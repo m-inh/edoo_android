@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_tenlopmonhoc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_toEndOf="@+id/rl_image"
+        android:layout_marginLeft="16dp"
+        android:text="Xac suat thong ke"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_idlopmonhoc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Id: MAT1101 1"
+        android:textSize="@dimen/description"
+        android:paddingRight="5dp"
+        android:maxLength="30"
+        android:layout_below="@+id/tv_tenlopmonhoc"
+        android:layout_alignStart="@+id/tv_tenlopmonhoc" />
+
+    <TextView
+        android:id="@+id/tv_songuoilopmonhoc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="So nguoi: 40"
+        android:textSize="@dimen/description"
+        android:layout_alignTop="@+id/tv_idlopmonhoc"
+        android:layout_toEndOf="@+id/tv_idlopmonhoc" />
+
+    <TextView
+        android:id="@+id/tv_giangvienlopmonhoc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/description"
+        android:maxLength="30"
+        android:text="Giang vien: Le Phe Do"
+        android:layout_below="@+id/tv_idlopmonhoc"
+        android:layout_alignStart="@+id/tv_idlopmonhoc" />
+
+    <RelativeLayout
+        android:id="@+id/rl_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_avatarlopmonhoc"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:civ_fill_color="@android:color/holo_green_dark"
+            android:src="@drawable/avar_item_bg_2" />
+
+        <TextView
+            android:id="@+id/tv_textimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="X"
+            android:textColor="@android:color/white"
+            android:textSize="22sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

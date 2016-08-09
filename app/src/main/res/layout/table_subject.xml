@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:id="@+id/itemNone"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="T2"
+            android:layout_weight="1"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="T3"
+            android:layout_weight="1"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="T4"
+            android:layout_weight="1"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="T5"
+            android:layout_weight="1"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="T6"
+            android:layout_weight="1"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="T7"
+            android:layout_weight="1"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:id="@+id/colTime"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_item_subject"
+                    android:text="7.00"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_item_subject"
+                    android:text="8.00"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_item_subject"
+                    android:text="9.00"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_item_subject"
+                    android:text="10.00"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_item_subject"
+                    android:text="11.00"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_item_subject"
+                    android:text="12.00"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_item_subject"
+                    android:text="13.00"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_item_subject"
+                    android:text="14.00"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_item_subject"
+                    android:text="15.00"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_item_subject"
+                    android:text="16.00"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_item_subject"
+                    android:text="17.00"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_item_subject"
+                    android:text="18.00"
+                    />
+            </LinearLayout>
+
+            <GridView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/gridSubject"
+                android:numColumns="6"
+                android:verticalSpacing="1dp"
+                android:horizontalSpacing="2dp" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>

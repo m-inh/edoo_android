@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/bg_editmode"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:paddingTop="20dp"
+    android:weightSum="1">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_editava"
+        android:layout_width="150dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:layout_gravity="center_horizontal"
+        app:civ_border_color="@android:color/white"
+        app:civ_border_width="2dp"
+        android:src="@mipmap/ic_user" />
+
+    <!--<Button-->
+    <!--android:layout_width="120dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textColor="@color/bg_editmode"-->
+    <!--android:background="@color/btn_login_bg"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--android:layout_gravity="right"-->
+    <!--android:text="Chỉnh sửa bìa" />-->
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/name"
+        android:singleLine="true"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp"
+        android:textColor="@android:color/darker_gray"
+        android:inputType="textPersonName"
+        android:background="@android:color/white"
+        android:layout_marginTop="20dp"
+        android:textColorHint="@color/input_login_hint"
+        android:id="@+id/edt_editname" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_mssv"
+        android:singleLine="true"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp"
+        android:textColor="@android:color/darker_gray"
+        android:inputType="number"
+        android:background="@android:color/white"
+        android:textColorHint="@color/input_login_hint"
+        android:id="@+id/edt_editmssv" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_email"
+        android:id="@+id/edt_editemail"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp"
+        android:textColor="@android:color/darker_gray"
+        android:inputType="textEmailAddress"
+        android:background="@android:color/white"
+        android:textColorHint="@color/input_login_hint"
+        android:editable="false" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/lopkhoahoc"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp"
+        android:inputType="text"
+        android:textColor="@android:color/darker_gray"
+        android:background="@android:color/white"
+        android:textColorHint="@color/input_login_hint"
+        android:id="@+id/edt_editlop" />
+
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/done"
+        android:textColor="@color/bg_editmode"
+        android:background="@color/btn_login_bg"
+        android:id="@+id/btn_editdone" />
+
+
+</LinearLayout>

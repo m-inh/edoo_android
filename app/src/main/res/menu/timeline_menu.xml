@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_post"
+        android:showAsAction="always"
+        android:icon="@mipmap/ic_write_post_48_2"
+        android:title="@string/post" />
+
+    <item
+        android:id="@+id/item_locbaidanggiaovien"
+        android:showAsAction="collapseActionView"
+        android:icon="@mipmap/ic_nhom"
+        android:title="@string/locbaidang" />
+
+    <item
+        android:id="@+id/item_locbaidangchuatraloi"
+        android:showAsAction="collapseActionView"
+        android:icon="@mipmap/ic_nhom"
+        android:title="@string/locbaidangchuatraloi" />
+
+    <item
+        android:id="@+id/item_tatcabaidang"
+        android:showAsAction="collapseActionView"
+        android:title="@string/tatcabaidang" />
+</menu>

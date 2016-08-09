@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:elevation="4dp"
+    android:orientation="vertical">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_marker_seen"
+            android:layout_height="8dp"
+            android:layout_width="8dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/avar_item_bg_2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="5dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingTop="0dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left|center_vertical"
+                    android:shadowColor="#000000"
+                    android:textAllCaps="true"
+                    android:text="@string/title_post"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_bookmark"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="top|right"
+                    android:src="@mipmap/ic_bookmark_check" />
+
+            </TableRow>
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="@string/content_post"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_marginTop="2dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/txtCountLike"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="11"
+                        android:textSize="@dimen/like_size"
+                        android:textColor="#989696" />
+
+                    <ImageView
+                        android:id="@+id/iv_like"
+                        android:layout_width="@dimen/ic_post_size"
+                        android:layout_height="@dimen/ic_post_size"
+                        android:src="@mipmap/ic_up_24" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/txtCountComment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="27"
+                        android:textSize="@dimen/like_size"
+                        android:textColor="#989696" />
+
+                    <ImageView
+                        android:layout_width="@dimen/ic_comment_post"
+                        android:layout_height="@dimen/ic_comment_post"
+                        android:src="@mipmap/ic_comment_24"
+                        android:paddingTop="2dp"
+                        android:layout_marginLeft="3dp" />
+                </TableRow>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imgAvatar"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@mipmap/student" />
+
+                    <TextView
+                        android:id="@+id/tv_name_postauthor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:textSize="12sp"
+                        android:text="@string/author_name" />
+
+                    <TextView
+                        android:id="@+id/tv_time_post"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:textSize="12sp"
+                        android:text="@string/time_post" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </TableRow>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bg_empty_post" />
+
+</LinearLayout>

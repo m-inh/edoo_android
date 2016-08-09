@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Edoo</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_sendAll">Gửi thông báo</string>
+    <string name="action_post">Đăng</string>
+
+
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Mật khẩu</string>
+    <string name="hint_name">Họ và tên</string>
+    <string name="btn_login">ĐĂNG NHẬP</string>
+    <string name="btn_register">ĐĂNG KÍ</string>
+    <string name="btn_link_to_register">Chưa có tài khoản? <u><b>Đăng kí ngay</b></u>.</string>
+    <string name="btn_link_to_login">Đã có tài khoản? <u><b>Đăng nhập ngay</b></u>.</string>
+    <string name="welcome">Chào mừng</string>
+    <string name="btn_logout">Đăng xuất</string>
+    <string name="name">Họ và tên</string>
+    <string name="hint_repassword">Nhập lại mật khẩu</string>
+    <string name="login">Đăng nhập</string>
+    <string name="register">Đăng kí</string>
+    <string name="lopmonhoc">Lớp môn học</string>
+    <string name="lopkhoahoc">Lớp khoá học</string>
+    <string name="register_lopkhoahoc">Lớp khoá học(vd: K58CLC, ...)</string>
+    <string name="tienich">Tiện ích</string>
+    <string name="taikhoan">Tài khoản</string>
+    <string name="share">Chia sẻ</string>
+    <string name="setting">Cài đặt</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="nhom">Nhóm</string>
+    <string name="tkb">Thời khoá biểu</string>
+    <string name="done">Hoàn tất</string>
+    <string name="editActivity">Chỉnh sửa thông tin cá nhân</string>
+    <string name="hint_mssv">Mã số sinh viên</string>
+    <string name="updateAccount">Cập nhật tài khoản</string>
+
+
+    <string name="thoi_khoa_bieu">Thời khóa biểu</string>
+    <string name="title_activity_write_post">WritePostActivity</string>
+    <string name="title_activity_post_writer">Đăng bài</string>
+    <string name="author_name">Trần Đức Hùng</string>
+    <string name="title_post">Hỏi thông tin bài tập</string>
+    <string name="content_post">Mình muốn hỏi bài tập JAVA hôm nay phải làm những gì thế ạ? Mình cám ơn nhiều :)</string>
+    <string name="comment_author">Bạn phải làm bài 20 21 22 ở trong sách giáo khoa cô có cho mà</string>
+    <string name="question_post">Hãy đặt câu hỏi ...</string>
+    <string name="title_post_hint">Tiêu đề</string>
+    <string name="content_hint">Nội dung</string>
+    <string name="title_post2">Tiêu đề</string>
+    <string name="title_content2">Nội dung</string>
+    <string name="lichthi">Lịch Thi</string>
+    <string name="tailieu">Tài Liệu</string>
+    <string name="diemtongket">Điểm tổng kết</string>
+    <string name="postDetailActivity">Chi tiết bài đăng</string>
+    <string name="locbaidang">Lọc bài đăng giáo viên</string>
+    <string name="locbaidangchuatraloi">Lọc theo bài đăng chưa trả lời</string>
+    <string name="post">Đăng bài</string>
+    <string name="tatcabaidang">Tất cả bài đăng</string>
+    <string name="feed">Bảng tin</string>
+    <string name="time_post">, 18/10/15</string>
+
+</resources>
