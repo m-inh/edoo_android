@@ -289,21 +289,21 @@ public class MainActivity extends AppCompatActivity
                 toolbar.setTitle("Lớp môn học");
                 showFragment(lopMonHocFragment);
                 break;
-            case R.id.nav_lopKhoaHoc:
-                switchToMenu(LOP_MENU_INT);
-                toolbar.setTitle("Lớp khoá học");
-                showFragment(lopKhoaHocFragment);
-                break;
-            case R.id.nav_feed:
-                switchToMenu(LOP_MENU_INT);
-                toolbar.setTitle("Bảng tin");
-                goToFeed();
-                break;
-            case R.id.nav_nhom:
-                switchToMenu(LOP_MENU_INT);
-                toolbar.setTitle("Nhóm");
-                showFragment(nhomFragment);
-                break;
+//            case R.id.nav_lopKhoaHoc:
+//                switchToMenu(LOP_MENU_INT);
+//                toolbar.setTitle("Lớp khoá học");
+//                showFragment(lopKhoaHocFragment);
+//                break;
+//            case R.id.nav_feed:
+//                switchToMenu(LOP_MENU_INT);
+//                toolbar.setTitle("Bảng tin");
+//                goToFeed();
+//                break;
+//            case R.id.nav_nhom:
+//                switchToMenu(LOP_MENU_INT);
+//                toolbar.setTitle("Nhóm");
+//                showFragment(nhomFragment);
+//                break;
             case R.id.nav_setting:
                 switchToMenu(LOP_MENU_INT);
                 toolbar.setTitle("Cài đặt");

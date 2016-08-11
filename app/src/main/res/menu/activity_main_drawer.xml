@@ -3,24 +3,24 @@
 
     <group android:checkableBehavior="single">
 
-        <item
-            android:id="@+id/nav_feed"
-            android:icon="@mipmap/ic_feed_24_2"
-            android:title="@string/feed" />
+        <!--<item-->
+            <!--android:id="@+id/nav_feed"-->
+            <!--android:icon="@mipmap/ic_feed_24_2"-->
+            <!--android:title="@string/feed" />-->
 
         <item
             android:id="@+id/nav_lopMonHoc"
             android:icon="@mipmap/ic_subject"
             android:title="@string/lopmonhoc" />
-        <item
-            android:id="@+id/nav_lopKhoaHoc"
-            android:icon="@mipmap/ic_key"
-            android:title="@string/lopkhoahoc" />
+        <!--<item-->
+            <!--android:id="@+id/nav_lopKhoaHoc"-->
+            <!--android:icon="@mipmap/ic_key"-->
+            <!--android:title="@string/lopkhoahoc" />-->
 
-        <item
-            android:id="@+id/nav_nhom"
-            android:icon="@mipmap/ic_nhom"
-            android:title="@string/nhom" />
+        <!--<item-->
+            <!--android:id="@+id/nav_nhom"-->
+            <!--android:icon="@mipmap/ic_nhom"-->
+            <!--android:title="@string/nhom" />-->
     </group>
 
     <item android:title="@string/tienich">
@@ -30,18 +30,18 @@
                     android:id="@+id/nav_thoikhoabieu"
                     android:icon="@mipmap/ic_thoikhoabieu"
                     android:title="@string/tkb" />
-                <item
-                    android:id="@+id/nav_lichThi"
-                    android:icon="@mipmap/ic_nhom"
-                    android:title="@string/lichthi"/>
-                <item
-                    android:id="@+id/nav_taiLieu"
-                    android:icon="@mipmap/ic_folder_24"
-                    android:title="@string/tailieu"/>
-                <item
-                    android:id="@+id/nav_diemTongKet"
-                    android:icon="@mipmap/ic_nhom"
-                    android:title="@string/diemtongket"/>
+                <!--<item-->
+                    <!--android:id="@+id/nav_lichThi"-->
+                    <!--android:icon="@mipmap/ic_nhom"-->
+                    <!--android:title="@string/lichthi"/>-->
+                <!--<item-->
+                    <!--android:id="@+id/nav_taiLieu"-->
+                    <!--android:icon="@mipmap/ic_folder_24"-->
+                    <!--android:title="@string/tailieu"/>-->
+                <!--<item-->
+                    <!--android:id="@+id/nav_diemTongKet"-->
+                    <!--android:icon="@mipmap/ic_nhom"-->
+                    <!--android:title="@string/diemtongket"/>-->
             </group>
         </menu>
     </item>

@@ -1,6 +1,7 @@
 package com.fries.edoo.app;
 
 public class AppConfig {
+	public static final String URL_HOST = "http://api.uetf.me";
 	//Server vote comment
 	public static final String URL_VOTE_COMMENT = "http://myclass.tutran.net/v1/vote";
 	//Server post comment
@@ -16,9 +17,9 @@ public class AppConfig {
 
 	public static final String URL_POST_DISLIKE = "http://myclass.tutran.net/v1/dislike";
 	// Server user login url
-	public static String URL_LOGIN = "http://128.199.226.234:2344/login";
+	public static String URL_LOGIN = URL_HOST + "/login";
 	// Server user logout url
-	public static String URL_LOGOUT = "http://api.uetf.me/logout";
+	public static String URL_LOGOUT = URL_HOST + "/logout";
 	// Server user register url
 	public static String URL_REGISTER = "http://api.uetf.me/register";
 	// Server user update
