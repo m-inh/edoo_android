@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <item android:title="@string/lophoc">
+        <menu>
+            <group android:checkableBehavior="single">
 
-        <!--<item-->
-            <!--android:id="@+id/nav_feed"-->
-            <!--android:icon="@mipmap/ic_feed_24_2"-->
-            <!--android:title="@string/feed" />-->
+                <!--<item-->
+                <!--android:id="@+id/nav_feed"-->
+                <!--android:icon="@mipmap/ic_feed_24_2"-->
+                <!--android:title="@string/feed" />-->
 
-        <item
-            android:id="@+id/nav_lopMonHoc"
-            android:icon="@mipmap/ic_subject"
-            android:title="@string/lopmonhoc" />
-        <!--<item-->
-            <!--android:id="@+id/nav_lopKhoaHoc"-->
-            <!--android:icon="@mipmap/ic_key"-->
-            <!--android:title="@string/lopkhoahoc" />-->
+                <item
+                    android:id="@+id/nav_lopMonHoc"
+                    android:icon="@mipmap/ic_subject"
+                    android:title="@string/lopmonhoc" />
+                <!--<item-->
+                <!--android:id="@+id/nav_lopKhoaHoc"-->
+                <!--android:icon="@mipmap/ic_key"-->
+                <!--android:title="@string/lopkhoahoc" />-->
 
-        <!--<item-->
-            <!--android:id="@+id/nav_nhom"-->
-            <!--android:icon="@mipmap/ic_nhom"-->
-            <!--android:title="@string/nhom" />-->
-    </group>
+                <!--<item-->
+                <!--android:id="@+id/nav_nhom"-->
+                <!--android:icon="@mipmap/ic_nhom"-->
+                <!--android:title="@string/nhom" />-->
+            </group>
+        </menu>
+    </item>
 
     <item android:title="@string/tienich">
         <menu>
