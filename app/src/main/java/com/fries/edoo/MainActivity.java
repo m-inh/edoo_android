@@ -36,6 +36,7 @@ import com.fries.edoo.models.ItemLop;
 import com.fries.edoo.models.ItemTimeLine;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
@@ -105,7 +106,6 @@ public class MainActivity extends AppCompatActivity
 
         header = navigationView.getHeaderView(0);
 
-        Log.i(TAG, "session: " + session.isLoggedIn());
         if (!session.isLoggedIn()) {
             logout();
         }
@@ -152,8 +152,19 @@ public class MainActivity extends AppCompatActivity
     public void updateAvatar() {
         HashMap<String, String> user = sqlite.getUserDetails();
         Picasso.with(this).invalidate(user.get("avatar"));
+        Log.i(TAG, "update ava: " + user.get("avatar"));
         Picasso.with(this).load(user.get("avatar")).placeholder(R.mipmap.ic_user).error(R.mipmap.ic_user)
-                .into(ivAva);
+                .into(ivAva, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.i(TAG, "picasso success ");
+                    }
+
+                    @Override
+                    public void onError() {
+                        Log.i(TAG, "picasso fail ");
+                    }
+                });
 
 //        Picasso.with(this).load("http://myclass.tutran.net/v1/avatar/13020285")
 //                .into(ivAva);
@@ -348,7 +359,6 @@ public class MainActivity extends AppCompatActivity
         requestServer.sendRequest("req_log_out");
         // xoa session
         session.setLogin(false);
-        Log.i(TAG, "Xoa session");
 
         // xoa user
         sqlite.deleteUsers();
@@ -393,21 +403,31 @@ public class MainActivity extends AppCompatActivity
         //Lay thong tin cac bai dang tren server ve
         //goi timelinefragment
         //set data cho listview
-        timelineFragment = new TimelineFragment();
-
+        Log.i(TAG, itemLop.getId());
+        Log.i(TAG, itemLop.getIdData());
+        Intent mIntent = new Intent(this, TimelineActivity.class);
         Bundle b = new Bundle();
-        b.putString("idData", itemLop.getIdData());
-        b.putString("keyLop", keyLop);
-        timelineFragment.setArguments(b);
+        b.putSerializable("item_class",  itemLop);
+//        b.putString("code_class", itemLop.getId());
+//        b.putString("id_class", itemLop.getIdData());
+        mIntent.putExtras(b);
+        startActivity(mIntent);
+
+//        timelineFragment = new TimelineFragment();
+
+//        Bundle b = new Bundle();
+//        b.putString("idData", itemLop.getIdData());
+//        b.putString("keyLop", keyLop);
+//        timelineFragment.setArguments(b);
 //        Toast.makeText(getApplicationContext(), "Id: " + idData, Toast.LENGTH_LONG).show();
 
-        getFragmentManager().beginTransaction().
-                replace(R.id.container, timelineFragment).addToBackStack(null).commit();
+//        getFragmentManager().beginTransaction().
+//                replace(R.id.container, timelineFragment).addToBackStack(null).commit();
 
         //Chinh sua toolbar
 
-        toolbar.setTitle(itemLop.getTen());
-        switchToMenu(TIMELINE_MENU_INT);
+//        toolbar.setTitle(itemLop.getTen());
+//        switchToMenu(TIMELINE_MENU_INT);
     }
 
     private FeedFragment feedFragment;

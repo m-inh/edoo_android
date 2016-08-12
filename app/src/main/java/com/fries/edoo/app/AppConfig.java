@@ -1,15 +1,17 @@
 package com.fries.edoo.app;
 
 public class AppConfig {
-	public static final String URL_HOST = "http://api.uetf.me";
+//	public static final String URL_HOST = "http://api.uetf.me";
+//	public static final String URL_HOST = "192.168.1.117:2344";
+	public static final String URL_HOST = "http://10.0.2.2:2344";
 	//Server vote comment
 	public static final String URL_VOTE_COMMENT = "http://myclass.tutran.net/v1/vote";
 	//Server post comment
 	public static final String URL_POST_COMMENT = "http://myclass.tutran.net/v1/post/comment";
 	//Server get post and comment
-	public static final String URL_GET_POST = "http://myclass.tutran.net/v1/getPosts";
+	public static final String URL_GET_POST = URL_HOST + "/posts";
 	//Server get LopKhoaHoc information
-	public static final String URL_GET_LOPKHOAHOC = "http://myclass.tutran.net/v1/getGroup";
+	public static final String URL_GET_LOPKHOAHOC = URL_HOST + "/classes";
 	//Server post posts
 	public static final String URL_POST_POST = "http://myclass.tutran.net/v1/post";
 

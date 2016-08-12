@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -129,27 +130,16 @@ public class LoginActivity extends Activity {
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 hideDialog();
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                 if (!error) {
-//                    Toast.makeText(getApplicationContext(), "Đăng nhập thành công!", Toast.LENGTH_LONG).show();
 
-                    // user successfully logged in
-                    // Create login session
-                    session.setLogin(true);
-                    String token = response.getJSONObject("data").getString("token");
-                    session.setTokenLogin(token);
-                    Toast.makeText(getApplicationContext(), "Token: " + token, Toast.LENGTH_SHORT).show();
-
-/*
                     // Now store the user in SQLite
-                    String uid = jObj.getString("uid");
 
-                    JSONObject user = jObj.getJSONObject("user");
+                    JSONObject user = response.getJSONObject("data").getJSONObject("user");
                     String ava = user.getString("avatar");
                     String email = user.getString("email");
-                    String lop = user.getString("lop");
-                    String mssv = user.getString("mssv");
-                    String type = user.getString("type");
+//                    String lop = user.getString("lop");
+                    String mssv = user.getString("code");
+                    String type = user.getString("capability");
                     String name = user.getString("name");
 
                     String created_at = "";
@@ -157,17 +147,23 @@ public class LoginActivity extends Activity {
                     Log.i(TAG, "login: " + name);
                     Log.i(TAG, "ava: " + ava);
                     Log.i(TAG, "login: " + email);
-                    Log.i(TAG, "login: " + lop);
+//                    Log.i(TAG, "login: " + lop);
                     Log.i(TAG, "login: " + mssv);
                     Log.i(TAG, "login: " + type);
-*/
+
                     // Inserting row in users table
-//                                db.addUser(name, email, uid, created_at, lop, mssv, type, ava);
+//                  db.addUser(name, email, uid, created_at, lop, mssv, type, ava);
+
+                    // user successfully logged in
+                    // Create login session
+                    session.setLogin(true);
+                    String token = response.getJSONObject("data").getString("token");
+                    session.setTokenLogin(token);
 
                     // Temporary data
-                    db.addUser("Trần Minh Quý", email, "", "", "K58CLC", "13020355", "student", "http://downloadicons.net/sites/default/files/female-college-students-'-icon-14067.png");
+                    db.addUser(name, email, "", "", "K58CLC", mssv, type, ava);
 
-
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                     // Launch main activity
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);

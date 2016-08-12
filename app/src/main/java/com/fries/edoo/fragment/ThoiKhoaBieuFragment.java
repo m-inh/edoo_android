@@ -138,8 +138,6 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
 //                    boolean error = response.getBoolean("error");
                     if (error) return;
 
-
-
                     JSONArray listSubjects = response.getJSONObject("data").getJSONArray("classes");
                     for (int i=0; i<listSubjects.length(); i++){
                         JSONObject subject = listSubjects.getJSONObject(i);

@@ -74,8 +74,15 @@ public class RequestServer {
                         mListener.onReceive(true, jsonError, jsonError.getString("message"));
                     }
                     Log.i(TAG, "Response = " + jsonError);
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     Log.i(TAG, "Error json: " + e.toString());
+                    if (mListener != null){
+                        try {
+                            mListener.onReceive(true, null, "");
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
                 }
             }
         };

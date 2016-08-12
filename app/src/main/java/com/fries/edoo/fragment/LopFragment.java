@@ -17,6 +17,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.fries.edoo.adapter.LopAdapter;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.app.AppController;
+import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.models.ItemLop;
 
@@ -52,86 +53,59 @@ public abstract class LopFragment extends Fragment {
     protected void requestLopHoc(final String uid, final String databaseKey, final ArrayList<ItemLop> itemArr) {
         isRefreshing = true;
 
-        StringRequest strReq = new StringRequest(Request.Method.POST,
-                AppConfig.URL_GET_LOPKHOAHOC, new Response.Listener<String>() {
+        RequestServer requestServer = new RequestServer(getActivity(), Request.Method.GET, AppConfig.URL_GET_LOPKHOAHOC);
+        requestServer.setListener(new RequestServer.ServerListener() {
             @Override
-            public void onResponse(String response) {
-                itemArr.clear();
-                Log.i(TAG, "Get lop hoc Response: " + response.toString());
-                try {
-                    JSONObject jObj = new JSONObject(response);
-                    boolean error = jObj.getBoolean("error");
-                    if (!error) {
+            public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
+                if (!error) {
+                    itemArr.clear();
 
-                        JSONArray jsonLopHocArray = jObj.getJSONArray("group");
+                    JSONArray jsonLopHocArray = response.getJSONObject("data").getJSONArray("classes");
 
-                        for (int i = 0; i < jsonLopHocArray.length(); i++) {
-                            JSONObject lopHoc = jsonLopHocArray.getJSONObject(i);
-                            String id = lopHoc.getString("id");
-                            String idLop = lopHoc.getString("name");
-                            String nameLop = lopHoc.getString("name");
-                            String baseLop = lopHoc.getString("base");
-                            int soSV = lopHoc.getInt("soSV");
+                    for (int i = 0; i < jsonLopHocArray.length(); i++) {
+                        JSONObject lopHoc = jsonLopHocArray.getJSONObject(i);
+                        String id = lopHoc.getString("id");
+                        String idLop = lopHoc.getString("code");
+                        String nameLop = lopHoc.getString("name");
+//                        String baseLop = lopHoc.getString("base");
+                        int soSV = lopHoc.getInt("student_count");
+                        String nameGiangVien = lopHoc.getString("teacher_name");
 
-                            Log.i(TAG, "id: " + id);
-                            Log.i(TAG, "idLop: " + idLop);
-                            Log.i(TAG, "name lop: " + nameLop);
-                            Log.i(TAG, "so sv: " + soSV);
+                        Log.i(TAG, "id: " + id);
+                        Log.i(TAG, "idLop: " + idLop);
+                        Log.i(TAG, "name lop: " + nameLop);
+                        Log.i(TAG, "so sv: " + soSV);
 
-                            JSONObject jsonGiangVien = jsonLopHocArray.getJSONObject(i).getJSONObject("teacher");
+//                        JSONObject jsonGiangVien = jsonLopHocArray.getJSONObject(i).getJSONObject("teacher");
+//
+//                        String nameGiangVien = jsonGiangVien.getString("name");
+//                        String idGiangVien = jsonGiangVien.getString("id");
+//                        String emailGiangVien = jsonGiangVien.getString("email");
+//                        String typeGiangVien = jsonGiangVien.getString("type");
 
-                            String nameGiangVien = jsonGiangVien.getString("name");
-                            String idGiangVien = jsonGiangVien.getString("id");
-                            String emailGiangVien = jsonGiangVien.getString("email");
-                            String typeGiangVien = jsonGiangVien.getString("type");
-
-                            itemArr.add(new ItemLop(nameLop, id, idLop, nameGiangVien, soSV));
-                        }
-                        Toast.makeText(mContext, "Lấy dữ liệu môn học thành công!", Toast.LENGTH_LONG).show();
-                        Message msg = new Message();
-                        msg.setTarget(mHandler);
-                        msg.sendToTarget();
-                    } else {
-                        // Error occurred in registration. Get the error message
-                        String errorMsg = jObj.getString("error_msg");
-                        Toast.makeText(mContext,
-                                errorMsg, Toast.LENGTH_LONG).show();
-
-                        isRefreshing = false;
-                        onFail();
+                        itemArr.add(new ItemLop(nameLop, id, idLop, nameGiangVien, soSV));
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+
+                    Toast.makeText(mContext, "Lấy dữ liệu môn học thành công!", Toast.LENGTH_LONG).show();
+                    Message msg = new Message();
+                    msg.setTarget(mHandler);
+                    msg.sendToTarget();
+                } else {
+                    // Error occurred in registration. Get the error message
+//                    String errorMsg = jObj.getString("error_msg");
+                    Toast.makeText(mContext,
+                            message, Toast.LENGTH_LONG).show();
+
                     isRefreshing = false;
                     onFail();
                 }
             }
-        }, new Response.ErrorListener() {
+        });
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Get class Error: " + error.getMessage());
-                Toast.makeText(mContext,
-                        error.getMessage(), Toast.LENGTH_LONG).show();
-                isRefreshing = false;
-                onFail();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                // Posting params to register url
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("id", uid);
-                params.put("base", databaseKey);
-                return params;
-            }
-        };
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(strReq, "Get lop hoc");
-
+        requestServer.sendRequest("get classes");
     }
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             isRefreshing = false;

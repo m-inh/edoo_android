@@ -1,9 +1,11 @@
 package com.fries.edoo.models;
 
+import java.io.Serializable;
+
 /**
  * Created by TooNies1810 on 11/20/15.
  */
-public class ItemLop {
+public class ItemLop implements Serializable{
     public String ten;
     public String giangVien;
     public int soNguoi;
