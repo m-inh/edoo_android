@@ -19,10 +19,10 @@ public class SessionManager {
 	int PRIVATE_MODE = 0;
 
 	// Shared preferences file name
-	private static final String PREF_NAME = "AndroidHiveLogin";
+	private static final String PREF_NAME = "edoo_session";
 	
-	private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
-	private static final String KEY_TOKEN_LOG_IN = "tokenLogin";
+	private static final String KEY_IS_LOGGED_IN = "is_login";
+	private static final String KEY_TOKEN_LOG_IN = "token_login";
 
 	public SessionManager(Context context) {
 		this._context = context;
@@ -34,7 +34,7 @@ public class SessionManager {
 		editor.putBoolean(KEY_IS_LOGGED_IN, isLoggedIn);
 
 		// Delete token
-		if (!isLoggedIn) editor.remove(KEY_TOKEN_LOG_IN);
+//		if (!isLoggedIn) editor.remove(KEY_TOKEN_LOG_IN);
 
 		// commit changes
 		editor.commit();

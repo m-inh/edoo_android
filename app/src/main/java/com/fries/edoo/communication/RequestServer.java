@@ -54,7 +54,9 @@ public class RequestServer {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    mListener.onReceive(false, response, response.getString("message"));
+                    if (mListener != null){
+                        mListener.onReceive(false, response, response.getString("message"));
+                    }
                     Log.i(TAG, "Response = " + response);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -68,7 +70,9 @@ public class RequestServer {
                 try {
                     byte[] data = error.networkResponse.data;
                     JSONObject jsonError = new JSONObject(new String(data));
-                    mListener.onReceive(true, jsonError, jsonError.getString("message"));
+                    if (mListener != null){
+                        mListener.onReceive(true, jsonError, jsonError.getString("message"));
+                    }
                     Log.i(TAG, "Response = " + jsonError);
                 } catch (JSONException e) {
                     Log.i(TAG, "Error json: " + e.toString());
@@ -76,14 +80,20 @@ public class RequestServer {
             }
         };
 
+        final boolean isLoggin = session.isLoggedIn();
+        final String token = session.getTokenLogin();
+
         request = new JsonObjectRequest(method, url, jsonReq, listener, error) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                if (session.isLoggedIn()) {
+//                Log.i(TAG, "Set header");
+//                Log.i(TAG, "" + isLoggin);
+//                Log.i(TAG, "Token: " + token);
+                if (isLoggin) {
                     Map<String, String> params = new HashMap<String, String>();
                     // Send token to server -> finish a session
-                    params.put("Authorization", session.getTokenLogin());
-
+                    params.put("Authorization", token);
+//                    Log.i(TAG, "Token: " + token);
                     return params;
                 }
 

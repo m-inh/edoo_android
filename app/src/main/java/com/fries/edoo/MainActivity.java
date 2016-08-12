@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity
 
         header = navigationView.getHeaderView(0);
 
+        Log.i(TAG, "session: " + session.isLoggedIn());
         if (!session.isLoggedIn()) {
             logout();
         }
@@ -341,23 +342,21 @@ public class MainActivity extends AppCompatActivity
         requestServer.setListener(new RequestServer.ServerListener() {
             @Override
             public void onReceive(boolean error, JSONObject response, String message) {
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-
-                if (!error) {
-                    // xoa session
-                    session.setLogin(false);
-
-                    // xoa user
-                    sqlite.deleteUsers();
-
-                    // thoat ra man hinh dang nhap
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
         });
         requestServer.sendRequest("req_log_out");
+        // xoa session
+        session.setLogin(false);
+        Log.i(TAG, "Xoa session");
+
+        // xoa user
+        sqlite.deleteUsers();
+
+        // thoat ra man hinh dang nhap
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override

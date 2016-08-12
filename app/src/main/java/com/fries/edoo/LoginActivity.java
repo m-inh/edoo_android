@@ -93,6 +93,8 @@ public class LoginActivity extends Activity {
                 startActivityForResult(i, REQUEST_CODE_REGISTER);
             }
         });
+
+        btnLinkToRegister.setVisibility(View.INVISIBLE);
     }
 
     @Override

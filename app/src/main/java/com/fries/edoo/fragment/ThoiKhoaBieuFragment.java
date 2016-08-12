@@ -21,6 +21,7 @@ import com.fries.edoo.R;
 import com.fries.edoo.adapter.TableSubjectAdapter;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.app.AppController;
+import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.models.ItemLopMonHoc;
 
@@ -122,34 +123,36 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
         listSubject.clear();
         String id = getUserID();
 
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("id", id);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        JSONObject jsonObject = new JSONObject();
+//        try {
+//            jsonObject.put("id", id);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, URL_REQUEST, jsonObject, new Response.Listener<JSONObject>() {
-
+        RequestServer requestServer = new RequestServer(getActivity(), Request.Method.GET, URL_REQUEST);
+        requestServer.setListener(new RequestServer.ServerListener() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 try {
-                    boolean error = response.getBoolean("error");
+//                    boolean error = response.getBoolean("error");
                     if (error) return;
 
-                    JSONArray listSubjects = response.getJSONArray("timetable");
+
+
+                    JSONArray listSubjects = response.getJSONObject("data").getJSONArray("classes");
                     for (int i=0; i<listSubjects.length(); i++){
                         JSONObject subject = listSubjects.getJSONObject(i);
                         String ten      = subject.getString("name");
-                        String maLMH    = subject.getString("maLMH");
-                        int vtri    = subject.getInt("viTri");
-                        int soTiet  = subject.getInt("soTiet");
-                        int soSV    = subject.getInt("soSV");
+                        String maLMH    = subject.getString("code");
+                        int vtri    = subject.getInt("period");
+                        int soTiet  = subject.getInt("credit_count");
+                        int soSV    = subject.getInt("student_count");
                         int nhom    = subject.getInt("nhom");
                         String ddiem= subject.getString("address");
 
-                        JSONObject teacher = subject.getJSONObject("teacher");
-                        String tenGV    = teacher.getString("name");
+//                        JSONObject teacher = subject.getJSONObject("teacher");
+                        String tenGV    = subject.getString("teacher_name");
 
                         ItemLopMonHoc item = new ItemLopMonHoc(ten, maLMH, ddiem,tenGV, vtri, soTiet, soSV, nhom);
 
@@ -166,21 +169,9 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
                     e.printStackTrace();
                 }
             }
-        },  new Response.ErrorListener() {
+        });
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i(TAG, "Error Response");
-            }
-        }
-        );
-
-        if (AppController.getInstance() != null) {
-            AppController.getInstance().addToRequestQueue(jsObjRequest, "jsonobject_request");
-        } else {
-            Log.i(TAG, "AppController is null");
-        }
-
+        requestServer.sendRequest("TKB");
 
 
     }

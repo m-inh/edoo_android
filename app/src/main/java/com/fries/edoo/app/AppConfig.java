@@ -28,7 +28,7 @@ public class AppConfig {
 	//Feed
 	public static final String URL_GET_FEED = "http://myclass.tutran.net/v1/feed";
 
-	public static final String URL_GET_TKB = "http://myclass.tutran.net/v1/timetable";
+	public static final String URL_GET_TKB = URL_HOST + "/classes";
 
 	////////////////// GCM
 	public static final String TOKEN = "663812496634";
