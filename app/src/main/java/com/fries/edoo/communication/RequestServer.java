@@ -57,7 +57,6 @@ public class RequestServer {
                     if (mListener != null){
                         mListener.onReceive(false, response, response.getString("message"));
                     }
-                    Log.i(TAG, "Response = " + response);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -73,9 +72,7 @@ public class RequestServer {
                     if (mListener != null){
                         mListener.onReceive(true, jsonError, jsonError.getString("message"));
                     }
-                    Log.i(TAG, "Response = " + jsonError);
                 } catch (Exception e) {
-                    Log.i(TAG, "Error json: " + e.toString());
                     if (mListener != null){
                         try {
                             mListener.onReceive(true, null, "");
@@ -93,14 +90,10 @@ public class RequestServer {
         request = new JsonObjectRequest(method, url, jsonReq, listener, error) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-//                Log.i(TAG, "Set header");
-//                Log.i(TAG, "" + isLoggin);
-//                Log.i(TAG, "Token: " + token);
                 if (isLoggin) {
                     Map<String, String> params = new HashMap<String, String>();
                     // Send token to server -> finish a session
                     params.put("Authorization", token);
-//                    Log.i(TAG, "Token: " + token);
                     return params;
                 }
 

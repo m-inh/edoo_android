@@ -33,19 +33,15 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implem
 
     public int currentMode = 1;
 
-    private OnBindItemComplete onBindItemComplete;
-
-    public TimeLineAdapter(Context context, String idLop, String keyLopType, OnBindItemComplete onBindItemComplete) {
+    public TimeLineAdapter(Context context, String idLop, String keyLopType) {
         this.mContext = context;
-        this.onBindItemComplete = onBindItemComplete;
         this.idLop = idLop;
         itemArr = new ArrayList<>();
         currentItemArr = new ArrayList<>();
     }
 
-    public TimeLineAdapter(Context context, OnBindItemComplete onBindItemComplete) {
+    public TimeLineAdapter(Context context) {
         this.mContext = context;
-        this.onBindItemComplete = onBindItemComplete;
         itemArr = new ArrayList<>();
         currentItemArr = new ArrayList<>();
     }
@@ -143,7 +139,11 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implem
                 itemPostHolder.getIvLike().setImageResource(R.mipmap.ic_down_24);
             }
 
-            itemPostHolder.getTxtCountComment().setText(itemTimeLine.getItemComments().size() + "");
+            int countCmt = itemTimeLine.getItemComments().size();
+            if (countCmt == 0){
+                countCmt = itemTimeLine.getCommentCount();
+            }
+            itemPostHolder.getTxtCountComment().setText(countCmt + "");
             itemPostHolder.getTvTimeCreateAt().setText(", " + itemTimeLine.getCreateAt());
 
             boolean isPostByTeacher = itemTimeLine.getTypeAuthor().equalsIgnoreCase("teacher");
@@ -167,11 +167,6 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implem
         } else {
                // ItemWritePostHolder itemWritePostHolder = (ItemWritePostHolder) abstactHolder;
         }
-
-        if (position == this.itemCompleteVisiblePosition || this.itemCompleteVisiblePosition == -1) {
-            onBindItemComplete.setIsRefreshing(false);
-            Log.i(TAG, "ok xong");
-        }
     }
 
     @Override
@@ -183,9 +178,5 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implem
     public void onClick(int position) {
 //        notifyDataSetChanged();
         notifyItemChanged(position);
-    }
-
-    public interface OnBindItemComplete {
-        public void setIsRefreshing(boolean isRefreshing);
     }
 }

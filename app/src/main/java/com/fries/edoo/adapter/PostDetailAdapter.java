@@ -20,6 +20,7 @@ import com.fries.edoo.holder.ItemPostDetailHolder;
 import com.fries.edoo.models.ItemComment;
 import com.fries.edoo.models.ItemTimeLine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -112,7 +113,6 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-//            Log.i(TAG, "ok");
 //            cbVote.setClickable(false);
             itemTimeline.setIsConfirmByTeacher(true);
             notifyItemChanged(0);
@@ -129,6 +129,11 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
     public void setItemTimeline(ItemTimeLine itemTimeline) {
         this.itemTimeline = itemTimeline;
+        notifyDataSetChanged();
+    }
+
+    public void setItemComments(ArrayList<ItemComment> commentArr){
+        this.itemTimeline.setItemComments(commentArr);
         notifyDataSetChanged();
     }
 }

@@ -7,15 +7,15 @@ public class AppConfig {
 	//Server vote comment
 	public static final String URL_VOTE_COMMENT = "http://myclass.tutran.net/v1/vote";
 	//Server post comment
-	public static final String URL_POST_COMMENT = "http://myclass.tutran.net/v1/post/comment";
+	public static final String URL_POST_COMMENT = URL_HOST + "/cmt";
 	//Server get post and comment
 	public static final String URL_GET_POST = URL_HOST + "/posts";
 	//Server get LopKhoaHoc information
 	public static final String URL_GET_LOPKHOAHOC = URL_HOST + "/classes";
 	//Server post posts
-	public static final String URL_POST_POST = "http://myclass.tutran.net/v1/post";
+	public static final String URL_POST_POST = URL_HOST + "/post";
 
-	public static final String URL_POST_LIKE = "http://myclass.tutran.net/v1/like";
+	public static final String URL_POST_LIKE = URL_HOST + "/votepost";
 
 	public static final String URL_POST_DISLIKE = "http://myclass.tutran.net/v1/dislike";
 	// Server user login url
@@ -38,4 +38,6 @@ public class AppConfig {
 
 	///////////////IMG
 	public static final String URL_POST_IMG = "http://myclass.tutran.net/v1/updateAvatar";
+
+	public static final String  URL_GET_POST_DETAIL = URL_HOST + "/post";
 }

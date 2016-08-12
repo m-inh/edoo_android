@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,12 +25,10 @@ import com.android.volley.Request;
 import com.fries.edoo.adapter.TimeLineAdapter;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
-import com.fries.edoo.fragment.FeedFragment;
 import com.fries.edoo.fragment.LopKhoaHocFragment;
 import com.fries.edoo.fragment.LopMonHocFragment;
 import com.fries.edoo.fragment.NhomFragment;
 import com.fries.edoo.fragment.ThoiKhoaBieuFragment;
-import com.fries.edoo.fragment.TimelineFragment;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.helper.SessionManager;
 import com.fries.edoo.models.ItemLop;
@@ -42,6 +41,8 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -56,8 +57,6 @@ public class MainActivity extends AppCompatActivity
     private static final int REQUEST_CODE_EDIT = 1234;
     public static final int REQUEST_CODE_ITEMWRITEPOSTHOLDER = 9000;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9200;
-    private static final int REQUEST_CODE_POST_WRITER = 1202;
-    private static final int REQUEST_CODE_POST_DETAIL = 1201;
 
     private LopMonHocFragment lopMonHocFragment = new LopMonHocFragment();
     private LopKhoaHocFragment lopKhoaHocFragment = new LopKhoaHocFragment();
@@ -125,6 +124,11 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
         }
+
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+        Date date = new Date(time.getTime());
+        Log.i(TAG, "date: " + date.toString());
+        Log.i(TAG, "time: " + System.currentTimeMillis());
     }
 
     @SuppressLint("SetTextI18n")
@@ -179,35 +183,35 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            if (lopKhoaHocFragment.isRefreshing()
-                    || lopMonHocFragment.isRefreshing() || timelineFragment.isRefreshing()) {
-                Log.i(TAG, "isRefreshing");
-                return;
-            }
-            Log.i(TAG, "onBackPressed");
-            getFragmentManager().popBackStack();
+//        if (getFragmentManager().getBackStackEntryCount() > 0) {
+//            if (lopKhoaHocFragment.isRefreshing()
+//                    || lopMonHocFragment.isRefreshing() || timelineFragment.isRefreshing()) {
+//                Log.i(TAG, "isRefreshing");
+//                return;
+//            }
+//            Log.i(TAG, "onBackPressed");
+//            getFragmentManager().popBackStack();
+//
+//            //switch toobal to lop menu
+//            switchToMenu(LOP_MENU_INT);
 
-            //switch toobal to lop menu
-            switchToMenu(LOP_MENU_INT);
-
-            if (timelineFragment != null) {
-                switch (timelineFragment.getKeyLopType()) {
-                    case LopMonHocFragment.KEY_LOP_MON_HOC:
-                        toolbar.setTitle("Lớp môn học");
-                        break;
-                    case LopKhoaHocFragment.KEY_LOP_KHOA_HOC:
-                        toolbar.setTitle("Lớp khoá học");
-                        break;
-                    case NhomFragment.KEY_NHOM:
-                        toolbar.setTitle("Nhom");
-                        break;
-                    default:
-                        break;
-                }
-            }
-            return;
-        }
+//            if (timelineFragment != null) {
+//                switch (timelineFragment.getKeyLopType()) {
+//                    case LopMonHocFragment.KEY_LOP_MON_HOC:
+//                        toolbar.setTitle("Lớp môn học");
+//                        break;
+//                    case LopKhoaHocFragment.KEY_LOP_KHOA_HOC:
+//                        toolbar.setTitle("Lớp khoá học");
+//                        break;
+//                    case NhomFragment.KEY_NHOM:
+//                        toolbar.setTitle("Nhom");
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//            return;
+//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -245,37 +249,37 @@ public class MainActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case R.id.item_post:
-                Intent mIntent = new Intent();
-                mIntent.setClass(MainActivity.this, PostWriterActivity.class);
-                mIntent.putExtra("idLop", timelineFragment.getIdLop());
-                mIntent.putExtra("keyLopType", timelineFragment.getKeyLopType());
-                startActivityForResult(mIntent, REQUEST_CODE_POST_WRITER);
-//                Toast.makeText(this, "Send to all", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.item_locbaidangchuatraloi:
-                Log.i(TAG, "loc bai dang chua tl");
-                if (timelineFragment != null) {
-                    timelineFragment.locTheoBaiDang(TimeLineAdapter.BAI_DANG_LOC_THEO_CHUA_TRA_LOI);
-                }
-                break;
-            case R.id.item_locbaidanggiaovien:
-                Log.i(TAG, "loc bai dang chua tl");
-                if (timelineFragment != null) {
-                    timelineFragment.locTheoBaiDang(TimeLineAdapter.BAI_DANG_LOC_THEO_GIAO_VIEN);
-                }
-                break;
-            case R.id.item_tatcabaidang:
-                Log.i(TAG, "tat ca bai dang");
-                if (timelineFragment != null) {
-                    timelineFragment.locTheoBaiDang(TimeLineAdapter.BAI_DANG_BINH_THUONG);
-                }
-                break;
-            case R.id.action_sendAll:
-//                Toast.makeText(this, "Send to all", Toast.LENGTH_LONG).show();
-                break;
-        }
+//        switch (item.getItemId()) {
+//            case R.id.item_post:
+//                Intent mIntent = new Intent();
+//                mIntent.setClass(MainActivity.this, PostWriterActivity.class);
+//                mIntent.putExtra("idLop", timelineFragment.getIdLop());
+//                mIntent.putExtra("keyLopType", timelineFragment.getKeyLopType());
+//                startActivityForResult(mIntent, REQUEST_CODE_POST_WRITER);
+////                Toast.makeText(this, "Send to all", Toast.LENGTH_LONG).show();
+//                break;
+//            case R.id.item_locbaidangchuatraloi:
+//                Log.i(TAG, "loc bai dang chua tl");
+//                if (timelineFragment != null) {
+//                    timelineFragment.locTheoBaiDang(TimeLineAdapter.BAI_DANG_LOC_THEO_CHUA_TRA_LOI);
+//                }
+//                break;
+//            case R.id.item_locbaidanggiaovien:
+//                Log.i(TAG, "loc bai dang chua tl");
+//                if (timelineFragment != null) {
+//                    timelineFragment.locTheoBaiDang(TimeLineAdapter.BAI_DANG_LOC_THEO_GIAO_VIEN);
+//                }
+//                break;
+//            case R.id.item_tatcabaidang:
+//                Log.i(TAG, "tat ca bai dang");
+//                if (timelineFragment != null) {
+//                    timelineFragment.locTheoBaiDang(TimeLineAdapter.BAI_DANG_BINH_THUONG);
+//                }
+//                break;
+//            case R.id.action_sendAll:
+////                Toast.makeText(this, "Send to all", Toast.LENGTH_LONG).show();
+//                break;
+//        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -378,26 +382,26 @@ public class MainActivity extends AppCompatActivity
                     checkLogDb();
                 }
                 break;
-            case REQUEST_CODE_POST_WRITER:
-                if (resultCode == RESULT_OK) {
-                    timelineFragment.onRefresh();
-                }
-                break;
-            case REQUEST_CODE_POST_DETAIL:
-                if (resultCode == RESULT_OK) {
-                    if (timelineFragment != null && timelineFragment.isAdded()) {
-                        timelineFragment.onRefresh();
-                    }
-
-                    if (feedFragment != null && feedFragment.isAdded()) {
-                        feedFragment.onRefresh();
-                    }
-                }
-                break;
+//            case REQUEST_CODE_POST_WRITER:
+//                if (resultCode == RESULT_OK) {
+//                    timelineFragment.onRefresh();
+//                }
+//                break;
+//            case REQUEST_CODE_POST_DETAIL:
+//                if (resultCode == RESULT_OK) {
+//                    if (timelineFragment != null && timelineFragment.isAdded()) {
+//                        timelineFragment.onRefresh();
+//                    }
+//
+//                    if (feedFragment != null && feedFragment.isAdded()) {
+//                        feedFragment.onRefresh();
+//                    }
+//                }
+//                break;
         }
     }
 
-    private TimelineFragment timelineFragment;
+//    private TimelineFragment timelineFragment;
 
     public void goToTimeLine(ItemLop itemLop, String keyLop) {
         //Lay thong tin cac bai dang tren server ve
@@ -430,34 +434,34 @@ public class MainActivity extends AppCompatActivity
 //        switchToMenu(TIMELINE_MENU_INT);
     }
 
-    private FeedFragment feedFragment;
+//    private FeedFragment feedFragment;
 
-    public void goToFeed() {
-        feedFragment = new FeedFragment();
-
-        HashMap<String, String> user = sqlite.getUserDetails();
-        String uid = user.get(SQLiteHandler.KEY_UID);
-
-        Bundle b = new Bundle();
-        b.putString("uid", uid);
-//        b.putString("keyLop", keyLop);
-        feedFragment.setArguments(b);
-//        Toast.makeText(getApplicationContext(), "Id: " + idData, Toast.LENGTH_LONG).show();
-
-        for (int i = 0; i < getFragmentManager().getBackStackEntryCount(); i++) {
-            getFragmentManager().popBackStack();
-            Log.i(TAG, "back stack count: " + getFragmentManager().getBackStackEntryCount());
-        }
-
-        getFragmentManager().beginTransaction().
-                replace(R.id.container, feedFragment).commit();
-
-        //Chinh sua toolbar
-
-//        toolbar.setTitle(itemLop.getTen());
-        //Test
-        switchToMenu(LOP_MENU_INT);
-    }
+//    public void goToFeed() {
+//        feedFragment = new FeedFragment();
+//
+//        HashMap<String, String> user = sqlite.getUserDetails();
+//        String uid = user.get(SQLiteHandler.KEY_UID);
+//
+//        Bundle b = new Bundle();
+//        b.putString("uid", uid);
+////        b.putString("keyLop", keyLop);
+//        feedFragment.setArguments(b);
+////        Toast.makeText(getApplicationContext(), "Id: " + idData, Toast.LENGTH_LONG).show();
+//
+//        for (int i = 0; i < getFragmentManager().getBackStackEntryCount(); i++) {
+//            getFragmentManager().popBackStack();
+//            Log.i(TAG, "back stack count: " + getFragmentManager().getBackStackEntryCount());
+//        }
+//
+//        getFragmentManager().beginTransaction().
+//                replace(R.id.container, feedFragment).commit();
+//
+//        //Chinh sua toolbar
+//
+////        toolbar.setTitle(itemLop.getTen());
+//        //Test
+//        switchToMenu(LOP_MENU_INT);
+//    }
 
     private void startEditActivity() {
         Intent mIntent = new Intent(MainActivity.this, EditProfileActivity.class);
@@ -469,21 +473,6 @@ public class MainActivity extends AppCompatActivity
         mIntent.putExtra("type", user.get("type"));
 
         startActivityForResult(mIntent, REQUEST_CODE_EDIT);
-    }
-
-    public void startPostWriterActivity(String idData, String keyLop) {
-        Intent intent = new Intent();
-        intent.putExtra("idData", idData);
-        intent.putExtra("keyLop", keyLop);
-        intent.setClass(MainActivity.this, PostWriterActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_ITEMWRITEPOSTHOLDER);
-    }
-
-    public void startPostDetailActivity(ItemTimeLine itemTimeLine) {
-        Intent mIntent = new Intent();
-        mIntent.putExtra("timelineItem", itemTimeLine);
-        mIntent.setClass(MainActivity.this, PostDetailActivity.class);
-        startActivityForResult(mIntent, REQUEST_CODE_POST_DETAIL);
     }
 
     private void checkLogDb() {

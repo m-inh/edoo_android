@@ -13,6 +13,7 @@ public class ItemTimeLine extends ItemBase implements Serializable {
     private String title;
 
     //name of author post
+    private String type;
     private String idPost;
     private String name;
     private String ava;
@@ -23,6 +24,7 @@ public class ItemTimeLine extends ItemBase implements Serializable {
     private boolean isConfirmByTeacher;
     private boolean isSeen;
     private String createAt;
+    private int commentCount;
     private ArrayList<ItemComment> itemComments = new ArrayList<>();
 
     public ItemTimeLine(String idPost, String title, String name, String ava, String content, int like, boolean isConfirmByTeacher) {
@@ -124,5 +126,20 @@ public class ItemTimeLine extends ItemBase implements Serializable {
 
     public void setIsSeen(boolean isSeen) {
         this.isSeen = isSeen;
+    }
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

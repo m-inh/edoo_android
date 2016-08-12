@@ -28,11 +28,16 @@ import com.fries.edoo.models.ItemBase;
 import com.fries.edoo.models.ItemComment;
 import com.fries.edoo.models.ItemLop;
 import com.fries.edoo.models.ItemTimeLine;
+import com.fries.edoo.utils.CommonVLs;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +45,7 @@ import java.util.Map;
 /**
  * Created by TooNies1810 on 8/12/16.
  */
-public class TimelineActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, TimeLineAdapter.OnBindItemComplete {
+public class TimelineActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     private static final String TAG = "TimelineActivity";
     private TimeLineAdapter mAdapter;
@@ -60,10 +65,6 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         setContentView(R.layout.activity_timeline);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //swipe refresh
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_timeline);
@@ -71,6 +72,12 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
 
         Bundle b = this.getIntent().getExtras();
         itemClass = (ItemLop) b.getSerializable("item_class");
+
+        toolbar.setTitle(itemClass.getTen());
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         Log.i(TAG, "id_class: " + itemClass.getIdData());
 
@@ -80,7 +87,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
 
     private void initAdapter() {
         itemPostArr = new ArrayList<>();
-        mAdapter = new TimeLineAdapter(this, itemClass.getIdData(), "", this);
+        mAdapter = new TimeLineAdapter(this, itemClass.getIdData(), "");
 
         requestPost(itemClass.getIdData());
 //        onRefresh();
@@ -114,12 +121,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                 break;
             case R.id.item_post:
                 Log.i(TAG, "new post");
-                Intent mIntent = new Intent();
-                mIntent.setClass(TimelineActivity.this, PostWriterActivity.class);
-//                mIntent.putExtra("idLop", timelineFragment.getIdLop());
-//                mIntent.putExtra("keyLopType", timelineFragment.getKeyLopType());
-//                startActivityForResult(mIntent, REQUEST_CODE_POST_WRITER);
-//                Toast.makeText(this, "Send to all", Toast.LENGTH_LONG).show();
+                startPostWriterActivity(itemClass.getIdData());
                 break;
             case R.id.item_locbaidangchuatraloi:
                 Log.i(TAG, "loc bai dang chua tl");
@@ -147,13 +149,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
     }
 
     private void requestPost(final String id) {
-        //Hien thi 1 dialog cho request
-//        isRefreshing = true;
-//        swipeRefresh.setRefreshing(true);
-
-//        itemPostArr.clear();
         final ArrayList<ItemBase> itemPostArr = new ArrayList<>();
-//        itemPostArr.add(new ItemBase());
 
         String url = AppConfig.URL_GET_POST + "/" + id;
 
@@ -175,10 +171,11 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         String titlePost = jsonPostArr.getJSONObject(i).getString("title");
                         String contentPost = jsonPostArr.getJSONObject(i).getString("content");
 //                        int like = jsonPostArr.getJSONObject(i).getInt("vote");
-                        int like = 0;
+                        int like = jsonPostArr.getJSONObject(i).getInt("vote_count");
+                        int commentCount = jsonPostArr.getJSONObject(i).getInt("comment_count");
 //                            boolean isConfirm = jsonPostArr.getJSONObject(i).getBoolean("confirm");
                         boolean isIncognito = jsonPostArr.getJSONObject(i).getInt("is_incognito") == 1;
-//                        String timeCreateAtPost = jsonPostArr.getJSONObject(i).getString("created_at");
+                        String timeCreateAtPost = jsonPostArr.getJSONObject(i).getString("created_at");
 
                         //author post
                         String nameAuthorPost = "Incognito";
@@ -188,7 +185,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         String mssvAuthorPost = "";
                         String avarAuthorPost = "okmen.com";
 
-                        if (!isIncognito){
+                        if (!isIncognito) {
                             JSONObject jsonAuthorPost = jsonPostArr.getJSONObject(i).getJSONObject("author");
                             nameAuthorPost = jsonAuthorPost.getString("name");
                             idAuthorPost = jsonAuthorPost.getString("id");
@@ -201,6 +198,19 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         boolean isConfirm = false;
                         ItemTimeLine itemTimeLine = new ItemTimeLine(id, titlePost, nameAuthorPost, avarAuthorPost, contentPost, like, isConfirm);
                         itemTimeLine.setTypeAuthor(typeAuthorPost);
+                        itemTimeLine.setCommentCount(commentCount);
+//                        String inputDate = "2012-08-24T12:15:00+02:00";
+                        String format = CommonVLs.TIME_FORMAT;
+
+                        SimpleDateFormat sdf = new SimpleDateFormat(format);
+                        try {
+                            Date d = new Date(sdf.parse(timeCreateAtPost).getTime());
+                            Log.i(TAG, "date create: " + d.getTime());
+                            itemTimeLine.setCreateAt(d.toString());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
                         itemPostArr.add(itemTimeLine);
 
                         //create comment array
@@ -257,135 +267,54 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         });
 
         requestServer.sendRequest("get posts");
+    }
 
-//        StringRequest request = new StringRequest(Request.Method.POST, AppConfig.URL_GET_POST, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-////                Log.i(TAG, "nhay vao onResponse");
-//                Log.i(TAG, response);
-//
-//                try {
-//                    JSONObject jsonObject = new JSONObject(response);
-//                    boolean error = jsonObject.getBoolean("error");
-//                    if (!error) {
-//                        //lay jsonItem nhet vao item
-//                        JSONArray jsonPostArr = jsonObject.getJSONArray("posts");
-//
-//                        // create item timeline
-//                        for (int i = 0; i < jsonPostArr.length(); i++) {
-//                            //Lay mang cac post
-//                            //Luu vao 1 arrayList post
-//                            String id = jsonPostArr.getJSONObject(i).getString("id");
-//                            String titlePost = jsonPostArr.getJSONObject(i).getString("title");
-//                            String contentPost = jsonPostArr.getJSONObject(i).getString("content");
-//                            String groupType = jsonPostArr.getJSONObject(i).getString("group");
-//                            int like = jsonPostArr.getJSONObject(i).getInt("like");
-////                            boolean isConfirm = jsonPostArr.getJSONObject(i).getBoolean("confirm");
-//                            boolean isIncognito = jsonPostArr.getJSONObject(i).getBoolean("isIncognito");
-//                            String basePost = jsonPostArr.getJSONObject(i).getString("base");
-//                            String timeCreateAtPost = jsonPostArr.getJSONObject(i).getString("created_at");
-//
-//                            //author post
-//                            JSONObject jsonAuthorPost = jsonPostArr.getJSONObject(i).getJSONObject("author");
-//                            String nameAuthorPost = jsonAuthorPost.getString("name");
-//                            String idAuthorPost = jsonAuthorPost.getString("id");
-//                            String emailAuthorPost = jsonAuthorPost.getString("email");
-//                            String typeAuthorPost = jsonAuthorPost.getString("type");
-//                            String mssvAuthorPost = jsonAuthorPost.getString("mssv");
-//                            String avarAuthorPost = jsonAuthorPost.getString("avatar");
-//
-//                            boolean isConfirm = false;
-////                            if (typeAuthorPost.equalsIgnoreCase("teacher")){
-////                                isConfirm = true;
-////                            }
-//                            ItemTimeLine itemTimeLine = new ItemTimeLine(id, titlePost, nameAuthorPost, avarAuthorPost, contentPost, like, isConfirm);
-//                            itemTimeLine.setTypeAuthor(typeAuthorPost);
-//                            itemTimeLine.setCreateAt(timeCreateAtPost);
-//                            itemPostArr.add(itemTimeLine);
-//
-//                            //create comment array
-//                            //Lay mang cac comment
-//                            //Luu vao 1 arraylist comment
-//                            JSONArray jsonCommentArr = jsonPostArr.getJSONObject(i).getJSONArray("comments");
-//                            ArrayList<ItemComment> itemCommentArr = new ArrayList<>();
-//                            for (int j = 0; j < jsonCommentArr.length(); j++) {
-//
-//                                String idComment = jsonCommentArr.getJSONObject(j).getString("id");
-//                                String contentComment = jsonCommentArr.getJSONObject(j).getString("content");
-//
-//                                String idAuthorComment = "";
-//                                String nameAuthorComment = "";
-//                                String emailAuthorComment = "";
-//                                String typeAuthorComment = "";
-//                                String mssvAuthorComment = "";
-//                                String avarAuthorComment = "";
-//
-//                                try{
-//                                    JSONObject jsonAuthorComment = jsonCommentArr.getJSONObject(j).getJSONObject("author");
-//                                    idAuthorComment = jsonAuthorComment.getString("id");
-//                                    nameAuthorComment = jsonAuthorComment.getString("name");
-//                                    emailAuthorComment = jsonAuthorComment.getString("email");
-//                                    typeAuthorComment = jsonAuthorComment.getString("type");
-//                                    mssvAuthorComment = jsonAuthorComment.getString("mssv");
-//                                    avarAuthorComment = jsonAuthorComment.getString("avatar");
-//                                } catch (Exception e){
-//                                    continue;
-//                                }
-//
-//                                Log.i(TAG, "comment: " + nameAuthorComment);
-//                                Log.i(TAG, "comment: " + emailAuthorComment);
-//                                Log.i(TAG, "comment: " + typeAuthorComment);
-//
-//                                boolean isVote = jsonCommentArr.getJSONObject(j).getBoolean("confirmed");
-//
-//                                if (isVote || typeAuthorComment.equalsIgnoreCase("teacher")) {
-//                                    isConfirm = true;
-//                                    ((ItemTimeLine) itemPostArr.get(i)).setIsConfirmByTeacher(true);
-//                                }
-//
-//                                itemCommentArr.add(new ItemComment(idComment, idAuthorComment, nameAuthorComment, avarAuthorComment, contentComment, isVote));
-//
-//                            }
-//                            ((ItemTimeLine) itemPostArr.get(i)).setItemComments(itemCommentArr);
-//                            ((ItemTimeLine) itemPostArr.get(i)).setKeyLopType(keyLopType);
-//                        }
-//                        TimelineActivity.this.itemPostArr = itemPostArr;
-//                        Message msg = new Message();
-//                        msg.setTarget(mHandler);
-//                        msg.sendToTarget();
-//                    } else {
-//                        isRefreshing = false;
-//                        if (swipeRefresh.isRefreshing()) {
-//                            swipeRefresh.setRefreshing(false);
-//                        }
-//                    }
-//                } catch (JSONException e) {
-//                    isRefreshing = false;
-//                    e.printStackTrace();
-//                    if (swipeRefresh.isRefreshing()) {
-//                        swipeRefresh.setRefreshing(false);
-//                    }
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                isRefreshing = false;
-//                if (swipeRefresh.isRefreshing()) {
-//                    swipeRefresh.setRefreshing(false);
-//                }
-//                Toast.makeText(TimelineActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> lop = new HashMap<>();
-//                lop.put("id", id);
-//                lop.put("base", database_type);
-//                return lop;
-//            }
-//        };
-//        AppController.getInstance().addToRequestQueue(request, "timeline_item");
+    private static final int REQUEST_CODE_POST_DETAIL = 1201;
+    private static final int REQUEST_CODE_POST_WRITER = 1202;
+
+    public void startPostDetailActivity(ItemTimeLine itemTimeLine) {
+        Intent mIntent = new Intent();
+        mIntent.putExtra("timelineItem", itemTimeLine);
+        mIntent.setClass(this, PostDetailActivity.class);
+        startActivityForResult(mIntent, REQUEST_CODE_POST_DETAIL);
+    }
+
+    public void startPostWriterActivity(String idClass) {
+        Intent intent = new Intent();
+        intent.putExtra("class_id", idClass);
+        intent.setClass(TimelineActivity.this, PostWriterActivity.class);
+        startActivityForResult(intent, REQUEST_CODE_POST_WRITER);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i(TAG, "ok men");
+        Log.i(TAG, "code: " + requestCode);
+        Log.i(TAG, "result code: " + resultCode);
+        if (requestCode == REQUEST_CODE_POST_DETAIL){
+            if (resultCode == RESULT_OK){
+                ItemTimeLine itemTimeLine = (ItemTimeLine) data.getExtras().getSerializable("item_timeline");
+
+                Log.i(TAG, "like: " + itemTimeLine.getLike());
+                Log.i(TAG, "cmt: " + itemTimeLine.getCommentCount());
+
+                String idPost = itemTimeLine.getIdPost();
+
+                for (int i = 0; i <itemPostArr.size(); i++) {
+                    ItemTimeLine tempItem = (ItemTimeLine) itemPostArr.get(i);
+                    if (idPost.equalsIgnoreCase(tempItem.getIdPost())){
+                        Log.i(TAG, "ok men" + idPost);
+                        Log.i(TAG, "like " + tempItem.getLike());
+                        Log.i(TAG, "cmt: " + tempItem.getCommentCount());
+
+                        tempItem.setLike(itemTimeLine.getLike());
+                        tempItem.setCommentCount(itemTimeLine.getCommentCount());
+                    }
+                }
+
+                mAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
     private Handler mHandler = new Handler() {
@@ -397,30 +326,13 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
             }
 
             mAdapter.updateList(itemPostArr, linearLayoutManager.findLastVisibleItemPosition());
-//            isRefreshing = false;
-
-//            Log.i(TAG, linearLayoutManager.findLastCompletelyVisibleItemPosition() + " findLastCompletelyVisibleItemPosition");
-//            Log.i(TAG, linearLayoutManager.findFirstCompletelyVisibleItemPosition() + " findFirstCompletelyVisibleItemPosition");
-//            Log.i(TAG, linearLayoutManager.findLastVisibleItemPosition() + " findLastVisibleItemPosition");
-//            Log.i(TAG, linearLayoutManager.findFirstVisibleItemPosition() + " findFirstVisibleItemPosition");
         }
     };
 
     @Override
     public void onRefresh() {
-//        Log.i(TAG, "onRefesh");
-
-//        requestPost(idLop, keyLopType, itemPostArr);
         requestPost(itemClass.getIdData());
     }
-
-//    @Override
-//    public void onDestroy() {
-//        Log.i(TAG, "onDestroy");
-////        swipeRefresh.setRefreshing(false);
-////        swipeRefresh.setEnabled(false);
-//        super.onDestroy();
-//    }
 
     public boolean isRefreshing() {
         return isRefreshing;

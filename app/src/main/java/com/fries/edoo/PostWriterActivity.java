@@ -19,11 +19,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.app.AppController;
+import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +39,6 @@ public class PostWriterActivity extends AppCompatActivity {
     private EditText edtTitlePost;
 
     private String idLop;
-    private String keyLopType;
 
     private boolean isAllowedClick;
 
@@ -54,8 +55,7 @@ public class PostWriterActivity extends AppCompatActivity {
 
         //get data from Mainactivity
         Intent mIntent = getIntent();
-        this.idLop = mIntent.getStringExtra("idLop");
-        this.keyLopType = mIntent.getStringExtra("keyLopType");
+        this.idLop = mIntent.getStringExtra("class_id");
 
         isAllowedClick = true;
 
@@ -137,68 +137,103 @@ public class PostWriterActivity extends AppCompatActivity {
 
                 //get intent tu MainActivity
 //                Intent intent = getIntent();
-                postPost(uid, idLop, keyLopType, title, content);
+                postPost(idLop, title, content, "note", false);
                 break;
         }
         return true;
     }
 
-    private void postPost(final String uid, final String group, final String base, final String title, final String content) {
+    private void postPost(String classId, String title, String content, String type, boolean isIncognito) {
         showDialog();
-        Log.i(TAG, "uid " + uid);
-        Log.i(TAG, "group " + group);
-        Log.i(TAG, "base " + base);
-        Log.i(TAG, "title " + title);
+//        Log.i(TAG, "uid " + uid);
+//        Log.i(TAG, "group " + group);
+//        Log.i(TAG, "base " + base);
+//        Log.i(TAG, "title " + title);
 
-        StringRequest request = new StringRequest(Request.Method.POST, AppConfig.URL_POST_POST,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        hideDialog();
-                        Log.i(TAG, response);
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
+        String url = AppConfig.URL_POST_POST;
 
-                            boolean error = jsonObject.getBoolean("error");
-                            if (!error) {
-                                // cap nhat giao dien
-                                // thong bao dang bai thanh cong
+        JSONObject params = new JSONObject();
+        try {
+            params.put("class_id", classId);
+            params.put("title", title);
+            params.put("content", content);
+            params.put("type", type);
+            params.put("is_incognito", isIncognito);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-                                Message msg = new Message();
-                                msg.setTarget(mHandler);
-                                msg.sendToTarget();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
+        RequestServer requestServer = new RequestServer(this, Request.Method.POST, url, params);
+        requestServer.setListener(new RequestServer.ServerListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 hideDialog();
-//                ivPost.setClickable(true);
-                isAllowedClick = true;
-                Log.i(TAG, "Post error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(), error.getMessage(),
-                        Toast.LENGTH_LONG).show();
+                if (!error) {
+                    Log.i(TAG, response.toString());
+
+                    Message msg = new Message();
+                    msg.setTarget(mHandler);
+                    msg.sendToTarget();
+                } else {
+//                    ivPost.setClickable(true);
+                    isAllowedClick = true;
+                    Log.i(TAG, "Post error: " + message);
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                }
             }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> data = new HashMap<>();
-                data.put("author", uid);
-                data.put("base", base);
-                data.put("title", title);
-                data.put("content", content);
-                data.put("group", group);
+        });
 
-                Log.i("content", content);
+        requestServer.sendRequest("post new post");
 
-                return data;
-            }
-        };
-
-        AppController.getInstance().addToRequestQueue(request, "post");
+//        StringRequest request = new StringRequest(Request.Method.POST, AppConfig.URL_POST_POST,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        hideDialog();
+//                        Log.i(TAG, response);
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response);
+//
+//                            boolean error = jsonObject.getBoolean("error");
+//                            if (!error) {
+//                                // cap nhat giao dien
+//                                // thong bao dang bai thanh cong
+//
+//                                Message msg = new Message();
+//                                msg.setTarget(mHandler);
+//                                msg.sendToTarget();
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                hideDialog();
+////                ivPost.setClickable(true);
+//                isAllowedClick = true;
+//                Log.i(TAG, "Post error: " + error.getMessage());
+//                Toast.makeText(getApplicationContext(), error.getMessage(),
+//                        Toast.LENGTH_LONG).show();
+//            }
+//        }) {
+//            @Override
+//            protected Map<String, String> getParams() {
+//                Map<String, String> data = new HashMap<>();
+//                data.put("author", uid);
+//                data.put("base", base);
+//                data.put("title", title);
+//                data.put("content", content);
+//                data.put("group", group);
+//
+//                Log.i("content", content);
+//
+//                return data;
+//            }
+//        };
+//
+//        AppController.getInstance().addToRequestQueue(request, "post");
     }
 
     private Handler mHandler = new Handler() {

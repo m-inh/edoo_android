@@ -25,8 +25,8 @@ public class ItemWritePostHolder extends AbstractHolder {
         txtView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity mainActivity = ((MainActivity) AppManager.getInstance().getMainContext());
-                mainActivity.startPostWriterActivity(idLop,keyLopType);
+//                MainActivity mainActivity = ((MainActivity) AppManager.getInstance().getMainContext());
+//                mainActivity.startPostWriterActivity(idLop,keyLopType);
             }
         });
     }

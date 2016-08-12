@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.fries.edoo.MainActivity;
 import com.fries.edoo.R;
+import com.fries.edoo.TimelineActivity;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.app.AppController;
 import com.fries.edoo.models.ItemComment;
@@ -116,8 +117,8 @@ public class ItemPostHolder extends AbstractHolder {
 //                Log.i(TAG, "Positino: " + getAdapterPosition());
                 itemTimeLine.setIsSeen(true);
                 onClickItemPost.onClick(getAdapterPosition());
-                MainActivity mainActivity = (MainActivity) mContext;
-                mainActivity.startPostDetailActivity(itemTimeLine);
+                TimelineActivity timelineActivity = (TimelineActivity) mContext;
+                timelineActivity.startPostDetailActivity(itemTimeLine);
             }
         });
     }

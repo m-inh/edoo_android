@@ -3,6 +3,8 @@ package com.fries.edoo.holder;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -18,9 +20,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.fries.edoo.PostDetailActivity;
 import com.fries.edoo.R;
+import com.fries.edoo.TimelineActivity;
 import com.fries.edoo.adapter.ImagePostDetailAdapter;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.app.AppController;
+import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.models.ItemTimeLine;
 import com.squareup.picasso.Picasso;
@@ -39,13 +43,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ItemPostDetailHolder extends AbstractHolder {
 
     private static final String TAG = "ItemPostDetailHolder";
-    private static final int POST_COMMENT_SUCCESS = 12;
-    private static final int POST_LIKE_SUCCESS = 11;
-    private static final int POST_DISLIKE_SUCCESS = 10;
-    private static final int POST_VOTE_SUCCESS = 13;
     private ItemTimeLine itemTimeLine;
     private Context mContext;
-    private ProgressDialog pDialog;
 
     private ListView lvImgPost;
     private ImagePostDetailAdapter mAdapter;
@@ -71,8 +70,6 @@ public class ItemPostDetailHolder extends AbstractHolder {
         this(itemView);
         this.itemTimeLine = itemTimeLine;
         this.mContext = itemView.getContext();
-
-        pDialog = new ProgressDialog(mContext);
 
         lvImgPost = (ListView) itemView.findViewById(R.id.lv_imagePost);
         mAdapter = new ImagePostDetailAdapter(itemView.getContext());
@@ -101,9 +98,6 @@ public class ItemPostDetailHolder extends AbstractHolder {
     }
 
     public void setCbIsVote(boolean isConfirmByTeacher) {
-//        cbIsVote.setChecked(isConfirmByTeacher);
-//        cbIsVote.setClickable(false);
-
         boolean isPostByTeacher = itemTimeLine.getTypeAuthor().equalsIgnoreCase("teacher");
 
         if (isPostByTeacher) {
@@ -121,24 +115,14 @@ public class ItemPostDetailHolder extends AbstractHolder {
         btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //get user
-                SQLiteHandler db = new SQLiteHandler(mContext);
-                HashMap<String, String> user = db.getUserDetails();
-                final String uid = user.get("uid");
-
-                postLike(uid, itemTimeLine.getIdPost());
+                postLike(itemTimeLine.getIdPost(), 1);
             }
         });
 
         btnDisLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //get user
-                SQLiteHandler db = new SQLiteHandler(mContext);
-                HashMap<String, String> user = db.getUserDetails();
-                final String uid = user.get("uid");
-
-                postDisLike(uid, itemTimeLine.getIdPost());
+                postLike(itemTimeLine.getIdPost(), -1);
             }
         });
     }
@@ -181,167 +165,42 @@ public class ItemPostDetailHolder extends AbstractHolder {
         return 0;
     }
 
-
     //Post like and cmt to server
-    private void postLike(final String uid, final String idPost) {
-        showDialog();
-        Log.i(TAG, uid);
-        Log.i(TAG, idPost);
+    private void postLike(String idPost, int content) {
+        String url = AppConfig.URL_POST_LIKE;
+        JSONObject params = new JSONObject();
+        try {
+            params.put("post_id", idPost);
+            params.put("content", content);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        StringRequest request = new StringRequest(Request.Method.POST, AppConfig.URL_POST_LIKE,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        hideDialog();
-
-                        Log.i(TAG, response);
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-
-                            boolean error = jsonObject.getBoolean("error");
-                            if (!error) {
-                                // cap nhat giao dien
-                                // thong bao dang bai thanh cong
-//                                JSONObject jsonComment = jsonObject.getJSONObject("comment");
-//                                String idCmt = jsonComment.getString("id");
-
-//                                Bundle b = new Bundle();
-//                                b.putString("idCmt", idCmt);
-//                                b.putString("content", content);
-
-                                Message msg = new Message();
-//                                msg.setData(b);
-                                msg.arg1 = POST_LIKE_SUCCESS;
-                                msg.setTarget(mHandler);
-                                msg.sendToTarget();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+        RequestServer requestServer = new RequestServer(mContext, Request.Method.POST, url, params);
+        requestServer.setListener(new RequestServer.ServerListener() {
+            @Override
+            public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
+                if (!error) {
+                    int countVote = response.getJSONObject("data").getInt("vote_count");
+                    itemTimeLine.setLike(countVote);
+                    tvLike.setText(itemTimeLine.getLike() + "");
+                    if (itemTimeLine.getLike() >= 0) {
+                        ivLike.setImageResource(R.mipmap.ic_up_24);
+                    } else {
+                        ivLike.setImageResource(R.mipmap.ic_down_24);
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                hideDialog();
-                Log.i(TAG, "Vote error: " + error.getMessage());
-                Toast.makeText(mContext, error.getMessage(),
-                        Toast.LENGTH_LONG).show();
+                }
             }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> data = new HashMap<>();
-                data.put("user", uid);
-                data.put("id", idPost);
+        });
 
-                return data;
-            }
-        };
+        requestServer.sendRequest("vote");
 
-        AppController.getInstance().addToRequestQueue(request, "postlike");
-    }
-
-
-    //Post dislike and cmt to server
-    private void postDisLike(final String uid, final String idPost) {
-        showDialog();
-        Log.i(TAG, uid);
-        Log.i(TAG, idPost);
-
-        StringRequest request = new StringRequest(Request.Method.POST, AppConfig.URL_POST_DISLIKE,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        hideDialog();
-
-                        Log.i(TAG, response);
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-
-                            boolean error = jsonObject.getBoolean("error");
-                            if (!error) {
-                                // cap nhat giao dien
-                                // thong bao dang bai thanh cong
-//                                JSONObject jsonComment = jsonObject.getJSONObject("comment");
-//                                String idCmt = jsonComment.getString("id");
-
-//                                Bundle b = new Bundle();
-//                                b.putString("idCmt", idCmt);
-//                                b.putString("content", content);
-
-                                Message msg = new Message();
-//                                msg.setData(b);
-                                msg.arg1 = POST_DISLIKE_SUCCESS;
-                                msg.setTarget(mHandler);
-                                msg.sendToTarget();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                hideDialog();
-                Log.i(TAG, "Vote error: " + error.getMessage());
-                Toast.makeText(mContext, error.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> data = new HashMap<>();
-                data.put("user", uid);
-                data.put("id", idPost);
-
-                return data;
-            }
-        };
-
-        AppController.getInstance().addToRequestQueue(request, "postdislike");
-    }
-
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.arg1) {
-                case POST_LIKE_SUCCESS:
-                    itemTimeLine.setLike(itemTimeLine.getLike() + 1);
-                    break;
-                case POST_DISLIKE_SUCCESS:
-                    itemTimeLine.setLike(itemTimeLine.getLike() - 1);
-                    break;
-            }
-            tvLike.setText(itemTimeLine.getLike() + "");
-            if (itemTimeLine.getLike() >= 0) {
-                ivLike.setImageResource(R.mipmap.ic_up_24);
-            } else {
-                ivLike.setImageResource(R.mipmap.ic_down_24);
-            }
-
-            PostDetailActivity postDetailActivity = (PostDetailActivity) mContext;
-            postDetailActivity.setResult(Activity.RESULT_OK);
-//            switch (msg.arg1){
-//                case POST_LIKE_SUCCESS:
-//
-//                    break;
-//                case POST_VOTE_SUCCESS:
-//
-//                    break;
-//            }
-        }
-    };
-
-    private void showDialog() {
-        if (!pDialog.isShowing()) {
-            pDialog.show();
-        }
-    }
-
-    private void hideDialog() {
-        if (pDialog.isShowing()) {
-            pDialog.hide();
-        }
+        Intent mIntent = new Intent();
+        Bundle b = new Bundle();
+        b.putSerializable("item_timeline", itemTimeLine);
+        mIntent.putExtras(b);
+        PostDetailActivity postDetailActivity = (PostDetailActivity) mContext;
+        postDetailActivity.setResult(postDetailActivity.RESULT_OK, mIntent);
     }
 
 }
