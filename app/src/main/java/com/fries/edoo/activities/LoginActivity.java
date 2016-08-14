@@ -1,4 +1,4 @@
-package com.fries.edoo;
+package com.fries.edoo.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request.Method;
+import com.fries.edoo.R;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
@@ -44,10 +45,6 @@ public class LoginActivity extends Activity {
 //        Intent mIntent = getIntent();
 //        inputEmail.setText(mIntent.getStringExtra(SQLiteHandler.KEY_EMAIL));
 //        inputPassword.setText(mIntent.getStringExtra("password"));
-
-        // Progress dialog
-        pDialog = new ProgressDialog(this);
-        pDialog.setCancelable(false);
 
         // SQLite database handler
         db = new SQLiteHandler(getApplicationContext());
@@ -114,8 +111,12 @@ public class LoginActivity extends Activity {
      * function to verify login details in mysql db
      */
     private void checkLogin(final String email, final String password) {
+        // Progress dialog
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
         pDialog.setMessage("Đăng nhập ...");
-        showDialog();
+        pDialog.show();
+//        showDialog();
 
         JSONObject objRequest = new JSONObject();
         try {
@@ -129,7 +130,7 @@ public class LoginActivity extends Activity {
         requestServer.setListener(new RequestServer.ServerListener() {
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
-                hideDialog();
+//                hideDialog();
                 if (!error) {
 
                     // Now store the user in SQLite
@@ -169,18 +170,20 @@ public class LoginActivity extends Activity {
                     startActivity(intent);
                     finish();
                 }
+
+                pDialog.dismiss();
             }
         });
         requestServer.sendRequest("req_log_in");
     }
 
-    private void showDialog() {
-        if (!pDialog.isShowing())
-            pDialog.show();
-    }
-
-    private void hideDialog() {
-        if (pDialog.isShowing())
-            pDialog.dismiss();
-    }
+//    private void showDialog() {
+//        if (!pDialog.isShowing())
+//            pDialog.show();
+//    }
+//
+//    private void hideDialog() {
+//        if (pDialog.isShowing())
+//            pDialog.dismiss();
+//    }
 }

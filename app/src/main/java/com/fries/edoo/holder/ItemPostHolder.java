@@ -17,9 +17,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.fries.edoo.MainActivity;
 import com.fries.edoo.R;
-import com.fries.edoo.TimelineActivity;
+import com.fries.edoo.activities.TimelineActivity;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.app.AppController;
 import com.fries.edoo.models.ItemComment;
@@ -107,7 +106,10 @@ public class ItemPostHolder extends AbstractHolder {
     }
 
     public void setAva(ItemTimeLine itemTimeLine) {
-        Picasso.with(mContext).load(itemTimeLine.getAva()).placeholder(R.mipmap.ic_user).placeholder(R.mipmap.ic_user).into(imgAvatar);
+        Picasso.with(mContext)
+                .load(itemTimeLine.getAva()).fit()
+                .placeholder(R.mipmap.ic_user)
+                .placeholder(R.mipmap.ic_user).into(imgAvatar);
     }
 
     private void createListener(View itemView) {

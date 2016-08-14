@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 
 
-import com.fries.edoo.PostDetailActivity;
+import com.fries.edoo.activities.PostDetailActivity;
 import com.fries.edoo.R;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.holder.AbstractHolder;

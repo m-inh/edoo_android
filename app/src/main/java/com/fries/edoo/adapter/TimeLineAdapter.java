@@ -49,7 +49,6 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implem
     private int itemCompleteVisiblePosition;
 
     public void updateList(ArrayList<ItemBase> posts, int itemCompleteVisiblePosition) {
-//        Toast.makeText(mContext, "update is done", Toast.LENGTH_SHORT).show();
         this.itemCompleteVisiblePosition = itemCompleteVisiblePosition;
         itemArr.clear();
         itemArr.addAll(posts);
@@ -119,7 +118,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implem
 
             //itemPostHolder.getImgAvatar();
             ItemPostHolder itemPostHolder = (ItemPostHolder) abstractHolder;
-            final ItemTimeLine itemTimeLine = (ItemTimeLine) currentItemArr.get(position);
+            final ItemTimeLine itemTimeLine = (ItemTimeLine) currentItemArr.get(currentItemArr.size() - 1 - position);
 //            itemPostHolder.startAnim();
             itemPostHolder.setIdLop(idLop);
             itemPostHolder.setKeyLopType(itemTimeLine.getKeyLopType());

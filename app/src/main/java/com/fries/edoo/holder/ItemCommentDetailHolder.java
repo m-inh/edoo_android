@@ -81,8 +81,8 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         Log.i(TAG, "url: " + itemComment.getAvaUrl());
         if (!itemComment.getAvaUrl().isEmpty()) {
             Picasso.with(mContext)
-                    .load(itemComment.getAvaUrl()).
-                    placeholder(R.mipmap.ic_user).error(R.mipmap.ic_user)
+                    .load(itemComment.getAvaUrl()).fit()
+                    .placeholder(R.mipmap.ic_user).error(R.mipmap.ic_user)
                     .into(ivAuthorAvatar);
         }
 

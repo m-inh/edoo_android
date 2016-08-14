@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "304601524686",
+    "firebase_url": "https://edoo-11392.firebaseio.com",
+    "project_id": "edoo-11392",
+    "storage_bucket": "edoo-11392.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:304601524686:android:bdca3710002930d1",
+        "android_client_info": {
+          "package_name": "com.fries.edoo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "304601524686-n4rdc1etcl18h81i3sm6f3fi3gkb7pb7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmZQFmBQfdY5PsxCqYp48pMIsscA0Quwg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

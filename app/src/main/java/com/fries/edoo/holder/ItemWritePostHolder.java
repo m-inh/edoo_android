@@ -4,9 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.fries.edoo.MainActivity;
 import com.fries.edoo.R;
-import com.fries.edoo.app.AppManager;
 
 /**
  * Created by Tdh4vn on 11/21/2015.

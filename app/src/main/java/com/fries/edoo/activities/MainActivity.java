@@ -1,4 +1,4 @@
-package com.fries.edoo;
+package com.fries.edoo.activities;
 
 
 import android.annotation.SuppressLint;
@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.fries.edoo.adapter.TimeLineAdapter;
+import com.fries.edoo.R;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.fragment.LopKhoaHocFragment;
@@ -32,17 +31,13 @@ import com.fries.edoo.fragment.ThoiKhoaBieuFragment;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.helper.SessionManager;
 import com.fries.edoo.models.ItemLop;
-import com.fries.edoo.models.ItemTimeLine;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
 import java.io.File;
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -55,8 +50,6 @@ public class MainActivity extends AppCompatActivity
     private static final String URL_DOWNLOAD_APK = "https://www.dropbox.com/sh/kapr5q60x80c8ua/AAAB3RH1FS9SwPYnYOuYHJJSa?dl=0";
 
     private static final int REQUEST_CODE_EDIT = 1234;
-    public static final int REQUEST_CODE_ITEMWRITEPOSTHOLDER = 9000;
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9200;
 
     private LopMonHocFragment lopMonHocFragment = new LopMonHocFragment();
     private LopKhoaHocFragment lopKhoaHocFragment = new LopKhoaHocFragment();
@@ -111,27 +104,11 @@ public class MainActivity extends AppCompatActivity
 
         initViews();
 
-//        if (getFragmentManager().getBackStackEntryCount() > 0) {
-//            getFragmentManager().popBackStack();
-//        }
-
         //replace fragment moi
         showFragment(thoiKhoaBieuFragment);
         toolbar.setTitle("Thời khoá biểu");
-
-        if (checkPlayServices()) {
-            // Start IntentService to register this application with GCM.
-            Intent intent = new Intent(this, RegistrationIntentService.class);
-            startService(intent);
-        }
-
-        Timestamp time = new Timestamp(System.currentTimeMillis());
-        Date date = new Date(time.getTime());
-        Log.i(TAG, "date: " + date.toString());
-        Log.i(TAG, "time: " + System.currentTimeMillis());
     }
 
-    @SuppressLint("SetTextI18n")
     private void initViews() {
         tvName = (TextView) header.findViewById(R.id.tv_name);
         tvEmail = (TextView) header.findViewById(R.id.tv_email);
@@ -157,21 +134,11 @@ public class MainActivity extends AppCompatActivity
         HashMap<String, String> user = sqlite.getUserDetails();
         Picasso.with(this).invalidate(user.get("avatar"));
         Log.i(TAG, "update ava: " + user.get("avatar"));
-        Picasso.with(this).load(user.get("avatar")).placeholder(R.mipmap.ic_user).error(R.mipmap.ic_user)
-                .into(ivAva, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        Log.i(TAG, "picasso success ");
-                    }
-
-                    @Override
-                    public void onError() {
-                        Log.i(TAG, "picasso fail ");
-                    }
-                });
-
-//        Picasso.with(this).load("http://myclass.tutran.net/v1/avatar/13020285")
-//                .into(ivAva);
+        Picasso.with(this)
+                .load(user.get("avatar")).fit()
+                .placeholder(R.mipmap.ic_user)
+                .error(R.mipmap.ic_user)
+                .into(ivAva);
     }
 
     private void showFragment(Fragment lopFragment) {
@@ -183,36 +150,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-//        if (getFragmentManager().getBackStackEntryCount() > 0) {
-//            if (lopKhoaHocFragment.isRefreshing()
-//                    || lopMonHocFragment.isRefreshing() || timelineFragment.isRefreshing()) {
-//                Log.i(TAG, "isRefreshing");
-//                return;
-//            }
-//            Log.i(TAG, "onBackPressed");
-//            getFragmentManager().popBackStack();
-//
-//            //switch toobal to lop menu
-//            switchToMenu(LOP_MENU_INT);
-
-//            if (timelineFragment != null) {
-//                switch (timelineFragment.getKeyLopType()) {
-//                    case LopMonHocFragment.KEY_LOP_MON_HOC:
-//                        toolbar.setTitle("Lớp môn học");
-//                        break;
-//                    case LopKhoaHocFragment.KEY_LOP_KHOA_HOC:
-//                        toolbar.setTitle("Lớp khoá học");
-//                        break;
-//                    case NhomFragment.KEY_NHOM:
-//                        toolbar.setTitle("Nhom");
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//            return;
-//        }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -246,40 +183,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-//        switch (item.getItemId()) {
-//            case R.id.item_post:
-//                Intent mIntent = new Intent();
-//                mIntent.setClass(MainActivity.this, PostWriterActivity.class);
-//                mIntent.putExtra("idLop", timelineFragment.getIdLop());
-//                mIntent.putExtra("keyLopType", timelineFragment.getKeyLopType());
-//                startActivityForResult(mIntent, REQUEST_CODE_POST_WRITER);
-////                Toast.makeText(this, "Send to all", Toast.LENGTH_LONG).show();
-//                break;
-//            case R.id.item_locbaidangchuatraloi:
-//                Log.i(TAG, "loc bai dang chua tl");
-//                if (timelineFragment != null) {
-//                    timelineFragment.locTheoBaiDang(TimeLineAdapter.BAI_DANG_LOC_THEO_CHUA_TRA_LOI);
-//                }
-//                break;
-//            case R.id.item_locbaidanggiaovien:
-//                Log.i(TAG, "loc bai dang chua tl");
-//                if (timelineFragment != null) {
-//                    timelineFragment.locTheoBaiDang(TimeLineAdapter.BAI_DANG_LOC_THEO_GIAO_VIEN);
-//                }
-//                break;
-//            case R.id.item_tatcabaidang:
-//                Log.i(TAG, "tat ca bai dang");
-//                if (timelineFragment != null) {
-//                    timelineFragment.locTheoBaiDang(TimeLineAdapter.BAI_DANG_BINH_THUONG);
-//                }
-//                break;
-//            case R.id.action_sendAll:
-////                Toast.makeText(this, "Send to all", Toast.LENGTH_LONG).show();
-//                break;
-//        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -382,22 +285,6 @@ public class MainActivity extends AppCompatActivity
                     checkLogDb();
                 }
                 break;
-//            case REQUEST_CODE_POST_WRITER:
-//                if (resultCode == RESULT_OK) {
-//                    timelineFragment.onRefresh();
-//                }
-//                break;
-//            case REQUEST_CODE_POST_DETAIL:
-//                if (resultCode == RESULT_OK) {
-//                    if (timelineFragment != null && timelineFragment.isAdded()) {
-//                        timelineFragment.onRefresh();
-//                    }
-//
-//                    if (feedFragment != null && feedFragment.isAdded()) {
-//                        feedFragment.onRefresh();
-//                    }
-//                }
-//                break;
         }
     }
 
@@ -494,40 +381,6 @@ public class MainActivity extends AppCompatActivity
         Log.i(TAG, "check db lop: " + lop);
         Log.i(TAG, "check db type: " + type);
         Log.i(TAG, "check db ava: " + ava);
-    }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-//                new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
-//    }
-//
-//    @Override
-//    protected void onPause() {
-//        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
-//        super.onPause();
-//    }
-
-    /**
-     * Check the device to make sure it has the Google Play Services APK. If
-     * it doesn't, display a dialog that allows users to download the APK from
-     * the Google Play Store or enable it in the device's system settings.
-     */
-    private boolean checkPlayServices() {
-        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (apiAvailability.isUserResolvableError(resultCode)) {
-                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
-                        .show();
-            } else {
-                Log.i(TAG, "This device is not supported.");
-                finish();
-            }
-            return false;
-        }
-        return true;
     }
 
 }

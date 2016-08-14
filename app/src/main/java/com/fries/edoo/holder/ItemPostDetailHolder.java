@@ -1,39 +1,24 @@
 package com.fries.edoo.holder;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.fries.edoo.PostDetailActivity;
+import com.fries.edoo.activities.PostDetailActivity;
 import com.fries.edoo.R;
-import com.fries.edoo.TimelineActivity;
 import com.fries.edoo.adapter.ImagePostDetailAdapter;
 import com.fries.edoo.app.AppConfig;
-import com.fries.edoo.app.AppController;
 import com.fries.edoo.communication.RequestServer;
-import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.models.ItemTimeLine;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -92,8 +77,12 @@ public class ItemPostDetailHolder extends AbstractHolder {
 //        cbIsVote = (CheckBox) itemView.findViewById(R.id.cb_isVote);
         ivIsVote = (ImageView) itemView.findViewById(R.id.iv_bookmark);
 
-        Picasso.with(mContext).load(itemTimeLine.getAva()).placeholder(R.mipmap.ic_user).error(R.mipmap.ic_user)
+        Picasso.with(mContext)
+                .load(itemTimeLine.getAva()).fit()
+                .placeholder(R.mipmap.ic_user).error(R.mipmap.ic_user)
                 .into(ivAvatar);
+
+
         createListener();
     }
 

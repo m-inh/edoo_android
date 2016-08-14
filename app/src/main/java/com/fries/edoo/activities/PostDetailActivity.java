@@ -1,10 +1,8 @@
-package com.fries.edoo;
+package com.fries.edoo.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,16 +16,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.fries.edoo.R;
 import com.fries.edoo.adapter.PostDetailAdapter;
 import com.fries.edoo.app.AppConfig;
-import com.fries.edoo.app.AppController;
 import com.fries.edoo.communication.RequestServer;
-import com.fries.edoo.fragment.LopKhoaHocFragment;
-import com.fries.edoo.fragment.LopMonHocFragment;
-import com.fries.edoo.fragment.NhomFragment;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.models.ItemComment;
 import com.fries.edoo.models.ItemTimeLine;
@@ -38,7 +30,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by TooNies1810 on 2/19/16.

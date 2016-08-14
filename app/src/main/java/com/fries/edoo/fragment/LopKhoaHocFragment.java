@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.fries.edoo.MainActivity;
+import com.fries.edoo.activities.MainActivity;
 import com.fries.edoo.R;
 import com.fries.edoo.adapter.LopAdapter;
 import com.fries.edoo.app.AppManager;

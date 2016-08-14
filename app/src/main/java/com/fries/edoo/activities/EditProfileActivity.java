@@ -1,4 +1,4 @@
-package com.fries.edoo;
+package com.fries.edoo.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -22,6 +22,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.fries.edoo.R;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.app.AppController;
 import com.fries.edoo.helper.SQLiteHandler;
@@ -86,7 +87,10 @@ public class EditProfileActivity extends Activity {
         String urlAvatar = user.get("avatar");
 //        String pathSaveImage = MainActivity.PATH_TO_DIR_SAVING_IMAGE + getIntent().getStringExtra("mssv") + ".jpg";
 //        UserPicture.setCurrentAvatar(ivAvar, pathSaveImage);
-        Picasso.with(this).load(urlAvatar).placeholder(R.mipmap.ic_user).error(R.mipmap.ic_user).into(ivAvar);
+        Picasso.with(this)
+                .load(urlAvatar).fit()
+                .placeholder(R.mipmap.ic_user)
+                .error(R.mipmap.ic_user).into(ivAvar);
 //        UserPicture.setCurrentAvatar(MainActivity.ivAva, pathSaveImage);
 
         ivAvar.setOnClickListener(new View.OnClickListener() {

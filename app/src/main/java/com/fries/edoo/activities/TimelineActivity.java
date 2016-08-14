@@ -1,10 +1,9 @@
-package com.fries.edoo;
+package com.fries.edoo.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,19 +12,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.fries.edoo.R;
 import com.fries.edoo.adapter.TimeLineAdapter;
 import com.fries.edoo.app.AppConfig;
-import com.fries.edoo.app.AppController;
 import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.models.ItemBase;
-import com.fries.edoo.models.ItemComment;
 import com.fries.edoo.models.ItemLop;
 import com.fries.edoo.models.ItemTimeLine;
 import com.fries.edoo.utils.CommonVLs;
@@ -35,12 +28,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by TooNies1810 on 8/12/16.
@@ -78,9 +68,6 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        Log.i(TAG, "id_class: " + itemClass.getIdData());
-
         initAdapter();
         initViews();
     }
@@ -90,7 +77,6 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         mAdapter = new TimeLineAdapter(this, itemClass.getIdData(), "");
 
         requestPost(itemClass.getIdData());
-//        onRefresh();
     }
 
     private LinearLayoutManager linearLayoutManager;
@@ -99,7 +85,6 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        //String title, String name, String ava, String content, int like, boolean isConfirmByTeacher
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -313,6 +298,13 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                 }
 
                 mAdapter.notifyDataSetChanged();
+            }
+        }
+
+        if (requestCode == REQUEST_CODE_POST_WRITER){
+            if (resultCode == RESULT_OK){
+                // refresh data
+                requestPost(itemClass.getIdData());
             }
         }
     }
