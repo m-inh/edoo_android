@@ -16,9 +16,12 @@ import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.helper.SessionManager;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 public class LoginActivity extends Activity {
     private static final String TAG = RegisterActivity.class.getSimpleName();
@@ -58,6 +61,17 @@ public class LoginActivity extends Activity {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
+        } else {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        FirebaseInstanceId.getInstance().deleteInstanceId();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
         }
 
         // Login button Click Event
@@ -130,11 +144,8 @@ public class LoginActivity extends Activity {
         requestServer.setListener(new RequestServer.ServerListener() {
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
-//                hideDialog();
                 if (!error) {
-
                     // Now store the user in SQLite
-
                     JSONObject user = response.getJSONObject("data").getJSONObject("user");
                     String ava = user.getString("avatar");
                     String email = user.getString("email");
@@ -169,6 +180,8 @@ public class LoginActivity extends Activity {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
+                } else {
+                    Log.d(TAG, message);
                 }
 
                 pDialog.dismiss();

@@ -33,11 +33,13 @@ import com.fries.edoo.helper.SessionManager;
 import com.fries.edoo.models.ItemLop;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -52,8 +54,8 @@ public class MainActivity extends AppCompatActivity
     private static final int REQUEST_CODE_EDIT = 1234;
 
     private LopMonHocFragment lopMonHocFragment = new LopMonHocFragment();
-    private LopKhoaHocFragment lopKhoaHocFragment = new LopKhoaHocFragment();
-    private NhomFragment nhomFragment = new NhomFragment();
+//    private LopKhoaHocFragment lopKhoaHocFragment = new LopKhoaHocFragment();
+//    private NhomFragment nhomFragment = new NhomFragment();
     private ThoiKhoaBieuFragment thoiKhoaBieuFragment = new ThoiKhoaBieuFragment();
 
     private SessionManager session;
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity
 
         if (!session.isLoggedIn()) {
             logout();
+            return;
         }
 
         initViews();
@@ -107,6 +110,9 @@ public class MainActivity extends AppCompatActivity
         //replace fragment moi
         showFragment(thoiKhoaBieuFragment);
         toolbar.setTitle("Thời khoá biểu");
+
+        // Register FCM token to server
+        Log.d(TAG, "FCM token: " + FirebaseInstanceId.getInstance().getToken());
     }
 
     private void initViews() {

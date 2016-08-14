@@ -2,7 +2,7 @@ package com.fries.edoo.app;
 
 public class AppConfig {
 	public static final String URL_HOST = "http://api.uetf.me";
-//	public static final String URL_HOST = "192.168.1.117:2344";
+//	public static final String URL_HOST = "http://192.168.1.117:2344";
 //	public static final String URL_HOST = "http://10.0.2.2:2344";
 	//Server vote comment
 	public static final String URL_VOTE_COMMENT = "http://myclass.tutran.net/v1/vote";
@@ -18,6 +18,7 @@ public class AppConfig {
 	public static final String URL_POST_LIKE = URL_HOST + "/votepost";
 
 	public static final String URL_POST_DISLIKE = "http://myclass.tutran.net/v1/dislike";
+	public static final String URL_REGISTER_FCM = URL_HOST + "/resfcm";
 	// Server user login url
 	public static String URL_LOGIN = URL_HOST + "/login";
 	// Server user logout url
