@@ -86,12 +86,6 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implem
 
     @Override
     public int getItemViewType(int position){
-//        if(position == 0){
-//            return 0;
-//        }
-//        else {
-//            return 1;
-//        }
         return 1;
     }
 
@@ -100,7 +94,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implem
         if(viewType == 1){
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_post, parent, false);
             ItemPostHolder itemPostHolder = new ItemPostHolder(view, this);
-            Log.i(TAG, "onCreateViewHolder");
+//            Log.i(TAG, "onCreateViewHolder");
             return itemPostHolder;
         } else {
             View view = LayoutInflater.from(mContext).inflate(R.layout.writepost_layout, parent, false);
@@ -112,7 +106,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implem
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(AbstractHolder abstractHolder, int position) {
-        Log.i(TAG, position + " position");
+//        Log.i(TAG, position + " position");
         if(abstractHolder.getViewHolderType() == 1){
 //            Log.i(TAG,"bat dau");
 
@@ -127,7 +121,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implem
             itemPostHolder.setListComment(itemTimeLine.getItemComments());
             itemPostHolder.getTxtAuthor().setText(itemTimeLine.getName());
 
-            Log.i(TAG, "title" + itemTimeLine.getTitle());
+//            Log.i(TAG, "title" + itemTimeLine.getTitle());
             itemPostHolder.getTxtTitle().setText(itemTimeLine.getTitle());
             itemPostHolder.getTxtContent().setText(itemTimeLine.getContent());
             itemPostHolder.setLike(itemTimeLine.getLike());

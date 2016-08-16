@@ -16,9 +16,8 @@ public class AppConfig {
 	public static final String URL_POST_POST = URL_HOST + "/post";
 
 	public static final String URL_POST_LIKE = URL_HOST + "/votepost";
-
-	public static final String URL_POST_DISLIKE = "http://myclass.tutran.net/v1/dislike";
 	public static final String URL_REGISTER_FCM = URL_HOST + "/resfcm";
+	public static final String URL_POST_SEEN = URL_HOST + "/seen";
 	// Server user login url
 	public static String URL_LOGIN = URL_HOST + "/login";
 	// Server user logout url

@@ -21,6 +21,7 @@ import com.fries.edoo.R;
 import com.fries.edoo.activities.TimelineActivity;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.app.AppController;
+import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.models.ItemComment;
 import com.fries.edoo.models.ItemTimeLine;
 import com.squareup.picasso.Picasso;
@@ -121,72 +122,24 @@ public class ItemPostHolder extends AbstractHolder {
                 onClickItemPost.onClick(getAdapterPosition());
                 TimelineActivity timelineActivity = (TimelineActivity) mContext;
                 timelineActivity.startPostDetailActivity(itemTimeLine);
+
+                postSeen(itemTimeLine.getIdPost());
             }
         });
     }
 
-    private void postLike(final String uid, final String idPost) {
-        showDialog();
-        Log.i(TAG, uid);
-        Log.i(TAG, idPost);
+    private void postSeen(String idPost) {
+        String url = AppConfig.URL_POST_SEEN;
+        JSONObject params = new JSONObject();
+        try {
+            params.put("post_id", idPost);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        StringRequest request = new StringRequest(Request.Method.POST, AppConfig.URL_POST_LIKE,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        hideDialog();
-
-                        Log.i(TAG, response);
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-
-                            boolean error = jsonObject.getBoolean("error");
-                            if (!error) {
-                                // cap nhat giao dien
-                                // thong bao dang bai thanh cong
-//                                JSONObject jsonComment = jsonObject.getJSONObject("comment");
-//                                String idCmt = jsonComment.getString("id");
-
-//                                Bundle b = new Bundle();
-//                                b.putString("idCmt", idCmt);
-//                                b.putString("content", content);
-
-                                Message msg = new Message();
-//                                msg.setData(b);
-                                msg.setTarget(mHandler);
-                                msg.sendToTarget();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                hideDialog();
-                Log.i(TAG, "Vote error: " + error.getMessage());
-                Toast.makeText(mContext, error.getMessage(),
-                        Toast.LENGTH_LONG).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> data = new HashMap<>();
-                data.put("user", uid);
-                data.put("id", idPost);
-
-                return data;
-            }
-        };
-
-        AppController.getInstance().addToRequestQueue(request, "post");
+        RequestServer requestServer = new RequestServer(mContext, Request.Method.POST, url, params);
+        requestServer.sendRequest("Post a seen");
     }
-
-//    private void showPopupComments(View view, String postId, String idLop, String keyLopType) {
-//        PopupComments pop = new PopupComments(AppManager.getInstance().getMainContext(), listComment, postId, idLop, keyLopType);
-//        pop.showPopupComments(view);
-//        pop.setOnDismissListener(this);
-//    }
 
     private LinearLayout layoutParent;
     private CircleImageView imgAvatar;
@@ -248,28 +201,6 @@ public class ItemPostHolder extends AbstractHolder {
     public void setTxtCountComment(TextView txtCountComment) {
         this.txtCountComment = txtCountComment;
     }
-
-
-
-    //----------------------------------------------
-
-
-//    @Override
-//    public void onDismiss(int numberSend, int vote) {
-//        String text = txtCountComment.getText().toString();
-//        int currentNumComment = Integer.parseInt(text.substring(0, text.indexOf(" ")));
-//        txtCountComment.setText((currentNumComment + numberSend) + " câu trả lời");
-//
-//        // Kiem tra Vote
-//        switch (vote) {
-//            case 0:
-//                checkBox.setChecked(false);
-//                break;
-//            case 1:
-//                checkBox.setChecked(true);
-//                break;
-//        }
-//    }
 
     public interface OnClickItemPost {
         void onClick(int position);
