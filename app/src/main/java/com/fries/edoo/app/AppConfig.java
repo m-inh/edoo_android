@@ -5,7 +5,7 @@ public class AppConfig {
 //	public static final String URL_HOST = "http://192.168.1.117:2344";
 	public static final String URL_HOST = "http://10.0.2.2:2344";
 	//Server vote comment
-	public static final String URL_VOTE_COMMENT = "http://myclass.tutran.net/v1/vote";
+	public static final String URL_VOTE_COMMENT = URL_HOST + "/solve";
 	//Server post comment
 	public static final String URL_POST_COMMENT = URL_HOST + "/cmt";
 	//Server get post and comment

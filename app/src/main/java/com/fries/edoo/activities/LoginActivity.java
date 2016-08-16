@@ -149,7 +149,8 @@ public class LoginActivity extends Activity {
                     JSONObject user = response.getJSONObject("data").getJSONObject("user");
                     String ava = user.getString("avatar");
                     String email = user.getString("email");
-//                    String lop = user.getString("lop");
+                    String uid = user.getString("id");
+                    String lop = user.getString("regular_class");
                     String mssv = user.getString("code");
                     String type = user.getString("capability");
                     String name = user.getString("name");
@@ -159,7 +160,7 @@ public class LoginActivity extends Activity {
                     Log.i(TAG, "login: " + name);
                     Log.i(TAG, "ava: " + ava);
                     Log.i(TAG, "login: " + email);
-//                    Log.i(TAG, "login: " + lop);
+                    Log.i(TAG, "login: " + lop);
                     Log.i(TAG, "login: " + mssv);
                     Log.i(TAG, "login: " + type);
 
@@ -173,7 +174,7 @@ public class LoginActivity extends Activity {
                     session.setTokenLogin(token);
 
                     // Temporary data
-                    db.addUser(name, email, "", "", "K58CLC", mssv, type, ava);
+                    db.addUser(name, email, uid, "", lop, mssv, type, ava);
 
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                     // Launch main activity

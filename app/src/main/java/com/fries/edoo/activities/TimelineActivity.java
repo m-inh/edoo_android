@@ -184,6 +184,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         boolean isConfirm = false;
                         ItemTimeLine itemTimeLine = new ItemTimeLine(id, titlePost, nameAuthorPost, avarAuthorPost, contentPost, like, isConfirm);
                         itemTimeLine.setTypeAuthor(typeAuthorPost);
+                        itemTimeLine.setIdAuthor(idAuthorPost);
                         itemTimeLine.setCommentCount(commentCount);
                         itemTimeLine.setIsSeen(isSeen);
 //                        String inputDate = "2012-08-24T12:15:00+02:00";

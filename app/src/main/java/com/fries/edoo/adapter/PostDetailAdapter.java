@@ -67,26 +67,25 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
             final ItemComment itemComment = itemTimeline.getItemComments().get(position - 1);
             commentHolder.setItemComment(itemComment);
 
-            final CheckBox cbVote = commentHolder.getCheckBoxVote();
+            final CheckBox cbSolve = commentHolder.getCheckBoxVote();
 
-            commentHolder.setmHandler(mHandler);
+//            commentHolder.setmHandler(mHandler);
 
-            if (user.get("type").equalsIgnoreCase("student") || itemComment.isVote()) {
-                cbVote.setClickable(false);
+            String authorId = itemTimeline.getIdAuthor();
+            if (!user.get("uid").equalsIgnoreCase(authorId)) {
+                cbSolve.setClickable(false);
+                cbSolve.setVisibility(View.INVISIBLE);
             } else {
-                cbVote.setClickable(true);
-//            cbVote.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                @Override
-//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                    postVoteByTeacher(itemComment.getIdComment(), user.get("uid"));
-//                }
-//            });
+                cbSolve.setClickable(true);
+                cbSolve.setVisibility(View.VISIBLE);
 
-                cbVote.setOnClickListener(new View.OnClickListener() {
+                cbSolve.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        commentHolder.postVoteByTeacher(itemComment.getIdComment(), user.get("uid"));
-//                    Log.i(TAG, "ok men");
+                        for (int i = 0; i < itemTimeline.getItemComments().size(); i++) {
+                            itemTimeline.getItemComments().get(i).setVote(false);
+                        }
+                        commentHolder.postSolve(itemComment.getIdComment());
                     }
                 });
             }
@@ -110,17 +109,17 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
         }
     }
 
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-//            cbVote.setClickable(false);
-            itemTimeline.setIsConfirmByTeacher(true);
-            notifyItemChanged(0);
-
-            PostDetailActivity postDetailActivity = (PostDetailActivity) mContext;
-            postDetailActivity.setResult(Activity.RESULT_OK);
-        }
-    };
+//    private Handler mHandler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+////            cbVote.setClickable(false);
+//            itemTimeline.setIsConfirmByTeacher(true);
+//            notifyItemChanged(0);
+//
+//            PostDetailActivity postDetailActivity = (PostDetailActivity) mContext;
+//            postDetailActivity.setResult(Activity.RESULT_OK);
+//        }
+//    };
 
     @Override
     public int getItemCount() {
@@ -132,7 +131,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
         notifyDataSetChanged();
     }
 
-    public void setItemComments(ArrayList<ItemComment> commentArr){
+    public void setItemComments(ArrayList<ItemComment> commentArr) {
         this.itemTimeline.setItemComments(commentArr);
         notifyDataSetChanged();
     }

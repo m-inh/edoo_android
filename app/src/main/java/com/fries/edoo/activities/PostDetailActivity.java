@@ -91,11 +91,6 @@ public class PostDetailActivity extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.post_detail, menu);
@@ -129,6 +124,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
                         String idComment = cmtJson.getString("id");
                         String contentComment = cmtJson.getString("content");
+                        boolean isSolve = cmtJson.getInt("is_solve") == 1;
 
                         String idAuthorComment = "";
                         String nameAuthorComment = "";
@@ -160,7 +156,7 @@ public class PostDetailActivity extends AppCompatActivity {
 //                            ((ItemTimeLine) itemPostArr.get(i)).setIsConfirmByTeacher(true);
 //                        }
 
-                        cmtArr.add(new ItemComment(idComment, idAuthorComment, nameAuthorComment, avarAuthorComment, contentComment, false));
+                        cmtArr.add(new ItemComment(idComment, idAuthorComment, nameAuthorComment, avarAuthorComment, contentComment, isSolve));
                     }
                     mAdapter.setItemComments(cmtArr);
                 }

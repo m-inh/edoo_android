@@ -48,4 +48,8 @@ public class ItemComment implements Serializable {
     public String getIdAuthorComment() {
         return idAuthorComment;
     }
+
+    public void setVote(boolean vote) {
+        isVote = vote;
+    }
 }

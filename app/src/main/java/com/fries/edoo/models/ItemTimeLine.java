@@ -18,6 +18,7 @@ public class ItemTimeLine extends ItemBase implements Serializable {
     private String name;
     private String ava;
     private String typeAuthor;
+    private String idAuthor;
     private String content;
     private String keyLopType;
     private int like;
@@ -141,5 +142,13 @@ public class ItemTimeLine extends ItemBase implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getIdAuthor() {
+        return idAuthor;
+    }
+
+    public void setIdAuthor(String idAuthor) {
+        this.idAuthor = idAuthor;
     }
 }
