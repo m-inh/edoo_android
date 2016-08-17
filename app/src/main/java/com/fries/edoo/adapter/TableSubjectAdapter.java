@@ -55,17 +55,6 @@ public class TableSubjectAdapter extends BaseAdapter {
         convertSubjectToTable();
     }
 
-    private void getSubjectData() {
-        listSubject = new ArrayList<>();
-
-//        listSubject.add(new ItemLopMonHoc("Xác suất thống kê", "MAT1111 1", "303 G2", "Lê Phê Đô", 3, 3, 90, 1));
-//        listSubject.add(new ItemLopMonHoc("Toán rời rạc", "MAT2222 3", "313 G2", "Đặng Thanh Hải", 16, 3, 90, 1));
-//        listSubject.add(new ItemLopMonHoc("Lý thuyết thông tin", "INT2222 3", "313 G2", "Đặng Thanh Hải", 22, 2, 90, 1));
-//        listSubject.add(new ItemLopMonHoc("Lập trình hướng đối tượng", "INT1111 1", "303 G2", "Lê Phê Đô", 28, 2, 90, 1));
-
-        convertSubjectToTable();
-    }
-
     private void convertSubjectToTable() {
         listSubjectInTable = new int[MAX_SIZE];
         for (int i = 0; i < MAX_SIZE; i++) {
@@ -78,14 +67,6 @@ public class TableSubjectAdapter extends BaseAdapter {
             int periodLength = item.getLengthOfPeriod();
 
             for (int j = 0; j < periodLength; j++) {
-//                int x = (viTri+j - 1) / 10;
-//                int y = (viTri+j - 1) % 10;
-//                if (y>=5) y++;
-//
-//                int viTriMoi = y*SIZE_COL + x;
-//
-//                listSubjectInTable[viTriMoi] = i;
-
                 int x = day - 2;
                 int y = posOfPeriod + j - 1;
                 Log.i(TAG, "period = " + posOfPeriod + ", x = " + x + ", y = " + y);
