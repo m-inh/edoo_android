@@ -88,19 +88,20 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
         TextView diaDiem= (TextView)    dialogInfo.findViewById(R.id.dialogDiaDiem);
 
         // Set for Views
-        ten.setText(item.getTen());
-        maLMH.setText(item.getMaLMH());
-        gv.setText(item.getGiangVien());
-        diaDiem.setText(item.getDiaDiem());
+        ten.setText(item.getName());
+        maLMH.setText(item.getCode());
+        gv.setText(item.getTeacherName());
+        diaDiem.setText(item.getAddress());
 
         // Convert time:
-        int vtri = item.getViTri();
-        int soTiet = item.getSoTiet();
-
-        int x = (vtri-1)/10;
-        int y = vtri - 10*x;
-
-        tgian.setText("Thứ " + (x+2) + "\t\tTiết " + y + " - " + (y+soTiet-1));
+//        int vtri = item.getViTri();
+//        int soTiet = item.getSoTiet();
+//
+//        int x = (vtri-1)/10;
+//        int y = vtri - 10*x;
+//
+//        tgian.setText("Thứ " + (x+2) + "\t\tTiết " + y + " - " + (y+soTiet-1));
+        tgian.setText("Time");
 
         dialogInfo.show();
     }
@@ -117,28 +118,17 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 try {
-//                    boolean error = response.getBoolean("error");
                     if (error) return;
 
                     JSONArray listSubjects = response.getJSONObject("data").getJSONArray("classes");
                     for (int i=0; i<listSubjects.length(); i++){
                         JSONObject subject = listSubjects.getJSONObject(i);
-                        String ten      = subject.getString("name");
-                        String maLMH    = subject.getString("code");
-                        int vtri    = subject.getInt("period");
-                        int soTiet  = subject.getInt("credit_count");
-                        int soSV    = subject.getInt("student_count");
-                        int nhom    = subject.getInt("nhom");
-                        String ddiem= subject.getString("address");
 
-//                        JSONObject teacher = subject.getJSONObject("teacher");
-                        String tenGV    = subject.getString("teacher_name");
-
-                        ItemLopMonHoc item = new ItemLopMonHoc(ten, maLMH, ddiem,tenGV, vtri, soTiet, soSV, nhom);
-
-                        listSubject.add(item);
-
-                        Log.i(TAG, listSubject.size() + " -- " + ten + ", " + vtri + ", " + soTiet + "_____________");
+                        JSONArray lessons = subject.getJSONArray("lessions");
+                        for (int j = 0; j < lessons.length(); j++) {
+                            JSONObject lesson = lessons.getJSONObject(j);
+                            listSubject.add(new ItemLopMonHoc(lesson));
+                        }
                     }
 
                     adapter = new TableSubjectAdapter(mContext);
