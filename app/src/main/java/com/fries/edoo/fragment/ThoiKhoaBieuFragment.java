@@ -109,26 +109,8 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
 
     private static final String URL_REQUEST = AppConfig.URL_GET_TKB;
 
-    private String getUserID(){
-        SQLiteHandler sqlite;
-        sqlite = new SQLiteHandler(mContext);
-
-        HashMap<String, String> user = sqlite.getUserDetails();
-        String uid = user.get("uid");
-
-        return uid;
-    }
-
     private void getDataFromServer(){
         listSubject.clear();
-        String id = getUserID();
-
-//        JSONObject jsonObject = new JSONObject();
-//        try {
-//            jsonObject.put("id", id);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
 
         RequestServer requestServer = new RequestServer(getActivity(), Request.Method.GET, URL_REQUEST);
         requestServer.setListener(new RequestServer.ServerListener() {
@@ -169,7 +151,7 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
             }
         });
 
-        requestServer.sendRequest("TKB");
+        requestServer.sendRequest("get timetable");
 
 
     }

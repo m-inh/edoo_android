@@ -30,7 +30,7 @@ public class AppConfig {
 	//Feed
 	public static final String URL_GET_FEED = "http://myclass.tutran.net/v1/feed";
 
-	public static final String URL_GET_TKB = URL_HOST + "/classes";
+	public static final String URL_GET_TKB = URL_HOST + "/timetable";
 
 	////////////////// GCM
 	public static final String TOKEN = "663812496634";
