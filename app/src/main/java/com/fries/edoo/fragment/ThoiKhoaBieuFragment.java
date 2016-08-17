@@ -92,16 +92,7 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
         maLMH.setText(item.getCode());
         gv.setText(item.getTeacherName());
         diaDiem.setText(item.getAddress());
-
-        // Convert time:
-//        int vtri = item.getViTri();
-//        int soTiet = item.getSoTiet();
-//
-//        int x = (vtri-1)/10;
-//        int y = vtri - 10*x;
-//
-//        tgian.setText("Thứ " + (x+2) + "\t\tTiết " + y + " - " + (y+soTiet-1));
-        tgian.setText("Time");
+        tgian.setText("Thứ " + item.getDayOfWeek() + "\t\tTiết " + item.getPeriod());
 
         dialogInfo.show();
     }
