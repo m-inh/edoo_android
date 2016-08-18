@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * Created by TMQ on 20-Nov-15.
  */
 public class TableSubjectAdapter extends BaseAdapter {
-    private static final String TAG = "TableSubjectAdapter";
+    private static final String TAG = TableSubjectAdapter.class.getSimpleName();
     // So item toi da trong bang Thoi khoa bieu
     private static final int MAX_SIZE = 77;
     // 6 ngay trong tuan <=> 6 cot
@@ -69,7 +69,7 @@ public class TableSubjectAdapter extends BaseAdapter {
             for (int j = 0; j < periodLength; j++) {
                 int x = day - 2;
                 int y = posOfPeriod + j - 1;
-                Log.i(TAG, "period = " + posOfPeriod + ", x = " + x + ", y = " + y);
+//                Log.i(TAG, "period = " + posOfPeriod + ", x = " + x + ", y = " + y);
                 if (y >= 5) y++;
 
                 int newPos = y * SIZE_COL + x;

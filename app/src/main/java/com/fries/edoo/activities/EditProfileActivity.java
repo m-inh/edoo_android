@@ -12,9 +12,12 @@ import android.os.Message;
 import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -44,10 +47,10 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProfileActivity extends Activity {
-    private static final String TAG = "EditProfileActivity";
+    private static final String TAG = EditProfileActivity.class.getSimpleName();
 
-    private EditText edtName, edtEmail, edtLopKhoaHoc, edtMssv;
-    private CircleImageView ivAvar;
+    private TextView txtName, txtEmail, txtRegularClass, txtCode;
+    private CircleImageView ivAvatar;
     private Button btnDone;
     private ProgressDialog pDialog;
     private SQLiteHandler db;
@@ -67,20 +70,20 @@ public class EditProfileActivity extends Activity {
     }
 
     private void initViews() {
-        edtName = (EditText) findViewById(R.id.edt_editname);
-        edtMssv = (EditText) findViewById(R.id.edt_editmssv);
-        edtEmail = (EditText) findViewById(R.id.edt_editemail);
-        edtLopKhoaHoc = (EditText) findViewById(R.id.edt_editlop);
-        ivAvar = (CircleImageView) findViewById(R.id.iv_editava);
+        txtName = (TextView) findViewById(R.id.txt_name_profile);
+        txtCode = (TextView) findViewById(R.id.txt_code_profile);
+        txtEmail = (TextView) findViewById(R.id.txt_email_profile);
+        txtRegularClass = (TextView) findViewById(R.id.txt_regular_class_profile);
+        ivAvatar = (CircleImageView) findViewById(R.id.iv_edit_avatar);
 
         //Get intent from MainActivity
         Intent mIntent = getIntent();
-        edtName.setText(mIntent.getStringExtra("name"));
-        edtEmail.setText(mIntent.getStringExtra("email"));
-        edtLopKhoaHoc.setText(mIntent.getStringExtra("lop"));
-        edtMssv.setText(mIntent.getStringExtra("mssv"));
+        txtName.setText(mIntent.getStringExtra("name"));
+        txtEmail.setText(mIntent.getStringExtra("email"));
+        txtRegularClass.setText(mIntent.getStringExtra("lop"));
+        txtCode.setText(mIntent.getStringExtra("mssv"));
 
-        ivAvar.setFillColor(Color.WHITE);
+        ivAvatar.setFillColor(Color.WHITE);
 
         SQLiteHandler sqLite = new SQLiteHandler(this);
         HashMap<String, String> user = sqLite.getUserDetails();
@@ -90,10 +93,10 @@ public class EditProfileActivity extends Activity {
         Picasso.with(this)
                 .load(urlAvatar).fit()
                 .placeholder(R.mipmap.ic_user)
-                .error(R.mipmap.ic_user).into(ivAvar);
+                .error(R.mipmap.ic_user).into(ivAvatar);
 //        UserPicture.setCurrentAvatar(MainActivity.ivAva, pathSaveImage);
 
-        ivAvar.setOnClickListener(new View.OnClickListener() {
+        ivAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // in onCreate or any event where your want the user to
@@ -107,12 +110,12 @@ public class EditProfileActivity extends Activity {
             }
         });
 
-        edtName.setInputType(InputType.TYPE_NULL);
-        edtMssv.setInputType(InputType.TYPE_NULL);
-        edtEmail.setInputType(InputType.TYPE_NULL);
-        edtLopKhoaHoc.setInputType(InputType.TYPE_NULL);
+        txtName.setInputType(InputType.TYPE_NULL);
+        txtCode.setInputType(InputType.TYPE_NULL);
+        txtEmail.setInputType(InputType.TYPE_NULL);
+        txtRegularClass.setInputType(InputType.TYPE_NULL);
 
-        btnDone = (Button) findViewById(R.id.btn_editdone);
+        btnDone = (Button) findViewById(R.id.btn_edit_done);
 
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -279,7 +282,7 @@ public class EditProfileActivity extends Activity {
                 /*Where to save image local*/
                 saveBitmapToDir(mBitmap, getIntent().getStringExtra("mssv"));
 //                ivAvar.setImageURI();
-                ivAvar.setImageBitmap(mBitmap);
+                ivAvatar.setImageBitmap(mBitmap);
 //                MainActivity.ivAva.setImageBitmap(mBitmap);
 
                 // send bitmap to server

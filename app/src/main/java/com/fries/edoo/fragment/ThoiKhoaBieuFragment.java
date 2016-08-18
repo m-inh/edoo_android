@@ -36,7 +36,7 @@ import java.util.HashMap;
  * Created by TMQ on 20-Nov-15.
  */
 public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItemClickListener{
-    private static final String TAG = "ThoiKhoaBieuFragment";
+    private static final String TAG = ThoiKhoaBieuFragment.class.getSimpleName();
     private Context mContext;
     private View rootView;
     private GridView gridSubject;

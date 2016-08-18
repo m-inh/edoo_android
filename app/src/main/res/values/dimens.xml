@@ -13,4 +13,10 @@
     <dimen name="ic_post_size">18dp</dimen>
     <dimen name="like_size">12sp</dimen>
     <dimen name="ic_comment_post">12dp</dimen>
+
+    <dimen name="text_size_normal">16sp</dimen>
+    <dimen name="dialog_padding_around_content">24dp</dimen>
+    <dimen name="action_padding">8dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="text_title">24sp</dimen>
 </resources>

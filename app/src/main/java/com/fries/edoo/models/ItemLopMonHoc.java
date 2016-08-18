@@ -109,7 +109,6 @@ public class ItemLopMonHoc {
      * Eg: 4-5 -> 4,        6-9 -> 6
      */
     public int getPosOfPeriod(){
-        Log.i(TAG, "getPosOfPeriod = " + period.substring(period.indexOf("-")));
         return Integer.parseInt(period.substring(0, period.indexOf("-")));
     }
 
@@ -127,7 +126,7 @@ public class ItemLopMonHoc {
 
     /**
      * @return First Character of Name
-     * Eg: "Dai so" -> "D"
+     * Eg: "Dai so" -> "DS"
      */
     public String getAcronymOfName() {
         if (name == null) {
