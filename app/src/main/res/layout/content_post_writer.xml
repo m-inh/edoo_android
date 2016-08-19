@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
+            android:textSize="10sp"
             android:text="@string/title_post2"/>
 
         <EditText
@@ -29,7 +29,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:layout_marginTop="@dimen/action_padding"
+            android:textSize="10dp"
             android:text="@string/title_content2"/>
 
         <EditText

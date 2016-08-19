@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/type_post_note" />
+        </shape>
+    </item>
 
-    <!--<item android:state_checked="true">-->
-        <!--<shape-->
-            <!--android:shape="rectangle">-->
-            <!--<solid android:color="@color/bg_editmode"/>-->
-            <!--<stroke android:width="2dp"-->
-                <!--android:color="@android:color/white"/>-->
-        <!--</shape>-->
-    <!--</item>-->
-
-    <!--<item android:state_checked="true">-->
-        <!--<shape-->
-            <!--android:shape="oval">-->
-            <!--<solid android:color="@color/bg_editmode"/>-->
-            <!--<stroke android:width="2dp"-->
-                <!--android:color="@android:color/white"/>-->
-        <!--</shape>-->
-    <!--</item>-->
-
+    <item android:state_checked="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/darker_gray" />
+        </shape>
+    </item>
 </selector>
