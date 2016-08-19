@@ -45,8 +45,6 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
 
     private ItemLop itemClass;
 
-    private boolean isRefreshing;
-
     private Toolbar toolbar;
 
     @Override
@@ -74,7 +72,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
 
     private void initAdapter() {
         itemPostArr = new ArrayList<>();
-        mAdapter = new TimeLineAdapter(this, itemClass.getIdData(), "");
+        mAdapter = new TimeLineAdapter(this, itemClass.getIdData());
 
         requestPost(itemClass.getIdData());
     }
@@ -101,7 +99,6 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         Log.i(TAG, "id: " + item.getItemId());
         switch (item.getItemId()) {
             case android.R.id.home:
-//                Log.i(TAG, "id home: ");
                 finish();
                 break;
             case R.id.item_post:
@@ -110,24 +107,19 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                 break;
             case R.id.item_locbaidangchuatraloi:
                 Log.i(TAG, "loc bai dang chua tl");
-//                if (timelineFragment != null) {
-//                    timelineFragment.locTheoBaiDang(TimeLineAdapter.BAI_DANG_LOC_THEO_CHUA_TRA_LOI);
-//                }
+                mAdapter.locBaiDang(TimeLineAdapter.BAI_DANG_LOC_THEO_CHUA_TRA_LOI);
                 break;
             case R.id.item_locbaidanggiaovien:
                 Log.i(TAG, "loc bai dang giao vien");
-//                if (timelineFragment != null) {
-//                    timelineFragment.locTheoBaiDang(TimeLineAdapter.BAI_DANG_LOC_THEO_GIAO_VIEN);
-//                }
+                mAdapter.locBaiDang(TimeLineAdapter.BAI_DANG_LOC_THEO_GIAO_VIEN);
                 break;
             case R.id.item_tatcabaidang:
                 Log.i(TAG, "tat ca bai dang");
-//                if (timelineFragment != null) {
-//                    timelineFragment.locTheoBaiDang(TimeLineAdapter.BAI_DANG_BINH_THUONG);
-//                }
+                mAdapter.locBaiDang(TimeLineAdapter.BAI_DANG_BINH_THUONG);
                 break;
-            case R.id.action_sendAll:
-//                Toast.makeText(this, "Send to all", Toast.LENGTH_LONG).show();
+            case R.id.item_locbaidangchuadoc:
+                Log.i(TAG, "tat ca bai dang");
+                mAdapter.locBaiDang(TimeLineAdapter.BAI_DANG_CHUA_DOC);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -155,10 +147,8 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         String id = jsonPostArr.getJSONObject(i).getString("id");
                         String titlePost = jsonPostArr.getJSONObject(i).getString("title");
                         String contentPost = jsonPostArr.getJSONObject(i).getString("content");
-//                        int like = jsonPostArr.getJSONObject(i).getInt("vote");
                         int like = jsonPostArr.getJSONObject(i).getInt("vote_count");
                         int commentCount = jsonPostArr.getJSONObject(i).getInt("comment_count");
-//                            boolean isConfirm = jsonPostArr.getJSONObject(i).getBoolean("confirm");
                         boolean isIncognito = jsonPostArr.getJSONObject(i).getInt("is_incognito") == 1;
                         boolean isSeen = jsonPostArr.getJSONObject(i).getInt("is_seen") == 1;
                         String timeCreateAtPost = jsonPostArr.getJSONObject(i).getString("created_at");
@@ -200,51 +190,6 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         }
 
                         itemPostArr.add(itemTimeLine);
-
-                        //create comment array
-                        //Lay mang cac comment
-                        //Luu vao 1 arraylist comment
-//                        JSONArray jsonCommentArr = jsonPostArr.getJSONObject(i).getJSONArray("comments");
-//                        ArrayList<ItemComment> itemCommentArr = new ArrayList<>();
-//                        for (int j = 0; j < jsonCommentArr.length(); j++) {
-//
-//                            String idComment = jsonCommentArr.getJSONObject(j).getString("id");
-//                            String contentComment = jsonCommentArr.getJSONObject(j).getString("content");
-//
-//                            String idAuthorComment = "";
-//                            String nameAuthorComment = "";
-//                            String emailAuthorComment = "";
-//                            String typeAuthorComment = "";
-//                            String mssvAuthorComment = "";
-//                            String avarAuthorComment = "";
-//
-//                            try {
-//                                JSONObject jsonAuthorComment = jsonCommentArr.getJSONObject(j).getJSONObject("author");
-//                                idAuthorComment = jsonAuthorComment.getString("id");
-//                                nameAuthorComment = jsonAuthorComment.getString("name");
-//                                emailAuthorComment = jsonAuthorComment.getString("email");
-//                                typeAuthorComment = jsonAuthorComment.getString("type");
-//                                mssvAuthorComment = jsonAuthorComment.getString("mssv");
-//                                avarAuthorComment = jsonAuthorComment.getString("avatar");
-//                            } catch (Exception e) {
-//                                continue;
-//                            }
-//
-//                            Log.i(TAG, "comment: " + nameAuthorComment);
-//                            Log.i(TAG, "comment: " + emailAuthorComment);
-//                            Log.i(TAG, "comment: " + typeAuthorComment);
-//
-//                            boolean isVote = jsonCommentArr.getJSONObject(j).getBoolean("confirmed");
-//
-//                            if (isVote || typeAuthorComment.equalsIgnoreCase("teacher")) {
-//                                isConfirm = true;
-//                                ((ItemTimeLine) itemPostArr.get(i)).setIsConfirmByTeacher(true);
-//                            }
-//
-//                            itemCommentArr.add(new ItemComment(idComment, idAuthorComment, nameAuthorComment, avarAuthorComment, contentComment, isVote));
-//
-//                        }
-//                        ((ItemTimeLine) itemPostArr.get(i)).setItemComments(itemCommentArr);
                     }
                     TimelineActivity.this.itemPostArr = itemPostArr;
                 }
@@ -276,30 +221,19 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i(TAG, "ok men");
-        Log.i(TAG, "code: " + requestCode);
-        Log.i(TAG, "result code: " + resultCode);
         if (requestCode == REQUEST_CODE_POST_DETAIL){
             if (resultCode == RESULT_OK){
                 ItemTimeLine itemTimeLine = (ItemTimeLine) data.getExtras().getSerializable("item_timeline");
-
-                Log.i(TAG, "like: " + itemTimeLine.getLike());
-                Log.i(TAG, "cmt: " + itemTimeLine.getCommentCount());
 
                 String idPost = itemTimeLine.getIdPost();
 
                 for (int i = 0; i <itemPostArr.size(); i++) {
                     ItemTimeLine tempItem = (ItemTimeLine) itemPostArr.get(i);
                     if (idPost.equalsIgnoreCase(tempItem.getIdPost())){
-                        Log.i(TAG, "ok men" + idPost);
-                        Log.i(TAG, "like " + tempItem.getLike());
-                        Log.i(TAG, "cmt: " + tempItem.getCommentCount());
-
                         tempItem.setLike(itemTimeLine.getLike());
                         tempItem.setCommentCount(itemTimeLine.getCommentCount());
                     }
                 }
-
                 mAdapter.notifyDataSetChanged();
             }
         }
@@ -310,17 +244,17 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                 requestPost(itemClass.getIdData());
             }
         }
+
+        mAdapter.refreshList();
     }
 
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-
             if (swipeRefresh.isRefreshing()) {
                 swipeRefresh.setRefreshing(false);
             }
-
-            mAdapter.updateList(itemPostArr, linearLayoutManager.findLastVisibleItemPosition());
+            mAdapter.updateList(itemPostArr);
         }
     };
 
@@ -328,17 +262,4 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
     public void onRefresh() {
         requestPost(itemClass.getIdData());
     }
-
-    public boolean isRefreshing() {
-        return isRefreshing;
-    }
-
-    public void setIsRefreshing(boolean isRefreshing) {
-        this.isRefreshing = isRefreshing;
-    }
-
-    public void locTheoBaiDang(int mode) {
-        mAdapter.locBaiDang(mode);
-    }
-
 }

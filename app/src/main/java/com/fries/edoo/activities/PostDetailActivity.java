@@ -167,17 +167,6 @@ public class PostDetailActivity extends AppCompatActivity {
                             continue;
                         }
 
-//                        Log.i(TAG, "comment: " + nameAuthorComment);
-//                        Log.i(TAG, "comment: " + emailAuthorComment);
-//                        Log.i(TAG, "comment: " + typeAuthorComment);
-
-//                        boolean isVote = cmtJson.getBoolean("confirmed");
-
-//                        if (isVote || typeAuthorComment.equalsIgnoreCase("teacher")) {
-//                            isConfirm = true;
-//                            ((ItemTimeLine) itemPostArr.get(i)).setIsConfirmByTeacher(true);
-//                        }
-
                         cmtArr.add(new ItemComment(idComment, idAuthorComment, nameAuthorComment, avarAuthorComment, contentComment, isSolve));
                     }
                     mAdapter.setItemComments(cmtArr);
@@ -207,6 +196,7 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 if (!error){
+                    Log.d(TAG, response.toString());
                     String idCmt = response.getJSONObject("data").getString("id");
 
                     SQLiteHandler db = new SQLiteHandler(PostDetailActivity.this);

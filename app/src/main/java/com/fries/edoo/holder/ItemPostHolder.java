@@ -97,9 +97,9 @@ public class ItemPostHolder extends AbstractHolder {
         this.onClickItemPost = onClickItemPost;
     }
 
-    public void startAnim() {
-        Animation myAni = AnimationUtils.loadAnimation(mContext, R.anim.anim_show_item_listview);
-        itemView.startAnimation(myAni);
+    @Override
+    public int getViewHolderType() {
+        return 1;
     }
 
     public void setListComment(ArrayList<ItemComment> arr) {
@@ -117,7 +117,6 @@ public class ItemPostHolder extends AbstractHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Log.i(TAG, "Positino: " + getAdapterPosition());
                 itemTimeLine.setIsSeen(true);
                 onClickItemPost.onClick(getAdapterPosition());
                 TimelineActivity timelineActivity = (TimelineActivity) mContext;
@@ -141,66 +140,35 @@ public class ItemPostHolder extends AbstractHolder {
         requestServer.sendRequest("Post a seen");
     }
 
-    private LinearLayout layoutParent;
+    public void startAnim() {
+        Animation myAni = AnimationUtils.loadAnimation(mContext, R.anim.anim_show_item_listview);
+        itemView.startAnimation(myAni);
+    }
+
     private CircleImageView imgAvatar;
     private TextView txtTitle;
     private TextView txtContent;
     private TextView txtAuthor;
     private TextView tvTimeCreateAt;
-    //    private Button btnLike;
-    //    private ImageView imgAvatarLastPost;
-//    private TextView txtNameLastPost;
-//    private TextView txtCommentLastPost;
     private TextView txtCountLike;
     private TextView txtCountComment;
-//    private Button btnTks;
-//    private Button btnComment;
-
-    @Override
-    public int getViewHolderType() {
-        int viewHolderType = 1;
-        return viewHolderType;
-    }
-
-    public ImageView getImgAvatar() {
-        return imgAvatar;
-    }
-
-    public void setImgAvatar(CircleImageView imgAvatar) {
-        this.imgAvatar = imgAvatar;
-    }
 
     public TextView getTxtTitle() {
         return txtTitle;
-    }
-
-    public void setTxtTitle(TextView txtTitle) {
-        this.txtTitle = txtTitle;
     }
 
     public TextView getTxtContent() {
         return txtContent;
     }
 
-    public void setTxtContent(TextView txtContent) {
-        this.txtContent = txtContent;
-    }
-
     public TextView getTxtCountLike() {
         return txtCountLike;
-    }
-
-    public void setTxtCountLike(TextView txtCountLike) {
-        this.txtCountLike = txtCountLike;
     }
 
     public TextView getTxtCountComment() {
         return txtCountComment;
     }
 
-    public void setTxtCountComment(TextView txtCountComment) {
-        this.txtCountComment = txtCountComment;
-    }
 
     public interface OnClickItemPost {
         void onClick(int position);
@@ -210,53 +178,12 @@ public class ItemPostHolder extends AbstractHolder {
         return txtAuthor;
     }
 
-    public void setTxtAuthor(TextView txtAuthor) {
-        this.txtAuthor = txtAuthor;
-    }
-
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            like ++;
-            txtCountLike.setText(like + "");
-            if (like >= 0) {
-                ivLike.setImageResource(R.mipmap.ic_up_24);
-            } else {
-                ivLike.setImageResource(R.mipmap.ic_down_24);
-            }
-        }
-    };
-
-    private void showDialog() {
-        if (!pDialog.isShowing()) {
-            pDialog.show();
-        }
-    }
-
-    private void hideDialog() {
-        if (pDialog.isShowing()) {
-            pDialog.hide();
-        }
-    }
-
-    public int getLike() {
-        return like;
-    }
-
     public void setLike(int like) {
         this.like = like;
     }
 
-    public String getIdPost() {
-        return idPost;
-    }
-
     public void setIdPost(String idPost) {
         this.idPost = idPost;
-    }
-
-    public ItemTimeLine getItemTimeLine() {
-        return itemTimeLine;
     }
 
     public void setItemTimeLine(ItemTimeLine itemTimeLine) {
@@ -264,16 +191,8 @@ public class ItemPostHolder extends AbstractHolder {
         setAva(itemTimeLine);
     }
 
-    public String getIdLop() {
-        return idLop;
-    }
-
     public void setIdLop(String idLop) {
         this.idLop = idLop;
-    }
-
-    public String getKeyLopType() {
-        return keyLopType;
     }
 
     public void setKeyLopType(String keyLopType) {
@@ -294,9 +213,5 @@ public class ItemPostHolder extends AbstractHolder {
 
     public CircleImageView getIvSeen() {
         return ivSeen;
-    }
-
-    public void setIvSeen(CircleImageView ivSeen) {
-        this.ivSeen = ivSeen;
     }
 }

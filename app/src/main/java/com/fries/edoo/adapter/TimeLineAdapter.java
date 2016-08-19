@@ -30,31 +30,22 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implem
     public static final int BAI_DANG_BINH_THUONG = 1;
     public static final int BAI_DANG_LOC_THEO_GIAO_VIEN = 2;
     public static final int BAI_DANG_LOC_THEO_CHUA_TRA_LOI = 3;
+    public static final int BAI_DANG_CHUA_DOC = 4;
 
-    public int currentMode = 1;
+    public int currentMode = BAI_DANG_BINH_THUONG;
 
-    public TimeLineAdapter(Context context, String idLop, String keyLopType) {
+    public TimeLineAdapter(Context context, String idLop) {
         this.mContext = context;
         this.idLop = idLop;
         itemArr = new ArrayList<>();
         currentItemArr = new ArrayList<>();
     }
 
-    public TimeLineAdapter(Context context) {
-        this.mContext = context;
-        itemArr = new ArrayList<>();
-        currentItemArr = new ArrayList<>();
-    }
-
-    private int itemCompleteVisiblePosition;
-
-    public void updateList(ArrayList<ItemBase> posts, int itemCompleteVisiblePosition) {
-        this.itemCompleteVisiblePosition = itemCompleteVisiblePosition;
+    public void updateList(ArrayList<ItemBase> posts) {
         itemArr.clear();
         itemArr.addAll(posts);
         this.currentItemArr = posts;
         locBaiDang(currentMode);
-//        Log.i(TAG, itemCompleteVisiblePosition + " position");
     }
 
     public void locBaiDang(int mode) {
@@ -79,8 +70,50 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implem
                     }
                 }
                 break;
+            case BAI_DANG_CHUA_DOC:
+                for (int i = 0; i < itemArr.size(); i++) {
+                    ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(i);
+                    if (!itemTimeLine.isSeen()) {
+                        currentItemArr.add(itemArr.get(i));
+                    }
+                }
+                break;
         }
         currentMode = mode;
+        notifyDataSetChanged();
+    }
+
+    public void refreshList(){
+        currentItemArr.clear();
+        switch (currentMode) {
+            case BAI_DANG_BINH_THUONG:
+                currentItemArr.addAll(itemArr);
+                break;
+            case BAI_DANG_LOC_THEO_CHUA_TRA_LOI:
+                for (int i = 0; i < itemArr.size(); i++) {
+                    ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(i);
+                    if (!itemTimeLine.isConfirmByTeacher()) {
+                        currentItemArr.add(itemArr.get(i));
+                    }
+                }
+                break;
+            case BAI_DANG_LOC_THEO_GIAO_VIEN:
+                for (int i = 0; i < itemArr.size(); i++) {
+                    ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(i);
+                    if (itemTimeLine.getTypeAuthor().equalsIgnoreCase("teacher")) {
+                        currentItemArr.add(itemArr.get(i));
+                    }
+                }
+                break;
+            case BAI_DANG_CHUA_DOC:
+                for (int i = 0; i < itemArr.size(); i++) {
+                    ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(i);
+                    if (!itemTimeLine.isSeen()) {
+                        currentItemArr.add(itemArr.get(i));
+                    }
+                }
+                break;
+        }
         notifyDataSetChanged();
     }
 
@@ -91,74 +124,55 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implem
 
     @Override
     public AbstractHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == 1){
-            View view = LayoutInflater.from(mContext).inflate(R.layout.item_post, parent, false);
-            ItemPostHolder itemPostHolder = new ItemPostHolder(view, this);
-//            Log.i(TAG, "onCreateViewHolder");
-            return itemPostHolder;
-        } else {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.writepost_layout, parent, false);
-            ItemWritePostHolder itemWritePostHolder = new ItemWritePostHolder(view, idLop, "");
-            return itemWritePostHolder;
-        }
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_post, parent, false);
+        ItemPostHolder itemPostHolder = new ItemPostHolder(view, this);
+        return itemPostHolder;
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(AbstractHolder abstractHolder, int position) {
-//        Log.i(TAG, position + " position");
-        if(abstractHolder.getViewHolderType() == 1){
-//            Log.i(TAG,"bat dau");
-
-            //itemPostHolder.getImgAvatar();
-            ItemPostHolder itemPostHolder = (ItemPostHolder) abstractHolder;
-            final ItemTimeLine itemTimeLine = (ItemTimeLine) currentItemArr.get(currentItemArr.size() - 1 - position);
-//            itemPostHolder.startAnim();
-            itemPostHolder.setIdLop(idLop);
-            itemPostHolder.setKeyLopType(itemTimeLine.getKeyLopType());
-            itemPostHolder.setIdPost(itemTimeLine.getIdPost());
-            itemPostHolder.setItemTimeLine(itemTimeLine);
-            itemPostHolder.setListComment(itemTimeLine.getItemComments());
-            itemPostHolder.getTxtAuthor().setText(itemTimeLine.getName());
-
-//            Log.i(TAG, "title" + itemTimeLine.getTitle());
-            itemPostHolder.getTxtTitle().setText(itemTimeLine.getTitle());
-            itemPostHolder.getTxtContent().setText(itemTimeLine.getContent());
-            itemPostHolder.setLike(itemTimeLine.getLike());
-            itemPostHolder.getTxtCountLike().setText(itemTimeLine.getLike() + "");
-            if (itemTimeLine.getLike() >= 0) {
-                itemPostHolder.getIvLike().setImageResource(R.mipmap.ic_up_24);
-            } else {
-                itemPostHolder.getIvLike().setImageResource(R.mipmap.ic_down_24);
-            }
-
-            int countCmt = itemTimeLine.getItemComments().size();
-            if (countCmt == 0){
-                countCmt = itemTimeLine.getCommentCount();
-            }
-            itemPostHolder.getTxtCountComment().setText(countCmt + "");
-            itemPostHolder.getTvTimeCreateAt().setText(", " + itemTimeLine.getCreateAt());
-
-            boolean isPostByTeacher = itemTimeLine.getTypeAuthor().equalsIgnoreCase("teacher");
-
-            if (isPostByTeacher) {
-                itemPostHolder.getIvBookmark().setVisibility(View.VISIBLE);
-                itemPostHolder.getIvBookmark().setImageResource(R.mipmap.ic_bookmark_post_giangvien);
-            } else if (!itemTimeLine.isConfirmByTeacher()) {
-                itemPostHolder.getIvBookmark().setVisibility(View.INVISIBLE);
-            } else {
-                itemPostHolder.getIvBookmark().setVisibility(View.VISIBLE);
-                itemPostHolder.getIvBookmark().setImageResource(R.mipmap.ic_bookmark_check);
-            }
-
-            if (itemTimeLine.isSeen()) {
-                itemPostHolder.getIvSeen().setVisibility(View.INVISIBLE);
-            } else {
-                itemPostHolder.getIvSeen().setVisibility(View.VISIBLE);
-            }
-
+        ItemPostHolder itemPostHolder = (ItemPostHolder) abstractHolder;
+        final ItemTimeLine itemTimeLine = (ItemTimeLine) currentItemArr.get(currentItemArr.size() - 1 - position);
+        itemPostHolder.setIdLop(idLop);
+        itemPostHolder.setKeyLopType(itemTimeLine.getKeyLopType());
+        itemPostHolder.setIdPost(itemTimeLine.getIdPost());
+        itemPostHolder.setItemTimeLine(itemTimeLine);
+        itemPostHolder.setListComment(itemTimeLine.getItemComments());
+        itemPostHolder.getTxtAuthor().setText(itemTimeLine.getName());
+        itemPostHolder.getTxtTitle().setText(itemTimeLine.getTitle());
+        itemPostHolder.getTxtContent().setText(itemTimeLine.getContent());
+        itemPostHolder.setLike(itemTimeLine.getLike());
+        itemPostHolder.getTxtCountLike().setText(itemTimeLine.getLike() + "");
+        if (itemTimeLine.getLike() >= 0) {
+            itemPostHolder.getIvLike().setImageResource(R.mipmap.ic_up_24);
         } else {
-               // ItemWritePostHolder itemWritePostHolder = (ItemWritePostHolder) abstactHolder;
+            itemPostHolder.getIvLike().setImageResource(R.mipmap.ic_down_24);
+        }
+
+        int countCmt = itemTimeLine.getItemComments().size();
+        if (countCmt == 0){
+            countCmt = itemTimeLine.getCommentCount();
+        }
+        itemPostHolder.getTxtCountComment().setText(countCmt + "");
+        itemPostHolder.getTvTimeCreateAt().setText(", " + itemTimeLine.getCreateAt());
+
+        boolean isPostByTeacher = itemTimeLine.getTypeAuthor().equalsIgnoreCase("teacher");
+
+        if (isPostByTeacher) {
+            itemPostHolder.getIvBookmark().setVisibility(View.VISIBLE);
+            itemPostHolder.getIvBookmark().setImageResource(R.mipmap.ic_bookmark_post_giangvien);
+        } else if (!itemTimeLine.isConfirmByTeacher()) {
+            itemPostHolder.getIvBookmark().setVisibility(View.INVISIBLE);
+        } else {
+            itemPostHolder.getIvBookmark().setVisibility(View.VISIBLE);
+            itemPostHolder.getIvBookmark().setImageResource(R.mipmap.ic_bookmark_check);
+        }
+
+        if (itemTimeLine.isSeen()) {
+            itemPostHolder.getIvSeen().setVisibility(View.INVISIBLE);
+        } else {
+            itemPostHolder.getIvSeen().setVisibility(View.VISIBLE);
         }
     }
 
@@ -169,7 +183,6 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implem
 
     @Override
     public void onClick(int position) {
-//        notifyDataSetChanged();
         notifyItemChanged(position);
     }
 }
