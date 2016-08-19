@@ -31,7 +31,7 @@ public class ItemPostDetailHolder extends AbstractHolder {
     private ItemTimeLine itemTimeLine;
     private Context mContext;
 
-    private ListView lvImgPost;
+//    private ListView lvImgPost;
     private ImagePostDetailAdapter mAdapter;
 
     private TextView tvTitle;
@@ -56,12 +56,12 @@ public class ItemPostDetailHolder extends AbstractHolder {
         this.itemTimeLine = itemTimeLine;
         this.mContext = itemView.getContext();
 
-        lvImgPost = (ListView) itemView.findViewById(R.id.lv_imagePost);
-        mAdapter = new ImagePostDetailAdapter(itemView.getContext());
-        lvImgPost.setAdapter(mAdapter);
+//        lvImgPost = (ListView) itemView.findViewById(R.id.lv_imagePost);
+//        mAdapter = new ImagePostDetailAdapter(itemView.getContext());
+//        lvImgPost.setAdapter(mAdapter);
 
         //test
-        lvImgPost.setVisibility(View.GONE);
+//        lvImgPost.setVisibility(View.GONE);
 
         ivAvatar = (CircleImageView) itemView.findViewById(R.id.iv_avatar);
         ivLike = (ImageView) itemView.findViewById(R.id.iv_like);
