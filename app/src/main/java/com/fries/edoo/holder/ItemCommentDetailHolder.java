@@ -1,7 +1,10 @@
 package com.fries.edoo.holder;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -15,11 +18,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.fries.edoo.R;
+import com.fries.edoo.activities.PostDetailActivity;
+import com.fries.edoo.activities.TimelineActivity;
+import com.fries.edoo.adapter.PostDetailAdapter;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.app.AppController;
 import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.models.ItemComment;
+import com.fries.edoo.models.ItemTimeLine;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -37,13 +44,14 @@ public class ItemCommentDetailHolder extends AbstractHolder {
 
     private static final String TAG = "ItemCommentDetailHolder";
     private Context mContext;
+    private ItemTimeLine itemTimeline;
     private ItemComment itemComment;
 
     private TextView tvAuthorName;
     private CircleImageView ivAuthorAvatar;
     private TextView tvComment;
     private CheckBox cbSolve;
-
+    private PostDetailAdapter postDetailAdapter;
 
     public ItemCommentDetailHolder(View itemView) {
         super(itemView);
@@ -54,6 +62,16 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         ivAuthorAvatar = (CircleImageView) itemView.findViewById(R.id.iv_avatar);
         tvComment = (TextView) itemView.findViewById(R.id.tv_comment);
         cbSolve = (CheckBox) itemView.findViewById(R.id.cb_vote);
+    }
+
+    public ItemCommentDetailHolder(View view, ItemTimeLine itemTimeline) {
+        this(view);
+        this.itemTimeline = itemTimeline;
+    }
+
+    public ItemCommentDetailHolder(View view, ItemTimeLine itemTimeline, PostDetailAdapter postDetailAdapter) {
+        this(view, itemTimeline);
+        this.postDetailAdapter = postDetailAdapter;
     }
 
     @Override
@@ -81,7 +99,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
     }
 
 
-    public void postSolve(String idCmt) {
+    public void postSolve(final String idCmt) {
         Log.i(TAG, idCmt);
 
         String url = AppConfig.URL_VOTE_COMMENT;
@@ -99,7 +117,15 @@ public class ItemCommentDetailHolder extends AbstractHolder {
                 if (!error){
                     Log.d(TAG, response.toString());
 
-//                    cbSolve.setChecked(true);
+                    itemTimeline.setSolve(true);
+                    postDetailAdapter.setSolveCmt(idCmt);
+
+                    Intent mIntent = new Intent();
+                    Bundle b = new Bundle();
+                    b.putSerializable("item_timeline", itemTimeline);
+                    mIntent.putExtras(b);
+                    PostDetailActivity postDetailActivity = (PostDetailActivity) mContext;
+                    postDetailActivity.setResult(Activity.RESULT_OK, mIntent);
                 }
                 Log.d(TAG, message);
             }

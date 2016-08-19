@@ -35,20 +35,14 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-//import com.hackathon.fries.myclass.dialog.PopupComments;
 
-/**
- * Created by Tdh4vn on 11/21/2015.
- */
 public class ItemPostHolder extends AbstractHolder {
     private static final String TAG = "ItemPostHolder";
     private ArrayList<ItemComment> listComment = new ArrayList<>();
     private Context mContext;
-    //    private CheckBox checkBox;
     private ImageView ivBookmark;
     private ImageView ivLike;
     private CircleImageView ivSeen;
-    private ProgressDialog pDialog;
 
     private int like;
 
@@ -57,8 +51,6 @@ public class ItemPostHolder extends AbstractHolder {
     private String idPost;
     private ItemTimeLine itemTimeLine;
 
-    private OnClickItemPost onClickItemPost;
-
     private View rootView;
 
     public ItemPostHolder(View itemView) {
@@ -66,7 +58,6 @@ public class ItemPostHolder extends AbstractHolder {
         rootView = itemView;
         mContext = itemView.getContext();
 
-        pDialog = new ProgressDialog(mContext);
         imgAvatar = (CircleImageView) itemView.findViewById(R.id.imgAvatar);
         ivSeen = (CircleImageView) itemView.findViewById(R.id.iv_marker_seen);
 
@@ -76,25 +67,11 @@ public class ItemPostHolder extends AbstractHolder {
         ivBookmark = (ImageView) itemView.findViewById(R.id.iv_bookmark);
         ivLike = (ImageView) itemView.findViewById(R.id.iv_like);
         tvTimeCreateAt = (TextView) itemView.findViewById(R.id.tv_time_post);
-//        imgAvatarLastPost = (ImageView) itemView.findViewById(R.id.imgAvaComment);
-//        txtNameLastPost = (TextView) itemView.findViewById(R.id.txtUserName);
-//
-//        txtCommentLastPost = (TextView) itemView.findViewById(R.id.txtContentComment);
-
         txtCountLike = (TextView) itemView.findViewById(R.id.txtCountLike);
         txtCountComment = (TextView) itemView.findViewById(R.id.txtCountComment);
-//        btnTks = (Button) itemView.findViewById(R.id.btnTks);
-//        btnComment = (Button) itemView.findViewById(R.id.btnComment);
 
-//        checkBox = (CheckBox) itemView.findViewById(R.id.cb_vote);
-//        checkBox.setClickable(false);
 //        startAnim();
         createListener(itemView);
-    }
-
-    public ItemPostHolder(View itemView, OnClickItemPost onClickItemPost) {
-        this(itemView);
-        this.onClickItemPost = onClickItemPost;
     }
 
     @Override
@@ -118,7 +95,6 @@ public class ItemPostHolder extends AbstractHolder {
             @Override
             public void onClick(View v) {
                 itemTimeLine.setIsSeen(true);
-                onClickItemPost.onClick(getAdapterPosition());
                 TimelineActivity timelineActivity = (TimelineActivity) mContext;
                 timelineActivity.startPostDetailActivity(itemTimeLine);
 
@@ -167,11 +143,6 @@ public class ItemPostHolder extends AbstractHolder {
 
     public TextView getTxtCountComment() {
         return txtCountComment;
-    }
-
-
-    public interface OnClickItemPost {
-        void onClick(int position);
     }
 
     public TextView getTxtAuthor() {

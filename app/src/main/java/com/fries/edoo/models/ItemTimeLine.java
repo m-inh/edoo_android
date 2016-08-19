@@ -24,6 +24,7 @@ public class ItemTimeLine extends ItemBase implements Serializable {
     private int like;
     private boolean isConfirmByTeacher;
     private boolean isSeen;
+    private boolean isSolve;
     private String createAt;
     private int commentCount;
     private ArrayList<ItemComment> itemComments = new ArrayList<>();
@@ -150,5 +151,13 @@ public class ItemTimeLine extends ItemBase implements Serializable {
 
     public void setIdAuthor(String idAuthor) {
         this.idAuthor = idAuthor;
+    }
+
+    public boolean isSolve() {
+        return isSolve;
+    }
+
+    public void setSolve(boolean solve) {
+        isSolve = solve;
     }
 }

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 /**
  * Created by TooNies1810 on 11/20/15.
  */
-public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implements ItemPostHolder.OnClickItemPost {
+public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
     private static final String TAG = "TimelineAdapter";
     private Context mContext;
     private ArrayList<ItemBase> itemArr;
@@ -125,8 +125,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implem
     @Override
     public AbstractHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_post, parent, false);
-        ItemPostHolder itemPostHolder = new ItemPostHolder(view, this);
-        return itemPostHolder;
+        return new ItemPostHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
@@ -157,16 +156,17 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implem
         itemPostHolder.getTxtCountComment().setText(countCmt + "");
         itemPostHolder.getTvTimeCreateAt().setText(", " + itemTimeLine.getCreateAt());
 
+        itemPostHolder.getIvBookmark().setVisibility(View.INVISIBLE);
+
         boolean isPostByTeacher = itemTimeLine.getTypeAuthor().equalsIgnoreCase("teacher");
 
+        if (itemTimeLine.isSolve()){
+            itemPostHolder.getIvBookmark().setVisibility(View.VISIBLE);
+            itemPostHolder.getIvBookmark().setImageResource(R.mipmap.ic_bookmark_check);
+        }
         if (isPostByTeacher) {
             itemPostHolder.getIvBookmark().setVisibility(View.VISIBLE);
             itemPostHolder.getIvBookmark().setImageResource(R.mipmap.ic_bookmark_post_giangvien);
-        } else if (!itemTimeLine.isConfirmByTeacher()) {
-            itemPostHolder.getIvBookmark().setVisibility(View.INVISIBLE);
-        } else {
-            itemPostHolder.getIvBookmark().setVisibility(View.VISIBLE);
-            itemPostHolder.getIvBookmark().setImageResource(R.mipmap.ic_bookmark_check);
         }
 
         if (itemTimeLine.isSeen()) {
@@ -179,10 +179,5 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> implem
     @Override
     public int getItemCount() {
         return currentItemArr == null ? 0 : currentItemArr.size();
-    }
-
-    @Override
-    public void onClick(int position) {
-        notifyItemChanged(position);
     }
 }

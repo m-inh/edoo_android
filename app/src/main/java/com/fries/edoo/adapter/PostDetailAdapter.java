@@ -56,7 +56,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
             return new ItemPostDetailHolder(view, itemTimeline);
         } else {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_comment_in_popup, parent, false);
-            return new ItemCommentDetailHolder(view);
+            return new ItemCommentDetailHolder(view, itemTimeline, this);
         }
     }
 
@@ -68,8 +68,6 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
             commentHolder.setItemComment(itemComment);
 
             final CheckBox cbSolve = commentHolder.getCheckBoxVote();
-
-//            commentHolder.setmHandler(mHandler);
 
             String authorId = itemTimeline.getIdAuthor();
             if (!user.get("uid").equalsIgnoreCase(authorId)) {
@@ -105,21 +103,9 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
             postDetailHolder.getTvCreateAt().setText(", " + itemTimeline.getCreateAt());
 
-            postDetailHolder.setCbIsVote(itemTimeline.isConfirmByTeacher());
+            postDetailHolder.setCbIsVote();
         }
     }
-
-//    private Handler mHandler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-////            cbVote.setClickable(false);
-//            itemTimeline.setIsConfirmByTeacher(true);
-//            notifyItemChanged(0);
-//
-//            PostDetailActivity postDetailActivity = (PostDetailActivity) mContext;
-//            postDetailActivity.setResult(Activity.RESULT_OK);
-//        }
-//    };
 
     @Override
     public int getItemCount() {
@@ -133,6 +119,18 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
     public void setItemComments(ArrayList<ItemComment> commentArr) {
         this.itemTimeline.setItemComments(commentArr);
+        notifyDataSetChanged();
+    }
+
+    public void setSolveCmt(String cmtId) {
+        ArrayList<ItemComment> cmts = itemTimeline.getItemComments();
+        for (int i = 0; i < cmts.size(); i++) {
+            if (cmts.get(i).getIdComment().equalsIgnoreCase(cmtId)) {
+                cmts.get(i).setVote(true);
+            } else {
+                cmts.get(i).setVote(false);
+            }
+        }
         notifyDataSetChanged();
     }
 }

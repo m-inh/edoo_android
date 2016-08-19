@@ -1,5 +1,6 @@
 package com.fries.edoo.holder;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,9 +36,6 @@ public class ItemPostDetailHolder extends AbstractHolder {
     private ItemTimeLine itemTimeLine;
     private Context mContext;
 
-//    private ListView lvImgPost;
-    private ImagePostDetailAdapter mAdapter;
-
     private TextView tvTitle;
     private TextView tvContent;
     private WebView webView;
@@ -49,7 +47,6 @@ public class ItemPostDetailHolder extends AbstractHolder {
     private CircleImageView ivAvatar;
     private ImageView ivLike;
     private TextView tvCreateAt;
-    //    private CheckBox cbIsVote;
     private ImageView ivIsVote;
 
     public ItemPostDetailHolder(View itemView) {
@@ -60,13 +57,6 @@ public class ItemPostDetailHolder extends AbstractHolder {
         this(itemView);
         this.itemTimeLine = itemTimeLine;
         this.mContext = itemView.getContext();
-
-//        lvImgPost = (ListView) itemView.findViewById(R.id.lv_imagePost);
-//        mAdapter = new ImagePostDetailAdapter(itemView.getContext());
-//        lvImgPost.setAdapter(mAdapter);
-
-        //test
-//        lvImgPost.setVisibility(View.GONE);
 
         ivAvatar = (CircleImageView) itemView.findViewById(R.id.iv_avatar);
         ivLike = (ImageView) itemView.findViewById(R.id.iv_like);
@@ -95,22 +85,22 @@ public class ItemPostDetailHolder extends AbstractHolder {
 
     public void setContentToWebview(String content){
         String htmlData = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />" +"<html>" + content + "</html>";
-        // lets assume we have /assets/style.css file
         webView.loadDataWithBaseURL("file:///android_asset/", htmlData, "text/html", "UTF-8", null);
-//        webView.loadUrl("file:///android_asset/test.html");
     }
 
-    public void setCbIsVote(boolean isConfirmByTeacher) {
+    public void setCbIsVote() {
         boolean isPostByTeacher = itemTimeLine.getTypeAuthor().equalsIgnoreCase("teacher");
+        boolean isSolve = itemTimeLine.isSolve();
 
+        ivIsVote.setVisibility(View.INVISIBLE);
+
+        if (isSolve) {
+            ivIsVote.setVisibility(View.VISIBLE);
+            ivIsVote.setImageResource(R.mipmap.ic_bookmark_check);
+        }
         if (isPostByTeacher) {
             ivIsVote.setVisibility(View.VISIBLE);
             ivIsVote.setImageResource(R.mipmap.ic_bookmark_post_giangvien);
-        } else if (isConfirmByTeacher) {
-            ivIsVote.setVisibility(View.VISIBLE);
-            ivIsVote.setImageResource(R.mipmap.ic_bookmark_check);
-        } else {
-            ivIsVote.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -129,39 +119,6 @@ public class ItemPostDetailHolder extends AbstractHolder {
             }
         });
     }
-
-    public void setTitle(String title) {
-        tvTitle.setText(title);
-    }
-
-    public void setContent(String content) {
-        tvContent.setText(content);
-    }
-
-    public void setAuthorName(String authorName) {
-        tvAuthorName.setText(authorName);
-    }
-
-    public void setLike(String like) {
-        tvLike.setText(like + "");
-    }
-
-    public void setComment(String comment) {
-        tvComment.setText(comment + "");
-    }
-
-    public ImageView getIvLike() {
-        return ivLike;
-    }
-
-    public TextView getTvCreateAt() {
-        return tvCreateAt;
-    }
-
-    public ImageView getBtnLike() {
-        return btnLike;
-    }
-
 
     @Override
     public int getViewHolderType() {
@@ -203,7 +160,34 @@ public class ItemPostDetailHolder extends AbstractHolder {
         b.putSerializable("item_timeline", itemTimeLine);
         mIntent.putExtras(b);
         PostDetailActivity postDetailActivity = (PostDetailActivity) mContext;
-        postDetailActivity.setResult(postDetailActivity.RESULT_OK, mIntent);
+        postDetailActivity.setResult(Activity.RESULT_OK, mIntent);
     }
 
+    public void setTitle(String title) {
+        tvTitle.setText(title);
+    }
+
+    public void setContent(String content) {
+        tvContent.setText(content);
+    }
+
+    public void setAuthorName(String authorName) {
+        tvAuthorName.setText(authorName);
+    }
+
+    public void setLike(String like) {
+        tvLike.setText(like + "");
+    }
+
+    public void setComment(String comment) {
+        tvComment.setText(comment + "");
+    }
+
+    public ImageView getIvLike() {
+        return ivLike;
+    }
+
+    public TextView getTvCreateAt() {
+        return tvCreateAt;
+    }
 }

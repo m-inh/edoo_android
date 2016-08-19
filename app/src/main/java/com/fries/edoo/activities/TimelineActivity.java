@@ -151,6 +151,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         int commentCount = jsonPostArr.getJSONObject(i).getInt("comment_count");
                         boolean isIncognito = jsonPostArr.getJSONObject(i).getInt("is_incognito") == 1;
                         boolean isSeen = jsonPostArr.getJSONObject(i).getInt("is_seen") == 1;
+                        boolean isSolve = jsonPostArr.getJSONObject(i).getInt("is_solve") == 1;
                         String timeCreateAtPost = jsonPostArr.getJSONObject(i).getString("created_at");
 
                         //author post
@@ -177,6 +178,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         itemTimeLine.setIdAuthor(idAuthorPost);
                         itemTimeLine.setCommentCount(commentCount);
                         itemTimeLine.setIsSeen(isSeen);
+                        itemTimeLine.setSolve(isSolve);
 //                        String inputDate = "2012-08-24T12:15:00+02:00";
                         String format = CommonVLs.TIME_FORMAT;
 
@@ -232,6 +234,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                     if (idPost.equalsIgnoreCase(tempItem.getIdPost())){
                         tempItem.setLike(itemTimeLine.getLike());
                         tempItem.setCommentCount(itemTimeLine.getCommentCount());
+                        tempItem.setSolve(itemTimeLine.isSolve());
                     }
                 }
                 mAdapter.notifyDataSetChanged();
