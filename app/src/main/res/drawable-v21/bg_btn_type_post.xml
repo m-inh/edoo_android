@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <ripple android:color="@android:color/white">
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/type_post_note" />
+                    <stroke android:width="2dp" android:color="@android:color/white" />
+                </shape>
+            </item>
+        </ripple>
+    </item>
+
+    <item android:state_checked="false">
+        <ripple android:color="@android:color/white">
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/type_post_note" />
+                    <stroke android:width="2dp" android:color="@android:color/white" />
+                </shape>
+            </item>
+        </ripple>
+    </item>
+</selector>
+
+<!--<item>-->
+<!--<ripple-->
+    <!--android:color="@android:color/white">-->
+    <!--<item>-->
+        <!--<shape android:shape="rectangle">-->
+            <!--<solid android:color="@color/bg_editmode"/>-->
+            <!--<stroke android:width="2dp"-->
+                <!--android:color="@android:color/white"/>-->
+        <!--</shape>-->
+    <!--</item>-->
+<!--</ripple>-->
+
+<!--</item>-->

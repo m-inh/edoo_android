@@ -49,6 +49,11 @@
     <string name="title_post_hint">Tiêu đề</string>
     <string name="content_hint">Nội dung</string>
     <string name="title_post2">Tiêu đề</string>
+    <string name="type_post">Loại post</string>
+    <string name="type_post_question">Question</string>
+    <string name="type_post_note">Note</string>
+    <string name="type_post_poll">Poll</string>
+    <string name="type_post_notification">Notification</string>
     <string name="title_content2">Nội dung</string>
     <string name="lichthi">Lịch Thi</string>
     <string name="tailieu">Tài Liệu</string>

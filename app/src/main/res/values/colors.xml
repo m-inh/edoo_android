@@ -32,5 +32,10 @@
     <color name="bg_item_subject_10">#E0F2F1</color>
     <color name="bg_empty_post">#f0f0f0</color>
 
+    <color name="type_post_question">#FEF102</color>
+    <color name="type_post_note">#33B5E6</color>
+    <color name="type_post_notification">#FFFF7F26</color>
+    <color name="type_post_poll">#AA66CD</color>
+
 
 </resources>
