@@ -124,6 +124,7 @@
         android:background="@android:color/white">
 
         <TextView
+            android:id="@+id/txt_hint_code_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/hint_mssv"
@@ -139,6 +140,7 @@
             android:textColor="@color/colorPrimary"/>
 
         <TextView
+            android:id="@+id/txt_hint_regular_class_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_horizontal_margin"

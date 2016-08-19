@@ -55,20 +55,22 @@ public class EditProfileActivity extends Activity {
     private CircleImageView ivAvatar;
     private Button btnDone;
     private ProgressDialog pDialog;
-    private SQLiteHandler db;
+    private SQLiteHandler sqLite;
+    private boolean isTeacher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editprofile);
 
-        //init data base
-        db = new SQLiteHandler(getApplicationContext());
-
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
+        sqLite = new SQLiteHandler(this);
+
         initViews();
+        initViewsForTeacher();
+        setUserVoteSolve();
     }
 
     private void initViews() {
@@ -85,11 +87,8 @@ public class EditProfileActivity extends Activity {
         txtRegularClass.setText(mIntent.getStringExtra("lop"));
         txtCode.setText(mIntent.getStringExtra("mssv"));
 
-        setUserVoteSolve();
-
         ivAvatar.setFillColor(Color.WHITE);
 
-        SQLiteHandler sqLite = new SQLiteHandler(this);
         HashMap<String, String> user = sqLite.getUserDetails();
         String urlAvatar = user.get("avatar");
 //        String pathSaveImage = MainActivity.PATH_TO_DIR_SAVING_IMAGE + getIntent().getStringExtra("mssv") + ".jpg";
@@ -103,39 +102,33 @@ public class EditProfileActivity extends Activity {
         ivAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // in onCreate or any event where your want the user to
-//                Intent intent = new Intent();
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(Intent.createChooser(intent,
-//                        getString(R.string.select_picture)), SELECT_SINGLE_PICTURE);
-                // The library provides a utility method to start an image picker:
                 Crop.pickImage(EditProfileActivity.this);
             }
         });
 
-        txtName.setInputType(InputType.TYPE_NULL);
-        txtCode.setInputType(InputType.TYPE_NULL);
-        txtEmail.setInputType(InputType.TYPE_NULL);
-        txtRegularClass.setInputType(InputType.TYPE_NULL);
-
         btnDone = (Button) findViewById(R.id.btn_edit_done);
-
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String name = edtName.getText().toString();
-//                String lop = edtLopKhoaHoc.getText().toString();
-//                String mssv = edtMssv.getText().toString();
-
-//                if (!name.equalsIgnoreCase("") && !lop.equalsIgnoreCase("")) {
-//
-//                    updateUser(name, lop, mssv, edtEmail.getText().toString());
-//                }
-                setResult(RESULT_OK);
-                finish();
+            setResult(RESULT_OK);
+            finish();
             }
         });
+    }
+
+    private void initViewsForTeacher() {
+        isTeacher = (sqLite.getUserDetails().get("type").equalsIgnoreCase("teacher"));
+        if (!isTeacher) return;
+
+        TextView hintCode = (TextView) findViewById(R.id.txt_hint_code_profile);
+        TextView hintRegularClass = (TextView) findViewById(R.id.txt_hint_regular_class_profile);
+
+        hintCode.setText(R.string.hint_msgv);
+        hintRegularClass.setText(R.string.covanlop);
+
+        // ---------
+        hintRegularClass.setVisibility(View.GONE);
+        txtRegularClass.setVisibility(View.GONE);
     }
 
     @Override
@@ -207,6 +200,8 @@ public class EditProfileActivity extends Activity {
     }
 
     private void setUserVoteSolve() {
+        if (isTeacher) return;
+
         RequestServer requestServer = new RequestServer(getApplicationContext(), Request.Method.GET, AppConfig.URL_GET_USER_SOLVE_VOTE);
         requestServer.setListener(new RequestServer.ServerListener() {
             @Override
