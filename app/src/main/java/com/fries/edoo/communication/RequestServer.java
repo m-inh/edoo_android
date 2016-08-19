@@ -22,7 +22,6 @@ import java.util.Map;
 public class RequestServer {
     private static final String TAG = "RequestServer";
     private JsonObjectRequest request;
-
     private int method;
     private String url;
     private JSONObject jsonReq;

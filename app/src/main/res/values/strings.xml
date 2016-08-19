@@ -63,5 +63,6 @@
     <string name="lophoc">Lớp học</string>
     <string name="timeline_activity">Bài đăng</string>
     <string name="locbaidangchuadoc">Lọc bài chưa đọc</string>
+    <string name="description">Một số thông tin</string>
 
 </resources>
