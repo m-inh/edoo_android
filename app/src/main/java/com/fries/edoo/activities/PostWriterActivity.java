@@ -47,8 +47,8 @@ public class PostWriterActivity extends AppCompatActivity{
     public static final String TYPE_POST_NOTIFICATION  = "notification";
     public static final String TYPE_POST_POLL          = "poll";
 
-
     private static final String TAG = PostWriterActivity.class.getSimpleName();
+
     private ProgressDialog pDialog;
 
     private EditText edtContentPost;
@@ -73,8 +73,11 @@ public class PostWriterActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_writer);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //get data from Mainactivity
         Intent mIntent = getIntent();
@@ -237,6 +240,9 @@ public class PostWriterActivity extends AppCompatActivity{
         if (!isAllowedClick) return true;
 
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
             case R.id.action_post:
                 String title = edtTitlePost.getText().toString();
                 String content = edtContentPost.getText().toString();
