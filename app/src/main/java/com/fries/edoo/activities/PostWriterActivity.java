@@ -17,9 +17,12 @@ import com.android.volley.Request;
 import com.fries.edoo.R;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
+import com.fries.edoo.helper.SQLiteHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class PostWriterActivity extends AppCompatActivity {
 
@@ -30,6 +33,8 @@ public class PostWriterActivity extends AppCompatActivity {
     private EditText edtTitlePost;
 
     private String idLop;
+
+    private SQLiteHandler sqlite;
 
     private boolean isAllowedClick;
 
@@ -43,6 +48,8 @@ public class PostWriterActivity extends AppCompatActivity {
         //get data from Mainactivity
         Intent mIntent = getIntent();
         this.idLop = mIntent.getStringExtra("class_id");
+
+        sqlite = new SQLiteHandler(this);
 
         isAllowedClick = true;
 
@@ -88,13 +95,14 @@ public class PostWriterActivity extends AppCompatActivity {
 
                 //get intent tu MainActivity
 //                Intent intent = getIntent();
-                postPost(idLop, title, content, "note", false);
+                boolean isTeacher = (sqlite.getUserDetails().get("type").equalsIgnoreCase("teacher"));
+                postPost(idLop, title, content, "note", false, isTeacher);
                 break;
         }
         return true;
     }
 
-    private void postPost(String classId, String title, String content, String type, boolean isIncognito) {
+    private void postPost(String classId, String title, String content, String type, boolean isIncognito, boolean isPostTeacher) {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.show();
@@ -108,6 +116,7 @@ public class PostWriterActivity extends AppCompatActivity {
             params.put("content", content);
             params.put("type", type);
             params.put("is_incognito", isIncognito);
+            params.put("is_post_teacher", isPostTeacher);
         } catch (JSONException e) {
             e.printStackTrace();
         }
