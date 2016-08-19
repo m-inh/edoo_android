@@ -155,7 +155,7 @@ public class LoginActivity extends Activity {
                     String type = user.getString("capability");
                     String name = user.getString("name");
 
-                    String created_at = "";
+//                    String created_at = "";
 
                     Log.i(TAG, "login: " + name);
                     Log.i(TAG, "ava: " + ava);
