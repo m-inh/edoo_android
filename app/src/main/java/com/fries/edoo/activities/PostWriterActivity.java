@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +24,7 @@ import android.webkit.WebView;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +41,12 @@ import jp.wasabeef.richeditor.RichEditor;
 
 import java.util.HashMap;
 
-public class PostWriterActivity extends AppCompatActivity {
+public class PostWriterActivity extends AppCompatActivity{
+    public static final String TYPE_POST_QUESTION      = "question";
+    public static final String TYPE_POST_NOTE          = "note";
+    public static final String TYPE_POST_NOTIFICATION  = "notification";
+    public static final String TYPE_POST_POLL          = "poll";
+
 
     private static final String TAG = PostWriterActivity.class.getSimpleName();
     private ProgressDialog pDialog;
@@ -56,6 +63,10 @@ public class PostWriterActivity extends AppCompatActivity {
     //---------------------
     private RichEditor mEditor;
     private int textSizeEditor;
+    private TextView typeQuestion, typeNote, typeNotification, typePoll;
+    private ImageView ivLineTypePost;
+    private String typePost;
+    private TextView oldType;
     //---------------------------
 
     @Override
@@ -75,12 +86,31 @@ public class PostWriterActivity extends AppCompatActivity {
 
         textSizeEditor = 0;
 
+        typePost = TYPE_POST_NOTE;
+        oldType = null;
         initViews();
     }
 
     private void initViews() {
         edtTitlePost = (EditText) findViewById(R.id.edt_titlePost);
         edtContentPost = (EditText) findViewById(R.id.edt_contentPost);
+
+        typeQuestion        = (TextView) findViewById(R.id.txt_type_post_question);
+        typeNote            = (TextView) findViewById(R.id.txt_type_post_note);
+        typeNotification    = (TextView) findViewById(R.id.txt_type_post_notification);
+        typePoll            = (TextView) findViewById(R.id.txt_type_post_poll);
+        ivLineTypePost      = (ImageView) findViewById(R.id.iv_line_type_post);
+
+        typeQuestion.setOnClickListener(clickTypePost);
+        typeNote.setOnClickListener(clickTypePost);
+        typeNotification.setOnClickListener(clickTypePost);
+        typePoll.setOnClickListener(clickTypePost);
+
+        typeNote.setTextSize(14f);
+
+        if (!sqlite.getUserDetails().get("type").equalsIgnoreCase("teacher")){
+            typeNotification.setVisibility(View.GONE);
+        }
 
         initViewsRichEditor();
     }
@@ -106,57 +136,13 @@ public class PostWriterActivity extends AppCompatActivity {
 //            }
 //        });
 
-        findViewById(R.id.editor_action_undo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.undo();
-            }
-        });
-
-        findViewById(R.id.editor_action_bold).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setBold();
-            }
-        });
-
-        findViewById(R.id.editor_action_italic).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setItalic();
-            }
-        });
-
-        findViewById(R.id.editor_action_underline).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setUnderline();
-            }
-        });
-
-
-        findViewById(R.id.editor_action_text_size).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textSizeEditor = (textSizeEditor + 1) % 3;
-                mEditor.setHeading((textSizeEditor + 1) * 2);
-            }
-        });
-
-        findViewById(R.id.editor_action_insert_image).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.insertImage("http://www.1honeywan.com/dachshund/image/7.21/7.21_3_thumb.JPG",
-                        "dachshund");
-            }
-        });
-
-        findViewById(R.id.editor_action_insert_link).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialogInsertLink();
-            }
-        });
+        findViewById(R.id.editor_action_undo).setOnClickListener(clickToolEditor);
+        findViewById(R.id.editor_action_bold).setOnClickListener(clickToolEditor);
+        findViewById(R.id.editor_action_italic).setOnClickListener(clickToolEditor);
+        findViewById(R.id.editor_action_underline).setOnClickListener(clickToolEditor);
+        findViewById(R.id.editor_action_text_size).setOnClickListener(clickToolEditor);
+        findViewById(R.id.editor_action_insert_image).setOnClickListener(clickToolEditor);
+        findViewById(R.id.editor_action_insert_link).setOnClickListener(clickToolEditor);
 
         mEditor.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -171,6 +157,72 @@ public class PostWriterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Receive event click to choose type of Post: Question, Note, Notification, Poll
+     */
+    View.OnClickListener clickTypePost = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            int idColor = 0;
+            switch (view.getId()) {
+                case R.id.txt_type_post_question:
+                    typePost = TYPE_POST_QUESTION;
+                    idColor = R.color.type_post_question;
+                    break;
+                case R.id.txt_type_post_note:
+                    typePost = TYPE_POST_NOTE;
+                    idColor = R.color.type_post_note;
+                    break;
+                case R.id.txt_type_post_notification:
+                    typePost = TYPE_POST_NOTIFICATION;
+                    idColor = R.color.type_post_notification;
+                    break;
+                case R.id.txt_type_post_poll:
+                    typePost = TYPE_POST_POLL;
+                    idColor = R.color.type_post_poll;
+                    break;
+            }
+            if (oldType!=null) oldType.setTextSize(12f);
+            oldType = (TextView) view;
+            oldType.setTextSize(14f);
+            ivLineTypePost.setBackgroundColor(getResources().getColor(idColor));
+        }
+    };
+
+    /**
+     * Receive event click to choose tool in Editor: Undo, TextSize, Bold, Italic, Underline, InsertImage, InsertLink
+     */
+    View.OnClickListener clickToolEditor = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.editor_action_undo:
+                    mEditor.undo();
+                    break;
+                case R.id.editor_action_text_size:
+                    textSizeEditor = (textSizeEditor + 1) % 3;
+                    mEditor.setHeading((textSizeEditor + 1) * 2);
+                    break;
+                case R.id.editor_action_bold:
+                    mEditor.setBold();
+                    break;
+                case R.id.editor_action_italic:
+                    mEditor.setItalic();
+                    break;
+                case R.id.editor_action_underline:
+                    mEditor.setUnderline();
+                    break;
+                case R.id.editor_action_insert_image:
+                    mEditor.insertImage("http://www.1honeywan.com/dachshund/image/7.21/7.21_3_thumb.JPG", "dachshund");
+                    break;
+                case R.id.editor_action_insert_link:
+                    showDialogInsertLink();
+                    break;
+            }
+        }
+    };
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.writepost_menu, menu);
@@ -182,9 +234,7 @@ public class PostWriterActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (!isAllowedClick) {
-            return true;
-        }
+        if (!isAllowedClick) return true;
 
         switch (item.getItemId()) {
             case R.id.action_post:

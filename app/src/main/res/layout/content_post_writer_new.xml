@@ -8,22 +8,36 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />
 
-    <android.support.design.widget.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_horizontal_margin">
 
-        <EditText
-            android:id="@+id/edt_titlePost"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="50"
-            android:hint="@string/title_post2"
-            android:inputType="textMultiLine|textCapSentences" />
+        <ImageView
+            android:id="@+id/iv_line_type_post"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/type_post_note"/>
 
-    </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edt_titlePost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="50"
+                android:hint="@string/title_post2"
+                android:inputType="textMultiLine|textCapSentences" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+
 
 
     <TextView
@@ -37,7 +51,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24sp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin">
 
         <TextView
@@ -45,45 +59,48 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:padding="@dimen/card_elevation"
             android:background="@color/type_post_question"
             android:gravity="center"
-            android:padding="@dimen/card_elevation"
             android:text="@string/type_post_question"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/txt_type_post_note"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:padding="@dimen/card_elevation"
             android:background="@color/type_post_note"
             android:gravity="center"
-            android:padding="@dimen/card_elevation"
             android:text="@string/type_post_note"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/txt_type_post_notification"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:padding="@dimen/card_elevation"
             android:background="@color/type_post_notification"
             android:gravity="center"
-            android:padding="@dimen/card_elevation"
             android:text="@string/type_post_notification"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/txt_type_post_poll"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:padding="@dimen/card_elevation"
             android:background="@color/type_post_poll"
             android:gravity="center"
-            android:padding="@dimen/card_elevation"
             android:text="@string/type_post_poll"
             android:textColor="@android:color/white"
             android:textSize="12sp"
