@@ -93,7 +93,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
             ItemPostDetailHolder postDetailHolder = (ItemPostDetailHolder) holder;
 
             postDetailHolder.setTitle(itemTimeline.getTitle());
-            postDetailHolder.setContent(itemTimeline.getContent());
+            postDetailHolder.setContentToWebview(itemTimeline.getContent());
             postDetailHolder.setAuthorName(itemTimeline.getName());
             postDetailHolder.setComment(itemTimeline.getItemComments().size() + "");
             postDetailHolder.setLike(itemTimeline.getLike() + "");

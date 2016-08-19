@@ -3,7 +3,11 @@ package com.fries.edoo.holder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,6 +40,7 @@ public class ItemPostDetailHolder extends AbstractHolder {
 
     private TextView tvTitle;
     private TextView tvContent;
+    private WebView webView;
     private TextView tvAuthorName;
     private TextView tvLike;
     private TextView tvComment;
@@ -84,6 +89,15 @@ public class ItemPostDetailHolder extends AbstractHolder {
 
 
         createListener();
+
+        webView = (WebView) itemView.findViewById(R.id.webview);
+    }
+
+    public void setContentToWebview(String content){
+        String htmlData = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />" +"<html>" + content + "</html>";
+        // lets assume we have /assets/style.css file
+        webView.loadDataWithBaseURL("file:///android_asset/", htmlData, "text/html", "UTF-8", null);
+//        webView.loadUrl("file:///android_asset/test.html");
     }
 
     public void setCbIsVote(boolean isConfirmByTeacher) {

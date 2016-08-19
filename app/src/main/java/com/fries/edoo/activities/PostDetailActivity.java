@@ -1,13 +1,18 @@
 package com.fries.edoo.activities;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,6 +72,7 @@ public class PostDetailActivity extends AppCompatActivity {
         initViews(itemTimeline);
 
         getPostDetail(itemTimeline.getIdPost());
+
     }
 
     private void initViews(final ItemTimeLine itemTimeline) {
@@ -75,6 +81,10 @@ public class PostDetailActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvMain.setLayoutManager(linearLayoutManager);
         rvMain.setAdapter(mAdapter);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            rvMain.setOnScrollChangeListener((View.OnScrollChangeListener) onScrollListener);
+        }
 
         edtComment = (EditText) findViewById(R.id.edt_comment);
         btnSend = (ImageView) findViewById(R.id.btn_send);
@@ -105,6 +115,18 @@ public class PostDetailActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onActionModeStarted(ActionMode mode) {
+        super.onActionModeStarted(mode);
+        toolbar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onActionModeFinished(ActionMode mode) {
+        super.onActionModeFinished(mode);
+        toolbar.setVisibility(View.VISIBLE);
     }
 
     private void getPostDetail(String idPost) {
@@ -214,4 +236,28 @@ public class PostDetailActivity extends AppCompatActivity {
         mIntent.putExtras(b);
         setResult(RESULT_OK, mIntent);
     }
+
+    public RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+        boolean hideToolBar = false;
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if (hideToolBar) {
+                PostDetailActivity.this.getSupportActionBar().hide();
+            } else {
+                PostDetailActivity.this.getSupportActionBar().show();
+            }
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            if (dy > 20) {
+                hideToolBar = true;
+
+            } else if (dy < -5) {
+                hideToolBar = false;
+            }
+        }
+    };
 }
