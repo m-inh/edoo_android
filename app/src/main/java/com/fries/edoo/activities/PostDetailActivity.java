@@ -145,9 +145,9 @@ public class PostDetailActivity extends AppCompatActivity {
                             continue;
                         }
 
-                        Log.i(TAG, "comment: " + nameAuthorComment);
-                        Log.i(TAG, "comment: " + emailAuthorComment);
-                        Log.i(TAG, "comment: " + typeAuthorComment);
+//                        Log.i(TAG, "comment: " + nameAuthorComment);
+//                        Log.i(TAG, "comment: " + emailAuthorComment);
+//                        Log.i(TAG, "comment: " + typeAuthorComment);
 
 //                        boolean isVote = cmtJson.getBoolean("confirmed");
 
