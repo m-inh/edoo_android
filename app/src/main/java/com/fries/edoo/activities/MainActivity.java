@@ -31,9 +31,9 @@ import com.fries.edoo.fragment.ThoiKhoaBieuFragment;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.helper.SessionManager;
 import com.fries.edoo.models.ItemLop;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.firebase.iid.FirebaseInstanceId;
+//import com.google.android.gms.common.ConnectionResult;
+//import com.google.android.gms.common.GoogleApiAvailability;
+//import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity
         toolbar.setTitle("Thời khoá biểu");
 
         // Register FCM token to server
-        Log.d(TAG, "FCM token: " + FirebaseInstanceId.getInstance().getToken());
+//        Log.d(TAG, "FCM token: " + FirebaseInstanceId.getInstance().getToken());
     }
 
     private void initViews() {
