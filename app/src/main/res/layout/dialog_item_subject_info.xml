@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minWidth="300dp"
+    android:minWidth="280dp"
     android:orientation="vertical"
-    android:padding="30dp">
+    android:padding="@dimen/dialog_padding_around_content">
 
     <TextView
         android:id="@+id/dialogTenMH"
@@ -14,7 +14,7 @@
         android:paddingBottom="20dp"
         android:text="Ten mon hoc"
         android:textColor="@android:color/holo_blue_dark"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <TableRow
@@ -32,9 +32,9 @@
             android:id="@+id/dialogMaMH"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:text="Ma lmh"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size_normal" />
 
     </TableRow>
 
@@ -53,9 +53,9 @@
             android:id="@+id/dialogGiangVien"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:text="Giang vien"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size_normal" />
 
     </TableRow>
 
@@ -74,9 +74,9 @@
             android:id="@+id/dialogThoiGian"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:text="Thoi gian"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size_normal" />
 
     </TableRow>
 
@@ -96,9 +96,9 @@
             android:id="@+id/dialogDiaDiem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:text="Dia diem"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size_normal" />
 
     </TableRow>
 

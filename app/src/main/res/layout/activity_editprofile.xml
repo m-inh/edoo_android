@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="182dp"
         android:padding="@dimen/activity_horizontal_margin"
         android:background="@android:color/white">
 
@@ -63,13 +63,15 @@
                     android:gravity="center_horizontal">
 
                     <TextView
+                        android:id="@+id/txt_vote_count_profile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="30"
+                        android:text="-"
                         android:textSize="16sp"
                         android:textColor="@android:color/black"/>
 
                     <ImageView
+                        android:id="@+id/iv_vote_profile"
                         android:layout_width="match_parent"
                         android:layout_height="24dp"
                         android:src="@mipmap/ic_up_24"/>
@@ -93,9 +95,10 @@
                     android:gravity="center_horizontal">
 
                     <TextView
+                        android:id="@+id/txt_solve_count_profile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="100"
+                        android:text="-"
                         android:textSize="16sp"
                         android:textColor="@android:color/black"/>
 
@@ -121,6 +124,7 @@
         android:background="@android:color/white">
 
         <TextView
+            android:id="@+id/txt_hint_code_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/hint_mssv"
@@ -136,6 +140,7 @@
             android:textColor="@color/colorPrimary"/>
 
         <TextView
+            android:id="@+id/txt_hint_regular_class_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_horizontal_margin"

@@ -24,6 +24,7 @@
     <string name="register">Đăng kí</string>
     <string name="lopmonhoc">Lớp môn học</string>
     <string name="lopkhoahoc">Lớp khoá học</string>
+    <string name="covanlop">Cố vấn lớp</string>
     <string name="register_lopkhoahoc">Lớp khoá học(vd: K58CLC, ...)</string>
     <string name="tienich">Tiện ích</string>
     <string name="taikhoan">Tài khoản</string>
@@ -35,6 +36,7 @@
     <string name="done">Hoàn tất</string>
     <string name="editActivity">Chỉnh sửa thông tin cá nhân</string>
     <string name="hint_mssv">Mã số sinh viên</string>
+    <string name="hint_msgv">Mã số giảng viên</string>
     <string name="updateAccount">Cập nhật tài khoản</string>
 
 
@@ -49,6 +51,11 @@
     <string name="title_post_hint">Tiêu đề</string>
     <string name="content_hint">Nội dung</string>
     <string name="title_post2">Tiêu đề</string>
+    <string name="type_post">Loại post</string>
+    <string name="type_post_question">Question</string>
+    <string name="type_post_note">Note</string>
+    <string name="type_post_poll">Poll</string>
+    <string name="type_post_notification">Notification</string>
     <string name="title_content2">Nội dung</string>
     <string name="lichthi">Lịch Thi</string>
     <string name="tailieu">Tài Liệu</string>
