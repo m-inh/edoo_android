@@ -27,5 +27,9 @@
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
     </style>
 
+    <style name="DialogAnimation" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:windowSoftInputMode">stateVisible</item>
+    </style>
+
 
 </resources>

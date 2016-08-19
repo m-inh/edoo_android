@@ -72,4 +72,9 @@
     <string name="locbaidangchuadoc">Lọc bài chưa đọc</string>
     <string name="description">Một số thông tin</string>
 
+    <string name="link">Link</string>
+    <string name="link_title">Title</string>
+    <string name="dialog_title_insert_link">Thêm link</string>
+    <string name="insert">Thêm</string>
+
 </resources>
