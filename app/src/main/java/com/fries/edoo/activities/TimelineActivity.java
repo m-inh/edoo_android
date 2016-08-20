@@ -135,7 +135,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 if (!error) {
-                    Log.i(TAG, response.toString());
+                    Log.d(TAG, response.toString());
 
                     //lay jsonItem nhet vao item
                     JSONArray jsonPostArr = response.getJSONObject("data").getJSONArray("posts");
@@ -147,6 +147,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         String id = jsonPostArr.getJSONObject(i).getString("id");
                         String titlePost = jsonPostArr.getJSONObject(i).getString("title");
                         String contentPost = jsonPostArr.getJSONObject(i).getString("content");
+                        String desPost = jsonPostArr.getJSONObject(i).getString("description");
                         int like = jsonPostArr.getJSONObject(i).getInt("vote_count");
                         int commentCount = jsonPostArr.getJSONObject(i).getInt("comment_count");
                         boolean isIncognito = jsonPostArr.getJSONObject(i).getInt("is_incognito") == 1;
@@ -175,6 +176,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         boolean isConfirm = false;
                         ItemTimeLine itemTimeLine = new ItemTimeLine(id, titlePost, nameAuthorPost, avarAuthorPost, contentPost, like, isConfirm);
                         itemTimeLine.setTypeAuthor(typeAuthorPost);
+                        itemTimeLine.setDescription(desPost);
                         itemTimeLine.setIdAuthor(idAuthorPost);
                         itemTimeLine.setCommentCount(commentCount);
                         itemTimeLine.setIsSeen(isSeen);

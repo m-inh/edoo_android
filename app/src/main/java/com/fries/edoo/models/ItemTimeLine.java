@@ -20,6 +20,7 @@ public class ItemTimeLine extends ItemBase implements Serializable {
     private String typeAuthor;
     private String idAuthor;
     private String content;
+    private String description;
     private String keyLopType;
     private int like;
     private boolean isConfirmByTeacher;
@@ -159,5 +160,13 @@ public class ItemTimeLine extends ItemBase implements Serializable {
 
     public void setSolve(boolean solve) {
         isSolve = solve;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

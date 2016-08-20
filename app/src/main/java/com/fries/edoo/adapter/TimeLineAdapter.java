@@ -57,7 +57,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
             case BAI_DANG_LOC_THEO_CHUA_TRA_LOI:
                 for (int i = 0; i < itemArr.size(); i++) {
                     ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(i);
-                    if (!itemTimeLine.isConfirmByTeacher()) {
+                    if (!itemTimeLine.isSolve()) {
                         currentItemArr.add(itemArr.get(i));
                     }
                 }
@@ -92,7 +92,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
             case BAI_DANG_LOC_THEO_CHUA_TRA_LOI:
                 for (int i = 0; i < itemArr.size(); i++) {
                     ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(i);
-                    if (!itemTimeLine.isConfirmByTeacher()) {
+                    if (!itemTimeLine.isSolve()) {
                         currentItemArr.add(itemArr.get(i));
                     }
                 }
@@ -140,7 +140,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
         itemPostHolder.setListComment(itemTimeLine.getItemComments());
         itemPostHolder.getTxtAuthor().setText(itemTimeLine.getName());
         itemPostHolder.getTxtTitle().setText(itemTimeLine.getTitle());
-        itemPostHolder.getTxtContent().setText(itemTimeLine.getContent());
+        itemPostHolder.getTxtContent().setText(itemTimeLine.getDescription());
         itemPostHolder.setLike(itemTimeLine.getLike());
         itemPostHolder.getTxtCountLike().setText(itemTimeLine.getLike() + "");
         if (itemTimeLine.getLike() >= 0) {
