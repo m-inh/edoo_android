@@ -29,8 +29,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.fries.edoo.R;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.app.AppController;
+import com.fries.edoo.communication.MultipartRequest;
 import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
+import com.fries.edoo.utils.CommonVLs;
 import com.fries.edoo.utils.UserPicture;
 import com.soundcloud.android.crop.Crop;
 import com.squareup.picasso.Picasso;
@@ -233,83 +235,115 @@ public class EditProfileActivity extends Activity {
     private void uploadImage(final Bitmap bmp) {
         //Showing the progress dialog
         final ProgressDialog loading = ProgressDialog.show(this, "Uploading...", "Please wait...", false, false);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConfig.URL_POST_IMG,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i(TAG, "response: " + response);
-                        //Disimissing the progress dialog
-                        loading.dismiss();
 
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String urlAva = jsonObject.getString("url");
+        byte[] fileData = CommonVLs.getFileDataFromBitmap(bmp);
+        String filename = "avatar.jpg";
+        String fileType = "image/jpg";
+        MultipartRequest request =
+                new MultipartRequest(this, Request.Method.POST,
+                        AppConfig.URL_POST_IMG, fileData, filename, fileType);
 
-                            //Send url avatar to handler
-                            Message msg = new Message();
-                            Bundle b = new Bundle();
-                            b.putString("avatar", urlAva);
-                            msg.setData(b);
-                            msg.setTarget(mHandler);
-                            msg.sendToTarget();
-
-                            //Showing toast message of the response
-//                        Toast.makeText(EditProfileActivity.this, response, Toast.LENGTH_LONG).show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        //Dismissing the progress dialog
-                        loading.dismiss();
-
-                        //Showing toast
-//                        Toast.makeText(EditProfileActivity.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
-                    }
-                }) {
+        request.setListener(new MultipartRequest.ServerListener() {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                //Converting Bitmap to String
-                String image = getStringImage(bmp);
+            public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
+                Log.d(TAG, "response: " + response);
+                Log.d(TAG, "msg: " + message);
+                //Disimissing the progress dialog
+                loading.dismiss();
 
-                //Getting Image Name
-//                String name = editTextName.getText().toString().trim();
+                if (!error){
+                    String urlAva = response.getJSONObject("data").getString("url");
 
-                //Creating parameters
-                Map<String, String> params = new Hashtable<String, String>();
-
-
-                SQLiteHandler sqLite = new SQLiteHandler(EditProfileActivity.this);
-                Map<String, String> user = sqLite.getUserDetails();
-                //Adding parameters
-                params.put("avatar", image);
-                params.put("uid", user.get(SQLiteHandler.KEY_UID));
-
-                //returning parameters
-                return params;
+                    //Send url avatar to handler
+                    Message msg = new Message();
+                    Bundle b = new Bundle();
+                    b.putString("avatar", urlAva);
+                    msg.setData(b);
+                    msg.setTarget(mHandler);
+                    msg.sendToTarget();
+                }
             }
-        };
+        });
+
+
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConfig.URL_POST_IMG,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        Log.i(TAG, "response: " + response);
+//                        //Disimissing the progress dialog
+//                        loading.dismiss();
+//
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            String urlAva = jsonObject.getString("url");
+//
+//                            //Send url avatar to handler
+//                            Message msg = new Message();
+//                            Bundle b = new Bundle();
+//                            b.putString("avatar", urlAva);
+//                            msg.setData(b);
+//                            msg.setTarget(mHandler);
+//                            msg.sendToTarget();
+//
+//                            //Showing toast message of the response
+////                        Toast.makeText(EditProfileActivity.this, response, Toast.LENGTH_LONG).show();
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError volleyError) {
+//                        //Dismissing the progress dialog
+//                        loading.dismiss();
+//
+//                        //Showing toast
+////                        Toast.makeText(EditProfileActivity.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+//                    }
+//                }) {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                //Converting Bitmap to String
+//                String image = getStringImage(bmp);
+//
+//                //Getting Image Name
+////                String name = editTextName.getText().toString().trim();
+//
+//                //Creating parameters
+//                Map<String, String> params = new Hashtable<String, String>();
+//
+//
+//                SQLiteHandler sqLite = new SQLiteHandler(EditProfileActivity.this);
+//                Map<String, String> user = sqLite.getUserDetails();
+//                //Adding parameters
+//                params.put("avatar", image);
+//                params.put("uid", user.get(SQLiteHandler.KEY_UID));
+//
+//                //returning parameters
+//                return params;
+//            }
+//        };
 
         //Creating a Request Queue
 //        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         //Adding request to the queue
 //        requestQueue.add(stringRequest);
-        AppController.getInstance().addToRequestQueue(stringRequest);
+//        AppController.getInstance().addToRequestQueue(stringRequest);
+        request.sendRequest("update avatar");
     }
 
-    public String getStringImage(Bitmap bmp) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-
-//        Log.i(TAG, encodedImage);
-        return encodedImage;
-    }
+//    public String getStringImage(Bitmap bmp) {
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+//        byte[] imageBytes = baos.toByteArray();
+//        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+//
+////        Log.i(TAG, encodedImage);
+//        return encodedImage;
+//    }
 
     private Handler mHandler = new Handler() {
         @Override
