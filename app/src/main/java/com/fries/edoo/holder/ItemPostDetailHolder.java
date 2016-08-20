@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.fries.edoo.activities.PostDetailActivity;
 import com.fries.edoo.R;
+import com.fries.edoo.activities.WebviewActivity;
 import com.fries.edoo.adapter.ImagePostDetailAdapter;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
@@ -86,6 +88,19 @@ public class ItemPostDetailHolder extends AbstractHolder {
     public void setContentToWebview(String content){
         String htmlData = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />" +"<html>" + content + "</html>";
         webView.loadDataWithBaseURL("file:///android_asset/", htmlData, "text/html", "UTF-8", null);
+
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Intent mIntent = new Intent();
+                mIntent.setClass(mContext, WebviewActivity.class);
+                mIntent.putExtra("url", url);
+                mContext.startActivity(mIntent);
+                return true;
+            }
+
+        });
+
     }
 
     public void setCbIsVote() {
