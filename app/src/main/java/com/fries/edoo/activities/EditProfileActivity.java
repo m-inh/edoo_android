@@ -200,8 +200,6 @@ public class EditProfileActivity extends Activity {
     }
 
     private void setUserVoteSolve() {
-        if (isTeacher) return;
-
         RequestServer requestServer = new RequestServer(getApplicationContext(), Request.Method.GET, AppConfig.URL_GET_USER_SOLVE_VOTE);
         requestServer.setListener(new RequestServer.ServerListener() {
             @Override
