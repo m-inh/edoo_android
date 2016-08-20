@@ -7,24 +7,40 @@
     android:paddingRight="@dimen/dialog_padding_around_content">
 
 
-    <android.support.design.widget.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginTop="@dimen/activity_horizontal_margin">
 
-        <EditText
-            android:id="@+id/edt_insert_url"
-            android:layout_width="match_parent"
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:focusableInTouchMode="true"
-            android:hint="@string/link"
-            android:inputType="textUri">
+            android:layout_weight="1">
 
-        </EditText>
+            <EditText
+                android:id="@+id/edt_insert_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:hint="@string/link"
+                android:inputType="textUri">
 
-        <requestFocus></requestFocus>
+            </EditText>
 
-    </android.support.design.widget.TextInputLayout>
+            <requestFocus></requestFocus>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/iv_link_invalid"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_sync_disabled"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"

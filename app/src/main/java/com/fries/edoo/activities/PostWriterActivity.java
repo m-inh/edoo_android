@@ -15,11 +15,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckedTextView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
@@ -41,17 +43,16 @@ import jp.wasabeef.richeditor.RichEditor;
 
 import java.util.HashMap;
 
-public class PostWriterActivity extends AppCompatActivity{
-    public static final String TYPE_POST_QUESTION      = "question";
-    public static final String TYPE_POST_NOTE          = "note";
-    public static final String TYPE_POST_NOTIFICATION  = "notification";
-    public static final String TYPE_POST_POLL          = "poll";
+public class PostWriterActivity extends AppCompatActivity {
+    public static final String TYPE_POST_QUESTION = "question";
+    public static final String TYPE_POST_NOTE = "note";
+    public static final String TYPE_POST_NOTIFICATION = "notification";
+    public static final String TYPE_POST_POLL = "poll";
 
     private static final String TAG = PostWriterActivity.class.getSimpleName();
 
     private ProgressDialog pDialog;
 
-    private EditText edtContentPost;
     private EditText edtTitlePost;
 
     private String idLop;
@@ -89,20 +90,19 @@ public class PostWriterActivity extends AppCompatActivity{
 
         textSizeEditor = 0;
 
-        typePost = TYPE_POST_NOTE;
-        oldType = null;
         initViews();
+        typePost = TYPE_POST_NOTE;
+        oldType = typeNote;
     }
 
     private void initViews() {
-        edtTitlePost = (EditText) findViewById(R.id.edt_titlePost);
-        edtContentPost = (EditText) findViewById(R.id.edt_contentPost);
+        edtTitlePost = (EditText) findViewById(R.id.edt_title_post);
 
-        typeQuestion        = (TextView) findViewById(R.id.txt_type_post_question);
-        typeNote            = (TextView) findViewById(R.id.txt_type_post_note);
-        typeNotification    = (TextView) findViewById(R.id.txt_type_post_notification);
-        typePoll            = (TextView) findViewById(R.id.txt_type_post_poll);
-        ivLineTypePost      = (ImageView) findViewById(R.id.iv_line_type_post);
+        typeQuestion = (TextView) findViewById(R.id.txt_type_post_question);
+        typeNote = (TextView) findViewById(R.id.txt_type_post_note);
+        typeNotification = (TextView) findViewById(R.id.txt_type_post_notification);
+        typePoll = (TextView) findViewById(R.id.txt_type_post_poll);
+        ivLineTypePost = (ImageView) findViewById(R.id.iv_line_type_post);
 
         typeQuestion.setOnClickListener(clickTypePost);
         typeNote.setOnClickListener(clickTypePost);
@@ -111,7 +111,7 @@ public class PostWriterActivity extends AppCompatActivity{
 
         typeNote.setTextSize(14f);
 
-        if (!sqlite.getUserDetails().get("type").equalsIgnoreCase("teacher")){
+        if (!sqlite.getUserDetails().get("type").equalsIgnoreCase("teacher")) {
             typeNotification.setVisibility(View.GONE);
         }
 
@@ -144,6 +144,7 @@ public class PostWriterActivity extends AppCompatActivity{
         findViewById(R.id.editor_action_italic).setOnClickListener(clickToolEditor);
         findViewById(R.id.editor_action_underline).setOnClickListener(clickToolEditor);
         findViewById(R.id.editor_action_text_size).setOnClickListener(clickToolEditor);
+        findViewById(R.id.editor_action_bullets).setOnClickListener(clickToolEditor);
         findViewById(R.id.editor_action_insert_image).setOnClickListener(clickToolEditor);
         findViewById(R.id.editor_action_insert_link).setOnClickListener(clickToolEditor);
 
@@ -185,7 +186,7 @@ public class PostWriterActivity extends AppCompatActivity{
                     idColor = R.color.type_post_poll;
                     break;
             }
-            if (oldType!=null) oldType.setTextSize(12f);
+            oldType.setTextSize(12f);
             oldType = (TextView) view;
             oldType.setTextSize(14f);
             ivLineTypePost.setBackgroundColor(getResources().getColor(idColor));
@@ -198,7 +199,7 @@ public class PostWriterActivity extends AppCompatActivity{
     View.OnClickListener clickToolEditor = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.editor_action_undo:
                     mEditor.undo();
                     break;
@@ -214,6 +215,9 @@ public class PostWriterActivity extends AppCompatActivity{
                     break;
                 case R.id.editor_action_underline:
                     mEditor.setUnderline();
+                    break;
+                case R.id.editor_action_bullets:
+                    mEditor.setBullets();
                     break;
                 case R.id.editor_action_insert_image:
                     mEditor.insertImage("http://www.1honeywan.com/dachshund/image/7.21/7.21_3_thumb.JPG", "dachshund");
@@ -232,6 +236,7 @@ public class PostWriterActivity extends AppCompatActivity{
         menu.findItem(R.id.action_post).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         menu.findItem(R.id.action_post).setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
+
         return true;
     }
 
@@ -245,8 +250,9 @@ public class PostWriterActivity extends AppCompatActivity{
                 break;
             case R.id.action_post:
                 String title = edtTitlePost.getText().toString();
-                String content = edtContentPost.getText().toString();
-                if (content.isEmpty()) {
+                String content = mEditor.getHtml();
+//                Toast.makeText(PostWriterActivity.this, content, Toast.LENGTH_SHORT).show();
+                if (content == null || content.isEmpty()) {
                     Toast.makeText(PostWriterActivity.this, "Bài viết không có nội dung!", Toast.LENGTH_SHORT).show();
                     return true;
                 }
@@ -268,16 +274,37 @@ public class PostWriterActivity extends AppCompatActivity{
     }
 
     private void showDialogInsertLink() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this, R.style.DialogAnimation);
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this, R.style.DialogAnimation);
         dialog.setTitle(R.string.dialog_title_insert_link);
         dialog.setIcon(R.drawable.ic_editor_insert_link_color);
         final View view = LayoutInflater.from(this).inflate(R.layout.dialog_insert_link_editor, null);
         dialog.setView(view);
 
+        final EditText link = (EditText) view.findViewById(R.id.edt_insert_url);
+        final ImageView error = (ImageView) view.findViewById(R.id.iv_link_invalid);
+        link.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+
+                if (!b) {
+                    String strLink = link.getText().toString();
+                    if (!strLink.contains("http")) {
+                        strLink = "http://" + strLink;
+                        link.setText(strLink);
+                    }
+                    if (!Patterns.WEB_URL.matcher(strLink).matches()) {
+                        Toast.makeText(getApplicationContext(), "Link error", Toast.LENGTH_SHORT).show();
+                        error.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    error.setVisibility(View.GONE);
+                }
+            }
+        });
+
         dialog.setPositiveButton(R.string.insert, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                EditText link = (EditText) view.findViewById(R.id.edt_insert_url);
                 EditText linkTitle = (EditText) view.findViewById(R.id.edt_insert_url_title);
 
                 String txtLink = link.getText().toString();
@@ -288,7 +315,7 @@ public class PostWriterActivity extends AppCompatActivity{
                 } else {
                     if (txtLinkTitle.isEmpty()) {
                         mEditor.insertLink(txtLink, txtLink);
-                    }else mEditor.insertLink(txtLink, txtLinkTitle);
+                    } else mEditor.insertLink(txtLink, txtLinkTitle);
                 }
             }
         });
@@ -346,4 +373,21 @@ public class PostWriterActivity extends AppCompatActivity{
         }
     };
 
+    @Override
+    public void onBackPressed() {
+        String title = edtTitlePost.getText().toString();
+        String content = mEditor.getHtml();
+        if (content != null || !title.isEmpty()) {
+            AlertDialog.Builder notiBack = new AlertDialog.Builder(this);
+            notiBack.setTitle(R.string.warn_exit);
+            notiBack.setPositiveButton("Hủy", null);
+            notiBack.setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    PostWriterActivity.super.onBackPressed();
+                }
+            });
+            notiBack.show();
+        } else super.onBackPressed();
+    }
 }

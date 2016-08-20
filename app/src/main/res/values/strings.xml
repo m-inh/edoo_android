@@ -76,5 +76,8 @@
     <string name="link_title">Title</string>
     <string name="dialog_title_insert_link">Thêm link</string>
     <string name="insert">Thêm</string>
+    <string name="warn">Cảnh báo</string>
+    <string name="go_back">Quay lại</string>
+    <string name="warn_exit">Hủy bài Post</string>
 
 </resources>
