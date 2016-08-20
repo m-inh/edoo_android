@@ -40,7 +40,7 @@ public class AppConfig {
 	public static final String SERVER_URL = "http://myclass.tutran.net/gcm/register";
 
 	///////////////IMG
-	public static final String URL_POST_IMG = URL_HOST + "/avatar";
+	public static final String URL_POST_IMG_AVATAR = URL_HOST + "/avatar";
 
 	public static final String  URL_GET_POST_DETAIL = URL_HOST + "/post";
 }

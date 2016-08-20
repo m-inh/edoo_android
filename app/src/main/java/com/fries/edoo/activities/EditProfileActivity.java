@@ -241,7 +241,7 @@ public class EditProfileActivity extends Activity {
         String fileType = "image/jpg";
         MultipartRequest request =
                 new MultipartRequest(this, Request.Method.POST,
-                        AppConfig.URL_POST_IMG, fileData, filename, fileType);
+                        AppConfig.URL_POST_IMG_AVATAR, fileData, filename, fileType);
 
         request.setListener(new MultipartRequest.ServerListener() {
             @Override
