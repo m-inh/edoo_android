@@ -79,5 +79,7 @@
     <string name="warn">Cảnh báo</string>
     <string name="go_back">Quay lại</string>
     <string name="warn_exit">Hủy bài Post</string>
+    <string name="post_incognito">Đăng ở chế độ ẩn danh</string>
+    <string name="anonymous">Anonymous</string>
 
 </resources>

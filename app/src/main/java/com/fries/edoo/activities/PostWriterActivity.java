@@ -1,333 +1,163 @@
 package com.fries.edoo.activities;
 
-import android.app.Dialog;
+
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatCheckedTextView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.Patterns;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.webkit.URLUtil;
-import android.webkit.WebView;
-import android.widget.CheckedTextView;
-import android.widget.EditText;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.fries.edoo.R;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
-import com.fries.edoo.helper.SQLiteHandler;
+import com.fries.edoo.fragment.PostWriterContentFragment;
+import com.fries.edoo.fragment.PostWriterTagFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import jp.wasabeef.richeditor.RichEditor;
-
-import java.util.HashMap;
-
-public class PostWriterActivity extends AppCompatActivity {
-    public static final String TYPE_POST_QUESTION = "question";
-    public static final String TYPE_POST_NOTE = "note";
-    public static final String TYPE_POST_NOTIFICATION = "notification";
-    public static final String TYPE_POST_POLL = "poll";
-
+/**
+ * Created by tmq on 20/08/2016.
+ */
+public class PostWriterActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener{
     private static final String TAG = PostWriterActivity.class.getSimpleName();
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private Toolbar toolbar;
+    private Button btnNext;
+    private PostAdapter postAdapter;
 
     private ProgressDialog pDialog;
 
-    private EditText edtTitlePost;
-
-    private String idLop;
-
-    private SQLiteHandler sqlite;
-
-    private boolean isAllowedClick;
-
-    //---------------------
-    private RichEditor mEditor;
-    private int textSizeEditor;
-    private TextView typeQuestion, typeNote, typeNotification, typePoll;
-    private ImageView ivLineTypePost;
-    private String typePost;
-    private TextView oldType;
-    //---------------------------
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_writer);
+        setContentView(R.layout.activity_post_writer_view_pager);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        initViews();
+    }
+
+    private void initViews(){
+        toolbar = (Toolbar) findViewById(R.id.tb_post_writer);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //get data from Mainactivity
-        Intent mIntent = getIntent();
-        this.idLop = mIntent.getStringExtra("class_id");
+        tabLayout = (TabLayout) findViewById(R.id.tl_post_writer);
+        viewPager = (ViewPager) findViewById(R.id.vp_post_writer);
 
-        sqlite = new SQLiteHandler(this);
+        postAdapter = new PostAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(postAdapter);
+        tabLayout.setupWithViewPager(viewPager);
 
-        isAllowedClick = true;
-
-        textSizeEditor = 0;
-
-        initViews();
-        typePost = TYPE_POST_NOTE;
-        oldType = typeNote;
+        btnNext = (Button) findViewById(R.id.btn_next_to_post_option);
+        btnNext.setOnClickListener(this);
+        viewPager.addOnPageChangeListener(this);
     }
 
-    private void initViews() {
-        edtTitlePost = (EditText) findViewById(R.id.edt_title_post);
-
-        typeQuestion = (TextView) findViewById(R.id.txt_type_post_question);
-        typeNote = (TextView) findViewById(R.id.txt_type_post_note);
-        typeNotification = (TextView) findViewById(R.id.txt_type_post_notification);
-        typePoll = (TextView) findViewById(R.id.txt_type_post_poll);
-        ivLineTypePost = (ImageView) findViewById(R.id.iv_line_type_post);
-
-        typeQuestion.setOnClickListener(clickTypePost);
-        typeNote.setOnClickListener(clickTypePost);
-        typeNotification.setOnClickListener(clickTypePost);
-        typePoll.setOnClickListener(clickTypePost);
-
-        typeNote.setTextSize(14f);
-
-        if (!sqlite.getUserDetails().get("type").equalsIgnoreCase("teacher")) {
-            typeNotification.setVisibility(View.GONE);
-        }
-
-        initViewsRichEditor();
-    }
-
-    private void initViewsRichEditor() {
-        mEditor = (RichEditor) findViewById(R.id.editor_rich_editor);
-//        mEditor.setEditorHeight(200);
-        mEditor.setEditorFontSize(16);
-        mEditor.setEditorFontColor(Color.BLACK);
-        mEditor.setPadding(8, 8, 8, 8);
-        //mEditor.setEditorBackgroundColor(Color.BLUE);
-        //mEditor.setBackgroundColor(Color.BLUE);
-        //mEditor.setBackgroundResource(R.drawable.bg);
-        //    mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
-        mEditor.setPlaceholder("Write post here ...");
-
-//        mEditor.setOnTextChangeListener(new RichEditor.OnTextChangeListener() {
-//            @Override
-//            public void onTextChange(String text) {
-//                mPreview.setText(text);
-//                mWebView.getSettings().setJavaScriptEnabled(true);
-//                mWebView.loadData(text, "text/html", "UTF-8");
-//            }
-//        });
-
-        findViewById(R.id.editor_action_undo).setOnClickListener(clickToolEditor);
-        findViewById(R.id.editor_action_bold).setOnClickListener(clickToolEditor);
-        findViewById(R.id.editor_action_italic).setOnClickListener(clickToolEditor);
-        findViewById(R.id.editor_action_underline).setOnClickListener(clickToolEditor);
-        findViewById(R.id.editor_action_text_size).setOnClickListener(clickToolEditor);
-        findViewById(R.id.editor_action_bullets).setOnClickListener(clickToolEditor);
-        findViewById(R.id.editor_action_insert_image).setOnClickListener(clickToolEditor);
-        findViewById(R.id.editor_action_insert_link).setOnClickListener(clickToolEditor);
-
-        mEditor.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                HorizontalScrollView editorToolBar = (HorizontalScrollView) findViewById(R.id.editor_tool_bar);
-                if (b) {
-                    editorToolBar.setVisibility(View.VISIBLE);
-                } else {
-                    editorToolBar.setVisibility(View.GONE);
-                }
-            }
-        });
-    }
-
-    /**
-     * Receive event click to choose type of Post: Question, Note, Notification, Poll
-     */
-    View.OnClickListener clickTypePost = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            int idColor = 0;
-            switch (view.getId()) {
-                case R.id.txt_type_post_question:
-                    typePost = TYPE_POST_QUESTION;
-                    idColor = R.color.type_post_question;
-                    break;
-                case R.id.txt_type_post_note:
-                    typePost = TYPE_POST_NOTE;
-                    idColor = R.color.type_post_note;
-                    break;
-                case R.id.txt_type_post_notification:
-                    typePost = TYPE_POST_NOTIFICATION;
-                    idColor = R.color.type_post_notification;
-                    break;
-                case R.id.txt_type_post_poll:
-                    typePost = TYPE_POST_POLL;
-                    idColor = R.color.type_post_poll;
-                    break;
-            }
-            oldType.setTextSize(12f);
-            oldType = (TextView) view;
-            oldType.setTextSize(14f);
-            ivLineTypePost.setBackgroundColor(getResources().getColor(idColor));
-        }
-    };
-
-    /**
-     * Receive event click to choose tool in Editor: Undo, TextSize, Bold, Italic, Underline, InsertImage, InsertLink
-     */
-    View.OnClickListener clickToolEditor = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.editor_action_undo:
-                    mEditor.undo();
-                    break;
-                case R.id.editor_action_text_size:
-                    textSizeEditor = (textSizeEditor + 1) % 3;
-                    mEditor.setHeading((textSizeEditor + 1) * 2);
-                    break;
-                case R.id.editor_action_bold:
-                    mEditor.setBold();
-                    break;
-                case R.id.editor_action_italic:
-                    mEditor.setItalic();
-                    break;
-                case R.id.editor_action_underline:
-                    mEditor.setUnderline();
-                    break;
-                case R.id.editor_action_bullets:
-                    mEditor.setBullets();
-                    break;
-                case R.id.editor_action_insert_image:
-                    mEditor.insertImage("http://www.1honeywan.com/dachshund/image/7.21/7.21_3_thumb.JPG", "dachshund");
-                    break;
-                case R.id.editor_action_insert_link:
-                    showDialogInsertLink();
-                    break;
-            }
-        }
-    };
-
+    // ---------------------------------------------------------------------------------------------
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.writepost_menu, menu);
-        menu.findItem(R.id.action_post).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        menu.findItem(R.id.action_post).setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-
-        return true;
+    public void onPageSelected(int position) {
+        switch (position){
+            case 0:
+                btnNext.setText("Tiếp tục");
+                break;
+            case 1:
+                btnNext.setText("Đăng bài");
+                break;
+        }
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (!isAllowedClick) return true;
+    public void onPageScrollStateChanged(int state) {}
+    // ---------------------------------------------------------------------------------------------
 
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
+    @Override
+    public void onClick(View view) {
+        switch (viewPager.getCurrentItem()){
+            case 0:
+                if (postAdapter.getPostWriterContent().checkFillContent()) viewPager.setCurrentItem(1, true);
                 break;
-            case R.id.action_post:
-                String title = edtTitlePost.getText().toString();
-                String content = mEditor.getHtml();
-//                Toast.makeText(PostWriterActivity.this, content, Toast.LENGTH_SHORT).show();
-                if (content == null || content.isEmpty()) {
-                    Toast.makeText(PostWriterActivity.this, "Bài viết không có nội dung!", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-                if (title.isEmpty()) {
-                    Toast.makeText(PostWriterActivity.this, "Bài viết không có tiêu đề!", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-
-                //block button post when clicked
-                isAllowedClick = false;
-
-                //get intent tu MainActivity
-//                Intent intent = getIntent();
-                boolean isTeacher = (sqlite.getUserDetails().get("type").equalsIgnoreCase("teacher"));
-                postPost(idLop, title, content, "note", false, isTeacher);
+            case 1:
+                postToServer();
                 break;
         }
-        return true;
     }
+    private void postToServer(){
+        String titlePost = postAdapter.getPostWriterContent().getTitlePost();
+        String contentPost = postAdapter.getPostWriterContent().getContentPost();
 
-    private void showDialogInsertLink() {
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(this, R.style.DialogAnimation);
-        dialog.setTitle(R.string.dialog_title_insert_link);
-        dialog.setIcon(R.drawable.ic_editor_insert_link_color);
-        final View view = LayoutInflater.from(this).inflate(R.layout.dialog_insert_link_editor, null);
-        dialog.setView(view);
+        if (!postAdapter.getPostWriterContent().checkFillContent()) {
+            viewPager.setCurrentItem(0, true);
+            return;
+        }
 
-        final EditText link = (EditText) view.findViewById(R.id.edt_insert_url);
-        final ImageView error = (ImageView) view.findViewById(R.id.iv_link_invalid);
-        link.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
+        btnNext.setEnabled(false);
 
-                if (!b) {
-                    String strLink = link.getText().toString();
-                    if (!strLink.contains("http")) {
-                        strLink = "http://" + strLink;
-                        link.setText(strLink);
-                    }
-                    if (!Patterns.WEB_URL.matcher(strLink).matches()) {
-                        Toast.makeText(getApplicationContext(), "Link error", Toast.LENGTH_SHORT).show();
-                        error.setVisibility(View.VISIBLE);
-                    }
-                } else {
-                    error.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        dialog.setPositiveButton(R.string.insert, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                EditText linkTitle = (EditText) view.findViewById(R.id.edt_insert_url_title);
-
-                String txtLink = link.getText().toString();
-                String txtLinkTitle = linkTitle.getText().toString();
-
-                if (txtLink.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Link rỗng", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (txtLinkTitle.isEmpty()) {
-                        mEditor.insertLink(txtLink, txtLink);
-                    } else mEditor.insertLink(txtLink, txtLinkTitle);
-                }
-            }
-        });
-
-        dialog.show();
-    }
-
-    private void postPost(String classId, String title, String content, String type, boolean isIncognito, boolean isPostTeacher) {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.show();
 
+        Intent mIntent = getIntent();
+        String idLop = mIntent.getStringExtra("class_id");
+
+        PostWriterTagFragment pTag = postAdapter.getPostWriterTagFragment();
+
+        postPost(idLop, titlePost, contentPost, pTag.getTypePost(), pTag.getIsIncognitoPost(), pTag.getIsTeacher());
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        String titlePost = postAdapter.getPostWriterContent().getTitlePost();
+        String contentPost = postAdapter.getPostWriterContent().getContentPost();
+        if (contentPost != null || !titlePost.isEmpty()) {
+            AlertDialog.Builder notiBack = new AlertDialog.Builder(this);
+            notiBack.setTitle(R.string.warn_exit);
+            notiBack.setPositiveButton("Hủy", null);
+            notiBack.setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    PostWriterActivity.super.onBackPressed();
+                }
+            });
+            notiBack.show();
+        } else super.onBackPressed();
+    }
+
+    // --------------------------------- Request Server --------------------------------------------
+    public void postPost(String classId, String title, String content, String type, boolean isIncognito, boolean isPostTeacher) {
         String url = AppConfig.URL_POST_POST;
 
         JSONObject params = new JSONObject();
@@ -355,7 +185,7 @@ public class PostWriterActivity extends AppCompatActivity {
                     msg.sendToTarget();
                 } else {
 //                    ivPost.setClickable(true);
-                    isAllowedClick = true;
+//                    isAllowedClick = true;
                     Log.i(TAG, "Post error: " + message);
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 }
@@ -373,21 +203,36 @@ public class PostWriterActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    public void onBackPressed() {
-        String title = edtTitlePost.getText().toString();
-        String content = mEditor.getHtml();
-        if (content != null || !title.isEmpty()) {
-            AlertDialog.Builder notiBack = new AlertDialog.Builder(this);
-            notiBack.setTitle(R.string.warn_exit);
-            notiBack.setPositiveButton("Hủy", null);
-            notiBack.setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    PostWriterActivity.super.onBackPressed();
-                }
-            });
-            notiBack.show();
-        } else super.onBackPressed();
+    // ----------------------------------------- Adapter -------------------------------------------
+    private class PostAdapter extends FragmentStatePagerAdapter{
+        private PostWriterContentFragment postWriterContent;
+        private PostWriterTagFragment postWriterTagFragment;
+
+        public PostAdapter(FragmentManager fm) {
+            super(fm);
+            postWriterContent = new PostWriterContentFragment();
+            postWriterTagFragment = new PostWriterTagFragment();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position){
+                case 0: return postWriterContent;
+                default: return postWriterTagFragment;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        public PostWriterContentFragment getPostWriterContent() {
+            return postWriterContent;
+        }
+
+        public PostWriterTagFragment getPostWriterTagFragment() {
+            return postWriterTagFragment;
+        }
     }
 }

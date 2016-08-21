@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/card_elevation"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:paddingLeft="@dimen/action_padding"
+        android:paddingTop="@dimen/action_padding"
+        android:text="Preview"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_tiny"
+        android:textStyle="italic" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/action_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_line_type_post"
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/type_post_note" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="150dp"
+                        android:layout_height="26dp"
+                        android:layout_margin="@dimen/action_padding"
+                        android:background="@color/colorPrimaryHint" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="16dp"
+                        android:layout_marginLeft="@dimen/action_padding"
+                        android:layout_marginRight="36dp"
+                        android:layout_marginTop="@dimen/card_elevation"
+                        android:background="@color/colorPrimaryHint" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="16dp"
+                        android:layout_marginLeft="@dimen/action_padding"
+                        android:layout_marginRight="72dp"
+                        android:layout_marginTop="@dimen/card_elevation"
+                        android:background="@color/colorPrimaryHint" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="16dp"
+                        android:layout_marginBottom="@dimen/action_padding"
+                        android:layout_marginLeft="@dimen/action_padding"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginTop="@dimen/card_elevation"
+                        android:background="@color/colorPrimaryHint" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_post_writer_avatar"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginRight="@dimen/action_padding"
+                    android:src="@mipmap/avatar_test"
+                    app:civ_border_color="@color/colorPrimary"
+                    app:civ_border_width="2dp" />
+
+                <TextView
+                    android:id="@+id/txt_post_writer_user"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/action_padding"
+                    android:text="Trần Minh Quý"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:background="@android:color/white"
+        android:paddingLeft="@dimen/action_padding"
+        android:paddingTop="@dimen/action_padding"
+        android:text="Options"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_tiny"
+        android:textStyle="italic" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/action_padding"
+            android:text="@string/type_post"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/txt_type_post_question"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/type_post_question"
+                android:gravity="center"
+                android:padding="@dimen/card_elevation"
+                android:text="@string/type_post_question"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_type_post_note"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/type_post_note"
+                android:gravity="center"
+                android:padding="@dimen/card_elevation"
+                android:text="@string/type_post_note"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_type_post_notification"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/type_post_notification"
+                android:gravity="center"
+                android:padding="@dimen/card_elevation"
+                android:text="@string/type_post_notification"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_type_post_poll"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/type_post_poll"
+                android:gravity="center"
+                android:padding="@dimen/card_elevation"
+                android:text="@string/type_post_poll"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/sc_incognito_mode_post"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:text="@string/post_incognito" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_add_tag_post"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="right"
+            android:layout_margin="@dimen/activity_horizontal_margin" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
