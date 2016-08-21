@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <!--<item-->
     <!--android:id="@+id/action_sendAll"-->
     <!--android:orderInCategory="100"-->
@@ -8,7 +9,15 @@
 
     <item
         android:id="@+id/action_post"
+        android:icon="@drawable/ic_send"
+        android:showAsAction="always"
         android:title="@string/action_post"
-        android:icon="@mipmap/ic_send_white_24dp"
-        android:showAsAction="always" />
+        tools:ignore="AppCompatResource" />
+
+    <item
+        android:id="@+id/action_next_page_write_post"
+        android:icon="@drawable/ic_arrow_forward"
+        android:showAsAction="always"
+        android:title="@string/next"
+        tools:ignore="AppCompatResource" />
 </menu>
