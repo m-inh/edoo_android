@@ -27,6 +27,9 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
     private ArrayList<ItemBase> currentItemArr;
     private String idLop;
 
+    public static final int ITEM_TIMELINE = 0;
+    public static final int ITEM_LOADMORE = 1;
+
     public static final int BAI_DANG_BINH_THUONG = 1;
     public static final int BAI_DANG_LOC_THEO_GIAO_VIEN = 2;
     public static final int BAI_DANG_LOC_THEO_CHUA_TRA_LOI = 3;
