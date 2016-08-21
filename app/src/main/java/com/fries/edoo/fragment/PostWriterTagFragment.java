@@ -21,10 +21,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.fries.edoo.R;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
+import com.nineoldandroids.animation.Animator;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -51,7 +54,6 @@ public class PostWriterTagFragment extends Fragment {
     private SwitchCompat scIncognitoMode;
     private String typePost;
     private TextView oldType;
-    private ProgressDialog pDialog;
     private FloatingActionButton fabAddTagPost;
     private CircleImageView ivAvatar;
     private TextView txtUser;
@@ -85,7 +87,7 @@ public class PostWriterTagFragment extends Fragment {
 
         typeNote.setTextSize(14f);
 
-        if (!sqlite.getUserDetails().get("type").equalsIgnoreCase("teacher")) {
+        if (!getIsTeacher()) {
             typeNotification.setVisibility(View.GONE);
         }
 
@@ -151,6 +153,11 @@ public class PostWriterTagFragment extends Fragment {
             oldType.setTextSize(12f);
             oldType = (TextView) view;
             oldType.setTextSize(14f);
+
+            YoYo.with(Techniques.ZoomInUp)
+                    .duration(700)
+                    .playOn(ivLineTypePost);
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 ivLineTypePost.setBackgroundColor(getActivity().getResources().getColor(idColor, getActivity().getTheme()));
             } else {
@@ -161,60 +168,47 @@ public class PostWriterTagFragment extends Fragment {
 
     CompoundButton.OnCheckedChangeListener checkIncognitoMode = new CompoundButton.OnCheckedChangeListener() {
         @Override
-        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-            setDataUser(!b);
+        public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
+            YoYo.with(Techniques.SlideOutRight)
+                    .withListener(new Animator.AnimatorListener() {
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            setDataUser(!b);
+                            YoYo.with(Techniques.SlideInRight)
+                                    .duration(500)
+                                    .playOn(txtUser);
+                            YoYo.with(Techniques.FlipInX)
+                                    .duration(1000)
+                                    .playOn(ivAvatar);
+                        }
+
+                        @Override
+                        public void onAnimationStart(Animator animation) {}
+                        @Override
+                        public void onAnimationCancel(Animator animation) {}
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {}
+                    })
+                    .duration(500)
+                    .playOn(txtUser);
+            YoYo.with(Techniques.FlipOutY)
+                    .duration(1000)
+                    .playOn(ivAvatar);
         }
     };
 
-    /*
-    private void postPost(String classId, String title, String content, String type, boolean isIncognito, boolean isPostTeacher) {
-        pDialog = new ProgressDialog(getContext());
-        pDialog.setCancelable(false);
-        pDialog.show();
-
-        String url = AppConfig.URL_POST_POST;
-
-        JSONObject params = new JSONObject();
-        try {
-            params.put("class_id", classId);
-            params.put("title", title);
-            params.put("content", content);
-            params.put("type", type);
-            params.put("is_incognito", isIncognito);
-            params.put("is_post_teacher", isPostTeacher);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        RequestServer requestServer = new RequestServer(getContext(), Request.Method.POST, url, params);
-        requestServer.setListener(new RequestServer.ServerListener() {
-            @Override
-            public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
-                pDialog.dismiss();
-                if (!error) {
-                    Log.i(TAG, response.toString());
-
-                    Message msg = new Message();
-                    msg.setTarget(mHandler);
-                    msg.sendToTarget();
-                } else {
-//                    ivPost.setClickable(true);
-                    isAllowedClick = true;
-                    Log.i(TAG, "Post error: " + message);
-                    Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        requestServer.sendRequest("post new post");
+    // ---------------------------------------------------------------------------------------------
+    public String getTypePost(){
+        return typePost;
     }
 
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            setResult(RESULT_OK);
-            finish();
-        }
-    };
-    */
+    public boolean getIsIncognitoPost(){
+        return scIncognitoMode.isChecked();
+    }
+
+    public boolean getIsTeacher(){
+        return sqlite.getUserDetails().get("type").equalsIgnoreCase("teacher");
+    }
+
 }

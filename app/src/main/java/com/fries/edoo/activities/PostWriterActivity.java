@@ -1,31 +1,49 @@
 package com.fries.edoo.activities;
 
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.fries.edoo.R;
+import com.fries.edoo.app.AppConfig;
+import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.fragment.PostWriterContentFragment;
 import com.fries.edoo.fragment.PostWriterTagFragment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by tmq on 20/08/2016.
  */
 public class PostWriterActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener{
+    private static final String TAG = PostWriterActivity.class.getSimpleName();
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Toolbar toolbar;
     private Button btnNext;
+    private PostAdapter postAdapter;
+
+    private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,20 +62,18 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
         tabLayout = (TabLayout) findViewById(R.id.tl_post_writer);
         viewPager = (ViewPager) findViewById(R.id.vp_post_writer);
 
-        viewPager.setAdapter(new PostAdapter(getSupportFragmentManager()));
+        postAdapter = new PostAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(postAdapter);
         tabLayout.setupWithViewPager(viewPager);
-//        tabLayout.getTabAt(0).setText("Content");
-//        tabLayout.getTabAt(1).setText("Tag");
 
         btnNext = (Button) findViewById(R.id.btn_next_to_post_option);
         btnNext.setOnClickListener(this);
         viewPager.addOnPageChangeListener(this);
     }
 
+    // ---------------------------------------------------------------------------------------------
     @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
     @Override
     public void onPageSelected(int position) {
@@ -72,20 +88,39 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
     }
 
     @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
+    public void onPageScrollStateChanged(int state) {}
+    // ---------------------------------------------------------------------------------------------
 
     @Override
     public void onClick(View view) {
         switch (viewPager.getCurrentItem()){
             case 0:
-                viewPager.setCurrentItem(1, true);  break;
+                if (postAdapter.getPostWriterContent().checkFillContent()) viewPager.setCurrentItem(1, true);
+                break;
             case 1:
-                //sdklafkj
+                btnNext.setEnabled(false);
+                postToServer();
                 break;
         }
     }
+    private void postToServer(){
+        String titlePost = postAdapter.getPostWriterContent().getTitlePost();
+        String contentPost = postAdapter.getPostWriterContent().getContentPost();
+
+        if (!postAdapter.getPostWriterContent().checkFillContent()) return;
+
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+        Intent mIntent = getIntent();
+        String idLop = mIntent.getStringExtra("class_id");
+
+        PostWriterTagFragment pTag = postAdapter.getPostWriterTagFragment();
+
+        postPost(idLop, titlePost, contentPost, pTag.getTypePost(), pTag.getIsIncognitoPost(), pTag.getIsTeacher());
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -96,6 +131,71 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        String titlePost = postAdapter.getPostWriterContent().getTitlePost();
+        String contentPost = postAdapter.getPostWriterContent().getContentPost();
+        if (contentPost != null || !titlePost.isEmpty()) {
+            AlertDialog.Builder notiBack = new AlertDialog.Builder(this);
+            notiBack.setTitle(R.string.warn_exit);
+            notiBack.setPositiveButton("Hủy", null);
+            notiBack.setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    PostWriterActivity.super.onBackPressed();
+                }
+            });
+            notiBack.show();
+        } else super.onBackPressed();
+    }
+
+    // --------------------------------- Request Server --------------------------------------------
+    public void postPost(String classId, String title, String content, String type, boolean isIncognito, boolean isPostTeacher) {
+        String url = AppConfig.URL_POST_POST;
+
+        JSONObject params = new JSONObject();
+        try {
+            params.put("class_id", classId);
+            params.put("title", title);
+            params.put("content", content);
+            params.put("type", type);
+            params.put("is_incognito", isIncognito);
+            params.put("is_post_teacher", isPostTeacher);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestServer requestServer = new RequestServer(this, Request.Method.POST, url, params);
+        requestServer.setListener(new RequestServer.ServerListener() {
+            @Override
+            public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
+                pDialog.dismiss();
+                if (!error) {
+                    Log.i(TAG, response.toString());
+
+                    Message msg = new Message();
+                    msg.setTarget(mHandler);
+                    msg.sendToTarget();
+                } else {
+//                    ivPost.setClickable(true);
+//                    isAllowedClick = true;
+                    Log.i(TAG, "Post error: " + message);
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        requestServer.sendRequest("post new post");
+    }
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            setResult(RESULT_OK);
+            finish();
+        }
+    };
 
     // ----------------------------------------- Adapter -------------------------------------------
     private class PostAdapter extends FragmentStatePagerAdapter{
@@ -119,6 +219,14 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
         @Override
         public int getCount() {
             return 2;
+        }
+
+        public PostWriterContentFragment getPostWriterContent() {
+            return postWriterContent;
+        }
+
+        public PostWriterTagFragment getPostWriterTagFragment() {
+            return postWriterTagFragment;
         }
     }
 }

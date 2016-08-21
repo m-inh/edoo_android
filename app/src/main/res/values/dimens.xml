@@ -14,6 +14,7 @@
     <dimen name="like_size">12sp</dimen>
     <dimen name="ic_comment_post">12dp</dimen>
 
+    <dimen name="text_size_big">20sp</dimen>
     <dimen name="text_size_normal">16sp</dimen>
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_tiny">12sp</dimen>

@@ -174,4 +174,27 @@ public class PostWriterContentFragment extends Fragment {
         dialog.show();
     }
 
+    // ---------------------------------------------------------------------------------------------
+
+    public String getTitlePost(){
+        return edtTitlePost.getText().toString();
+    }
+
+    public String getContentPost(){
+        return mEditor.getHtml();
+    }
+
+    public boolean checkFillContent(){
+        String titlePost = getTitlePost();
+        String contentPost = getContentPost();
+        if (contentPost == null || contentPost.isEmpty()) {
+            Toast.makeText(getContext(), "Bài viết không có nội dung!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (titlePost.isEmpty()) {
+            Toast.makeText(getContext(), "Bài viết không có tiêu đề!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
 }
