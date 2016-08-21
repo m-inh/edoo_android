@@ -50,6 +50,7 @@ public class ItemPostDetailHolder extends AbstractHolder {
     private ImageView ivLike;
     private TextView tvCreateAt;
     private ImageView ivIsVote;
+    private ImageView ivTypePost;
 
     public ItemPostDetailHolder(View itemView) {
         super(itemView);
@@ -69,6 +70,7 @@ public class ItemPostDetailHolder extends AbstractHolder {
         tvComment = (TextView) itemView.findViewById(R.id.tv_comment);
         btnLike = (ImageView) itemView.findViewById(R.id.btn_like);
         btnDisLike = (ImageView) itemView.findViewById(R.id.btn_dislike);
+        ivTypePost = (ImageView) itemView.findViewById(R.id.iv_type_post_detail);
 
         tvCreateAt = (TextView) itemView.findViewById(R.id.tv_time_post);
 //        cbIsVote = (CheckBox) itemView.findViewById(R.id.cb_isVote);
@@ -204,5 +206,9 @@ public class ItemPostDetailHolder extends AbstractHolder {
 
     public TextView getTvCreateAt() {
         return tvCreateAt;
+    }
+
+    public ImageView getIvTypePost(){
+        return ivTypePost;
     }
 }

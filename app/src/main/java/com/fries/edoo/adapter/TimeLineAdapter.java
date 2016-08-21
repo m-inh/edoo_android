@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fries.edoo.R;
 import com.fries.edoo.holder.AbstractHolder;
@@ -17,6 +18,7 @@ import com.fries.edoo.holder.ItemPostHolder;
 import com.fries.edoo.holder.ItemWritePostHolder;
 import com.fries.edoo.models.ItemBase;
 import com.fries.edoo.models.ItemTimeLine;
+import com.fries.edoo.utils.CommonVLs;
 
 import java.util.ArrayList;
 
@@ -131,7 +133,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
     public void onBindViewHolder(AbstractHolder abstractHolder, int position) {
         if (position == currentItemArr.size() - 1) {
             LoadMoreHolder loadMoreHolder = (LoadMoreHolder) abstractHolder;
-            if (isLoadable){
+            if (isLoadable) {
                 loadMoreHolder.p.setVisibility(View.VISIBLE);
                 loadMoreHolder.p.setIndeterminate(true);
                 loadMoreHolder.tvDone.setVisibility(View.GONE);
@@ -182,11 +184,23 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
             }
 
             if (itemTimeLine.isSeen()) {
-                itemPostHolder.getIvSeen().setVisibility(View.INVISIBLE);
+                itemPostHolder.getIvSeen().setVisibility(View.GONE);
             } else {
                 itemPostHolder.getIvSeen().setVisibility(View.VISIBLE);
             }
+
+            setResourceTypePost(itemPostHolder, itemTimeLine.getType());
         }
+    }
+
+    private void setResourceTypePost(ItemPostHolder itemPostHolder, String type) {
+        int idDrawable = android.R.color.white;
+        if (type.equals(ItemTimeLine.TYPE_POST_NOTE)) idDrawable = R.drawable.ic_type_post_note;
+        else if (type.equals(ItemTimeLine.TYPE_POST_QUESTION)) idDrawable = R.drawable.ic_type_post_question;
+        else if (type.equals(ItemTimeLine.TYPE_POST_POLL)) idDrawable = R.drawable.ic_type_post_poll;
+        else if (type.equals(ItemTimeLine.TYPE_POST_NOTIFICATION))
+            idDrawable = R.drawable.ic_type_post_notification;
+        itemPostHolder.getIvTypePost().setImageResource(idDrawable);
     }
 
     @Override

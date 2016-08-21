@@ -180,6 +180,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         boolean isSeen = jsonPostArr.getJSONObject(i).getInt("is_seen") == 1;
                         boolean isSolve = jsonPostArr.getJSONObject(i).getInt("is_solve") == 1;
                         String timeCreateAtPost = jsonPostArr.getJSONObject(i).getString("created_at");
+                        String type = jsonPostArr.getJSONObject(i).getString("type");
 
                         //author post
                         String nameAuthorPost = "Incognito";
@@ -200,7 +201,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         }
 
                         boolean isConfirm = false;
-                        ItemTimeLine itemTimeLine = new ItemTimeLine(id, titlePost, nameAuthorPost, avarAuthorPost, contentPost, like, isConfirm);
+                        ItemTimeLine itemTimeLine = new ItemTimeLine(id, titlePost, nameAuthorPost, avarAuthorPost, contentPost, like, isConfirm, type);
                         itemTimeLine.setTypeAuthor(typeAuthorPost);
                         itemTimeLine.setDescription(desPost);
                         itemTimeLine.setIdAuthor(idAuthorPost);

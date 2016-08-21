@@ -76,6 +76,7 @@ public class PostWriterTagFragment extends Fragment {
     private void setData() {
         typePost = ItemTimeLine.TYPE_POST_QUESTION;
         oldType = typeQuestion;
+        typeQuestion.setTextSize(14f);
 
         typeQuestion.setOnClickListener(clickTypePost);
         typeNote.setOnClickListener(clickTypePost);
@@ -83,8 +84,6 @@ public class PostWriterTagFragment extends Fragment {
         typePoll.setOnClickListener(clickTypePost);
         scIncognitoMode.setOnCheckedChangeListener(checkIncognitoMode);
         fabAddTagPost.setOnClickListener(clickTypePost);
-
-        typeNote.setTextSize(14f);
 
         if (!getIsTeacher()) {
             typeNotification.setVisibility(View.GONE);
