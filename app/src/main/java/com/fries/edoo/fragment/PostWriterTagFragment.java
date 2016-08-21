@@ -25,9 +25,12 @@ import com.fries.edoo.R;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -68,22 +71,10 @@ public class PostWriterTagFragment extends Fragment {
         setData();
         return rootView;
     }
-    private void setData(){
+
+    private void setData() {
         typePost = TYPE_POST_NOTE;
         oldType = typeNote;
-    }
-
-    private void initViews(){
-        typeQuestion = (TextView) rootView.findViewById(R.id.txt_type_post_question);
-        typeNote = (TextView) rootView.findViewById(R.id.txt_type_post_note);
-        typeNotification = (TextView) rootView.findViewById(R.id.txt_type_post_notification);
-        typePoll = (TextView) rootView.findViewById(R.id.txt_type_post_poll);
-        ivLineTypePost = (ImageView) rootView.findViewById(R.id.iv_line_type_post);
-        scIncognitoMode = (SwitchCompat) rootView.findViewById(R.id.sc_incognito_mode_post);
-        fabAddTagPost = (FloatingActionButton) rootView.findViewById(R.id.fab_add_tag_post);
-
-        ivAvatar = (CircleImageView) rootView.findViewById(R.id.iv_post_writer_avatar);
-        txtUser = (TextView) rootView.findViewById(R.id.txt_post_writer_user);
 
         typeQuestion.setOnClickListener(clickTypePost);
         typeNote.setOnClickListener(clickTypePost);
@@ -97,6 +88,36 @@ public class PostWriterTagFragment extends Fragment {
         if (!sqlite.getUserDetails().get("type").equalsIgnoreCase("teacher")) {
             typeNotification.setVisibility(View.GONE);
         }
+
+        setDataUser(true);
+    }
+
+    private void setDataUser(boolean isUser) {
+        if (isUser) {
+            HashMap<String, String> user = sqlite.getUserDetails();
+            String urlAvatar = user.get("avatar");
+            Picasso.with(getContext())
+                    .load(urlAvatar).fit()
+                    .placeholder(R.mipmap.ic_user)
+                    .error(R.mipmap.ic_user).into(ivAvatar);
+            txtUser.setText(user.get("name"));
+        } else {
+            ivAvatar.setImageResource(R.drawable.ic_incognito_mode);
+            txtUser.setText(R.string.anonymous);
+        }
+    }
+
+    private void initViews() {
+        typeQuestion = (TextView) rootView.findViewById(R.id.txt_type_post_question);
+        typeNote = (TextView) rootView.findViewById(R.id.txt_type_post_note);
+        typeNotification = (TextView) rootView.findViewById(R.id.txt_type_post_notification);
+        typePoll = (TextView) rootView.findViewById(R.id.txt_type_post_poll);
+        ivLineTypePost = (ImageView) rootView.findViewById(R.id.iv_line_type_post);
+        scIncognitoMode = (SwitchCompat) rootView.findViewById(R.id.sc_incognito_mode_post);
+        fabAddTagPost = (FloatingActionButton) rootView.findViewById(R.id.fab_add_tag_post);
+
+        ivAvatar = (CircleImageView) rootView.findViewById(R.id.iv_post_writer_avatar);
+        txtUser = (TextView) rootView.findViewById(R.id.txt_post_writer_user);
     }
 
     /**
@@ -132,7 +153,7 @@ public class PostWriterTagFragment extends Fragment {
             oldType.setTextSize(14f);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 ivLineTypePost.setBackgroundColor(getActivity().getResources().getColor(idColor, getActivity().getTheme()));
-            }else {
+            } else {
                 ivLineTypePost.setBackgroundColor(getActivity().getResources().getColor(idColor));
             }
         }
@@ -141,8 +162,7 @@ public class PostWriterTagFragment extends Fragment {
     CompoundButton.OnCheckedChangeListener checkIncognitoMode = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-            Toast.makeText(getContext(), "check = " + b, Toast.LENGTH_SHORT).show();
-
+            setDataUser(!b);
         }
     };
 
