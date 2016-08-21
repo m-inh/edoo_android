@@ -36,6 +36,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/bg_empty_post"
+            android:focusable="true"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
             android:scrollbars="vertical" />
     </android.support.v4.widget.SwipeRefreshLayout>
 

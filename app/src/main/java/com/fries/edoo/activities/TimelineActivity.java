@@ -83,6 +83,9 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
         linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
+//        mRecyclerView.setFocusable(true);
+//        mRecyclerView.setClickable(true);
+//        mRecyclerView.setFocusableInTouchMode(true);
         mRecyclerView.setAdapter(mAdapter);
     }
 
