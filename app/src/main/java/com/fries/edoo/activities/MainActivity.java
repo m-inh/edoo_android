@@ -1,7 +1,6 @@
 package com.fries.edoo.activities;
 
 
-import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
@@ -24,9 +23,7 @@ import com.android.volley.Request;
 import com.fries.edoo.R;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
-import com.fries.edoo.fragment.LopKhoaHocFragment;
 import com.fries.edoo.fragment.LopMonHocFragment;
-import com.fries.edoo.fragment.NhomFragment;
 import com.fries.edoo.fragment.ThoiKhoaBieuFragment;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.helper.SessionManager;
@@ -39,7 +36,6 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;

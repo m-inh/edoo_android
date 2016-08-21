@@ -47,12 +47,18 @@
             android:label="@string/postDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
+        <!--<activity-->
+            <!--android:name=".activities.PostWriterActivity"-->
+            <!--android:label="@string/title_activity_post_writer"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/AppTheme.NoActionBar"-->
+            <!--android:windowSoftInputMode="adjustResize"/>-->
         <activity
             android:name=".activities.PostWriterActivity"
             android:label="@string/title_activity_post_writer"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"/>
+
         <activity
             android:name="com.soundcloud.android.crop.CropImageActivity"
             android:screenOrientation="portrait" />

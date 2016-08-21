@@ -4,9 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,11 +12,12 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_horizontal_margin">
 
-        <ImageView
-            android:id="@+id/iv_line_type_post"
-            android:layout_width="10dp"
-            android:layout_height="match_parent"
-            android:background="@color/type_post_note" />
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_line_type_post"-->
+            <!--android:layout_width="10dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/type_post_note"-->
+            <!--android:visibility="visible"/>-->
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -38,74 +36,74 @@
     </LinearLayout>
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/action_padding"
-        android:text="@string/type_post"
-        android:textSize="12sp" />
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
+        <!--android:layout_marginTop="@dimen/action_padding"-->
+        <!--android:text="@string/type_post"-->
+        <!--android:textSize="12sp" />-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:gravity="center_vertical">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
+        <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
+        <!--android:gravity="center_vertical">-->
 
-        <TextView
-            android:id="@+id/txt_type_post_question"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/type_post_question"
-            android:gravity="center"
-            android:padding="@dimen/card_elevation"
-            android:text="@string/type_post_question"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+        <!--<TextView-->
+            <!--android:id="@+id/txt_type_post_question"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@color/type_post_question"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="@dimen/card_elevation"-->
+            <!--android:text="@string/type_post_question"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:textSize="12sp"-->
+            <!--android:textStyle="bold" />-->
 
-        <TextView
-            android:id="@+id/txt_type_post_note"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/type_post_note"
-            android:gravity="center"
-            android:padding="@dimen/card_elevation"
-            android:text="@string/type_post_note"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+        <!--<TextView-->
+            <!--android:id="@+id/txt_type_post_note"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@color/type_post_note"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="@dimen/card_elevation"-->
+            <!--android:text="@string/type_post_note"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:textSize="12sp"-->
+            <!--android:textStyle="bold" />-->
 
-        <TextView
-            android:id="@+id/txt_type_post_notification"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/type_post_notification"
-            android:gravity="center"
-            android:padding="@dimen/card_elevation"
-            android:text="@string/type_post_notification"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+        <!--<TextView-->
+            <!--android:id="@+id/txt_type_post_notification"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@color/type_post_notification"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="@dimen/card_elevation"-->
+            <!--android:text="@string/type_post_notification"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:textSize="12sp"-->
+            <!--android:textStyle="bold" />-->
 
-        <TextView
-            android:id="@+id/txt_type_post_poll"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/type_post_poll"
-            android:gravity="center"
-            android:padding="@dimen/card_elevation"
-            android:text="@string/type_post_poll"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+        <!--<TextView-->
+            <!--android:id="@+id/txt_type_post_poll"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@color/type_post_poll"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="@dimen/card_elevation"-->
+            <!--android:text="@string/type_post_poll"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:textSize="12sp"-->
+            <!--android:textStyle="bold" />-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
     <!--RichEditor-->
 
