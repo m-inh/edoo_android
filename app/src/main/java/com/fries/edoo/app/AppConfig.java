@@ -18,6 +18,10 @@ public class AppConfig {
 	public static final String URL_POST_LIKE = URL_HOST + "/votepost";
 	public static final String URL_REGISTER_FCM = URL_HOST + "/resfcm";
 	public static final String URL_POST_SEEN = URL_HOST + "/seen";
+
+	///posts/{class_id}/page/{page_number}
+	public static final String URL_GET_POST_IN_PAGE = URL_HOST + "/posts";
+
 	// Server user login url
 	public static String URL_LOGIN = URL_HOST + "/login";
 	// Server user logout url

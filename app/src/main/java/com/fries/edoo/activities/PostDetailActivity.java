@@ -72,7 +72,6 @@ public class PostDetailActivity extends AppCompatActivity {
         initViews(itemTimeline);
 
         getPostDetail(itemTimeline.getIdPost());
-
     }
 
     private void initViews(final ItemTimeLine itemTimeline) {

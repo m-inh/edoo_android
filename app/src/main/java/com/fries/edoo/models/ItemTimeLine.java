@@ -39,12 +39,12 @@ public class ItemTimeLine extends ItemBase implements Serializable {
         this.like = like;
         this.isConfirmByTeacher = isConfirmByTeacher;
 
-        Log.i(TAG, "name: " + name);
-        Log.i(TAG, "title: " + title);
-        Log.i(TAG, "ava: " + ava);
-        Log.i(TAG, "content: " + content);
-        Log.i(TAG, "like: " + like);
-        Log.i(TAG, "is confirmed: " + isConfirmByTeacher);
+//        Log.i(TAG, "name: " + name);
+//        Log.i(TAG, "title: " + title);
+//        Log.i(TAG, "ava: " + ava);
+//        Log.i(TAG, "content: " + content);
+//        Log.i(TAG, "like: " + like);
+//        Log.i(TAG, "is confirmed: " + isConfirmByTeacher);
     }
 
     public String getName() {

@@ -11,8 +11,8 @@
         android:background="#ffffff"
         android:orientation="vertical"
         android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:paddingTop="0dp">
 
         <TableRow
@@ -26,7 +26,6 @@
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:gravity="left|center_vertical"
-                android:shadowColor="#000000"
                 android:text="@string/title_post"
                 android:textAllCaps="true"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -44,19 +43,19 @@
         </TableRow>
 
         <!--<TextView-->
-            <!--android:id="@+id/tv_content"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="3dp"-->
-            <!--android:text=""-->
-            <!--android:textColor="@android:color/black"-->
-            <!--android:textSize="14sp" />-->
+        <!--android:id="@+id/tv_content"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="3dp"-->
+        <!--android:text=""-->
+        <!--android:textColor="@android:color/black"-->
+        <!--android:textSize="14sp" />-->
 
         <WebView
             android:id="@+id/webview"
-            android:layout_marginTop="3dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,16 +75,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
-                android:textSize="14sp"
-                android:text="@string/author_name" />
+                android:text="@string/author_name"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_time_post"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="0dp"
-                android:textSize="14sp"
-                android:text="@string/time_post" />
+                android:text="@string/time_post"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -106,8 +105,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="11"
-                    android:textSize="@dimen/like_size"
-                    android:textColor="#989696" />
+                    android:textColor="#989696"
+                    android:textSize="@dimen/like_size" />
 
                 <ImageView
                     android:id="@+id/iv_like"
@@ -128,15 +127,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="27"
-                    android:textSize="@dimen/like_size"
-                    android:textColor="#989696" />
+                    android:textColor="#989696"
+                    android:textSize="@dimen/like_size" />
 
                 <ImageView
                     android:layout_width="@dimen/ic_comment_post"
                     android:layout_height="@dimen/ic_comment_post"
-                    android:src="@mipmap/ic_comment_24"
+                    android:layout_marginLeft="3dp"
                     android:paddingTop="2dp"
-                    android:layout_marginLeft="3dp" />
+                    android:src="@mipmap/ic_comment_24" />
             </TableRow>
 
             <LinearLayout
@@ -144,7 +143,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
-                android:orientation="horizontal"/>
+                android:orientation="horizontal" />
 
         </LinearLayout>
 
@@ -166,18 +165,18 @@
                 android:id="@+id/btn_like"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_up_24"
+                android:layout_weight="1"
                 android:scaleType="centerInside"
-                android:layout_weight="1" />
+                android:src="@mipmap/ic_up_24" />
 
             <ImageView
                 android:id="@+id/btn_dislike"
                 android:layout_width="0dp"
-                android:layout_marginLeft="6dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_down_24"
+                android:layout_marginLeft="6dp"
+                android:layout_weight="1"
                 android:scaleType="centerInside"
-                android:layout_weight="1" />
+                android:src="@mipmap/ic_down_24" />
         </LinearLayout>
     </LinearLayout>
 

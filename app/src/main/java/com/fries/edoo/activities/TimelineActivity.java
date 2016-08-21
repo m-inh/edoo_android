@@ -35,7 +35,7 @@ import java.util.ArrayList;
 /**
  * Created by TooNies1810 on 8/12/16.
  */
-public class TimelineActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
+public class TimelineActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "TimelineActivity";
     private TimeLineAdapter mAdapter;
@@ -46,6 +46,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
     private ItemLop itemClass;
 
     private Toolbar toolbar;
+    private int currPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,18 +75,35 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         itemPostArr = new ArrayList<>();
         mAdapter = new TimeLineAdapter(this, itemClass.getIdData());
 
-        requestPost(itemClass.getIdData());
+        requestPost(itemClass.getIdData(), currPage);
     }
 
     private LinearLayoutManager linearLayoutManager;
+    private int visibleThreshold = 0;
+    private boolean isLoading;
+    private boolean isLoadable = true;
 
     private void initViews() {
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
         linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-//        mRecyclerView.setFocusable(true);
-//        mRecyclerView.setClickable(true);
-//        mRecyclerView.setFocusableInTouchMode(true);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                int totalItemCount = linearLayoutManager.getItemCount() - 1;
+                int lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+
+//                Log.i(TAG, "total: " + totalItemCount);
+//                Log.i(TAG, "latest: " + lastVisibleItem);
+
+                if (isLoadable && !isLoading && totalItemCount == (lastVisibleItem + visibleThreshold)) {
+                    loadMore();
+                    isLoading = true;
+                }
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -128,17 +146,22 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         return super.onOptionsItemSelected(item);
     }
 
-    private void requestPost(final String id) {
+    private void loadMore() {
+        Log.d(TAG, "load more");
+        requestPost(itemClass.getIdData(), ++currPage);
+    }
+
+    private void requestPost(final String classId, int pageNumber) {
         final ArrayList<ItemBase> itemPostArr = new ArrayList<>();
 
-        String url = AppConfig.URL_GET_POST + "/" + id;
+        String url = AppConfig.URL_GET_POST_IN_PAGE + "/" + classId + "/page" + "/" + pageNumber;
 
         RequestServer requestServer = new RequestServer(this, Request.Method.GET, url);
         requestServer.setListener(new RequestServer.ServerListener() {
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 if (!error) {
-                    Log.d(TAG, response.toString());
+                    Log.i(TAG, response.toString());
 
                     //lay jsonItem nhet vao item
                     JSONArray jsonPostArr = response.getJSONObject("data").getJSONArray("posts");
@@ -190,7 +213,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         SimpleDateFormat sdf = new SimpleDateFormat(format);
                         try {
                             Date d = new Date(sdf.parse(timeCreateAtPost).getTime());
-                            Log.i(TAG, "date create: " + d.getTime());
+//                            Log.i(TAG, "date create: " + d.getTime());
                             itemTimeLine.setCreateAt(d.toString());
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -198,7 +221,24 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
 
                         itemPostArr.add(itemTimeLine);
                     }
+
+                    JSONObject jsonPage = response.getJSONObject("data").getJSONObject("pagination");
+                    int curPage = jsonPage.getInt("page");
+                    int pageCount = jsonPage.getInt("pageCount");
+
+//                    currPage = curPage;
+                    Log.i(TAG, "curPage json: " + curPage);
+                    Log.i(TAG, "page count json: " + pageCount);
+
+                    if (curPage == pageCount){
+                        isLoadable = false;
+                    } else {
+                        isLoadable = true;
+                    }
+//                    itemPostArr.add(null);
                     TimelineActivity.this.itemPostArr = itemPostArr;
+                } else {
+                    isLoadable = false;
                 }
                 Message msg = new Message();
                 msg.setTarget(mHandler);
@@ -228,15 +268,15 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_POST_DETAIL){
-            if (resultCode == RESULT_OK){
+        if (requestCode == REQUEST_CODE_POST_DETAIL) {
+            if (resultCode == RESULT_OK) {
                 ItemTimeLine itemTimeLine = (ItemTimeLine) data.getExtras().getSerializable("item_timeline");
 
                 String idPost = itemTimeLine.getIdPost();
 
-                for (int i = 0; i <itemPostArr.size(); i++) {
+                for (int i = 0; i < itemPostArr.size(); i++) {
                     ItemTimeLine tempItem = (ItemTimeLine) itemPostArr.get(i);
-                    if (idPost.equalsIgnoreCase(tempItem.getIdPost())){
+                    if (idPost.equalsIgnoreCase(tempItem.getIdPost())) {
                         tempItem.setLike(itemTimeLine.getLike());
                         tempItem.setCommentCount(itemTimeLine.getCommentCount());
                         tempItem.setSolve(itemTimeLine.isSolve());
@@ -246,10 +286,9 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
             }
         }
 
-        if (requestCode == REQUEST_CODE_POST_WRITER){
-            if (resultCode == RESULT_OK){
-                // refresh data
-                requestPost(itemClass.getIdData());
+        if (requestCode == REQUEST_CODE_POST_WRITER) {
+            if (resultCode == RESULT_OK) {
+                refreshPosts();
             }
         }
 
@@ -262,12 +301,28 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
             if (swipeRefresh.isRefreshing()) {
                 swipeRefresh.setRefreshing(false);
             }
-            mAdapter.updateList(itemPostArr);
+
+            Log.i(TAG, "current page: " + currPage);
+
+            mAdapter.setLoadable(isLoadable);
+            if (currPage == 1) {
+                mAdapter.updateList(itemPostArr);
+            } else {
+                mAdapter.addItems(itemPostArr);
+                Log.i(TAG, "add items");
+            }
+
+            isLoading = false;
         }
     };
 
     @Override
     public void onRefresh() {
-        requestPost(itemClass.getIdData());
+        refreshPosts();
+    }
+
+    private void refreshPosts() {
+        currPage = 1;
+        requestPost(itemClass.getIdData(), currPage);
     }
 }
