@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.fries.edoo.R;
 
 import jp.wasabeef.richeditor.RichEditor;
@@ -187,12 +189,18 @@ public class PostWriterContentFragment extends Fragment {
     public boolean checkFillContent(){
         String titlePost = getTitlePost();
         String contentPost = getContentPost();
-        if (contentPost == null || contentPost.isEmpty()) {
-            Toast.makeText(getContext(), "Bài viết không có nội dung!", Toast.LENGTH_SHORT).show();
+        if (titlePost.isEmpty()) {
+            YoYo.with(Techniques.Tada)
+                    .duration(1000)
+                    .playOn(edtTitlePost);
+            Toast.makeText(getContext(), "Bài viết không có tiêu đề!", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (titlePost.isEmpty()) {
-            Toast.makeText(getContext(), "Bài viết không có tiêu đề!", Toast.LENGTH_SHORT).show();
+        if (contentPost == null || contentPost.isEmpty()) {
+            YoYo.with(Techniques.Tada)
+                    .duration(1000)
+                    .playOn(mEditor);
+            Toast.makeText(getContext(), "Bài viết không có nội dung!", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

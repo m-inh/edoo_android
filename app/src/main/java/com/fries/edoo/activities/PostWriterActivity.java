@@ -23,6 +23,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.fries.edoo.R;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
@@ -98,7 +100,6 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
                 if (postAdapter.getPostWriterContent().checkFillContent()) viewPager.setCurrentItem(1, true);
                 break;
             case 1:
-                btnNext.setEnabled(false);
                 postToServer();
                 break;
         }
@@ -107,7 +108,12 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
         String titlePost = postAdapter.getPostWriterContent().getTitlePost();
         String contentPost = postAdapter.getPostWriterContent().getContentPost();
 
-        if (!postAdapter.getPostWriterContent().checkFillContent()) return;
+        if (!postAdapter.getPostWriterContent().checkFillContent()) {
+            viewPager.setCurrentItem(0, true);
+            return;
+        }
+
+        btnNext.setEnabled(false);
 
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);

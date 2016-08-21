@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -192,7 +193,7 @@ public class PostWriterTagFragment extends Fragment {
                     })
                     .duration(500)
                     .playOn(txtUser);
-            YoYo.with(Techniques.FlipOutY)
+            YoYo.with(Techniques.FlipInX)
                     .duration(1000)
                     .playOn(ivAvatar);
         }
