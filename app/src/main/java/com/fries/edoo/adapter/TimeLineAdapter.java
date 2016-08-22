@@ -29,7 +29,6 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
     private static final String TAG = "TimelineAdapter";
     private Context mContext;
     private ArrayList<ItemBase> itemArr;
-//    private ArrayList<ItemBase> currentItemArr;
     private String idLop;
 
     private boolean isLoadable;
@@ -37,29 +36,17 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
     public static final int ITEM_TIMELINE = 0;
     public static final int ITEM_LOADMORE = 1;
 
-//    public static final int BAI_DANG_BINH_THUONG = 1;
-//    public static final int BAI_DANG_LOC_THEO_GIAO_VIEN = 2;
-//    public static final int BAI_DANG_LOC_THEO_CHUA_TRA_LOI = 3;
-//    public static final int BAI_DANG_CHUA_DOC = 4;
-
-//    public int currentMode = BAI_DANG_BINH_THUONG;
-
     public TimeLineAdapter(Context context, String idLop) {
         this.mContext = context;
         this.idLop = idLop;
         this.isLoadable = true;
         itemArr = new ArrayList<>();
-//        currentItemArr = new ArrayList<>();
     }
 
     public void updateList(ArrayList<ItemBase> posts) {
         itemArr.clear();
         itemArr.addAll(posts);
         itemArr.add(null);
-//        currentItemArr.clear();
-//        currentItemArr.add(null);
-//        this.currentItemArr.addAll(posts);
-//        locBaiDang(currentMode);
         notifyDataSetChanged();
     }
 
@@ -67,49 +54,8 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
         itemArr.remove(itemArr.size()-1);
         itemArr.addAll(posts);
         itemArr.add(null);
-//        locBaiDang(currentMode);
         notifyDataSetChanged();
     }
-
-//    public void locBaiDang(int mode) {
-//        currentItemArr.clear();
-//        switch (mode) {
-//            case BAI_DANG_BINH_THUONG:
-//                currentItemArr.addAll(itemArr);
-//                break;
-//            case BAI_DANG_LOC_THEO_CHUA_TRA_LOI:
-//                for (int i = 0; i < itemArr.size(); i++) {
-//                    ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(i);
-//                    if (!itemTimeLine.isSolve()) {
-//                        currentItemArr.add(itemArr.get(i));
-//                    }
-//                }
-//                break;
-//            case BAI_DANG_LOC_THEO_GIAO_VIEN:
-//                for (int i = 0; i < itemArr.size(); i++) {
-//                    ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(i);
-//                    if (itemTimeLine.getTypeAuthor().equalsIgnoreCase("teacher")) {
-//                        currentItemArr.add(itemArr.get(i));
-//                    }
-//                }
-//                break;
-//            case BAI_DANG_CHUA_DOC:
-//                for (int i = 0; i < itemArr.size(); i++) {
-//                    ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(i);
-//                    if (!itemTimeLine.isSeen()) {
-//                        currentItemArr.add(itemArr.get(i));
-//                    }
-//                }
-//                break;
-//        }
-//        currentItemArr.add(null);
-//        currentMode = mode;
-//        notifyDataSetChanged();
-//    }
-
-//    public void refreshList() {
-//        locBaiDang(currentMode);
-//    }
 
     @Override
     public int getItemCount() {
@@ -207,10 +153,6 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
         else if (type.equals(ItemTimeLine.TYPE_POST_NOTIFICATION))
             idDrawable = R.drawable.ic_type_post_notification;
         itemPostHolder.getIvTypePost().setImageResource(idDrawable);
-    }
-
-    public boolean isLoadable() {
-        return isLoadable;
     }
 
     public void setLoadable(boolean loadable) {
