@@ -27,7 +27,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
     private static final String TAG = "TimelineAdapter";
     private Context mContext;
     private ArrayList<ItemBase> itemArr;
-    private ArrayList<ItemBase> currentItemArr;
+//    private ArrayList<ItemBase> currentItemArr;
     private String idLop;
 
     private boolean isLoadable;
@@ -35,19 +35,19 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
     public static final int ITEM_TIMELINE = 0;
     public static final int ITEM_LOADMORE = 1;
 
-    public static final int BAI_DANG_BINH_THUONG = 1;
-    public static final int BAI_DANG_LOC_THEO_GIAO_VIEN = 2;
-    public static final int BAI_DANG_LOC_THEO_CHUA_TRA_LOI = 3;
-    public static final int BAI_DANG_CHUA_DOC = 4;
+//    public static final int BAI_DANG_BINH_THUONG = 1;
+//    public static final int BAI_DANG_LOC_THEO_GIAO_VIEN = 2;
+//    public static final int BAI_DANG_LOC_THEO_CHUA_TRA_LOI = 3;
+//    public static final int BAI_DANG_CHUA_DOC = 4;
 
-    public int currentMode = BAI_DANG_BINH_THUONG;
+//    public int currentMode = BAI_DANG_BINH_THUONG;
 
     public TimeLineAdapter(Context context, String idLop) {
         this.mContext = context;
         this.idLop = idLop;
         this.isLoadable = true;
         itemArr = new ArrayList<>();
-        currentItemArr = new ArrayList<>();
+//        currentItemArr = new ArrayList<>();
     }
 
     public void updateList(ArrayList<ItemBase> posts) {
@@ -56,58 +56,64 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
 //        currentItemArr.clear();
 //        currentItemArr.add(null);
 //        this.currentItemArr.addAll(posts);
-        locBaiDang(currentMode);
+//        locBaiDang(currentMode);
     }
 
     public void addItems(ArrayList<ItemBase> posts) {
-//        itemArr.remove(itemArr.size()-1);
+        itemArr.remove(itemArr.size()-1);
         itemArr.addAll(posts);
-        locBaiDang(currentMode);
+        itemArr.add(null);
+//        locBaiDang(currentMode);
     }
 
-    public void locBaiDang(int mode) {
-        currentItemArr.clear();
-        switch (mode) {
-            case BAI_DANG_BINH_THUONG:
-                currentItemArr.addAll(itemArr);
-                break;
-            case BAI_DANG_LOC_THEO_CHUA_TRA_LOI:
-                for (int i = 0; i < itemArr.size(); i++) {
-                    ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(i);
-                    if (!itemTimeLine.isSolve()) {
-                        currentItemArr.add(itemArr.get(i));
-                    }
-                }
-                break;
-            case BAI_DANG_LOC_THEO_GIAO_VIEN:
-                for (int i = 0; i < itemArr.size(); i++) {
-                    ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(i);
-                    if (itemTimeLine.getTypeAuthor().equalsIgnoreCase("teacher")) {
-                        currentItemArr.add(itemArr.get(i));
-                    }
-                }
-                break;
-            case BAI_DANG_CHUA_DOC:
-                for (int i = 0; i < itemArr.size(); i++) {
-                    ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(i);
-                    if (!itemTimeLine.isSeen()) {
-                        currentItemArr.add(itemArr.get(i));
-                    }
-                }
-                break;
-        }
-        currentItemArr.add(null);
-        currentMode = mode;
-        notifyDataSetChanged();
-    }
+//    public void locBaiDang(int mode) {
+//        currentItemArr.clear();
+//        switch (mode) {
+//            case BAI_DANG_BINH_THUONG:
+//                currentItemArr.addAll(itemArr);
+//                break;
+//            case BAI_DANG_LOC_THEO_CHUA_TRA_LOI:
+//                for (int i = 0; i < itemArr.size(); i++) {
+//                    ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(i);
+//                    if (!itemTimeLine.isSolve()) {
+//                        currentItemArr.add(itemArr.get(i));
+//                    }
+//                }
+//                break;
+//            case BAI_DANG_LOC_THEO_GIAO_VIEN:
+//                for (int i = 0; i < itemArr.size(); i++) {
+//                    ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(i);
+//                    if (itemTimeLine.getTypeAuthor().equalsIgnoreCase("teacher")) {
+//                        currentItemArr.add(itemArr.get(i));
+//                    }
+//                }
+//                break;
+//            case BAI_DANG_CHUA_DOC:
+//                for (int i = 0; i < itemArr.size(); i++) {
+//                    ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(i);
+//                    if (!itemTimeLine.isSeen()) {
+//                        currentItemArr.add(itemArr.get(i));
+//                    }
+//                }
+//                break;
+//        }
+//        currentItemArr.add(null);
+//        currentMode = mode;
+//        notifyDataSetChanged();
+//    }
 
-    public void refreshList() {
-        locBaiDang(currentMode);
+//    public void refreshList() {
+//        locBaiDang(currentMode);
+//    }
+
+    @Override
+    public int getItemCount() {
+        return itemArr == null ? 0 : itemArr.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == currentItemArr.size() - 1) {
+        if (position == itemArr.size() - 1) {
             return ITEM_LOADMORE;
         } else {
             return ITEM_TIMELINE;
@@ -129,9 +135,9 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(AbstractHolder abstractHolder, int position) {
-        if (position == currentItemArr.size() - 1) {
+        if (position == itemArr.size() - 1) {
             LoadMoreHolder loadMoreHolder = (LoadMoreHolder) abstractHolder;
-            if (isLoadable){
+            if (isLoadable) {
                 loadMoreHolder.p.setVisibility(View.VISIBLE);
                 loadMoreHolder.p.setIndeterminate(true);
                 loadMoreHolder.tvDone.setVisibility(View.GONE);
@@ -141,10 +147,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
             }
         } else {
             ItemPostHolder itemPostHolder = (ItemPostHolder) abstractHolder;
-            ItemTimeLine itemTimeLine = (ItemTimeLine) currentItemArr.get(position);
-//            if (itemTimeLine == null){
-//                return;
-//            }
+            ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(position);
             itemPostHolder.setIdLop(idLop);
             itemPostHolder.setKeyLopType(itemTimeLine.getKeyLopType());
             itemPostHolder.setIdPost(itemTimeLine.getIdPost());
@@ -189,11 +192,6 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return currentItemArr == null ? 0 : currentItemArr.size();
-    }
-
     public boolean isLoadable() {
         return isLoadable;
     }
@@ -202,6 +200,9 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
         isLoadable = loadable;
     }
 
+    /**
+     * Load more view holder
+     */
     public class LoadMoreHolder extends AbstractHolder {
         public ProgressBar p;
         public TextView tvDone;

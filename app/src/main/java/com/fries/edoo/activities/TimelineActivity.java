@@ -128,19 +128,19 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                 break;
             case R.id.item_locbaidangchuatraloi:
                 Log.i(TAG, "loc bai dang chua tl");
-                mAdapter.locBaiDang(TimeLineAdapter.BAI_DANG_LOC_THEO_CHUA_TRA_LOI);
+//                mAdapter.locBaiDang(TimeLineAdapter.BAI_DANG_LOC_THEO_CHUA_TRA_LOI);
                 break;
             case R.id.item_locbaidanggiaovien:
                 Log.i(TAG, "loc bai dang giao vien");
-                mAdapter.locBaiDang(TimeLineAdapter.BAI_DANG_LOC_THEO_GIAO_VIEN);
+//                mAdapter.locBaiDang(TimeLineAdapter.BAI_DANG_LOC_THEO_GIAO_VIEN);
                 break;
             case R.id.item_tatcabaidang:
                 Log.i(TAG, "tat ca bai dang");
-                mAdapter.locBaiDang(TimeLineAdapter.BAI_DANG_BINH_THUONG);
+//                mAdapter.locBaiDang(TimeLineAdapter.BAI_DANG_BINH_THUONG);
                 break;
             case R.id.item_locbaidangchuadoc:
                 Log.i(TAG, "tat ca bai dang");
-                mAdapter.locBaiDang(TimeLineAdapter.BAI_DANG_CHUA_DOC);
+//                mAdapter.locBaiDang(TimeLineAdapter.BAI_DANG_CHUA_DOC);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -230,11 +230,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                     Log.i(TAG, "curPage json: " + curPage);
                     Log.i(TAG, "page count json: " + pageCount);
 
-                    if (curPage == pageCount){
-                        isLoadable = false;
-                    } else {
-                        isLoadable = true;
-                    }
+                    isLoadable = curPage != pageCount;
 //                    itemPostArr.add(null);
                     TimelineActivity.this.itemPostArr = itemPostArr;
                 } else {
@@ -292,7 +288,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
             }
         }
 
-        mAdapter.refreshList();
+//        mAdapter.refreshList();
     }
 
     private Handler mHandler = new Handler() {
