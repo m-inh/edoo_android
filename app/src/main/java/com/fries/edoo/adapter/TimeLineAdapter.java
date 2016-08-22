@@ -55,10 +55,12 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
     public void updateList(ArrayList<ItemBase> posts) {
         itemArr.clear();
         itemArr.addAll(posts);
+        itemArr.add(null);
 //        currentItemArr.clear();
 //        currentItemArr.add(null);
 //        this.currentItemArr.addAll(posts);
 //        locBaiDang(currentMode);
+        notifyDataSetChanged();
     }
 
     public void addItems(ArrayList<ItemBase> posts) {
@@ -66,6 +68,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
         itemArr.addAll(posts);
         itemArr.add(null);
 //        locBaiDang(currentMode);
+        notifyDataSetChanged();
     }
 
 //    public void locBaiDang(int mode) {
