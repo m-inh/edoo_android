@@ -28,6 +28,8 @@ import com.fries.edoo.R;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
+import com.fries.edoo.models.ItemTimeLine;
+import com.fries.edoo.utils.CommonVLs;
 import com.nineoldandroids.animation.Animator;
 import com.squareup.picasso.Picasso;
 
@@ -42,10 +44,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by tmq on 20/08/2016.
  */
 public class PostWriterTagFragment extends Fragment {
-    public static final String TYPE_POST_QUESTION = "question";
-    public static final String TYPE_POST_NOTE = "note";
-    public static final String TYPE_POST_NOTIFICATION = "notification";
-    public static final String TYPE_POST_POLL = "poll";
     private static final String TAG = PostWriterTagFragment.class.getSimpleName();
 
     private View rootView;
@@ -76,8 +74,9 @@ public class PostWriterTagFragment extends Fragment {
     }
 
     private void setData() {
-        typePost = TYPE_POST_NOTE;
-        oldType = typeNote;
+        typePost = ItemTimeLine.TYPE_POST_QUESTION;
+        oldType = typeQuestion;
+        typeQuestion.setTextSize(14f);
 
         typeQuestion.setOnClickListener(clickTypePost);
         typeNote.setOnClickListener(clickTypePost);
@@ -85,8 +84,6 @@ public class PostWriterTagFragment extends Fragment {
         typePoll.setOnClickListener(clickTypePost);
         scIncognitoMode.setOnCheckedChangeListener(checkIncognitoMode);
         fabAddTagPost.setOnClickListener(clickTypePost);
-
-        typeNote.setTextSize(14f);
 
         if (!getIsTeacher()) {
             typeNotification.setVisibility(View.GONE);
@@ -135,19 +132,19 @@ public class PostWriterTagFragment extends Fragment {
                     Toast.makeText(getContext(), "Add Tag...", Toast.LENGTH_SHORT).show();
                     return;
                 case R.id.txt_type_post_question:
-                    typePost = TYPE_POST_QUESTION;
+                    typePost = ItemTimeLine.TYPE_POST_QUESTION;
                     idColor = R.color.type_post_question;
                     break;
                 case R.id.txt_type_post_note:
-                    typePost = TYPE_POST_NOTE;
+                    typePost = ItemTimeLine.TYPE_POST_NOTE;
                     idColor = R.color.type_post_note;
                     break;
                 case R.id.txt_type_post_notification:
-                    typePost = TYPE_POST_NOTIFICATION;
+                    typePost = ItemTimeLine.TYPE_POST_NOTIFICATION;
                     idColor = R.color.type_post_notification;
                     break;
                 case R.id.txt_type_post_poll:
-                    typePost = TYPE_POST_POLL;
+                    typePost = ItemTimeLine.TYPE_POST_POLL;
                     idColor = R.color.type_post_poll;
                     break;
             }
@@ -159,11 +156,7 @@ public class PostWriterTagFragment extends Fragment {
                     .duration(700)
                     .playOn(ivLineTypePost);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                ivLineTypePost.setBackgroundColor(getActivity().getResources().getColor(idColor, getActivity().getTheme()));
-            } else {
-                ivLineTypePost.setBackgroundColor(getActivity().getResources().getColor(idColor));
-            }
+            CommonVLs.setBackgroundColorForView(ivLineTypePost, idColor, getContext());
         }
     };
 

@@ -9,7 +9,11 @@ import java.util.ArrayList;
  * Created by TooNies1810 on 11/20/15.
  */
 public class ItemTimeLine extends ItemBase implements Serializable {
-    private static final String TAG = "ItemTimeLine";
+    private static final String TAG = ItemTimeLine.class.getSimpleName();
+    public static final String TYPE_POST_QUESTION = "question";
+    public static final String TYPE_POST_NOTE = "note";
+    public static final String TYPE_POST_NOTIFICATION = "notification";
+    public static final String TYPE_POST_POLL = "poll";
     private String title;
 
     //name of author post
@@ -30,7 +34,7 @@ public class ItemTimeLine extends ItemBase implements Serializable {
     private int commentCount;
     private ArrayList<ItemComment> itemComments = new ArrayList<>();
 
-    public ItemTimeLine(String idPost, String title, String name, String ava, String content, int like, boolean isConfirmByTeacher) {
+    public ItemTimeLine(String idPost, String title, String name, String ava, String content, int like, boolean isConfirmByTeacher, String type) {
         this.name = name;
         this.idPost = idPost;
         this.title = title;
@@ -38,6 +42,7 @@ public class ItemTimeLine extends ItemBase implements Serializable {
         this.content = content;
         this.like = like;
         this.isConfirmByTeacher = isConfirmByTeacher;
+        this.type = type;
 
 //        Log.i(TAG, "name: " + name);
 //        Log.i(TAG, "title: " + title);

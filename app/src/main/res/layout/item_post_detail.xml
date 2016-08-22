@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="4dp"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/card_elevation"
+    android:paddingRight="@dimen/card_elevation"
+    android:background="@android:color/white">
+
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
+        android:layout_weight="1"
         android:orientation="vertical"
         android:paddingBottom="5dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
         android:paddingTop="0dp">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <TextView
                 android:id="@+id/tv_title"
@@ -32,6 +38,13 @@
                 android:textColor="#000000"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_type_post_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_type_post_question"
+                />
 
             <ImageView
                 android:id="@+id/iv_bookmark"
@@ -55,7 +68,8 @@
             android:id="@+id/webview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp" />
+            android:layout_marginTop="3dp"
+            tools:ignore="WebViewLayout" />
 
         <LinearLayout
             android:layout_width="match_parent"

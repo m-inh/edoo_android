@@ -78,8 +78,9 @@
     <string name="insert">Thêm</string>
     <string name="warn">Cảnh báo</string>
     <string name="go_back">Quay lại</string>
-    <string name="warn_exit">Hủy bài Post</string>
+    <string name="warn_exit">Bạn thực sự muốn thoát?</string>
     <string name="post_incognito">Đăng ở chế độ ẩn danh</string>
     <string name="anonymous">Anonymous</string>
+    <string name="next">Kế tiếp</string>
 
 </resources>

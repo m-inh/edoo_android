@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import jp.wasabeef.richeditor.RichEditor;
  * Created by tmq on 20/08/2016.
  */
 public class PostWriterContentFragment extends Fragment {
+    private static final String TAG = PostWriterContentFragment.class.getSimpleName();
     private View rootView;
 
     private RichEditor mEditor;
@@ -67,6 +69,7 @@ public class PostWriterContentFragment extends Fragment {
 //                mWebView.loadData(text, "text/html", "UTF-8");
 //            }
 //        });
+//        mEditor.setHtml();
 
         rootView.findViewById(R.id.editor_action_undo).setOnClickListener(clickToolEditor);
         rootView.findViewById(R.id.editor_action_bold).setOnClickListener(clickToolEditor);
@@ -189,6 +192,7 @@ public class PostWriterContentFragment extends Fragment {
     public boolean checkFillContent(){
         String titlePost = getTitlePost();
         String contentPost = getContentPost();
+        Log.i(TAG, "content: " + contentPost);
         if (titlePost.isEmpty()) {
             YoYo.with(Techniques.Tada)
                     .duration(1000)

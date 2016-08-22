@@ -17,6 +17,7 @@ import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.holder.AbstractHolder;
 import com.fries.edoo.holder.ItemCommentDetailHolder;
 import com.fries.edoo.holder.ItemPostDetailHolder;
+import com.fries.edoo.holder.ItemPostHolder;
 import com.fries.edoo.models.ItemComment;
 import com.fries.edoo.models.ItemTimeLine;
 
@@ -104,7 +105,19 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
             postDetailHolder.getTvCreateAt().setText(", " + itemTimeline.getCreateAt());
 
             postDetailHolder.setCbIsVote();
+
+            setResourceTypePost(postDetailHolder, itemTimeline.getType());
         }
+    }
+
+    private void setResourceTypePost(ItemPostDetailHolder postDetailHolder, String type) {
+        int idDrawable = android.R.color.white;
+        if (type.equals(ItemTimeLine.TYPE_POST_NOTE)) idDrawable = R.drawable.ic_type_post_note;
+        else if (type.equals(ItemTimeLine.TYPE_POST_QUESTION)) idDrawable = R.drawable.ic_type_post_question;
+        else if (type.equals(ItemTimeLine.TYPE_POST_POLL)) idDrawable = R.drawable.ic_type_post_poll;
+        else if (type.equals(ItemTimeLine.TYPE_POST_NOTIFICATION))
+            idDrawable = R.drawable.ic_type_post_notification;
+        postDetailHolder.getIvTypePost().setImageResource(idDrawable);
     }
 
     @Override

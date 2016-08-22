@@ -43,6 +43,7 @@ public class ItemPostHolder extends AbstractHolder {
     private ImageView ivBookmark;
     private ImageView ivLike;
     private CircleImageView ivSeen;
+    private ImageView ivTypePost;
 
     private int like;
 
@@ -60,6 +61,7 @@ public class ItemPostHolder extends AbstractHolder {
 
         imgAvatar = (CircleImageView) itemView.findViewById(R.id.imgAvatar);
         ivSeen = (CircleImageView) itemView.findViewById(R.id.iv_marker_seen);
+        ivTypePost = (ImageView) itemView.findViewById(R.id.iv_type_post_list);
 
         txtTitle = (TextView) itemView.findViewById(R.id.txtTitle);
         txtContent = (TextView) itemView.findViewById(R.id.tv_content);
@@ -184,5 +186,9 @@ public class ItemPostHolder extends AbstractHolder {
 
     public CircleImageView getIvSeen() {
         return ivSeen;
+    }
+
+    public ImageView getIvTypePost(){
+        return ivTypePost;
     }
 }

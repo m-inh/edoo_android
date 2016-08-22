@@ -29,12 +29,6 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/btn_next_to_post_option"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tiếp tục"/>
-
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
