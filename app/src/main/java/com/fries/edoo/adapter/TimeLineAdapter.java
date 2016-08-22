@@ -136,7 +136,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
             }
 
             if (itemTimeLine.isSeen()) {
-                itemPostHolder.getIvSeen().setVisibility(View.GONE);
+                itemPostHolder.getIvSeen().setVisibility(View.INVISIBLE);
             } else {
                 itemPostHolder.getIvSeen().setVisibility(View.VISIBLE);
             }

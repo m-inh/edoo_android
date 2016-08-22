@@ -41,8 +41,8 @@
 
             <ImageView
                 android:id="@+id/iv_type_post_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:src="@drawable/ic_type_post_question"
                 />
 
