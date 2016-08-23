@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 public class LoginActivity extends Activity {
-    private static final String TAG = RegisterActivity.class.getSimpleName();
+    private static final String TAG = LoginActivity.class.getSimpleName();
     private static final int REQUEST_CODE_REGISTER = 1234;
     private Button btnLogin;
     private Button btnLinkToRegister;
@@ -95,15 +95,15 @@ public class LoginActivity extends Activity {
         });
 
         // Link to Register Screen
-        btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),
-                        RegisterActivity.class);
-//                startActivity(i);
-                startActivityForResult(i, REQUEST_CODE_REGISTER);
-            }
-        });
+//        btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
+//
+//            public void onClick(View view) {
+//                Intent i = new Intent(getApplicationContext(),
+//                        RegisterActivity.class);
+////                startActivity(i);
+//                startActivityForResult(i, REQUEST_CODE_REGISTER);
+//            }
+//        });
 
         btnLinkToRegister.setVisibility(View.INVISIBLE);
     }
@@ -189,14 +189,4 @@ public class LoginActivity extends Activity {
         });
         requestServer.sendRequest("req_log_in");
     }
-
-//    private void showDialog() {
-//        if (!pDialog.isShowing())
-//            pDialog.show();
-//    }
-//
-//    private void hideDialog() {
-//        if (pDialog.isShowing())
-//            pDialog.dismiss();
-//    }
 }

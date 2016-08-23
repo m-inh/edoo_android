@@ -33,10 +33,10 @@
             android:label="@string/timeline_activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".activities.RegisterActivity"
-            android:label="@string/register"
-            android:windowSoftInputMode="adjustResize" />
+        <!--<activity-->
+            <!--android:name=".activities.RegisterActivity"-->
+            <!--android:label="@string/register"-->
+            <!--android:windowSoftInputMode="adjustResize" />-->
         <activity
             android:name=".activities.EditProfileActivity"
             android:label="@string/editActivity"

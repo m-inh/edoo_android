@@ -187,7 +187,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
             params.put("content", content);
             params.put("type", type);
             params.put("is_incognito", isIncognito);
-            params.put("is_post_teacher", isPostTeacher);
+//            params.put("is_post_teacher", isPostTeacher);
         } catch (JSONException e) {
             e.printStackTrace();
         }

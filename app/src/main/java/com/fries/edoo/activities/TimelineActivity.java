@@ -258,14 +258,19 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                     Log.i(TAG, "curPage json: " + curPage);
                     Log.i(TAG, "page count json: " + pageCount);
 
-                    isLoadable = curPage != pageCount;
+                    isLoadable = curPage < pageCount;
                     TimelineActivity.this.itemPostArr = itemPostArr;
+                    Message msg = new Message();
+                    msg.what = SUCCESS;
+                    msg.setTarget(mHandler);
+                    msg.sendToTarget();
                 } else {
                     isLoadable = false;
+                    Message msg = new Message();
+                    msg.what = FAIL;
+                    msg.setTarget(mHandler);
+                    msg.sendToTarget();
                 }
-                Message msg = new Message();
-                msg.setTarget(mHandler);
-                msg.sendToTarget();
             }
         });
 
@@ -317,6 +322,9 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         mAdapter.notifyDataSetChanged();
     }
 
+    public static int SUCCESS = 1;
+    public static int FAIL = 0;
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -327,11 +335,13 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
             Log.i(TAG, "current page: " + currPage);
 
             mAdapter.setLoadable(isLoadable);
-            if (currPage == 1) {
-                mAdapter.updateList(itemPostArr);
-            } else {
-                mAdapter.addItems(itemPostArr);
-                Log.i(TAG, "add items");
+            if (msg.what == SUCCESS){
+                if (currPage == 1) {
+                    mAdapter.updateList(itemPostArr);
+                } else {
+                    mAdapter.addItems(itemPostArr);
+                    Log.i(TAG, "add items");
+                }
             }
 
             isLoading = false;
