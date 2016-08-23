@@ -159,6 +159,10 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
         isLoadable = loadable;
     }
 
+    public ArrayList<ItemBase> getItemArr() {
+        return itemArr;
+    }
+
     /**
      * Load more view holder
      */

@@ -48,6 +48,13 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
     private Toolbar toolbar;
     private int currPage = 1;
 
+    public static final int BAI_DANG_BINH_THUONG = 1;
+    public static final int BAI_DANG_LOC_THEO_GIAO_VIEN = 2;
+    public static final int BAI_DANG_LOC_THEO_CHUA_TRA_LOI = 3;
+    public static final int BAI_DANG_CHUA_DOC = 4;
+
+    private int currTypeFilter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +62,6 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        //swipe refresh
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_timeline);
         swipeRefresh.setOnRefreshListener(this);
 
@@ -67,6 +73,8 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        currTypeFilter = 1;
+
         initAdapter();
         initViews();
     }
@@ -75,7 +83,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         itemPostArr = new ArrayList<>();
         mAdapter = new TimeLineAdapter(this, itemClass.getIdData());
 
-        requestPost(itemClass.getIdData(), currPage);
+        requestPost(itemClass.getIdData(), currPage, currTypeFilter);
     }
 
     private LinearLayoutManager linearLayoutManager;
@@ -117,7 +125,6 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.i(TAG, "id: " + item.getItemId());
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
@@ -126,35 +133,56 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                 Log.i(TAG, "new post");
                 startPostWriterActivity(itemClass.getIdData());
                 break;
+
+            // filter
+            case R.id.item_tatcabaidang:
+                Log.i(TAG, "tat ca bai dang");
+                requestPost(itemClass.getIdData(), currPage, BAI_DANG_BINH_THUONG);
+                currTypeFilter = BAI_DANG_BINH_THUONG;
+                break;
             case R.id.item_locbaidangchuatraloi:
                 Log.i(TAG, "loc bai dang chua tl");
-//                mAdapter.locBaiDang(TimeLineAdapter.BAI_DANG_LOC_THEO_CHUA_TRA_LOI);
+                requestPost(itemClass.getIdData(), currPage, BAI_DANG_LOC_THEO_CHUA_TRA_LOI);
+                currTypeFilter = BAI_DANG_LOC_THEO_CHUA_TRA_LOI;
                 break;
             case R.id.item_locbaidanggiaovien:
                 Log.i(TAG, "loc bai dang giao vien");
-//                mAdapter.locBaiDang(TimeLineAdapter.BAI_DANG_LOC_THEO_GIAO_VIEN);
-                break;
-            case R.id.item_tatcabaidang:
-                Log.i(TAG, "tat ca bai dang");
-//                mAdapter.locBaiDang(TimeLineAdapter.BAI_DANG_BINH_THUONG);
+                requestPost(itemClass.getIdData(), currPage, BAI_DANG_LOC_THEO_GIAO_VIEN);
+                currTypeFilter = BAI_DANG_LOC_THEO_GIAO_VIEN;
                 break;
             case R.id.item_locbaidangchuadoc:
                 Log.i(TAG, "tat ca bai dang");
-//                mAdapter.locBaiDang(TimeLineAdapter.BAI_DANG_CHUA_DOC);
+                requestPost(itemClass.getIdData(), currPage, BAI_DANG_CHUA_DOC);
+                currTypeFilter = BAI_DANG_CHUA_DOC;
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void loadMore() {
-        Log.d(TAG, "load more");
-        requestPost(itemClass.getIdData(), ++currPage);
+        requestPost(itemClass.getIdData(), ++currPage, currTypeFilter);
     }
 
-    private void requestPost(final String classId, int pageNumber) {
+    private void requestPost(final String classId, int pageNumber, int typeFilter) {
         final ArrayList<ItemBase> itemPostArr = new ArrayList<>();
 
-        String url = AppConfig.URL_GET_POST_IN_PAGE + "/" + classId + "/page" + "/" + pageNumber;
+        String queryParams = "";
+
+        switch (typeFilter){
+            case BAI_DANG_BINH_THUONG:
+                break;
+            case BAI_DANG_LOC_THEO_GIAO_VIEN:
+                queryParams += "?filter=post_teacher";
+                break;
+            case BAI_DANG_LOC_THEO_CHUA_TRA_LOI:
+                queryParams += "?filter=post_notsolve";
+                break;
+            case BAI_DANG_CHUA_DOC:
+                queryParams += "?filter=post_notseen";
+                break;
+        }
+
+        String url = AppConfig.URL_GET_POST_IN_PAGE + "/" + classId + "/page" + "/" + pageNumber + queryParams;
 
         RequestServer requestServer = new RequestServer(this, Request.Method.GET, url);
         requestServer.setListener(new RequestServer.ServerListener() {
@@ -227,12 +255,10 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                     int curPage = jsonPage.getInt("page");
                     int pageCount = jsonPage.getInt("pageCount");
 
-//                    currPage = curPage;
                     Log.i(TAG, "curPage json: " + curPage);
                     Log.i(TAG, "page count json: " + pageCount);
 
                     isLoadable = curPage != pageCount;
-//                    itemPostArr.add(null);
                     TimelineActivity.this.itemPostArr = itemPostArr;
                 } else {
                     isLoadable = false;
@@ -271,15 +297,14 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
 
                 String idPost = itemTimeLine.getIdPost();
 
-                for (int i = 0; i < itemPostArr.size(); i++) {
-                    ItemTimeLine tempItem = (ItemTimeLine) itemPostArr.get(i);
+                for (int i = 0; i < mAdapter.getItemArr().size() - 1; i++) {
+                    ItemTimeLine tempItem = (ItemTimeLine) mAdapter.getItemArr().get(i);
                     if (idPost.equalsIgnoreCase(tempItem.getIdPost())) {
                         tempItem.setLike(itemTimeLine.getLike());
                         tempItem.setCommentCount(itemTimeLine.getCommentCount());
                         tempItem.setSolve(itemTimeLine.isSolve());
                     }
                 }
-                mAdapter.notifyDataSetChanged();
             }
         }
 
@@ -289,7 +314,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
             }
         }
 
-//        mAdapter.refreshList();
+        mAdapter.notifyDataSetChanged();
     }
 
     private Handler mHandler = new Handler() {
@@ -320,6 +345,6 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
 
     private void refreshPosts() {
         currPage = 1;
-        requestPost(itemClass.getIdData(), currPage);
+        requestPost(itemClass.getIdData(), currPage, currTypeFilter);
     }
 }

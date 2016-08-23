@@ -31,6 +31,7 @@ import com.fries.edoo.models.ItemLop;
 //import com.google.android.gms.common.ConnectionResult;
 //import com.google.android.gms.common.GoogleApiAvailability;
 //import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
@@ -107,8 +108,15 @@ public class MainActivity extends AppCompatActivity
         showFragment(thoiKhoaBieuFragment);
         toolbar.setTitle("Thời khoá biểu");
 
+        //start timeline activity if click noti
+        Intent mIntent = getIntent();
+        ItemLop itemLop = (ItemLop) mIntent.getSerializableExtra("item_class");
+        if (itemLop != null){
+            goToTimeLine(itemLop, "");
+        }
+
         // Register FCM token to server
-//        Log.d(TAG, "FCM token: " + FirebaseInstanceId.getInstance().getToken());
+        Log.d(TAG, "FCM token: " + FirebaseInstanceId.getInstance().getToken());
     }
 
     private void initViews() {
