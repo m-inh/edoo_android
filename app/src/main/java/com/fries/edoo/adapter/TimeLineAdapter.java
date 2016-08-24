@@ -122,7 +122,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
             itemPostHolder.getTxtCountComment().setText(countCmt + "");
             itemPostHolder.getTvTimeCreateAt().setText(", " + itemTimeLine.getCreateAt());
 
-            itemPostHolder.getIvBookmark().setVisibility(View.INVISIBLE);
+            itemPostHolder.getIvBookmark().setVisibility(View.GONE);
 
             boolean isPostByTeacher = itemTimeLine.getTypeAuthor().equalsIgnoreCase("teacher");
 

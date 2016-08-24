@@ -1,6 +1,7 @@
 package com.fries.edoo.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,10 +13,10 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -29,6 +30,7 @@ import jp.wasabeef.richeditor.RichEditor;
  */
 public class PostWriterContentFragment extends Fragment {
     private static final String TAG = PostWriterContentFragment.class.getSimpleName();
+    private static final String HTML_PLACE_HOLDER = "<a style='color:#80CBC4'>Write content ...<a><br><br><br><br><br><br><br><br><br><br>";
     private View rootView;
 
     private RichEditor mEditor;
@@ -46,7 +48,7 @@ public class PostWriterContentFragment extends Fragment {
         return rootView;
     }
 
-    private void initViews(){
+    private void initViews() {
         edtTitlePost = (EditText) rootView.findViewById(R.id.edt_title_post);
 
 
@@ -61,16 +63,6 @@ public class PostWriterContentFragment extends Fragment {
         //    mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
         mEditor.setPlaceholder("Write post here ...");
 
-//        mEditor.setOnTextChangeListener(new RichEditor.OnTextChangeListener() {
-//            @Override
-//            public void onTextChange(String text) {
-//                mPreview.setText(text);
-//                mWebView.getSettings().setJavaScriptEnabled(true);
-//                mWebView.loadData(text, "text/html", "UTF-8");
-//            }
-//        });
-//        mEditor.setHtml();
-
         rootView.findViewById(R.id.editor_action_undo).setOnClickListener(clickToolEditor);
         rootView.findViewById(R.id.editor_action_bold).setOnClickListener(clickToolEditor);
         rootView.findViewById(R.id.editor_action_italic).setOnClickListener(clickToolEditor);
@@ -80,15 +72,19 @@ public class PostWriterContentFragment extends Fragment {
         rootView.findViewById(R.id.editor_action_insert_image).setOnClickListener(clickToolEditor);
         rootView.findViewById(R.id.editor_action_insert_link).setOnClickListener(clickToolEditor);
 
+
+        mEditor.setHtml(HTML_PLACE_HOLDER);
         mEditor.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 HorizontalScrollView editorToolBar = (HorizontalScrollView) rootView.findViewById(R.id.editor_tool_bar);
                 if (b) {
+                    if (mEditor.getHtml().equals(HTML_PLACE_HOLDER)) mEditor.setHtml("");
                     editorToolBar.setVisibility(View.VISIBLE);
                 } else {
                     editorToolBar.setVisibility(View.GONE);
                 }
+
             }
         });
     }
@@ -181,26 +177,32 @@ public class PostWriterContentFragment extends Fragment {
 
     // ---------------------------------------------------------------------------------------------
 
-    public String getTitlePost(){
-        return edtTitlePost.getText().toString();
+    public String getTitlePost() {
+        try {// Case: edtTitlePost is NULL
+            return "" + edtTitlePost.getText().toString();
+        } catch (NullPointerException e){
+            e.printStackTrace();
+            return "";
+        }
     }
 
-    public String getContentPost(){
-        return mEditor.getHtml();
+    public String getContentPost() {
+        return "" + mEditor.getHtml();
     }
 
-    public boolean checkFillContent(){
+    public boolean checkFillContent() {
         String titlePost = getTitlePost();
-        String contentPost = getContentPost();
-        Log.i(TAG, "content: " + contentPost);
         if (titlePost.isEmpty()) {
+            edtTitlePost.requestFocus();
             YoYo.with(Techniques.Tada)
                     .duration(1000)
-                    .playOn(edtTitlePost);
+                    .playOn(rootView.findViewById(R.id.t_i_l_title_post));
             Toast.makeText(getContext(), "Bài viết không có tiêu đề!", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (contentPost == null || contentPost.isEmpty()) {
+        if (contentIsEmpty()) {
+            mEditor.focusEditor();
+            mEditor.requestFocus();
             YoYo.with(Techniques.Tada)
                     .duration(1000)
                     .playOn(mEditor);
@@ -208,5 +210,10 @@ public class PostWriterContentFragment extends Fragment {
             return false;
         }
         return true;
+    }
+
+    public boolean contentIsEmpty() {
+        String contentPost = getContentPost();
+        return contentPost.isEmpty() || contentPost.equals(HTML_PLACE_HOLDER);
     }
 }

@@ -2,6 +2,7 @@ package com.fries.edoo.activities;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethod;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -38,7 +42,7 @@ import org.json.JSONObject;
 /**
  * Created by tmq on 20/08/2016.
  */
-public class PostWriterActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
+public class PostWriterActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
     private static final String TAG = PostWriterActivity.class.getSimpleName();
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -55,7 +59,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
         initViews();
     }
 
-    private void initViews(){
+    private void initViews() {
         toolbar = (Toolbar) findViewById(R.id.tb_post_writer);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -73,18 +77,24 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
 
     // ---------------------------------------------------------------------------------------------
     @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    }
 
     @Override
     public void onPageSelected(int position) {
-        switch (position){
+        switch (position) {
             case 0:
                 showActionNexPage(true);
                 break;
             case 1:
                 if (!postAdapter.getPostWriterContent().checkFillContent()) {
                     viewPager.setCurrentItem(0, true);
+                    InputMethodManager imm = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
                     break;
+                } else {
+                    InputMethodManager inputMgr = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    inputMgr.hideSoftInputFromWindow(viewPager.getWindowToken(), 0);
                 }
                 showActionNexPage(false);
                 break;
@@ -92,10 +102,11 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
     }
 
     @Override
-    public void onPageScrollStateChanged(int state) {}
+    public void onPageScrollStateChanged(int state) {
+    }
     // ---------------------------------------------------------------------------------------------
 
-    private void postToServer(){
+    private void postToServer() {
         String titlePost = postAdapter.getPostWriterContent().getTitlePost();
         String contentPost = postAdapter.getPostWriterContent().getContentPost();
 
@@ -117,6 +128,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
     }
 
     private MenuItem actionNextPage, actionPost;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.writepost_menu, menu);
@@ -125,7 +137,8 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
         showActionNexPage(true);
         return true;
     }
-    private void showActionNexPage(boolean isShow){
+
+    private void showActionNexPage(boolean isShow) {
         actionPost.setVisible(!isShow);
         actionNextPage.setVisible(isShow);
     }
@@ -134,9 +147,10 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                switch (viewPager.getCurrentItem()){
+                switch (viewPager.getCurrentItem()) {
                     case 0:
-                        exitWriterPost();   break;
+                        exitWriterPost();
+                        break;
                     case 1:
                         viewPager.setCurrentItem(0, true);
                 }
@@ -156,13 +170,13 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
 
     @Override
     public void onBackPressed() {
-        exitWriterPost();
+        if (viewPager.getCurrentItem()==1) viewPager.setCurrentItem(0, true);
+        else exitWriterPost();
     }
 
-    public void exitWriterPost(){
+    public void exitWriterPost() {
         String titlePost = postAdapter.getPostWriterContent().getTitlePost();
-        String contentPost = postAdapter.getPostWriterContent().getContentPost();
-        if (contentPost != null || !titlePost.isEmpty()) {
+        if (!postAdapter.getPostWriterContent().contentIsEmpty() || !titlePost.isEmpty()) {
             AlertDialog.Builder notiBack = new AlertDialog.Builder(this);
             notiBack.setTitle(R.string.warn_exit);
             notiBack.setPositiveButton("Hủy", null);
@@ -192,7 +206,6 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
             e.printStackTrace();
         }
 
-        Log.i(TAG, "pre Post");
         RequestServer requestServer = new RequestServer(this, Request.Method.POST, url, params);
         requestServer.setListener(new RequestServer.ServerListener() {
             @Override
@@ -205,7 +218,6 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
                     msg.setTarget(mHandler);
                     msg.sendToTarget();
 
-                    Log.i(TAG, "Post success");
                 } else {
 //                    ivPost.setClickable(true);
 //                    isAllowedClick = true;
@@ -227,7 +239,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
     };
 
     // ----------------------------------------- Adapter -------------------------------------------
-    private class PostAdapter extends FragmentStatePagerAdapter{
+    private class PostAdapter extends FragmentStatePagerAdapter {
         private PostWriterContentFragment postWriterContent;
         private PostWriterTagFragment postWriterTagFragment;
 
@@ -239,9 +251,11 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
 
         @Override
         public Fragment getItem(int position) {
-            switch (position){
-                case 0: return postWriterContent;
-                default: return postWriterTagFragment;
+            switch (position) {
+                case 0:
+                    return postWriterContent;
+                default:
+                    return postWriterTagFragment;
             }
         }
 

@@ -109,7 +109,7 @@ public class ItemPostDetailHolder extends AbstractHolder {
         boolean isPostByTeacher = itemTimeLine.getTypeAuthor().equalsIgnoreCase("teacher");
         boolean isSolve = itemTimeLine.isSolve();
 
-        ivIsVote.setVisibility(View.INVISIBLE);
+        ivIsVote.setVisibility(View.GONE);
 
         if (isSolve) {
             ivIsVote.setVisibility(View.VISIBLE);

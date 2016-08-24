@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <jp.wasabeef.richeditor.RichEditor
+        android:id="@+id/editor_rich_editor"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/card_elevation"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_weight="1"
+        android:gravity="top|left"
+        android:padding="@dimen/action_padding" />
+
+    <HorizontalScrollView
+        android:id="@+id/editor_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/editor_action_undo"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_btn_pressed"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_editor_undo" />
+
+            <ImageButton
+                android:id="@+id/editor_action_insert_image"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_btn_pressed"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_editor_insert_image" />
+
+            <ImageButton
+                android:id="@+id/editor_action_insert_link"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_btn_pressed"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_editor_insert_link" />
+
+            <ImageButton
+                android:id="@+id/editor_action_text_size"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_btn_pressed"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_editor_text_size" />
+
+            <ImageButton
+                android:id="@+id/editor_action_bullets"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_btn_pressed"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_editor_format_list_bulleted" />
+
+            <ImageButton
+                android:id="@+id/editor_action_bold"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_btn_pressed"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_editor_format_bold" />
+
+            <ImageButton
+                android:id="@+id/editor_action_italic"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_btn_pressed"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_editor_format_italic" />
+
+            <ImageButton
+                android:id="@+id/editor_action_underline"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_btn_pressed"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_editor_format_underlined" />
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+
+</LinearLayout>
