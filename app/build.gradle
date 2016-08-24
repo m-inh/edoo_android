@@ -43,8 +43,8 @@ dependencies {
     compile 'com.daimajia.androidanimations:library:1.1.2@aar'
 
     // FCM libs
-    compile 'com.google.android.gms:play-services:9.4.0'
-    compile 'com.android.support:multidex:1.0.1'
+//    compile 'com.google.android.gms:play-services:9.4.0'
+//    compile 'com.android.support:multidex:1.0.1'
 }
 
 //apply plugin: 'com.google.gms.google-services'

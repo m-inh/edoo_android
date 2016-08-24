@@ -137,21 +137,25 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
             // filter
             case R.id.item_tatcabaidang:
                 Log.i(TAG, "tat ca bai dang");
+                currPage = 1;
                 requestPost(itemClass.getIdData(), currPage, BAI_DANG_BINH_THUONG);
                 currTypeFilter = BAI_DANG_BINH_THUONG;
                 break;
             case R.id.item_locbaidangchuatraloi:
                 Log.i(TAG, "loc bai dang chua tl");
+                currPage = 1;
                 requestPost(itemClass.getIdData(), currPage, BAI_DANG_LOC_THEO_CHUA_TRA_LOI);
                 currTypeFilter = BAI_DANG_LOC_THEO_CHUA_TRA_LOI;
                 break;
             case R.id.item_locbaidanggiaovien:
                 Log.i(TAG, "loc bai dang giao vien");
+                currPage = 1;
                 requestPost(itemClass.getIdData(), currPage, BAI_DANG_LOC_THEO_GIAO_VIEN);
                 currTypeFilter = BAI_DANG_LOC_THEO_GIAO_VIEN;
                 break;
             case R.id.item_locbaidangchuadoc:
                 Log.i(TAG, "tat ca bai dang");
+                currPage = 1;
                 requestPost(itemClass.getIdData(), currPage, BAI_DANG_CHUA_DOC);
                 currTypeFilter = BAI_DANG_CHUA_DOC;
                 break;
