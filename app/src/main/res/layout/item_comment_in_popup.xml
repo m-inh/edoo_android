@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@android:color/white"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
@@ -17,8 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="16dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="16dp">
 
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -47,9 +46,9 @@
                 android:id="@+id/tv_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/comment_author"
                 android:textSize="16sp"
-                android:textStyle="normal"
-                android:text="@string/comment_author" />
+                android:textStyle="normal" />
 
         </LinearLayout>
 

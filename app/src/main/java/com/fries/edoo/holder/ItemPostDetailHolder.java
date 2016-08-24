@@ -18,7 +18,6 @@ import com.android.volley.Request;
 import com.fries.edoo.activities.PostDetailActivity;
 import com.fries.edoo.R;
 import com.fries.edoo.activities.WebviewActivity;
-import com.fries.edoo.adapter.ImagePostDetailAdapter;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.models.ItemTimeLine;

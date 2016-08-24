@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/height_item_subject"
     android:background="@android:color/darker_gray"
-    android:padding="0.3dp"
-    >
+    android:orientation="vertical"
+    android:padding="0.3dp">
 
     <TextView
         android:id="@+id/txtItemNameSubject"
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="@dimen/height_item_subject"
-        android:text=""
         android:background="@android:color/white"
-        />
+        android:gravity="center"
+        android:text="" />
 
 </LinearLayout>

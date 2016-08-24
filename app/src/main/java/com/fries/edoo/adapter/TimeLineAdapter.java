@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.fries.edoo.R;
 import com.fries.edoo.holder.AbstractHolder;
 import com.fries.edoo.holder.ItemPostHolder;
-import com.fries.edoo.holder.ItemWritePostHolder;
 import com.fries.edoo.models.ItemBase;
 import com.fries.edoo.models.ItemTimeLine;
 import com.fries.edoo.utils.CommonVLs;
