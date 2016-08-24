@@ -87,6 +87,8 @@ public class PostWriterTagFragment extends Fragment {
 
         if (!getIsTeacher()) {
             typeNotification.setVisibility(View.GONE);
+        } else {
+            scIncognitoMode.setVisibility(View.GONE);
         }
 
         setDataUser(true);
