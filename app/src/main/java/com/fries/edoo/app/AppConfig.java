@@ -31,6 +31,8 @@ public class AppConfig {
 
 	///////////////IMG
 	public static final String URL_POST_IMG_AVATAR = URL_HOST + "/avatar";
+	public static final String URL_POST_IMG = URL_HOST + "/img";
+
 
 	public static final String  URL_GET_POST_DETAIL = URL_HOST + "/post";
 }

@@ -107,6 +107,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
     // ---------------------------------------------------------------------------------------------
 
     private void postToServer() {
+        postAdapter.getPostWriterContent().replaceUrlImage();
         String titlePost = postAdapter.getPostWriterContent().getTitlePost();
         String contentPost = postAdapter.getPostWriterContent().getContentPost();
 
@@ -163,6 +164,8 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
                 break;
             case R.id.action_post:
                 postToServer();
+//                postAdapter.getPostWriterContent().replaceUrlImage();
+                Log.i(TAG, "post = " + postAdapter.getPostWriterContent().getContentPost());
                 break;
         }
         return super.onOptionsItemSelected(item);
