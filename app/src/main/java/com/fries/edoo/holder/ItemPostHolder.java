@@ -100,23 +100,23 @@ public class ItemPostHolder extends AbstractHolder {
                 TimelineActivity timelineActivity = (TimelineActivity) mContext;
                 timelineActivity.startPostDetailActivity(itemTimeLine);
 
-                postSeen(itemTimeLine.getIdPost());
+//                postSeen(itemTimeLine.getIdPost());
             }
         });
     }
 
-    private void postSeen(String idPost) {
-        String url = AppConfig.URL_POST_SEEN;
-        JSONObject params = new JSONObject();
-        try {
-            params.put("post_id", idPost);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        RequestServer requestServer = new RequestServer(mContext, Request.Method.POST, url, params);
-        requestServer.sendRequest("Post a seen");
-    }
+//    private void postSeen(String idPost) {
+//        String url = AppConfig.URL_POST_SEEN;
+//        JSONObject params = new JSONObject();
+//        try {
+//            params.put("post_id", idPost);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        RequestServer requestServer = new RequestServer(mContext, Request.Method.POST, url, params);
+//        requestServer.sendRequest("Post a seen");
+//    }
 
     public void startAnim() {
         Animation myAni = AnimationUtils.loadAnimation(mContext, R.anim.anim_show_item_listview);
