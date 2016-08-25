@@ -83,4 +83,8 @@
     <string name="anonymous">Anonymous</string>
     <string name="next">Kế tiếp</string>
 
+
+    <string name="txt_gallery">Gallery</string>
+    <string name="txt_camera">Camera</string>
+
 </resources>

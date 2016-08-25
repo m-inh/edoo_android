@@ -1,40 +1,36 @@
 package com.fries.edoo.fragment;
 
-import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ContentUris;
-import android.content.Context;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.media.Image;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Message;
 import android.os.SystemClock;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.PopupMenu;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.fries.edoo.io.*;
 
 import com.android.volley.Request;
 import com.daimajia.androidanimations.library.Techniques;
@@ -60,13 +56,15 @@ import jp.wasabeef.richeditor.RichEditor;
 public class PostWriterContentFragment extends Fragment {
     private static final String TAG = PostWriterContentFragment.class.getSimpleName();
     private static final String HTML_PLACE_HOLDER = "<a style='color:#80CBC4'>Write content ...<a><br><br><br><br><br><br><br><br><br><br>";
-    private static final int REQUEST_CODE_IMAGE = 34242;
+    private static final int IMAGE_LOCAL_REQUEST = 34242;
+    private static final int CAMERA_REQUEST = 23423;
 
     private View rootView;
 
     private RichEditor mEditor;
     private int textSizeEditor;
     private EditText edtTitlePost;
+    private ImageButton editorInsertImage;
 
     private ProgressDialog pDialog;
 
@@ -85,14 +83,9 @@ public class PostWriterContentFragment extends Fragment {
 
 
         mEditor = (RichEditor) rootView.findViewById(R.id.editor_rich_editor);
-//        mEditor.setEditorHeight(200);
         mEditor.setEditorFontSize(16);
         mEditor.setEditorFontColor(Color.BLACK);
         mEditor.setPadding(8, 8, 8, 8);
-        //mEditor.setEditorBackgroundColor(Color.BLUE);
-        //mEditor.setBackgroundColor(Color.BLUE);
-        //mEditor.setBackgroundResource(R.drawable.bg);
-        //    mEditor.setBackground("https://raw.githubusercontent.com/wasabeef/art/master/chip.jpg");
         mEditor.setPlaceholder("Write post here ...");
 
         rootView.findViewById(R.id.editor_action_undo).setOnClickListener(clickToolEditor);
@@ -101,9 +94,10 @@ public class PostWriterContentFragment extends Fragment {
         rootView.findViewById(R.id.editor_action_underline).setOnClickListener(clickToolEditor);
         rootView.findViewById(R.id.editor_action_text_size).setOnClickListener(clickToolEditor);
         rootView.findViewById(R.id.editor_action_bullets).setOnClickListener(clickToolEditor);
-        rootView.findViewById(R.id.editor_action_insert_image).setOnClickListener(clickToolEditor);
+        editorInsertImage = (ImageButton) rootView.findViewById(R.id.editor_action_insert_image);
         rootView.findViewById(R.id.editor_action_insert_link).setOnClickListener(clickToolEditor);
 
+        editorInsertImage.setOnClickListener(clickToolEditor);
 
         mEditor.setHtml(HTML_PLACE_HOLDER);
         mEditor.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -129,7 +123,7 @@ public class PostWriterContentFragment extends Fragment {
                 if (newImageInserted) {
                     int posTagImg = text.lastIndexOf("img") + 3;
 
-                    String html = text.substring(0, posTagImg) + resizeImage() + text.substring(posTagImg, text.length()) + "<br>";
+                    String html = text.substring(0, posTagImg) + resizeImage() + text.substring(posTagImg, text.length()) + "<br><br>";
                     mEditor.setHtml(html);
                     newImageInserted = false;
                     mEditor.focusEditor();
@@ -165,8 +159,7 @@ public class PostWriterContentFragment extends Fragment {
                     mEditor.setBullets();
                     break;
                 case R.id.editor_action_insert_image:
-//                    mEditor.insertImage("http://www.1honeywan.com/dachshund/image/7.21/7.21_3_thumb.JPG", "dachshund");
-                    pickImageFromMemory();
+                    pickImage();
                     break;
                 case R.id.editor_action_insert_link:
                     showDialogInsertLink();
@@ -177,13 +170,33 @@ public class PostWriterContentFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "result code = " + resultCode);
+        if (resultCode != Activity.RESULT_OK) return;
+        newImageInserted = true;
         switch (requestCode) {
-            case REQUEST_CODE_IMAGE:
+            case IMAGE_LOCAL_REQUEST:
                 Log.i(TAG, data.getData().toString());
-                Bitmap bmp = getBitmap(data.getData());
-                uploadImage(bmp);
+                File file = new File(FileManager.getPath(getContext(), data.getData()));
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+                imgWidth = bitmap.getWidth();
+                imgHeight = bitmap.getHeight();
+                uploadImage(bitmap);
                 mEditor.insertImage(data.getData().toString(), "alt_image");
                 break;
+            case CAMERA_REQUEST:
+                try {
+                    Bitmap photo = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), photoUri);
+                    if (photo == null) return;
+                    imgWidth = photo.getWidth();
+                    imgHeight = photo.getHeight();
+                    uploadImage(photo);
+                    mEditor.insertImage(FileManager.getPath(getContext(), photoUri), "alt_photo");
+                    Log.i(TAG, "Size = " + imgWidth + ", " + imgHeight);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         }
     }
 
@@ -245,17 +258,51 @@ public class PostWriterContentFragment extends Fragment {
     private int imgWidth, imgHeight;
     private boolean newImageInserted = false;
     private ArrayList<String> arrImageCloud = new ArrayList<>(); // Save link Image, what is uploaded to server
+    private Uri photoUri;
 
+    private void pickImage() {
+        PopupMenu menu = new PopupMenu(getContext(), editorInsertImage);
+        menu.getMenuInflater().inflate(R.menu.pick_image, menu.getMenu());
+
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_pick_image_gallery:
+                        pickImageFromMemory();
+                        break;
+                    case R.id.action_pick_image_camera:
+                        pickImageFromCamera();
+                        break;
+                }
+                return true;
+            }
+        });
+        menu.show();
+    }
 
     private void pickImageFromMemory() {
         Intent iImage = (new Intent("android.intent.action.GET_CONTENT")).setType("image/*");
         preHTMLEditor = mEditor.getHtml() + "";
-        newImageInserted = true;
-        startActivityForResult(iImage, REQUEST_CODE_IMAGE);
+        startActivityForResult(iImage, IMAGE_LOCAL_REQUEST);
+    }
+
+
+
+    private void pickImageFromCamera() {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "New Picture");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+        photoUri = getContext().getContentResolver().insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+        startActivityForResult(intent, CAMERA_REQUEST);
     }
 
     private String resizeImage() {
         int screenWidth = mEditor.getWidth() - 2 * mEditor.getPaddingLeft() - 2 * mEditor.getPaddingRight();
+        Log.i(TAG, "Screen width = " + screenWidth);
         float scale = ((float) screenWidth) / imgWidth;
         imgWidth = screenWidth;
         imgHeight *= scale;
@@ -271,15 +318,6 @@ public class PostWriterContentFragment extends Fragment {
         return " width = '" + imgWidth + "' height = '" + imgHeight + "' ";
     }
 
-    private Bitmap getBitmap(Uri uri) {
-        File file = new File(SelectedFilePath.getPath(getContext(), uri));
-//        Log.i(TAG, "path = " + file.getAbsolutePath());
-        Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
-        imgWidth = bitmap.getWidth();
-        imgHeight = bitmap.getHeight();
-        return bitmap;
-    }
-
     public void replaceUrlImage() {
         StringBuilder content = new StringBuilder(getContentPost());
         int posImg = 0;
@@ -289,25 +327,22 @@ public class PostWriterContentFragment extends Fragment {
             int pos1 = content.indexOf("\"", posImg);
             int pos2 = content.indexOf("\"", pos1 + 1);
 
-            content.replace(pos1+1, pos2, url);
+            content.replace(pos1 + 1, pos2, url);
 
             posImg++;
         }
-        mEditor.setHtml("  ");
-        Log.i(TAG, "Html prepare post = " + content.toString());
         mEditor.setHtml(content.toString());
     }
 
     // ---------------
     private void uploadImage(final Bitmap bmp) {
-        //Showing the progress dialog
-        final ProgressDialog loading = ProgressDialog.show(getContext(), "Uploading...", "Please wait...", false, false);
+        final ProgressBar pbrUploadingImage = (ProgressBar) rootView.findViewById(R.id.pbr_uploading_image);
+        pbrUploadingImage.setVisibility(View.VISIBLE);
 
         byte[] fileData = CommonVLs.getFileDataFromBitmap(bmp);
-        String filename = "avatar.jpg";
+        String filename = "image_post.jpg";
         String fileType = "image/jpg";
-        MultipartRequest request =
-                new MultipartRequest(getContext(), Request.Method.POST,
+        MultipartRequest request = new MultipartRequest(getContext(), Request.Method.POST,
                         AppConfig.URL_POST_IMG, fileData, filename, fileType);
 
         request.setListener(new MultipartRequest.ServerListener() {
@@ -315,26 +350,16 @@ public class PostWriterContentFragment extends Fragment {
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 Log.d(TAG, "response: " + response);
                 Log.d(TAG, "msg: " + message);
-                //Disimissing the progress dialog
-                loading.dismiss();
+
+                pbrUploadingImage.setVisibility(View.GONE);
 
                 if (!error) {
-                    String urlAva = response.getJSONObject("data").getString("url");
-                    Log.i(TAG, "url = " + urlAva);
-                    Toast.makeText(getContext(), "Post xong", Toast.LENGTH_SHORT).show();
-
-//                    mEditor.insertImage(urlAva, "image");
-
-                    arrImageCloud.add(urlAva);
-
-
-                    //Send url avatar to handler
-//                    Message msg = new Message();
-//                    Bundle b = new Bundle();
-//                    b.putString("avatar", urlAva);
-//                    msg.setData(b);
-//                    msg.setTarget(mHandler);
-//                    msg.sendToTarget();
+                    String urlImg = response.getJSONObject("data").getString("url");
+                    Log.i(TAG, "url = " + urlImg);
+//                    Toast.makeText(getContext(), "Post xong", Toast.LENGTH_SHORT).show();
+                    arrImageCloud.add(urlImg);
+                } else {
+                    Toast.makeText(getContext(), "Upload Failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -384,136 +409,4 @@ public class PostWriterContentFragment extends Fragment {
         return contentPost.isEmpty() || contentPost.equals(HTML_PLACE_HOLDER);
     }
 
-    // ---------------------------------------------------------------------------------------------
-    private static class SelectedFilePath {
-        /**
-         * Get a file path from a Uri. This will get the the path for Storage Access
-         * Framework Documents, as well as the _data field for the MediaStore and
-         * other file-based ContentProviders.
-         *
-         * @param context The context.
-         * @param uri     The Uri to query.
-         * @author paulburke
-         */
-        @TargetApi(Build.VERSION_CODES.KITKAT)
-        public static String getPath(final Context context, final Uri uri) {
-
-            final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-
-            // DocumentProvider
-            if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-                // ExternalStorageProvider
-                if (isExternalStorageDocument(uri)) {
-                    final String docId = DocumentsContract.getDocumentId(uri);
-                    final String[] split = docId.split(":");
-                    final String type = split[0];
-
-                    if ("primary".equalsIgnoreCase(type)) {
-                        return Environment.getExternalStorageDirectory() + "/" + split[1];
-                    }
-
-                    // TODO handle non-primary volumes
-                }
-                // DownloadsProvider
-                else if (isDownloadsDocument(uri)) {
-
-                    final String id = DocumentsContract.getDocumentId(uri);
-                    final Uri contentUri = ContentUris.withAppendedId(
-                            Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-
-                    return getDataColumn(context, contentUri, null, null);
-                }
-                // MediaProvider
-                else if (isMediaDocument(uri)) {
-                    final String docId = DocumentsContract.getDocumentId(uri);
-                    final String[] split = docId.split(":");
-                    final String type = split[0];
-
-                    Uri contentUri = null;
-                    if ("image".equals(type)) {
-                        contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                    } else if ("video".equals(type)) {
-                        contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-                    } else if ("audio".equals(type)) {
-                        contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-                    }
-
-                    final String selection = "_id=?";
-                    final String[] selectionArgs = new String[]{
-                            split[1]
-                    };
-
-                    return getDataColumn(context, contentUri, selection, selectionArgs);
-                }
-            }
-            // MediaStore (and general)
-            else if ("content".equalsIgnoreCase(uri.getScheme())) {
-                return getDataColumn(context, uri, null, null);
-            }
-            // File
-            else if ("file".equalsIgnoreCase(uri.getScheme())) {
-                return uri.getPath();
-            }
-
-            return null;
-        }
-
-        /**
-         * Get the value of the data column for this Uri. This is useful for
-         * MediaStore Uris, and other file-based ContentProviders.
-         *
-         * @param context       The context.
-         * @param uri           The Uri to query.
-         * @param selection     (Optional) Filter used in the query.
-         * @param selectionArgs (Optional) Selection arguments used in the query.
-         * @return The value of the _data column, which is typically a file path.
-         */
-        public static String getDataColumn(Context context, Uri uri, String selection,
-                                           String[] selectionArgs) {
-
-            Cursor cursor = null;
-            final String column = "_data";
-            final String[] projection = {
-                    column
-            };
-
-            try {
-                cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
-                        null);
-                if (cursor != null && cursor.moveToFirst()) {
-                    final int column_index = cursor.getColumnIndexOrThrow(column);
-                    return cursor.getString(column_index);
-                }
-            } finally {
-                if (cursor != null)
-                    cursor.close();
-            }
-            return null;
-        }
-
-
-        /**
-         * @param uri The Uri to check.
-         * @return Whether the Uri authority is ExternalStorageProvider.
-         */
-        public static boolean isExternalStorageDocument(Uri uri) {
-            return "com.android.externalstorage.documents".equals(uri.getAuthority());
-        }
-
-        /**
-         * @param uri The Uri to check.
-         * @return Whether the Uri authority is DownloadsProvider.
-         */
-        public static boolean isDownloadsDocument(Uri uri) {
-            return "com.android.providers.downloads.documents".equals(uri.getAuthority());
-        }
-
-        /**
-         * @param uri The Uri to check.
-         * @return Whether the Uri authority is MediaProvider.
-         */
-        public static boolean isMediaDocument(Uri uri) {
-            return "com.android.providers.media.documents".equals(uri.getAuthority());
-        }
-    }
 }

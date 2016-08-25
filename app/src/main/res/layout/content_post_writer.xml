@@ -29,11 +29,20 @@
     </android.support.design.widget.TextInputLayout>
 
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:id="@+id/pbr_uploading_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/card_padding"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:indeterminate="true"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:visibility="gone"/>
     <include
         layout="@layout/editor_writer_post_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:layout_weight="1" />
 
 
