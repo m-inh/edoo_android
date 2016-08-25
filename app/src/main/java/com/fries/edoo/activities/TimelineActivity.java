@@ -1,17 +1,27 @@
 package com.fries.edoo.activities;
 
+import android.animation.Animator;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.fries.edoo.R;
@@ -60,6 +70,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_timeline);
@@ -69,6 +80,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         itemClass = (ItemLop) b.getSerializable("item_class");
 
         toolbar.setTitle(itemClass.getTen());
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -361,4 +373,5 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         currPage = 1;
         requestPost(itemClass.getIdData(), currPage, currTypeFilter);
     }
+
 }
