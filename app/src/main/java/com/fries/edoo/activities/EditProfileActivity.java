@@ -108,14 +108,14 @@ public class EditProfileActivity extends Activity {
             }
         });
 
-        btnDone = (Button) findViewById(R.id.btn_edit_done);
-        btnDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            setResult(RESULT_OK);
-            finish();
-            }
-        });
+//        btnDone = (Button) findViewById(R.id.btn_edit_done);
+//        btnDone.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//            setResult(RESULT_OK);
+//            finish();
+//            }
+//        });
     }
 
     private void initViewsForTeacher() {
