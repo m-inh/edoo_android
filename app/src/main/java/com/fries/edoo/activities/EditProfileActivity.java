@@ -221,8 +221,8 @@ public class EditProfileActivity extends Activity {
                     vote.setText("" + voteCount);
                     solve.setText("" + data.getInt("solve_count"));
 
-                    if (voteCount >= 0) ivVote.setImageResource(R.mipmap.ic_up_24);
-                    else ivVote.setImageResource(R.mipmap.ic_down_24);
+                    if (voteCount >= 0) ivVote.setImageResource(R.drawable.ic_vote_up);
+                    else ivVote.setImageResource(R.drawable.ic_vote_down);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

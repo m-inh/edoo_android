@@ -97,9 +97,9 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
             postDetailHolder.setComment(itemTimeline.getItemComments().size() + "");
             postDetailHolder.setLike(itemTimeline.getLike() + "");
             if (itemTimeline.getLike() >= 0) {
-                postDetailHolder.getIvLike().setImageResource(R.mipmap.ic_up_24);
+                postDetailHolder.getIvLike().setImageResource(R.drawable.ic_vote_up);
             } else {
-                postDetailHolder.getIvLike().setImageResource(R.mipmap.ic_down_24);
+                postDetailHolder.getIvLike().setImageResource(R.drawable.ic_vote_down);
             }
 
             postDetailHolder.getTvCreateAt().setText(", " + itemTimeline.getCreateAt());

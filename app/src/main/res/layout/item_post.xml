@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
-    android:elevation="4dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/paragraph_margin"
+    android:paddingRight="@dimen/paragraph_margin"
+    android:paddingTop="@dimen/i_class_padding_top">
 
     <TableRow
         android:layout_width="match_parent"
@@ -14,18 +16,16 @@
             android:id="@+id/iv_marker_seen"
             android:layout_width="8dp"
             android:layout_height="8dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"
+            android:layout_marginTop="@dimen/line_text_margin"
             android:src="@drawable/avar_item_bg_2" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="5dp"
+            android:paddingBottom="@dimen/i_class_padding_bottom_small"
             android:paddingLeft="6dp"
-            android:paddingRight="8dp"
             android:paddingTop="0dp">
 
             <TableRow
@@ -36,29 +36,27 @@
                     android:id="@+id/txtTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:gravity="left|center_vertical"
                     android:text="@string/title_post"
                     android:textAllCaps="true"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/t_size_subheading_2"
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/iv_type_post_list"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_type_post_question"
-                    />
+                    android:id="@+id/iv_bookmark"
+                    android:layout_width="@dimen/i_icon_size"
+                    android:layout_height="@dimen/i_icon_size"
+                    android:layout_gravity="top|right"
+                    android:src="@drawable/ic_bookmark_post_teacher" />
 
                 <ImageView
-                    android:id="@+id/iv_bookmark"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="top|right"
-                    android:src="@mipmap/ic_bookmark_check" />
+                    android:id="@+id/iv_type_post_list"
+                    android:layout_width="@dimen/i_icon_size"
+                    android:layout_height="@dimen/i_icon_size"
+                    android:src="@drawable/ic_type_post_question" />
 
             </TableRow>
 
@@ -66,23 +64,29 @@
                 android:id="@+id/tv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginRight="@dimen/i_class_padding_top"
+                android:layout_marginTop="@dimen/i_class_padding_bottom_small"
                 android:text="@string/content_post"
                 android:textColor="@android:color/black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/t_size_body" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="22dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/i_block_margin_top"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TableRow
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
                     android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_like"
+                        android:layout_width="@dimen/i_icon_size_small"
+                        android:layout_height="@dimen/i_icon_size_small"
+                        android:src="@drawable/ic_vote_down" />
 
                     <TextView
                         android:id="@+id/txtCountLike"
@@ -90,21 +94,21 @@
                         android:layout_height="wrap_content"
                         android:text="11"
                         android:textColor="#989696"
-                        android:textSize="@dimen/like_size" />
-
-                    <ImageView
-                        android:id="@+id/iv_like"
-                        android:layout_width="@dimen/ic_post_size"
-                        android:layout_height="@dimen/ic_post_size"
-                        android:src="@mipmap/ic_up_24" />
+                        android:textSize="@dimen/t_size_body" />
 
                 </TableRow>
 
                 <TableRow
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginLeft="@dimen/paragraph_margin"
                     android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/i_icon_size_small"
+                        android:layout_height="@dimen/i_icon_size_small"
+                        android:padding="2dp"
+                        android:src="@drawable/ic_comment" />
 
                     <TextView
                         android:id="@+id/txtCountComment"
@@ -112,28 +116,16 @@
                         android:layout_height="wrap_content"
                         android:text="27"
                         android:textColor="#989696"
-                        android:textSize="@dimen/like_size" />
-
-                    <ImageView
-                        android:layout_width="@dimen/ic_comment_post"
-                        android:layout_height="@dimen/ic_comment_post"
-                        android:layout_marginLeft="3dp"
-                        android:paddingTop="2dp"
-                        android:src="@mipmap/ic_comment_24" />
+                        android:textSize="@dimen/t_size_body" />
                 </TableRow>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/i_icon_size"
                     android:layout_weight="1"
                     android:gravity="center_vertical|right"
                     android:orientation="horizontal">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/imgAvatar"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:src="@mipmap/student" />
 
                     <TextView
                         android:id="@+id/tv_name_postauthor"
@@ -141,15 +133,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
                         android:text="@string/author_name"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/t_size_body" />
 
                     <TextView
                         android:id="@+id/tv_time_post"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
                         android:text="@string/time_post"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/t_size_body" />
                 </LinearLayout>
 
             </LinearLayout>

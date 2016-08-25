@@ -18,9 +18,36 @@
     <dimen name="text_size_normal">16sp</dimen>
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_tiny">12sp</dimen>
+    <dimen name="text_size_tiny_tiny">10sp</dimen>
     <dimen name="dialog_padding_around_content">24dp</dimen>
     <dimen name="action_padding">8dp</dimen>
     <dimen name="card_padding">4dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
     <dimen name="text_title">24sp</dimen>
+
+
+    <dimen name="paragraph_margin">10dp</dimen>
+    <dimen name="line_text_margin">4dp</dimen>
+    <dimen name="i_class_padding_top">12dp</dimen>
+    <dimen name="i_class_padding_bottom">8dp</dimen>
+    <dimen name="i_class_padding_bottom_small">6dp</dimen>
+    <dimen name="i_class_padding_left">30dp</dimen>
+    <dimen name="i_block_margin_top">14dp</dimen>
+    <dimen name="i_icon_size">25dp</dimen>
+    <dimen name="i_icon_size_small">20dp</dimen>
+    <dimen name="lv_margin_top">8dp</dimen>
+
+    <!--Font text size Material-->
+    <dimen name="t_size_headline">24sp</dimen>
+    <dimen name="t_size_title">20sp</dimen>
+    <dimen name="t_size_subheading_2">18sp</dimen>
+    <dimen name="t_size_subheading">16sp</dimen>
+    <dimen name="t_size_body_1">15sp</dimen>
+    <dimen name="t_size_body">14sp</dimen>
+    <dimen name="t_size_caption">12sp</dimen>
+    <dimen name="t_size_small">12sp</dimen>
+    <dimen name="t_size_tiny">10sp</dimen>
+
+    <dimen name="t_size_button">14sp</dimen>
+    
 </resources>

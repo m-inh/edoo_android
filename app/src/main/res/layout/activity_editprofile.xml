@@ -74,7 +74,7 @@
                         android:id="@+id/iv_vote_profile"
                         android:layout_width="match_parent"
                         android:layout_height="24dp"
-                        android:src="@mipmap/ic_up_24"/>
+                        android:src="@drawable/ic_vote_up"/>
 
                 </LinearLayout>
 

@@ -125,7 +125,7 @@
                     android:id="@+id/iv_like"
                     android:layout_width="@dimen/ic_post_size"
                     android:layout_height="@dimen/ic_post_size"
-                    android:src="@mipmap/ic_up_24" />
+                    android:src="@drawable/ic_vote_up" />
 
             </TableRow>
 
@@ -148,7 +148,7 @@
                     android:layout_height="@dimen/ic_comment_post"
                     android:layout_marginLeft="3dp"
                     android:paddingTop="2dp"
-                    android:src="@mipmap/ic_comment_24" />
+                    android:src="@drawable/ic_comment" />
             </TableRow>
 
             <LinearLayout
@@ -180,7 +180,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_up_24" />
+                android:src="@drawable/ic_vote_up" />
 
             <ImageView
                 android:id="@+id/btn_dislike"
@@ -189,7 +189,7 @@
                 android:layout_marginLeft="6dp"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_down_24" />
+                android:src="@drawable/ic_vote_down" />
         </LinearLayout>
     </LinearLayout>
 

@@ -92,7 +92,7 @@ public class LopAdapter extends BaseAdapter {
 //            }
 //        }, MIN_TIME_UPDATE*position);
 
-        Animation myAni = AnimationUtils.loadAnimation(mContext, R.anim.anim_show_item_listview);
+        Animation myAni = AnimationUtils.loadAnimation(mContext, R.anim.amim_enter_activity);
         convertView.startAnimation(myAni);
 
 
@@ -100,18 +100,11 @@ public class LopAdapter extends BaseAdapter {
         TextView tvId = (TextView) convertView.findViewById(R.id.tv_idlopmonhoc);
         TextView tvGiangVien = (TextView) convertView.findViewById(R.id.tv_giangvienlopmonhoc);
         TextView tvSoNguoi = (TextView) convertView.findViewById(R.id.tv_songuoilopmonhoc);
-        TextView tvVietTat = (TextView) convertView.findViewById(R.id.tv_textimage);
-
-        CircleImageView ivAvar = (CircleImageView) convertView.findViewById(R.id.iv_avatarlopmonhoc);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ivAvar.setImageDrawable(mContext.getDrawable(resBgId.get(rand.nextInt(resBgId.size()))));
-        }
 
         tvTen.setText(itemArr.get(position).ten);
         tvId.setText(itemArr.get(position).id);
         tvGiangVien.setText(itemArr.get(position).giangVien);
 
-        tvVietTat.setText(itemArr.get(position).vietTat);
         tvSoNguoi.setText("Số người: " + itemArr.get(position).soNguoi);
 
         return convertView;

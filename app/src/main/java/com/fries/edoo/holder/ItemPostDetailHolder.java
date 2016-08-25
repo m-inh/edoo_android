@@ -161,9 +161,9 @@ public class ItemPostDetailHolder extends AbstractHolder {
                     itemTimeLine.setLike(countVote);
                     tvLike.setText(itemTimeLine.getLike() + "");
                     if (itemTimeLine.getLike() >= 0) {
-                        ivLike.setImageResource(R.mipmap.ic_up_24);
+                        ivLike.setImageResource(R.drawable.ic_vote_up);
                     } else {
-                        ivLike.setImageResource(R.mipmap.ic_down_24);
+                        ivLike.setImageResource(R.drawable.ic_vote_down);
                     }
                 }
             }

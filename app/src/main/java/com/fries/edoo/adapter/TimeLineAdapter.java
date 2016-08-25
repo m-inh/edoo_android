@@ -109,9 +109,9 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
             itemPostHolder.setLike(itemTimeLine.getLike());
             itemPostHolder.getTxtCountLike().setText(itemTimeLine.getLike() + "");
             if (itemTimeLine.getLike() >= 0) {
-                itemPostHolder.getIvLike().setImageResource(R.mipmap.ic_up_24);
+                itemPostHolder.getIvLike().setImageResource(R.drawable.ic_vote_up);
             } else {
-                itemPostHolder.getIvLike().setImageResource(R.mipmap.ic_down_24);
+                itemPostHolder.getIvLike().setImageResource(R.drawable.ic_vote_down);
             }
 
             int countCmt = itemTimeLine.getItemComments().size();
@@ -127,11 +127,11 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
             if (itemTimeLine.isSolve()) {
                 itemPostHolder.getIvBookmark().setVisibility(View.VISIBLE);
-                itemPostHolder.getIvBookmark().setImageResource(R.mipmap.ic_bookmark_check);
+                itemPostHolder.getIvBookmark().setImageResource(R.drawable.ic_bookmark_solved);
             }
             if (isPostByTeacher) {
                 itemPostHolder.getIvBookmark().setVisibility(View.VISIBLE);
-                itemPostHolder.getIvBookmark().setImageResource(R.mipmap.ic_bookmark_post_giangvien);
+                itemPostHolder.getIvBookmark().setImageResource(R.drawable.ic_bookmark_post_teacher);
             }
 
             if (itemTimeLine.isSeen()) {

@@ -59,7 +59,6 @@ public class ItemPostHolder extends AbstractHolder {
         rootView = itemView;
         mContext = itemView.getContext();
 
-        imgAvatar = (CircleImageView) itemView.findViewById(R.id.imgAvatar);
         ivSeen = (CircleImageView) itemView.findViewById(R.id.iv_marker_seen);
         ivTypePost = (ImageView) itemView.findViewById(R.id.iv_type_post_list);
 
@@ -83,13 +82,6 @@ public class ItemPostHolder extends AbstractHolder {
 
     public void setListComment(ArrayList<ItemComment> arr) {
         listComment = arr;
-    }
-
-    public void setAva(ItemTimeLine itemTimeLine) {
-        Picasso.with(mContext)
-                .load(itemTimeLine.getAva()).fit()
-                .placeholder(R.mipmap.ic_user)
-                .placeholder(R.mipmap.ic_user).into(imgAvatar);
     }
 
     private void createListener(View itemView) {
@@ -123,7 +115,6 @@ public class ItemPostHolder extends AbstractHolder {
         itemView.startAnimation(myAni);
     }
 
-    private CircleImageView imgAvatar;
     private TextView txtTitle;
     private TextView txtContent;
     private TextView txtAuthor;
@@ -161,7 +152,6 @@ public class ItemPostHolder extends AbstractHolder {
 
     public void setItemTimeLine(ItemTimeLine itemTimeLine) {
         this.itemTimeLine = itemTimeLine;
-        setAva(itemTimeLine);
     }
 
     public void setIdLop(String idLop) {
