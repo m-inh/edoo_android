@@ -93,7 +93,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
                 loadMoreHolder.tvDone.setVisibility(View.GONE);
             } else {
                 loadMoreHolder.p.setVisibility(View.GONE);
-                loadMoreHolder.tvDone.setVisibility(View.INVISIBLE);
+                loadMoreHolder.tvDone.setVisibility(View.GONE);
             }
         } else {
             ItemPostHolder itemPostHolder = (ItemPostHolder) abstractHolder;
