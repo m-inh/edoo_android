@@ -40,7 +40,7 @@
         android:id="@+id/tv_giangvienlopmonhoc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/line_text_margin"
+        android:layout_marginTop="2dp"
         android:textSize="@dimen/t_size_body"
         android:maxLength="30"
         android:text="Giang vien: Le Phe Do"
