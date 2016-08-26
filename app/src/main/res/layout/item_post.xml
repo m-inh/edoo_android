@@ -14,8 +14,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_marker_seen"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
             android:layout_marginBottom="12dp"
             android:layout_marginTop="@dimen/line_text_margin"
             android:src="@drawable/avar_item_bg_2" />

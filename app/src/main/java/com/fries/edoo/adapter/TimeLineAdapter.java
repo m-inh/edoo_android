@@ -94,6 +94,11 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
             } else {
                 loadMoreHolder.p.setVisibility(View.GONE);
                 loadMoreHolder.tvDone.setVisibility(View.GONE);
+
+                if (position == 0){
+                    loadMoreHolder.tvDone.setText("Lớp học chưa có bài đăng nào");
+                    loadMoreHolder.tvDone.setVisibility(View.VISIBLE);
+                }
             }
         } else {
             ItemPostHolder itemPostHolder = (ItemPostHolder) abstractHolder;
