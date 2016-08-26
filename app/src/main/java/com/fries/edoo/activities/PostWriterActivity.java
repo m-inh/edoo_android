@@ -182,13 +182,13 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
         if (!postAdapter.getPostWriterContent().contentIsEmpty() || !titlePost.isEmpty()) {
             AlertDialog.Builder notiBack = new AlertDialog.Builder(this);
             notiBack.setTitle(R.string.warn_exit);
-            notiBack.setPositiveButton("Hủy", null);
-            notiBack.setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
+            notiBack.setPositiveButton("Thoát", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     PostWriterActivity.super.onBackPressed();
                 }
             });
+            notiBack.setNegativeButton("Không", null);
             notiBack.show();
         } else super.onBackPressed();
     }
