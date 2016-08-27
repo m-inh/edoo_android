@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fries.edoo.R;
 import com.fries.edoo.models.ItemLopMonHoc;
@@ -48,18 +49,19 @@ public class TableSubjectAdapter extends BaseAdapter {
     public TableSubjectAdapter(Context context) {
         mContext = context;
         lf = LayoutInflater.from(mContext);
+        listSubjectInTable = new int[MAX_SIZE];
+        for (int i = 0; i < MAX_SIZE; i++) {
+            listSubjectInTable[i] = -1;
+        }
     }
 
     public void setListSubject(ArrayList<ItemLopMonHoc> list) {
         listSubject = list;
         convertSubjectToTable();
+        notifyDataSetChanged();
     }
 
     private void convertSubjectToTable() {
-        listSubjectInTable = new int[MAX_SIZE];
-        for (int i = 0; i < MAX_SIZE; i++) {
-            listSubjectInTable[i] = -1;
-        }
         for (int i = 0; i < listSubject.size(); i++) {
             ItemLopMonHoc item = listSubject.get(i);
             int day = item.getDayOfWeek();
@@ -107,6 +109,8 @@ public class TableSubjectAdapter extends BaseAdapter {
             return view;
         }
 
+        if (listSubjectInTable==null) Log.i(TAG, "list null");
+        if (view==null) Log.i(TAG, "view null");
         if (listSubjectInTable[position] == -1) return view;
 
         Animation myAni = AnimationUtils.loadAnimation(mContext, R.anim.anim_show_item_subject);

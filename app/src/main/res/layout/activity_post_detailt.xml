@@ -18,6 +18,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/a_b_l_post_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark">
@@ -44,13 +45,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:inputType="textCapSentences"
             android:background="@drawable/bg_popup_comment"
             android:hint="Bình luận ..."
             android:paddingLeft="10dp" />
 
         <ImageView
             android:id="@+id/btn_send"
-            android:layout_width="40dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:scaleType="centerInside"
             android:background="@drawable/bg_btn_pressed"

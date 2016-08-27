@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -184,7 +185,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
 
         String queryParams = "";
 
-        switch (typeFilter){
+        switch (typeFilter) {
             case BAI_DANG_BINH_THUONG:
                 break;
             case BAI_DANG_LOC_THEO_GIAO_VIEN:
@@ -300,14 +301,24 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         Intent mIntent = new Intent();
         mIntent.putExtra("timelineItem", itemTimeLine);
         mIntent.setClass(this, PostDetailActivity.class);
-        startActivityForResult(mIntent, REQUEST_CODE_POST_DETAIL);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
+                    R.anim.anim_enter_activity, R.anim.anim_exit_activity);
+            startActivityForResult(mIntent, REQUEST_CODE_POST_DETAIL, optionsCompat.toBundle());
+        } else startActivityForResult(mIntent, REQUEST_CODE_POST_DETAIL);
     }
 
     public void startPostWriterActivity(String idClass) {
-        Intent intent = new Intent();
-        intent.putExtra("class_id", idClass);
-        intent.setClass(TimelineActivity.this, PostWriterActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_POST_WRITER);
+        Intent mIntent = new Intent();
+        mIntent.putExtra("class_id", idClass);
+        mIntent.setClass(TimelineActivity.this, PostWriterActivity.class);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
+                    R.anim.anim_enter_activity, R.anim.anim_exit_activity);
+            startActivityForResult(mIntent, REQUEST_CODE_POST_WRITER, optionsCompat.toBundle());
+        } else startActivityForResult(mIntent, REQUEST_CODE_POST_WRITER);
     }
 
     @Override
@@ -351,7 +362,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
             Log.i(TAG, "current page: " + currPage);
 
             mAdapter.setLoadable(isLoadable);
-            if (msg.what == SUCCESS){
+            if (msg.what == SUCCESS) {
                 if (currPage == 1) {
                     mAdapter.updateList(itemPostArr);
                 } else {

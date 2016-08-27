@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,14 +74,20 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
     @Override
     public AbstractHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        AbstractHolder holder = null;
+        View view = null;
         if (viewType == ITEM_TIMELINE) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.item_post, parent, false);
-            return new ItemPostHolder(view);
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_post, parent, false);
+            holder = new ItemPostHolder(view);
         } else if (viewType == ITEM_LOADMORE) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.item_loadmore, parent, false);
-            return new LoadMoreHolder(view);
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_loadmore, parent, false);
+            holder = new LoadMoreHolder(view);
         }
-        return null;
+        Animation myAni = AnimationUtils.loadAnimation(mContext, R.anim.anim_show_itemtimeline_fadein);
+        if (view != null) {
+            view.startAnimation(myAni);
+        }
+        return holder;
     }
 
     @SuppressLint("SetTextI18n")

@@ -1,12 +1,10 @@
 package com.fries.edoo.activities;
 
-import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBarActivity;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +14,7 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -93,6 +92,8 @@ public class PostDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!edtComment.getText().toString().isEmpty()) {
                     postCmt(itemTimeline.getIdPost(), edtComment.getText().toString());
+                    InputMethodManager inputMgr = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    inputMgr.hideSoftInputFromWindow(edtComment.getWindowToken(), 0);
                 } else {
                     Toast.makeText(PostDetailActivity.this, "Nhập câu trả lời trước!", Toast.LENGTH_SHORT).show();
                 }
@@ -194,7 +195,7 @@ public class PostDetailActivity extends AppCompatActivity {
         requestServer.setListener(new RequestServer.ServerListener() {
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
-                if (!error){
+                if (!error) {
                     Log.d(TAG, response.toString());
                     String idCmt = response.getJSONObject("data").getString("id");
 
@@ -211,6 +212,14 @@ public class PostDetailActivity extends AppCompatActivity {
 
                     itemTimeline.setCommentCount(itemTimeline.getCommentCount() + 1);
                     mAdapter.notifyDataSetChanged();
+                    rvMain.smoothScrollToPosition(mAdapter.getItemCount());
+                    rvMain.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.a_b_l_post_details);
+                            appBarLayout.setExpanded(false, true);
+                        }
+                    }, 1000);
                 }
             }
         });
@@ -228,6 +237,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
     public RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
         boolean hideToolBar = false;
+
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);

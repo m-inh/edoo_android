@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,10 +47,9 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
     private Context mContext;
     private View rootView;
     private GridView gridSubject;
-    private ArrayList<ItemLopMonHoc> listSubject = new ArrayList<>();
+    private ArrayList<ItemLopMonHoc> listSubject;
 
     private TableSubjectAdapter adapter;
-    private Dialog dialogInfo;
 
     private SessionManager sessionMgr;
     private SQLiteHandler sqlite;
@@ -65,6 +65,10 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
         sessionMgr = new SessionManager(mContext);
         sqlite = new SQLiteHandler(mContext);
 
+        listSubject = new ArrayList<>();
+        adapter = new TableSubjectAdapter(mContext);
+        gridSubject.setAdapter(adapter);
+
         if (!sessionMgr.isSaveClass()) getDataFromServer();
         else getDataFromSQLite();
 
@@ -74,21 +78,19 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
     private void initViews() {
         gridSubject = (GridView) rootView.findViewById(R.id.gridSubject);
         gridSubject.setOnItemClickListener(this);
-
-        dialogInfo = new Dialog(mContext, R.style.DialogNoActionBar);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         ItemLopMonHoc item = adapter.getItem(position);
         if (item == null) {
-//            Toast.makeText(mContext, "Trống", Toast.LENGTH_SHORT).show();
             return;
         }
         showDialogInfo(item);
     }
 
     private void showDialogInfo(final ItemLopMonHoc item) {
+        final Dialog dialogInfo = new Dialog(mContext, R.style.DialogNoActionBar);
         dialogInfo.setContentView(R.layout.dialog_item_subject_info);
 
         dialogInfo.setTitle("Thông tin:");
@@ -122,11 +124,10 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
 
     //----------------------------------------------------------------------------------------------
 
-    private static final String URL_REQUEST = AppConfig.URL_GET_TKB;
-
     private void getDataFromServer() {
         listSubject.clear();
 
+        String URL_REQUEST = AppConfig.URL_GET_TKB;
         RequestServer requestServer = new RequestServer(getActivity(), Request.Method.GET, URL_REQUEST);
         requestServer.setListener(new RequestServer.ServerListener() {
             @Override
@@ -145,9 +146,7 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
                         }
                     }
 
-                    adapter = new TableSubjectAdapter(mContext);
                     adapter.setListSubject(listSubject);
-                    gridSubject.setAdapter(adapter);
 
                     saveClassesToSQLite();
                 } catch (JSONException e) {
@@ -163,19 +162,11 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
         ArrayList<HashMap<String, String>> arrClasses = sqlite.getAllClasses();
         listSubject.clear();
 
-        Log.i(TAG, "class size = " + arrClasses.size());
-//        for (HashMap<String, String> hashClass: arrClasses) {
-//            listSubject.add(new ItemLopMonHoc(hashClass));
-//        }
-        for (int i = 0; i < arrClasses.size(); i++) {
-            ItemLopMonHoc item = new ItemLopMonHoc(arrClasses.get(i));
-            Log.i(TAG, "item id = " + item.getId());
-            listSubject.add(item);
+        for (HashMap<String, String> hashClass : arrClasses) {
+            listSubject.add(new ItemLopMonHoc(hashClass));
         }
 
-        adapter = new TableSubjectAdapter(mContext);
         adapter.setListSubject(listSubject);
-        gridSubject.setAdapter(adapter);
     }
 
 

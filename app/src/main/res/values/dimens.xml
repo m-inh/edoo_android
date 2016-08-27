@@ -55,5 +55,13 @@
     <dimen name="dialog_margin_icon">20dp</dimen>
 
 
+    <!--Movement-->
+    <!--<dimen name="move_large_layout">375</dimen>-->
+    <!--<dimen name="move_object_enter_layout">225</dimen>-->
+    <!--<dimen name="move_object_leave_layout">195</dimen>-->
+    <integer name="move_large_layout">375</integer>
+    <integer name="move_object_enter_layout">225</integer>
+    <integer name="move_object_leave_layout">195</integer>
+
 
 </resources>
