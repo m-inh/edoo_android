@@ -115,6 +115,7 @@
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:background="@color/bg_divider"/>
     <Button
+        android:id="@+id/btn_direct_to_class_dialog"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/btn_dialog_height"
         android:layout_gravity="right"

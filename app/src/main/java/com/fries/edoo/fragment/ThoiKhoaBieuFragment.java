@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,12 +21,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.fries.edoo.R;
+import com.fries.edoo.activities.MainActivity;
 import com.fries.edoo.adapter.TableSubjectAdapter;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.app.AppController;
 import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.helper.SessionManager;
+import com.fries.edoo.models.ItemLop;
 import com.fries.edoo.models.ItemLopMonHoc;
 
 import org.json.JSONArray;
@@ -38,7 +41,7 @@ import java.util.HashMap;
 /**
  * Created by TMQ on 20-Nov-15.
  */
-public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItemClickListener{
+public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItemClickListener {
     private static final String TAG = ThoiKhoaBieuFragment.class.getSimpleName();
     private Context mContext;
     private View rootView;
@@ -68,8 +71,8 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
         return rootView;
     }
 
-    private void initViews(){
-        gridSubject = (GridView)    rootView.findViewById(R.id.gridSubject);
+    private void initViews() {
+        gridSubject = (GridView) rootView.findViewById(R.id.gridSubject);
         gridSubject.setOnItemClickListener(this);
 
         dialogInfo = new Dialog(mContext, R.style.DialogNoActionBar);
@@ -78,24 +81,25 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         ItemLopMonHoc item = adapter.getItem(position);
-        if (item==null) {
+        if (item == null) {
 //            Toast.makeText(mContext, "Trống", Toast.LENGTH_SHORT).show();
             return;
         }
         showDialogInfo(item);
     }
 
-    private void showDialogInfo(ItemLopMonHoc item){
+    private void showDialogInfo(final ItemLopMonHoc item) {
         dialogInfo.setContentView(R.layout.dialog_item_subject_info);
 
         dialogInfo.setTitle("Thông tin:");
 
         // InitViews
-        TextView ten    = (TextView)    dialogInfo.findViewById(R.id.dialogTenMH);
-        TextView maLMH  = (TextView)    dialogInfo.findViewById(R.id.dialogMaMH);
-        TextView gv     = (TextView)    dialogInfo.findViewById(R.id.dialogGiangVien);
-        TextView tgian  = (TextView)    dialogInfo.findViewById(R.id.dialogThoiGian);
-        TextView diaDiem= (TextView)    dialogInfo.findViewById(R.id.dialogDiaDiem);
+        TextView ten = (TextView) dialogInfo.findViewById(R.id.dialogTenMH);
+        TextView maLMH = (TextView) dialogInfo.findViewById(R.id.dialogMaMH);
+        TextView gv = (TextView) dialogInfo.findViewById(R.id.dialogGiangVien);
+        TextView tgian = (TextView) dialogInfo.findViewById(R.id.dialogThoiGian);
+        TextView diaDiem = (TextView) dialogInfo.findViewById(R.id.dialogDiaDiem);
+        Button directToClass = (Button) dialogInfo.findViewById(R.id.btn_direct_to_class_dialog);
 
         // Set for Views
         ten.setText(item.getName());
@@ -103,6 +107,15 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
         gv.setText(item.getTeacherName());
         diaDiem.setText(item.getAddress());
         tgian.setText("Thứ " + item.getDayOfWeek() + "\t\tTiết " + item.getPeriod());
+        directToClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity = (MainActivity) mContext;
+                ItemLop itemLop = new ItemLop(item.getName(), item.getClassId(), item.getCode(), item.getTeacherName(), item.getStudentCount());
+                mainActivity.goToTimeLine(itemLop, LopFragment.KEY_LOP_MON_HOC);
+                dialogInfo.dismiss();
+            }
+        });
 
         dialogInfo.show();
     }
@@ -111,7 +124,7 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
 
     private static final String URL_REQUEST = AppConfig.URL_GET_TKB;
 
-    private void getDataFromServer(){
+    private void getDataFromServer() {
         listSubject.clear();
 
         RequestServer requestServer = new RequestServer(getActivity(), Request.Method.GET, URL_REQUEST);
@@ -122,7 +135,7 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
                     if (error) return;
 
                     JSONArray listSubjects = response.getJSONObject("data").getJSONArray("classes");
-                    for (int i=0; i<listSubjects.length(); i++){
+                    for (int i = 0; i < listSubjects.length(); i++) {
                         JSONObject subject = listSubjects.getJSONObject(i);
 
                         JSONArray lessons = subject.getJSONArray("lessions");
@@ -146,7 +159,7 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
         requestServer.sendRequest("get timetable");
     }
 
-    private void getDataFromSQLite(){
+    private void getDataFromSQLite() {
         ArrayList<HashMap<String, String>> arrClasses = sqlite.getAllClasses();
         listSubject.clear();
 
@@ -154,7 +167,7 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
 //        for (HashMap<String, String> hashClass: arrClasses) {
 //            listSubject.add(new ItemLopMonHoc(hashClass));
 //        }
-        for (int i=0; i<arrClasses.size(); i++){
+        for (int i = 0; i < arrClasses.size(); i++) {
             ItemLopMonHoc item = new ItemLopMonHoc(arrClasses.get(i));
             Log.i(TAG, "item id = " + item.getId());
             listSubject.add(item);
@@ -166,7 +179,7 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
     }
 
 
-    private void saveClassesToSQLite(){
+    private void saveClassesToSQLite() {
         for (ItemLopMonHoc c : listSubject) {
             sqlite.addClass(c.getId(), c.getClassId(), c.getCode(), c.getName(), c.getType(), c.getTeacherName(), c.getAddress(), c.getPeriod(),
                     c.getDayOfWeek(), c.getCreditCount(), c.getStudentCount());
