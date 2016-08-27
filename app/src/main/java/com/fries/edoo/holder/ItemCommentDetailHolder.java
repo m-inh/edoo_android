@@ -116,9 +116,6 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         MenuItem itSolve = menu.getMenu().findItem(R.id.action_solve_comment);
         MenuItem itNotSolve = menu.getMenu().findItem(R.id.action_not_solve_comment);
 
-        Log.i(TAG, menu.toString());
-        Log.i(TAG, itSolve.toString());
-
         if (userId.equalsIgnoreCase(itemComment.getIdAuthorComment())){ // If userId == IdAuthor -> Hide Solved, NotSolved
             itSolve.setVisible(false);
             itNotSolve.setVisible(false);
@@ -141,10 +138,11 @@ public class ItemCommentDetailHolder extends AbstractHolder {
                         for (int i=0; i<itemTimeline.getItemComments().size(); i++){
                             itemTimeline.getItemComments().get(i).setIsSolved(false);
                         }
-                        postSolve(itemComment.getIdComment());
+                        postSolve(itemComment.getIdComment(), true);
                         break;
                     case R.id.action_not_solve_comment:
-                        Toast.makeText(mContext, "Not Solved comment", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Remove Solved comment", Toast.LENGTH_SHORT).show();
+                        postSolve(itemComment.getIdComment(), false);
                         break;
                 }
                 return true;
@@ -159,10 +157,17 @@ public class ItemCommentDetailHolder extends AbstractHolder {
     }
 
 
-    public void postSolve(final String idCmt) {
+    /**
+     * Post to server: Solved - Not Solved
+     * @param idCmt id of Comment
+     * @param isSolved true: Solved, false: Not Solved
+     */
+    public void postSolve(final String idCmt, final boolean isSolved) {
         Log.i(TAG, idCmt);
 
-        String url = AppConfig.URL_VOTE_COMMENT;
+        String url;
+        if (isSolved) url = AppConfig.URL_SOLVE_COMMENT;
+        else url = AppConfig.URL_UNSOLVE_COMMENT;
         JSONObject params = new JSONObject();
         try {
             params.put("comment_id", idCmt);
@@ -177,8 +182,9 @@ public class ItemCommentDetailHolder extends AbstractHolder {
                 if (!error){
                     Log.d(TAG, response.toString());
 
-                    itemTimeline.setSolve(true);
-                    postDetailAdapter.setSolveCmt(idCmt);
+                    itemTimeline.setSolve(isSolved);
+                    if (isSolved) postDetailAdapter.setSolveCmt(idCmt);
+                    else postDetailAdapter.setUnsolveCmt();
 
                     Intent mIntent = new Intent();
                     Bundle b = new Bundle();
@@ -191,7 +197,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
             }
         });
 
-        requestServer.sendRequest("Post solve");
+        requestServer.sendRequest("Post solve_unsolve");
     }
 
     private void setIsSolved(boolean isSolved){

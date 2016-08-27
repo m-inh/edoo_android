@@ -64,30 +64,6 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
             commentHolder.setItemComment(itemComment, user.get("uid"));
 
             commentHolder.updateIvIsSolved();
-//            boolean isSolved = itemComment.isSolved();
-//
-//            String authorId = itemTimeline.getIdAuthor();
-//            if (!user.get("uid").equalsIgnoreCase(authorId)) {
-//                cbSolve.setClickable(false);
-//                cbSolve.setVisibility(View.INVISIBLE);
-//            } else {
-//                cbSolve.setClickable(true);
-//                cbSolve.setVisibility(View.VISIBLE);
-//
-//                cbSolve.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        for (int i = 0; i < itemTimeline.getItemComments().size(); i++) {
-//                            itemTimeline.getItemComments().get(i).setVote(false);
-//                        }
-//                        commentHolder.postSolve(itemComment.getIdComment());
-//                    }
-//                });
-//            }
-
-
-
-
 
         } else {
             ItemPostDetailHolder postDetailHolder = (ItemPostDetailHolder) holder;
@@ -114,8 +90,10 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
     private void setResourceTypePost(ItemPostDetailHolder postDetailHolder, String type) {
         int idDrawable = android.R.color.white;
         if (type.equals(ItemTimeLine.TYPE_POST_NOTE)) idDrawable = R.drawable.ic_type_post_note;
-        else if (type.equals(ItemTimeLine.TYPE_POST_QUESTION)) idDrawable = R.drawable.ic_type_post_question;
-        else if (type.equals(ItemTimeLine.TYPE_POST_POLL)) idDrawable = R.drawable.ic_type_post_poll;
+        else if (type.equals(ItemTimeLine.TYPE_POST_QUESTION))
+            idDrawable = R.drawable.ic_type_post_question;
+        else if (type.equals(ItemTimeLine.TYPE_POST_POLL))
+            idDrawable = R.drawable.ic_type_post_poll;
         else if (type.equals(ItemTimeLine.TYPE_POST_NOTIFICATION))
             idDrawable = R.drawable.ic_type_post_notification;
         postDetailHolder.getIvTypePost().setImageResource(idDrawable);
@@ -144,6 +122,14 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
             } else {
                 cmts.get(i).setIsSolved(false);
             }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void setUnsolveCmt() {
+        ArrayList<ItemComment> cmts = itemTimeline.getItemComments();
+        for (int i = 0; i < cmts.size(); i++) {
+            cmts.get(i).setIsSolved(false);
         }
         notifyDataSetChanged();
     }

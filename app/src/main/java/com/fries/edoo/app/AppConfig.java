@@ -4,7 +4,8 @@ public class AppConfig {
 	public static final String URL_HOST = "http://api.uetf.me";
 //	public static final String URL_HOST = "http://10.0.2.2:2344";
 	//Server vote comment
-	public static final String URL_VOTE_COMMENT = URL_HOST + "/solve";
+	public static final String URL_SOLVE_COMMENT = URL_HOST + "/solve";
+	public static final String URL_UNSOLVE_COMMENT = URL_HOST + "/unsolve";
 	//Server post comment
 	public static final String URL_POST_COMMENT = URL_HOST + "/cmt";
 	//Server get post and comment
