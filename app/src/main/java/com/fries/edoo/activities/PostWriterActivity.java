@@ -89,8 +89,8 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
             case 1:
                 if (!postAdapter.getPostWriterContent().checkFillContent()) {
                     viewPager.setCurrentItem(0, true);
-                    InputMethodManager imm = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+                    InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
                     break;
                 } else {
                     InputMethodManager inputMgr = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -173,7 +173,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
 
     @Override
     public void onBackPressed() {
-        if (viewPager.getCurrentItem()==1) viewPager.setCurrentItem(0, true);
+        if (viewPager.getCurrentItem() == 1) viewPager.setCurrentItem(0, true);
         else exitWriterPost();
     }
 
@@ -196,6 +196,8 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
     // --------------------------------- Request Server --------------------------------------------
     public void postPost(String classId, String title, String content, String type, boolean isIncognito, boolean isPostTeacher) {
         String url = AppConfig.URL_POST_POST;
+
+        content = "<html>" + content + "</html>";
 
         JSONObject params = new JSONObject();
         try {

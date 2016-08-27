@@ -262,6 +262,10 @@ p {
     margin-bottom: 10px;
 }
 
+br {
+     margin-bottom: 10px;
+}
+
 img {
     max-width: 80%;
     height: auto;
