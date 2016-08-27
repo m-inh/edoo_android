@@ -276,9 +276,11 @@ public class MainActivity extends AppCompatActivity
         requestServer.sendRequest("req_log_out");
         // xoa session
         session.setLogin(false);
+        session.setIsSaveClass(false);
 
-        // xoa user
+        // xoa user, classes
         sqlite.deleteUsers();
+        sqlite.deleteClasses();
 
         // thoat ra man hinh dang nhap
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);

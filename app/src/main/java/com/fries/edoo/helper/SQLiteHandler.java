@@ -308,4 +308,16 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         return arrClasses;
     }
+
+    /**
+     * Re create database Delete all tables and create them again
+     */
+    public void deleteClasses() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Delete All Rows
+        db.delete(TABLE_CLASS, null, null);
+        db.close();
+
+        Log.d(TAG, "Deleted all classes info from sqlite");
+    }
 }
