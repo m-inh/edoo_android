@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/i_class_padding_bottom_small"
+    android:paddingLeft="@dimen/i_icon_size"
+    android:paddingRight="@dimen/i_block_margin_top">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="#f0f0f0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="16dp">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="top"
+            android:src="@mipmap/avatar_test" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/i_class_padding_bottom"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_authorname"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="User name"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/t_size_subheading"
+                    android:textStyle="bold" />
+
+
+                <ImageView
+                    android:id="@+id/iv_comment_solved"
+                    android:layout_width="@dimen/i_icon_size"
+                    android:layout_height="@dimen/i_icon_size"
+                    android:clickable="true"
+                    android:src="@drawable/ic_bookmark_solved" />
+
+                <ImageView
+                    android:id="@+id/iv_comment_menu"
+                    android:layout_width="@dimen/i_icon_size"
+                    android:layout_height="@dimen/i_icon_size"
+                    android:clickable="true"
+                    android:src="@drawable/ic_menu" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/i_class_padding_bottom"
+                android:text="1/1/16"
+                android:textColor="@color/black_54"
+                android:textSize="@dimen/t_size_caption" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/i_block_margin_top"
+        android:layout_marginTop="@dimen/paragraph_margin"
+        android:text="@string/comment_author"
+        android:textColor="@color/black_87"
+        android:textSize="@dimen/t_size_body"
+        android:textStyle="normal" />
+</LinearLayout>

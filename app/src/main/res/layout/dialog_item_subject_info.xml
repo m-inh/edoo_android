@@ -112,7 +112,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/dialog_padding_around_content"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:background="@color/bg_divider"/>
     <Button
         android:layout_width="wrap_content"

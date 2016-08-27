@@ -112,11 +112,11 @@ public class ItemPostDetailHolder extends AbstractHolder {
 
         if (isSolve) {
             ivIsVote.setVisibility(View.VISIBLE);
-            ivIsVote.setImageResource(R.mipmap.ic_bookmark_check);
+            ivIsVote.setImageResource(R.drawable.ic_bookmark_solved);
         }
         if (isPostByTeacher) {
             ivIsVote.setVisibility(View.VISIBLE);
-            ivIsVote.setImageResource(R.mipmap.ic_bookmark_post_giangvien);
+            ivIsVote.setImageResource(R.drawable.ic_bookmark_post_teacher);
         }
     }
 

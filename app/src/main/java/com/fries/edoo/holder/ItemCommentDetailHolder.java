@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +45,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ItemCommentDetailHolder extends AbstractHolder {
 
-    private static final String TAG = "ItemCommentDetailHolder";
+    private static final String TAG = ItemCommentDetailHolder.class.getSimpleName();
     private Context mContext;
     private ItemTimeLine itemTimeline;
     private ItemComment itemComment;
@@ -50,7 +53,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
     private TextView tvAuthorName;
     private CircleImageView ivAuthorAvatar;
     private TextView tvComment;
-    private CheckBox cbSolve;
+    private ImageView ivCommentSolved, ivCommentMenu;
     private PostDetailAdapter postDetailAdapter;
 
     public ItemCommentDetailHolder(View itemView) {
@@ -61,7 +64,8 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         tvAuthorName = (TextView) itemView.findViewById(R.id.tv_authorname);
         ivAuthorAvatar = (CircleImageView) itemView.findViewById(R.id.iv_avatar);
         tvComment = (TextView) itemView.findViewById(R.id.tv_comment);
-        cbSolve = (CheckBox) itemView.findViewById(R.id.cb_vote);
+        ivCommentMenu = (ImageView) itemView.findViewById(R.id.iv_comment_menu);
+        ivCommentSolved = (ImageView) itemView.findViewById(R.id.iv_comment_solved);
     }
 
     public ItemCommentDetailHolder(View view, ItemTimeLine itemTimeline) {
@@ -83,7 +87,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         return itemComment;
     }
 
-    public void setItemComment(final ItemComment itemComment) {
+    public void setItemComment(final ItemComment itemComment, final String userId) {
         this.itemComment = itemComment;
 
         tvAuthorName.setText(itemComment.getName());
@@ -95,7 +99,63 @@ public class ItemCommentDetailHolder extends AbstractHolder {
                     .into(ivAuthorAvatar);
         }
 
-        cbSolve.setChecked(itemComment.isVote());
+        updateIvIsSolved();
+
+        ivCommentMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMenuComment(userId);
+            }
+        });
+    }
+
+    private void showMenuComment(String userId){
+        PopupMenu menu = new PopupMenu(mContext, ivCommentMenu);
+        menu.getMenuInflater().inflate(R.menu.comment_menu, menu.getMenu());
+
+        MenuItem itSolve = menu.getMenu().findItem(R.id.action_solve_comment);
+        MenuItem itNotSolve = menu.getMenu().findItem(R.id.action_not_solve_comment);
+
+        Log.i(TAG, menu.toString());
+        Log.i(TAG, itSolve.toString());
+
+        if (userId.equalsIgnoreCase(itemComment.getIdAuthorComment())){ // If userId == IdAuthor -> Hide Solved, NotSolved
+            itSolve.setVisible(false);
+            itNotSolve.setVisible(false);
+        } else {
+            if (itemComment.isSolved()) {   // If comment is solved -> show NotSolved
+                itSolve.setVisible(false);
+                itNotSolve.setVisible(true);
+            } else {                        // // If comment is not solved -> show Solved
+                itSolve.setVisible(true);
+                itNotSolve.setVisible(false);
+            }
+        }
+
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_solve_comment:
+                        Toast.makeText(mContext, "Solved comment", Toast.LENGTH_SHORT).show();
+                        for (int i=0; i<itemTimeline.getItemComments().size(); i++){
+                            itemTimeline.getItemComments().get(i).setIsSolved(false);
+                        }
+                        postSolve(itemComment.getIdComment());
+                        break;
+                    case R.id.action_not_solve_comment:
+                        Toast.makeText(mContext, "Not Solved comment", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                return true;
+            }
+        });
+        menu.show();
+    }
+
+    public void updateIvIsSolved(){
+        if (itemComment.isSolved()) ivCommentSolved.setVisibility(View.VISIBLE);
+        else ivCommentSolved.setVisibility(View.GONE);
     }
 
 
@@ -134,7 +194,16 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         requestServer.sendRequest("Post solve");
     }
 
-    public CheckBox getCheckBoxVote() {
-        return cbSolve;
+    private void setIsSolved(boolean isSolved){
+        this.itemComment.setIsSolved(isSolved);
     }
+
+    public ImageView getIvCommentSolved(){
+        return ivCommentSolved;
+    }
+
+    public ImageView getIvCommentMenu(){
+        return ivCommentMenu;
+    }
+
 }

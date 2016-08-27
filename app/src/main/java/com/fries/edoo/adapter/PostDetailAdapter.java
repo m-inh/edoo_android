@@ -1,9 +1,6 @@
 package com.fries.edoo.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +8,11 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 
 
-import com.fries.edoo.activities.PostDetailActivity;
 import com.fries.edoo.R;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.holder.AbstractHolder;
 import com.fries.edoo.holder.ItemCommentDetailHolder;
 import com.fries.edoo.holder.ItemPostDetailHolder;
-import com.fries.edoo.holder.ItemPostHolder;
 import com.fries.edoo.models.ItemComment;
 import com.fries.edoo.models.ItemTimeLine;
 
@@ -56,7 +51,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_post_detail, parent, false);
             return new ItemPostDetailHolder(view, itemTimeline);
         } else {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.item_comment_in_popup, parent, false);
+            View view = LayoutInflater.from(mContext).inflate(R.layout.item_comment_in_post, parent, false);
             return new ItemCommentDetailHolder(view, itemTimeline, this);
         }
     }
@@ -66,28 +61,34 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
         if (position != 0) {
             final ItemCommentDetailHolder commentHolder = (ItemCommentDetailHolder) holder;
             final ItemComment itemComment = itemTimeline.getItemComments().get(position - 1);
-            commentHolder.setItemComment(itemComment);
+            commentHolder.setItemComment(itemComment, user.get("uid"));
 
-            final CheckBox cbSolve = commentHolder.getCheckBoxVote();
+            commentHolder.updateIvIsSolved();
+//            boolean isSolved = itemComment.isSolved();
+//
+//            String authorId = itemTimeline.getIdAuthor();
+//            if (!user.get("uid").equalsIgnoreCase(authorId)) {
+//                cbSolve.setClickable(false);
+//                cbSolve.setVisibility(View.INVISIBLE);
+//            } else {
+//                cbSolve.setClickable(true);
+//                cbSolve.setVisibility(View.VISIBLE);
+//
+//                cbSolve.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        for (int i = 0; i < itemTimeline.getItemComments().size(); i++) {
+//                            itemTimeline.getItemComments().get(i).setVote(false);
+//                        }
+//                        commentHolder.postSolve(itemComment.getIdComment());
+//                    }
+//                });
+//            }
 
-            String authorId = itemTimeline.getIdAuthor();
-            if (!user.get("uid").equalsIgnoreCase(authorId)) {
-                cbSolve.setClickable(false);
-                cbSolve.setVisibility(View.INVISIBLE);
-            } else {
-                cbSolve.setClickable(true);
-                cbSolve.setVisibility(View.VISIBLE);
 
-                cbSolve.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        for (int i = 0; i < itemTimeline.getItemComments().size(); i++) {
-                            itemTimeline.getItemComments().get(i).setVote(false);
-                        }
-                        commentHolder.postSolve(itemComment.getIdComment());
-                    }
-                });
-            }
+
+
+
         } else {
             ItemPostDetailHolder postDetailHolder = (ItemPostDetailHolder) holder;
 
@@ -102,7 +103,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
                 postDetailHolder.getIvLike().setImageResource(R.drawable.ic_vote_down);
             }
 
-            postDetailHolder.getTvCreateAt().setText(", " + itemTimeline.getCreateAt());
+            postDetailHolder.getTvCreateAt().setText(itemTimeline.getCreateAt());
 
             postDetailHolder.setCbIsVote();
 
@@ -139,9 +140,9 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
         ArrayList<ItemComment> cmts = itemTimeline.getItemComments();
         for (int i = 0; i < cmts.size(); i++) {
             if (cmts.get(i).getIdComment().equalsIgnoreCase(cmtId)) {
-                cmts.get(i).setVote(true);
+                cmts.get(i).setIsSolved(true);
             } else {
-                cmts.get(i).setVote(false);
+                cmts.get(i).setIsSolved(false);
             }
         }
         notifyDataSetChanged();

@@ -92,7 +92,7 @@ public class LopAdapter extends BaseAdapter {
 //            }
 //        }, MIN_TIME_UPDATE*position);
 
-        Animation myAni = AnimationUtils.loadAnimation(mContext, R.anim.amim_enter_activity);
+        Animation myAni = AnimationUtils.loadAnimation(mContext, R.anim.anim_show_itemtimeline_fadein);
         convertView.startAnimation(myAni);
 
 

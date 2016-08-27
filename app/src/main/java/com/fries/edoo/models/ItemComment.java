@@ -12,7 +12,7 @@ public class ItemComment implements Serializable {
     //ava of author comment
     private String avaUrl;
     private String content;
-    private boolean isVote;
+    private boolean isSolved;
     private String idComment;
     private String idAuthorComment;
 
@@ -20,7 +20,7 @@ public class ItemComment implements Serializable {
         this.name = name;
         this.avaUrl = avaUrl;
         this.content = content;
-        this.isVote = isVote;
+        this.isSolved = isVote;
         this.idComment = idComment;
         this.idAuthorComment = idAuthorComment;
     }
@@ -37,8 +37,8 @@ public class ItemComment implements Serializable {
         return content;
     }
 
-    public boolean isVote() {
-        return isVote;
+    public boolean isSolved() {
+        return isSolved;
     }
 
     public String getIdComment() {
@@ -49,7 +49,7 @@ public class ItemComment implements Serializable {
         return idAuthorComment;
     }
 
-    public void setVote(boolean vote) {
-        isVote = vote;
+    public void setIsSolved(boolean solved) {
+        isSolved = solved;
     }
 }

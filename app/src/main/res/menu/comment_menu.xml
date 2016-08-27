@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_solve_comment"
+        android:showAsAction="collapseActionView"
+        android:title="@string/txt_solved" />
+
+    <item
+        android:id="@+id/action_not_solve_comment"
+        android:showAsAction="collapseActionView"
+        android:title="@string/txt_not_solved" />
+
+    <item
+        android:showAsAction="collapseActionView"
+        android:title="...Report..." />
+
+    <item
+        android:showAsAction="collapseActionView"
+        android:title="...Delete..." />
+
+    <item
+        android:showAsAction="collapseActionView"
+        android:title="...Hide..." />
+
+</menu>
