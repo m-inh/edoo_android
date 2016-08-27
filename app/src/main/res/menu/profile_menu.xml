@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.fries.edoo.activities.ProfileActivity">
+
+    <item
+        android:id="@+id/action_edit_profile"
+        android:orderInCategory="100"
+        android:title="Edit"
+        android:icon="@drawable/ic_edit"
+        app:showAsAction="always" />
+
+    <item android:title="Edit Avatar" />
+    <item android:title="Edit Background" />
+</menu>

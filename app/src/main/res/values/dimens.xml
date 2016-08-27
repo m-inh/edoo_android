@@ -2,7 +2,8 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
-    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="nav_header_height">200dp</dimen>
+    <dimen name="avatar_size">96dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -34,10 +35,13 @@
     <dimen name="i_class_padding_left">30dp</dimen>
     <dimen name="i_block_margin_top">14dp</dimen>
     <dimen name="i_icon_size">20dp</dimen>
+    <dimen name="i_icon_size_big">24dp</dimen>
     <dimen name="i_icon_size_small">18dp</dimen>
     <dimen name="lv_margin_top">8dp</dimen>
+    <dimen name="i_height">72dp</dimen>
 
     <!--Font text size Material-->
+    <dimen name="t_size_display_1">34sp</dimen>
     <dimen name="t_size_headline">24sp</dimen>
     <dimen name="t_size_title">20sp</dimen>
     <dimen name="t_size_subheading_2">18sp</dimen>
@@ -56,12 +60,11 @@
 
 
     <!--Movement-->
-    <!--<dimen name="move_large_layout">375</dimen>-->
-    <!--<dimen name="move_object_enter_layout">225</dimen>-->
-    <!--<dimen name="move_object_leave_layout">195</dimen>-->
     <integer name="move_large_layout">375</integer>
     <integer name="move_object_enter_layout">225</integer>
     <integer name="move_object_leave_layout">195</integer>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 
 
 </resources>

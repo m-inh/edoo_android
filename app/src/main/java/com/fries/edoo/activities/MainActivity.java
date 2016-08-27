@@ -373,13 +373,14 @@ public class MainActivity extends AppCompatActivity
 //    }
 
     private void startEditActivity() {
-        Intent mIntent = new Intent(MainActivity.this, EditProfileActivity.class);
-        HashMap<String, String> user = sqlite.getUserDetails();
-        mIntent.putExtra("name", user.get("name"));
-        mIntent.putExtra("email", user.get("email"));
-        mIntent.putExtra("lop", user.get("lop"));
-        mIntent.putExtra("mssv", user.get("mssv"));
-        mIntent.putExtra("type", user.get("type"));
+//        Intent mIntent = new Intent(MainActivity.this, EditProfileActivity.class);
+        Intent mIntent = new Intent(MainActivity.this, ProfileActivity.class);
+//        HashMap<String, String> user = sqlite.getUserDetails();
+//        mIntent.putExtra("name", user.get("name"));
+//        mIntent.putExtra("email", user.get("email"));
+//        mIntent.putExtra("lop", user.get("lop"));
+//        mIntent.putExtra("mssv", user.get("mssv"));
+//        mIntent.putExtra("type", user.get("type"));
 
         startActivityForResult(mIntent, REQUEST_CODE_EDIT);
     }
