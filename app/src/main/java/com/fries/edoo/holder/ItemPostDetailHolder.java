@@ -87,7 +87,7 @@ public class ItemPostDetailHolder extends AbstractHolder {
     }
 
     public void setContentToWebview(String content){
-        String htmlData = "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />" +"<html>" + content + "</html>";
+        String htmlData = "<html>" + "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />" + content + "</html>";
         webView.loadDataWithBaseURL("file:///android_asset/", htmlData, "text/html", "UTF-8", null);
 
         webView.setWebViewClient(new WebViewClient(){
