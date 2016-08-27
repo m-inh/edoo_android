@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity
     private static final int REQUEST_CODE_EDIT = 1234;
 
     private LopMonHocFragment lopMonHocFragment = new LopMonHocFragment();
-//    private LopKhoaHocFragment lopKhoaHocFragment = new LopKhoaHocFragment();
+    //    private LopKhoaHocFragment lopKhoaHocFragment = new LopKhoaHocFragment();
 //    private NhomFragment nhomFragment = new NhomFragment();
     private ThoiKhoaBieuFragment thoiKhoaBieuFragment = new ThoiKhoaBieuFragment();
 
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity
         //start timeline activity if click noti
         Intent mIntent = getIntent();
         ItemLop itemLop = (ItemLop) mIntent.getSerializableExtra("item_class");
-        if (itemLop != null){
+        if (itemLop != null) {
             goToTimeLine(itemLop, "");
         }
 
@@ -310,15 +310,16 @@ public class MainActivity extends AppCompatActivity
         Log.i(TAG, itemLop.getIdData());
         Intent mIntent = new Intent(this, TimelineActivity.class);
         Bundle b = new Bundle();
-        b.putSerializable("item_class",  itemLop);
+        b.putSerializable("item_class", itemLop);
 
         mIntent.putExtras(b);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
-                    R.anim.anim_enter_activity, R.anim.anim_exit_activity);
-            startActivity(mIntent, optionsCompat.toBundle());
-        } else startActivity(mIntent);
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+//            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
+//                    R.anim.anim_enter_activity, R.anim.anim_exit_activity);
+//            startActivity(mIntent, optionsCompat.toBundle());
+//        } else
+        startActivity(mIntent);
 
 //        timelineFragment = new TimelineFragment();
 

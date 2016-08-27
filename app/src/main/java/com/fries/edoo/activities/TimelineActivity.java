@@ -302,11 +302,12 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         mIntent.putExtra("timelineItem", itemTimeLine);
         mIntent.setClass(this, PostDetailActivity.class);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
-                    R.anim.anim_enter_activity, R.anim.anim_exit_activity);
-            startActivityForResult(mIntent, REQUEST_CODE_POST_DETAIL, optionsCompat.toBundle());
-        } else startActivityForResult(mIntent, REQUEST_CODE_POST_DETAIL);
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+//            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
+//                    R.anim.anim_enter_activity, R.anim.anim_exit_activity);
+//            startActivityForResult(mIntent, REQUEST_CODE_POST_DETAIL, optionsCompat.toBundle());
+//        } else
+        startActivityForResult(mIntent, REQUEST_CODE_POST_DETAIL);
     }
 
     public void startPostWriterActivity(String idClass) {
@@ -314,11 +315,12 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         mIntent.putExtra("class_id", idClass);
         mIntent.setClass(TimelineActivity.this, PostWriterActivity.class);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
-                    R.anim.anim_enter_activity, R.anim.anim_exit_activity);
-            startActivityForResult(mIntent, REQUEST_CODE_POST_WRITER, optionsCompat.toBundle());
-        } else startActivityForResult(mIntent, REQUEST_CODE_POST_WRITER);
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+//            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
+//                    R.anim.anim_enter_activity, R.anim.anim_exit_activity);
+//            startActivityForResult(mIntent, REQUEST_CODE_POST_WRITER, optionsCompat.toBundle());
+//        } else
+        startActivityForResult(mIntent, REQUEST_CODE_POST_WRITER);
     }
 
     @Override

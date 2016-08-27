@@ -197,8 +197,6 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
     public void postPost(String classId, String title, String content, String type, boolean isIncognito, boolean isPostTeacher) {
         String url = AppConfig.URL_POST_POST;
 
-        content = "<html>" + content + "</html>";
-
         JSONObject params = new JSONObject();
         try {
             params.put("class_id", classId);
