@@ -31,9 +31,10 @@ import com.fries.edoo.helper.SessionManager;
 import com.fries.edoo.models.ItemLop;
 //import com.google.android.gms.common.ConnectionResult;
 //import com.google.android.gms.common.GoogleApiAvailability;
-//import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -116,7 +117,11 @@ public class MainActivity extends AppCompatActivity
         }
 
         // Register FCM token to server
-//        Log.d(TAG, "FCM token: " + FirebaseInstanceId.getInstance().getToken());
+        String fcmToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "FCM token: " + fcmToken);
+        if (fcmToken == null || fcmToken.isEmpty()){
+            sendRegistrationToServer(fcmToken);
+        }
     }
 
     private void initViews() {
@@ -398,6 +403,20 @@ public class MainActivity extends AppCompatActivity
         Log.i(TAG, "check db lop: " + lop);
         Log.i(TAG, "check db type: " + type);
         Log.i(TAG, "check db ava: " + ava);
+    }
+
+    private void sendRegistrationToServer(String token) {
+        String url = AppConfig.URL_REGISTER_FCM;
+        JSONObject params = new JSONObject();
+        try {
+            params.put("type", "android");
+            params.put("token", token);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestServer requestServer = new RequestServer(this, Request.Method.POST, url,  params);
+        requestServer.sendRequest("register FCM");
     }
 
 }
