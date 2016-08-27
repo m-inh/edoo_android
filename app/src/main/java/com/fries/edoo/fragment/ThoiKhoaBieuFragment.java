@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -23,6 +25,7 @@ import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.app.AppController;
 import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
+import com.fries.edoo.helper.SessionManager;
 import com.fries.edoo.models.ItemLopMonHoc;
 
 import org.json.JSONArray;
@@ -45,6 +48,9 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
     private TableSubjectAdapter adapter;
     private Dialog dialogInfo;
 
+    private SessionManager sessionMgr;
+    private SQLiteHandler sqlite;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,7 +59,11 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
 
         initViews();
 
-        getDataFromServer();
+        sessionMgr = new SessionManager(mContext);
+        sqlite = new SQLiteHandler(mContext);
+
+        if (!sessionMgr.isSaveClass()) getDataFromServer();
+        else getDataFromSQLite();
 
         return rootView;
     }
@@ -126,6 +136,7 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
                     adapter.setListSubject(listSubject);
                     gridSubject.setAdapter(adapter);
 
+                    saveClassesToSQLite();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -133,8 +144,34 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
         });
 
         requestServer.sendRequest("get timetable");
+    }
+
+    private void getDataFromSQLite(){
+        ArrayList<HashMap<String, String>> arrClasses = sqlite.getAllClasses();
+        listSubject.clear();
+
+        Log.i(TAG, "class size = " + arrClasses.size());
+//        for (HashMap<String, String> hashClass: arrClasses) {
+//            listSubject.add(new ItemLopMonHoc(hashClass));
+//        }
+        for (int i=0; i<arrClasses.size(); i++){
+            ItemLopMonHoc item = new ItemLopMonHoc(arrClasses.get(i));
+            Log.i(TAG, "item id = " + item.getId());
+            listSubject.add(item);
+        }
+
+        adapter = new TableSubjectAdapter(mContext);
+        adapter.setListSubject(listSubject);
+        gridSubject.setAdapter(adapter);
+    }
 
 
+    private void saveClassesToSQLite(){
+        for (ItemLopMonHoc c : listSubject) {
+            sqlite.addClass(c.getId(), c.getClassId(), c.getCode(), c.getName(), c.getType(), c.getTeacherName(), c.getAddress(), c.getPeriod(),
+                    c.getDayOfWeek(), c.getCreditCount(), c.getStudentCount());
+        }
+        sessionMgr.setIsSaveClass(true);
     }
 
 }

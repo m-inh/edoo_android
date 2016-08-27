@@ -5,6 +5,8 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 /**
  * Created by TMQ on 21-Nov-15.
  */
@@ -71,6 +73,37 @@ public class ItemLopMonHoc {
             e.printStackTrace();
             Log.i(TAG, "Error parse String -> JsonObject");
         }
+    }
+
+    /**
+     * Create ItemLopMonHoc by HashMap, which is init at SQLiteHandler
+     * @param item HashMap
+     */
+    public ItemLopMonHoc(HashMap<String, String> lesson) {
+        this.id = Integer.parseInt(lesson.get("id"));
+        this.classId = lesson.get("class_id");
+        this.code = lesson.get("code");
+        this.name = lesson.get("name");
+        this.type = lesson.get("type");
+        this.semester = lesson.get("semester");
+        this.teacherName = lesson.get("teacher_name");
+        this.address = lesson.get("address");
+        this.period = lesson.get("period");
+        this.creditCount = Integer.parseInt(lesson.get("credit_count"));
+        this.studentCount = Integer.parseInt(lesson.get("student_count"));
+        this.dayOfWeek = Integer.parseInt(lesson.get("day_of_week"));
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public String getClassId() {
+        return classId;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public String getCode() {

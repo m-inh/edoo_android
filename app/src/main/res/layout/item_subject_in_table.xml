@@ -4,7 +4,7 @@
     android:layout_height="@dimen/height_item_subject"
     android:background="@android:color/darker_gray"
     android:orientation="vertical"
-    android:padding="0.3dp">
+    android:padding="0.2dp">
 
     <TextView
         android:id="@+id/txtItemNameSubject"

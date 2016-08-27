@@ -7,11 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SQLiteHandler extends SQLiteOpenHelper {
 
-    private static final String TAG = "SQLiteHandler";
+    private static final String TAG = SQLiteHandler.class.getSimpleName();
 
     // All Static variables
     // Database Version
@@ -20,9 +21,11 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     // Database Name
     private static final String DATABASE_NAME = "android_api";
 
-    // Login table name
+    /**
+     * Table name
+     * TABLE_USER: save information of User
+     */
     private static final String TABLE_USER = "user";
-
     // Login Table Columns names
     public static final String KEY_ID = "id";
     public static final String KEY_NAME = "name";
@@ -33,6 +36,24 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     public static final String KEY_LOP_KHOA_HOC = "lop_khoa_hoc";
     public static final String KEY_MSSV = "massv";
     public static final String KEY_TYPE = "type";
+
+
+    /**
+     * TABLE CLASS: save class, which User was joined
+     */
+    private static final String TABLE_CLASS = "class";
+    // Columns names
+    public static final String CLASS_ID = "id";
+    public static final String CLASS_CLASS_ID = "class_id";
+    public static final String CLASS_CODE = "code";
+    public static final String CLASS_NAME = "name";
+    public static final String CLASS_TYPE = "type";
+    public static final String CLASS_TEACHER_NAME = "teacher_name";
+    public static final String CLASS_ADDRESS = "address";
+    public static final String CLASS_PERIOD = "period";
+    public static final String CLASS_DAY_OF_WEEK = "day_of_week";
+    public static final String CLASS_CREDIT_COUNT = "credit_count";
+    public static final String CLASS_STUDENT_COUNT = "student_count";
 
 
     public SQLiteHandler(Context context) {
@@ -55,6 +76,22 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 + ")";
         db.execSQL(CREATE_LOGIN_TABLE);
 
+        String CREATE_CLASS_TABLE = "CREATE TABLE " + TABLE_CLASS + "("
+                + CLASS_ID + " INTEGER PRIMARY KEY,"
+                + CLASS_CLASS_ID + " TEXT,"
+                + CLASS_CODE + " TEXT,"
+                + CLASS_NAME + " TEXT,"
+                + CLASS_TYPE + " TEXT,"
+                + CLASS_TEACHER_NAME + " TEXT,"
+                + CLASS_ADDRESS + " TEXT,"
+                + CLASS_PERIOD + " TEXT,"
+                + CLASS_DAY_OF_WEEK + " INTEGER,"
+                + CLASS_CREDIT_COUNT + " INTEGER,"
+                + CLASS_STUDENT_COUNT + " INTEGER"
+                + ")";
+        db.execSQL(CREATE_CLASS_TABLE);
+
+
         Log.d(TAG, "Database tables created");
     }
 
@@ -63,10 +100,14 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLASS);
 
+        Log.i(TAG, "Database is Upgraded");
         // Create tables again
         onCreate(db);
     }
+
+    // --------------------------------- User ------------------------------------------------------
 
     /**
      * Storing user details in database
@@ -189,4 +230,82 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Log.d(TAG, "Deleted all user info from sqlite");
     }
 
+
+    // --------------------------------------- Class -----------------------------------------------
+    public void addClass(int id, String classId, String code, String name, String type, String teacherName, String address, String period,
+                         int dayOfWeek, int creditCount, int studentCount) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(CLASS_ID, id);
+        values.put(CLASS_CLASS_ID, classId);
+        values.put(CLASS_CODE, code);
+        values.put(CLASS_NAME, name);
+        values.put(CLASS_TYPE, type);
+        values.put(CLASS_TEACHER_NAME, teacherName);
+        values.put(CLASS_ADDRESS, address);
+        values.put(CLASS_PERIOD, period);
+        values.put(CLASS_DAY_OF_WEEK, dayOfWeek);
+        values.put(CLASS_CREDIT_COUNT, creditCount);
+        values.put(CLASS_STUDENT_COUNT, studentCount);
+
+        long result = db.insert(TABLE_CLASS, null, values);
+
+        db.close();
+
+        Log.d(TAG, "New class inserted into sqlite: " + result);
+    }
+
+
+    public ArrayList<HashMap<String, String>> getAllClasses() {
+        ArrayList<HashMap<String, String>> arrClasses = new ArrayList<>();
+
+
+        String selectQuery = "SELECT  * FROM " + TABLE_CLASS;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int idId = cursor.getColumnIndex(CLASS_ID);
+        int idClassId = cursor.getColumnIndex(CLASS_CLASS_ID);
+        int idCode = cursor.getColumnIndex(CLASS_CODE);
+        int idName = cursor.getColumnIndex(CLASS_NAME);
+        int idType = cursor.getColumnIndex(CLASS_TYPE);
+        int idTeacherName = cursor.getColumnIndex(CLASS_TEACHER_NAME);
+        int idAddress = cursor.getColumnIndex(CLASS_ADDRESS);
+        int idPeriod = cursor.getColumnIndex(CLASS_PERIOD);
+        int idDayOfWeek = cursor.getColumnIndex(CLASS_DAY_OF_WEEK);
+        int idCreditCount = cursor.getColumnIndex(CLASS_CREDIT_COUNT);
+        int idStudentCount = cursor.getColumnIndex(CLASS_STUDENT_COUNT);
+
+        // Move to first row
+        cursor.moveToFirst();
+        if (cursor.getCount() <= 0) return arrClasses;
+
+        for (int i = 0; i < cursor.getCount(); i++) {
+            HashMap<String, String> classes = new HashMap<String, String>();
+
+            classes.put(CLASS_ID, "" + cursor.getInt(idId));
+            classes.put(CLASS_CLASS_ID, cursor.getString(idClassId));
+            classes.put(CLASS_CODE, cursor.getString(idCode));
+            classes.put(CLASS_NAME, cursor.getString(idName));
+            classes.put(CLASS_TYPE, cursor.getString(idType));
+            classes.put(CLASS_TEACHER_NAME, cursor.getString(idTeacherName));
+            classes.put(CLASS_ADDRESS, cursor.getString(idAddress));
+            classes.put(CLASS_PERIOD, cursor.getString(idPeriod));
+            classes.put(CLASS_DAY_OF_WEEK, "" + cursor.getInt(idDayOfWeek));
+            classes.put(CLASS_CREDIT_COUNT, "" + cursor.getInt(idCreditCount));
+            classes.put(CLASS_STUDENT_COUNT, "" + cursor.getInt(idStudentCount));
+
+            arrClasses.add(classes);
+            cursor.moveToNext();
+            Log.d(TAG, "Fetching class from Sqlite: " + classes.toString());
+        }
+
+        cursor.close();
+        db.close();
+        // return user
+
+        return arrClasses;
+    }
 }

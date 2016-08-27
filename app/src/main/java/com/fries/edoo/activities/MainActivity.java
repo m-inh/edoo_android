@@ -1,19 +1,13 @@
 package com.fries.edoo.activities;
 
 
-import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -320,7 +314,7 @@ public class MainActivity extends AppCompatActivity
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
-                    R.anim.amim_enter_activity, R.anim.amim_exit_activity);
+                    R.anim.anim_enter_activity, R.anim.anim_exit_activity);
             startActivity(mIntent, optionsCompat.toBundle());
         } else startActivity(mIntent);
 

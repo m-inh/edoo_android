@@ -2,49 +2,50 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/i_class_padding_top"
     android:paddingBottom="@dimen/i_class_padding_bottom"
-    android:paddingLeft="@dimen/i_class_padding_left">
+    android:paddingLeft="@dimen/i_class_padding_left"
+    android:paddingTop="@dimen/i_class_padding_top">
 
     <TextView
         android:id="@+id/tv_tenlopmonhoc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:textColor="@android:color/black"
         android:text="Xac suat thong ke"
-        android:textSize="@dimen/t_size_title" />
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/t_size_title"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_idlopmonhoc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/paragraph_margin"
-        android:text="Id: MAT1101 1"
-        android:textSize="@dimen/t_size_body"
-        android:maxLength="30"
+        android:layout_alignLeft="@+id/tv_tenlopmonhoc"
         android:layout_below="@+id/tv_tenlopmonhoc"
-        android:layout_alignLeft="@+id/tv_tenlopmonhoc" />
+        android:layout_marginTop="@dimen/paragraph_margin"
+        android:maxLength="30"
+        android:text="Id: MAT1101 1"
+        android:textSize="@dimen/t_size_body" />
 
     <TextView
         android:id="@+id/tv_songuoilopmonhoc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="So nguoi: 40"
-        android:textSize="@dimen/t_size_body"
         android:layout_alignTop="@+id/tv_idlopmonhoc"
+        android:layout_marginLeft="@dimen/i_class_padding_top"
         android:layout_toRightOf="@+id/tv_idlopmonhoc"
-        android:layout_marginLeft="@dimen/i_class_padding_top"/>
+        android:text="So nguoi: 40"
+        android:textSize="@dimen/t_size_body" />
 
     <TextView
         android:id="@+id/tv_giangvienlopmonhoc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:textSize="@dimen/t_size_body"
+        android:layout_alignLeft="@+id/tv_idlopmonhoc"
+        android:layout_below="@+id/tv_idlopmonhoc"
+        android:layout_marginTop="@dimen/card_padding"
         android:maxLength="30"
         android:text="Giang vien: Le Phe Do"
-        android:layout_below="@+id/tv_idlopmonhoc"
-        android:layout_alignLeft="@+id/tv_idlopmonhoc" />
+        android:textSize="@dimen/t_size_body" />
 
 </RelativeLayout>

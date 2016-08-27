@@ -66,7 +66,7 @@
     <string name="post">Đăng bài</string>
     <string name="tatcabaidang">Tất cả bài đăng</string>
     <string name="feed">Bảng tin</string>
-    <string name="time_post">, 18/10/15</string>
+    <string name="time_post">18/10/15</string>
     <string name="lophoc">Lớp học</string>
     <string name="timeline_activity">Bài đăng</string>
     <string name="locbaidangchuadoc">Lọc bài chưa đọc</string>
@@ -86,5 +86,8 @@
 
     <string name="txt_gallery">Gallery</string>
     <string name="txt_camera">Camera</string>
+    <string name="txt_solved">Solved</string>
+    <string name="txt_not_solved">Not solved</string>
+
 
 </resources>

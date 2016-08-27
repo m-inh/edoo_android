@@ -23,6 +23,7 @@ public class SessionManager {
 	
 	private static final String KEY_IS_LOGGED_IN = "is_login";
 	private static final String KEY_TOKEN_LOG_IN = "token_login";
+	private static final String KEY_IS_SAVE_CLASS = "is_save_class";
 
 	public SessionManager(Context context) {
 		this._context = context;
@@ -64,5 +65,17 @@ public class SessionManager {
 		}
 
 		return token;
+	}
+
+	// ---------------------------------------------------------------------------------------------
+
+	public void setIsSaveClass(boolean isSave) {
+		editor.putBoolean(KEY_IS_SAVE_CLASS, isSave);
+		editor.commit();
+		Log.d(TAG, "Is Save class: " + isSave);
+	}
+
+	public boolean isSaveClass(){
+		return pref.getBoolean(KEY_IS_SAVE_CLASS, false);
 	}
 }
