@@ -103,7 +103,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.post_detail, menu);
+        getMenuInflater().inflate(R.menu.post_details_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -112,6 +112,12 @@ public class PostDetailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                break;
+            case R.id.action_delete_post:
+                Toast.makeText(this, "Delete post: Coming soon", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_edit_post:
+                Toast.makeText(this, "Edit post: Coming soon", Toast.LENGTH_SHORT).show();
                 break;
         }
         return true;
@@ -259,4 +265,5 @@ public class PostDetailActivity extends AppCompatActivity {
             }
         }
     };
+
 }

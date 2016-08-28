@@ -266,7 +266,8 @@ public class MainActivity extends AppCompatActivity
                 toolbar.setTitle("Thời khoá biểu");
                 break;
             case R.id.nav_updateAccount:
-                startEditActivity();
+                Intent mIntent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivityForResult(mIntent, REQUEST_CODE_EDIT);
                 break;
             case R.id.nav_logout:
                 logout();
@@ -379,19 +380,6 @@ public class MainActivity extends AppCompatActivity
 //        //Test
 //        switchToMenu(LOP_MENU_INT);
 //    }
-
-    private void startEditActivity() {
-//        Intent mIntent = new Intent(MainActivity.this, EditProfileActivity.class);
-        Intent mIntent = new Intent(MainActivity.this, ProfileActivity.class);
-//        HashMap<String, String> user = sqlite.getUserDetails();
-//        mIntent.putExtra("name", user.get("name"));
-//        mIntent.putExtra("email", user.get("email"));
-//        mIntent.putExtra("lop", user.get("lop"));
-//        mIntent.putExtra("mssv", user.get("mssv"));
-//        mIntent.putExtra("type", user.get("type"));
-
-        startActivityForResult(mIntent, REQUEST_CODE_EDIT);
-    }
 
     private void checkLogDb() {
         HashMap<String, String> user = sqlite.getUserDetails();
