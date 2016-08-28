@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.GravityCompat;
@@ -163,13 +164,20 @@ public class MainActivity extends AppCompatActivity
         getFragmentManager().beginTransaction().replace(R.id.container, lopFragment).commit();
     }
 
+    private long prevTime = 0;
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            long currentTime = System.currentTimeMillis();
+            if (currentTime-prevTime<=1500){
+                super.onBackPressed();
+            } else {
+                Toast.makeText(this, getResources().getString(R.string.lert_press_back), Toast.LENGTH_SHORT).show();
+            }
+            prevTime = currentTime;
         }
     }
 
