@@ -1,122 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:minWidth="300dp"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_horizontal_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_horizontal_margin">
-
-    <TextView
-        android:id="@+id/dialogTenMH"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ten mon hoc"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:gravity="center_vertical"
-        android:minHeight="@dimen/d_height"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_info_content_hint_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mã môn học"
-            android:textColor="@color/black_54"
-            android:textSize="@dimen/t_size_body" />
-
-        <TextView
-            android:id="@+id/dialogMaMH"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="QH-I-CQ-2013/CLC"
-            android:textColor="@color/black"
-            android:textSize="@dimen/t_size_subheading" />
-    </LinearLayout>
+    android:paddingBottom="@dimen/action_padding"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:gravity="center_vertical"
-        android:minHeight="@dimen/d_height"
+        android:paddingBottom="@dimen/dialog_margin_icon"
+        android:paddingLeft="@dimen/dialog_padding_around_content"
+        android:paddingRight="@dimen/dialog_padding_around_content"
+        android:paddingTop="@dimen/dialog_padding_around_content"
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/dialogTenMH"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Giảng viên"
-            android:textColor="@color/black_54"
-            android:textSize="@dimen/t_size_body" />
-
-        <TextView
-            android:id="@+id/dialogGiangVien"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="QH-I-CQ-2013/CLC"
+            android:text="Ten mon hoc"
             android:textColor="@color/black"
-            android:textSize="@dimen/t_size_subheading" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/d_height"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_info_content_hint_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mã môn học"
+                android:textColor="@color/black_54"
+                android:textSize="@dimen/t_size_body" />
+
+            <TextView
+                android:id="@+id/dialogMaMH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="QH-I-CQ-2013/CLC"
+                android:textColor="@color/black"
+                android:textSize="@dimen/t_size_subheading" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/d_height"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Giảng viên"
+                android:textColor="@color/black_54"
+                android:textSize="@dimen/t_size_body" />
+
+            <TextView
+                android:id="@+id/dialogGiangVien"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="QH-I-CQ-2013/CLC"
+                android:textColor="@color/black"
+                android:textSize="@dimen/t_size_subheading" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/d_height"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thời gian"
+                android:textColor="@color/black_54"
+                android:textSize="@dimen/t_size_body" />
+
+            <TextView
+                android:id="@+id/dialogThoiGian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="QH-I-CQ-2013/CLC"
+                android:textColor="@color/black"
+                android:textSize="@dimen/t_size_subheading" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/d_height"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Địa điểm"
+                android:textColor="@color/black_54"
+                android:textSize="@dimen/t_size_body" />
+
+            <TextView
+                android:id="@+id/dialogDiaDiem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="QH-I-CQ-2013/CLC"
+                android:textColor="@color/black"
+                android:textSize="@dimen/t_size_subheading" />
+        </LinearLayout>
+
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:gravity="center_vertical"
-        android:minHeight="@dimen/d_height"
-        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Thời gian"
-            android:textColor="@color/black_54"
-            android:textSize="@dimen/t_size_body" />
-
-        <TextView
-            android:id="@+id/dialogThoiGian"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="QH-I-CQ-2013/CLC"
-            android:textColor="@color/black"
-            android:textSize="@dimen/t_size_subheading" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:gravity="center_vertical"
-        android:minHeight="@dimen/d_height"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Địa điểm"
-            android:textColor="@color/black_54"
-            android:textSize="@dimen/t_size_body" />
-
-        <TextView
-            android:id="@+id/dialogDiaDiem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="QH-I-CQ-2013/CLC"
-            android:textColor="@color/black"
-            android:textSize="@dimen/t_size_subheading" />
-    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -128,7 +139,8 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/btn_dialog_height"
         android:layout_gravity="right"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="@dimen/action_padding"
+        android:layout_marginRight="@dimen/action_padding"
         android:background="@drawable/bg_btn_pressed"
         android:padding="@dimen/line_text_margin"
         android:text="Vào lớp"
