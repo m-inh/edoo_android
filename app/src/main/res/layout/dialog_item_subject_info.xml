@@ -2,127 +2,133 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minWidth="280dp"
-    android:orientation="vertical">
+    android:background="@android:color/white"
+    android:minWidth="300dp"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin">
 
     <TextView
         android:id="@+id/dialogTenMH"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dialog_margin_icon"
-        android:layout_marginLeft="@dimen/dialog_padding_around_content"
-        android:layout_marginTop="@dimen/dialog_padding_around_content"
         android:text="Ten mon hoc"
         android:textColor="@color/black"
-        android:textSize="@dimen/t_size_title"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dialog_padding_around_content"
-        android:gravity="center_vertical">
 
-        <ImageView
-            android:layout_width="@dimen/btn_dialog_height"
-            android:layout_height="@dimen/btn_dialog_height"
-            android:src="@drawable/ic_lop_mon_hoc" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/d_height"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_info_content_hint_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mã môn học"
+            android:textColor="@color/black_54"
+            android:textSize="@dimen/t_size_body" />
 
         <TextView
             android:id="@+id/dialogMaMH"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dialog_margin_icon"
-            android:text="Ma lmh"
-            android:textColor="@color/black_87"
-            android:textSize="@dimen/t_size_body" />
+            android:text="QH-I-CQ-2013/CLC"
+            android:textColor="@color/black"
+            android:textSize="@dimen/t_size_subheading" />
+    </LinearLayout>
 
-    </TableRow>
-
-    <TableRow
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dialog_padding_around_content"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:gravity="center_vertical">
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/d_height"
+        android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="@dimen/btn_dialog_height"
-            android:layout_height="@dimen/btn_dialog_height"
-            android:src="@drawable/ic_giang_vien" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giảng viên"
+            android:textColor="@color/black_54"
+            android:textSize="@dimen/t_size_body" />
 
         <TextView
             android:id="@+id/dialogGiangVien"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dialog_margin_icon"
-            android:text="Giang vien"
-            android:textColor="@color/black_87"
-            android:textSize="@dimen/t_size_body" />
+            android:text="QH-I-CQ-2013/CLC"
+            android:textColor="@color/black"
+            android:textSize="@dimen/t_size_subheading" />
+    </LinearLayout>
 
-    </TableRow>
-
-    <TableRow
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dialog_padding_around_content"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:gravity="center_vertical">
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/d_height"
+        android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="@dimen/btn_dialog_height"
-            android:layout_height="@dimen/btn_dialog_height"
-            android:src="@drawable/ic_thoi_gian" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thời gian"
+            android:textColor="@color/black_54"
+            android:textSize="@dimen/t_size_body" />
 
         <TextView
             android:id="@+id/dialogThoiGian"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dialog_margin_icon"
-            android:text="Thoi gian"
-            android:textColor="@color/black_87"
-            android:textSize="@dimen/t_size_body" />
+            android:text="QH-I-CQ-2013/CLC"
+            android:textColor="@color/black"
+            android:textSize="@dimen/t_size_subheading" />
+    </LinearLayout>
 
-    </TableRow>
-
-
-    <TableRow
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dialog_padding_around_content"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:gravity="center_vertical">
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/d_height"
+        android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="@dimen/btn_dialog_height"
-            android:layout_height="@dimen/btn_dialog_height"
-            android:src="@drawable/ic_dia_diem" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Địa điểm"
+            android:textColor="@color/black_54"
+            android:textSize="@dimen/t_size_body" />
 
         <TextView
             android:id="@+id/dialogDiaDiem"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dialog_margin_icon"
-            android:text="Dia diem"
-            android:textColor="@color/black_87"
-            android:textSize="@dimen/t_size_body" />
-
-    </TableRow>
+            android:text="QH-I-CQ-2013/CLC"
+            android:textColor="@color/black"
+            android:textSize="@dimen/t_size_subheading" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:background="@color/bg_divider"/>
+        android:background="@color/bg_divider" />
+
     <Button
         android:id="@+id/btn_direct_to_class_dialog"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/btn_dialog_height"
         android:layout_gravity="right"
-        android:layout_marginBottom="@dimen/line_text_margin"
-        android:layout_marginLeft="@dimen/line_text_margin"
-        android:layout_marginRight="@dimen/line_text_margin"
-        android:layout_marginTop="@dimen/line_text_margin"
+        android:layout_marginTop="4dp"
         android:background="@drawable/bg_btn_pressed"
         android:padding="@dimen/line_text_margin"
         android:text="Vào lớp"

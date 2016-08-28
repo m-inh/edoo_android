@@ -65,6 +65,8 @@
     <integer name="move_object_leave_layout">195</integer>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="margin_item_timetable">10dp</dimen>
+    <dimen name="d_height">45dp</dimen>
 
 
 </resources>

@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "MainActivity";
 
-    private static final String URL_DOWNLOAD_APK = "https://www.dropbox.com/sh/kapr5q60x80c8ua/AAAB3RH1FS9SwPYnYOuYHJJSa?dl=0";
+    private static final String URL_DOWNLOAD_APK = "http://uetf.me/";
 
     private static final int REQUEST_CODE_EDIT = 1234;
 
@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_share:
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Ứng dụng \"Lớp tôi\" thật tuyệt vời!\n" + URL_DOWNLOAD_APK);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Cùng trải nghiệm môi trường học tập khác biệt với " + URL_DOWNLOAD_APK);
                 sendIntent.setType("text/plain");
                 startActivity(sendIntent);
 //                toolbar.setTitle("Chia sẻ");
