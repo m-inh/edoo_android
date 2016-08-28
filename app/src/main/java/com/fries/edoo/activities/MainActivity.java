@@ -30,9 +30,6 @@ import com.fries.edoo.fragment.ThoiKhoaBieuFragment;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.helper.SessionManager;
 import com.fries.edoo.models.ItemLop;
-//import com.google.android.gms.common.ConnectionResult;
-//import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -74,11 +71,6 @@ public class MainActivity extends AppCompatActivity
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        toolbar.setNavigationIcon(R.mipmap.ic_launcher);
-//        toolbar.setNavigationContentDescription("BackPressed");
-
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -118,11 +110,11 @@ public class MainActivity extends AppCompatActivity
         }
 
         // Register FCM token to server
-        String fcmToken = FirebaseInstanceId.getInstance().getToken();
-        Log.d(TAG, "FCM token: " + fcmToken);
-        if (fcmToken == null || fcmToken.isEmpty()){
-            sendRegistrationToServer(fcmToken);
-        }
+//        String fcmToken = FirebaseInstanceId.getInstance().getToken();
+//        Log.d(TAG, "FCM token: " + fcmToken);
+//        if (fcmToken == null || fcmToken.isEmpty()){
+//            sendRegistrationToServer(fcmToken);
+//        }
     }
 
     private void initViews() {

@@ -284,7 +284,12 @@ public class PostWriterContentFragment extends Fragment {
     private void pickImageFromMemory() {
         Intent iImage = (new Intent("android.intent.action.GET_CONTENT")).setType("image/*");
         preHTMLEditor = mEditor.getHtml() + "";
-        startActivityForResult(iImage, IMAGE_LOCAL_REQUEST);
+
+        if (CommonVLs.isHasStoragePermissions(getActivity())){
+            startActivityForResult(iImage, IMAGE_LOCAL_REQUEST);
+        } else {
+            CommonVLs.verifyStoragePermissions(getActivity());
+        }
     }
 
 
@@ -297,7 +302,12 @@ public class PostWriterContentFragment extends Fragment {
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-        startActivityForResult(intent, CAMERA_REQUEST);
+
+        if (CommonVLs.isHasCameraPermissions(getActivity())){
+            startActivityForResult(intent, CAMERA_REQUEST);
+        } else {
+            CommonVLs.verifyCameraPermissions(getActivity());
+        }
     }
 
     private String resizeImage() {

@@ -295,7 +295,11 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
             }
         });
 
-        requestServer.sendRequest("get posts");
+        if (!requestServer.sendRequest("get posts")){
+            if (swipeRefresh.isRefreshing()) {
+                swipeRefresh.setRefreshing(false);
+            }
+        }
     }
 
     private static final int REQUEST_CODE_POST_DETAIL = 1201;

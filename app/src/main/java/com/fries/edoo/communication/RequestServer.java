@@ -46,6 +46,7 @@ public class RequestServer {
     // Request: Upload data (JSONObject)
     public RequestServer(Context context, int method, String url, JSONObject jsonReq) {
         session = new SessionManager(context);
+        this.mContext = context;
         this.method = method;
         this.url = url;
         this.jsonReq = jsonReq;
@@ -106,17 +107,19 @@ public class RequestServer {
         };
     }
 
-    public void sendRequest(String tag) {
+    public boolean sendRequest(String tag) {
         if (isOnline()){
             AppController.getInstance().addToRequestQueue(request, tag);
+            return true;
         } else {
             Toast.makeText(mContext, "Vui lòng kiểm tra kết nối internet!", Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 
     public boolean isOnline() {
         ConnectivityManager cm =
-                (ConnectivityManager) AppController.getInstance().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }

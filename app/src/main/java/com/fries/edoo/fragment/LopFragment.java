@@ -102,7 +102,12 @@ public abstract class LopFragment extends Fragment {
             }
         });
 
-        requestServer.sendRequest("get classes");
+        if (!requestServer.sendRequest("get classes")){
+            isRefreshing = false;
+            if (swipeRefresh.isRefreshing()){
+                swipeRefresh.setRefreshing(false);
+            }
+        }
     }
 
     private Handler mHandler = new Handler() {

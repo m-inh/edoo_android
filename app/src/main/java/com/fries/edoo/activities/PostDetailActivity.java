@@ -84,9 +84,9 @@ public class PostDetailActivity extends AppCompatActivity {
         rvMain.setLayoutManager(linearLayoutManager);
         rvMain.setAdapter(mAdapter);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            rvMain.setOnScrollChangeListener((View.OnScrollChangeListener) onScrollListener);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            rvMain.setOnScrollChangeListener((View.OnScrollChangeListener) onScrollListener);
+//        }
 
         edtComment = (EditText) findViewById(R.id.edt_comment);
         btnSend = (ImageView) findViewById(R.id.btn_send);
@@ -261,29 +261,29 @@ public class PostDetailActivity extends AppCompatActivity {
         setResult(RESULT_OK, mIntent);
     }
 
-    public RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
-        boolean hideToolBar = false;
-
-        @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-            if (hideToolBar) {
-                PostDetailActivity.this.getSupportActionBar().hide();
-            } else {
-                PostDetailActivity.this.getSupportActionBar().show();
-            }
-        }
-
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            if (dy > 20) {
-                hideToolBar = true;
-
-            } else if (dy < -5) {
-                hideToolBar = false;
-            }
-        }
-    };
+//    public RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+//        boolean hideToolBar = false;
+//
+//        @Override
+//        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//            super.onScrollStateChanged(recyclerView, newState);
+//            if (hideToolBar) {
+//                PostDetailActivity.this.getSupportActionBar().hide();
+//            } else {
+//                PostDetailActivity.this.getSupportActionBar().show();
+//            }
+//        }
+//
+//        @Override
+//        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//            super.onScrolled(recyclerView, dx, dy);
+//            if (dy > 20) {
+//                hideToolBar = true;
+//
+//            } else if (dy < -5) {
+//                hideToolBar = false;
+//            }
+//        }
+//    };
 
 }

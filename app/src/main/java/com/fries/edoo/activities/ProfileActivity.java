@@ -207,7 +207,9 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        request.sendRequest("update avatar");
+       if (! request.sendRequest("update avatar")){
+           loading.dismiss();
+       }
     }
 
     private Handler mHandler = new Handler() {

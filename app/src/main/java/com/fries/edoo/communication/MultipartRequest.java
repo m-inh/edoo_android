@@ -112,11 +112,13 @@ public class MultipartRequest {
         };
     }
 
-    public void sendRequest(String tag) {
+    public boolean sendRequest(String tag) {
         if (isOnline()){
             AppController.getInstance().addToRequestQueue(request, tag);
+            return true;
         } else {
             Toast.makeText(mContext, "Vui lòng kiểm tra kết nối internet!", Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 

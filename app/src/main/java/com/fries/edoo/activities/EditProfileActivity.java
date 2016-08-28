@@ -265,7 +265,9 @@ public class EditProfileActivity extends Activity {
             }
         });
 
-        request.sendRequest("update avatar");
+        if (!request.sendRequest("update avatar")){
+            loading.dismiss();
+        }
     }
 
 //    public String getStringImage(Bitmap bmp) {

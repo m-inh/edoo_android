@@ -20,11 +20,6 @@ import java.util.Random;
  */
 public class FileManager {
 
-
-
-
-
-
     public static String saveTempImage(Bitmap bmp){
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/edoo");
