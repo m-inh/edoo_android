@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -27,11 +28,14 @@ import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.models.ItemComment;
 import com.fries.edoo.models.ItemTimeLine;
+import com.fries.edoo.utils.CommonVLs;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -152,6 +156,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
                         String idComment = cmtJson.getString("id");
                         String contentComment = cmtJson.getString("content");
+                        String timeCreateAtCmt = cmtJson.getString("created_at");
                         boolean isSolve = cmtJson.getInt("is_solve") == 1;
 
                         String idAuthorComment = "";
@@ -173,7 +178,22 @@ public class PostDetailActivity extends AppCompatActivity {
                             continue;
                         }
 
-                        cmtArr.add(new ItemComment(idComment, idAuthorComment, nameAuthorComment, avarAuthorComment, contentComment, isSolve));
+                        ItemComment itemComment = new ItemComment(idComment,
+                                idAuthorComment, nameAuthorComment,
+                                avarAuthorComment, contentComment, isSolve);
+
+                        String format = CommonVLs.TIME_FORMAT;
+                        SimpleDateFormat sdf = new SimpleDateFormat(format);
+                        try {
+                            String tempTime = DateFormat.format("dd/MM/yy", sdf.parse(timeCreateAtCmt)
+                                    .getTime())
+                                    .toString();
+                            itemComment.setCreateAt(tempTime);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        cmtArr.add(itemComment);
                     }
                     mAdapter.setItemComments(cmtArr);
                 }

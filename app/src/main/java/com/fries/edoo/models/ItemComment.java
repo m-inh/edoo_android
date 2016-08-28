@@ -15,6 +15,7 @@ public class ItemComment implements Serializable {
     private boolean isSolved;
     private String idComment;
     private String idAuthorComment;
+    private String createAt;
 
     public ItemComment(String idComment, String idAuthorComment, String name, String avaUrl, String content, boolean isVote) {
         this.name = name;
@@ -51,5 +52,13 @@ public class ItemComment implements Serializable {
 
     public void setIsSolved(boolean solved) {
         isSolved = solved;
+    }
+
+    public String getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(String createAt) {
+        this.createAt = createAt;
     }
 }

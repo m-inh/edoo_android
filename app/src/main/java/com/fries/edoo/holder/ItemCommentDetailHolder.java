@@ -53,6 +53,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
     private TextView tvAuthorName;
     private CircleImageView ivAuthorAvatar;
     private TextView tvComment;
+    private TextView tvCreateAt;
     private ImageView ivCommentSolved, ivCommentMenu;
     private PostDetailAdapter postDetailAdapter;
 
@@ -66,6 +67,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         tvComment = (TextView) itemView.findViewById(R.id.tv_comment);
         ivCommentMenu = (ImageView) itemView.findViewById(R.id.iv_comment_menu);
         ivCommentSolved = (ImageView) itemView.findViewById(R.id.iv_comment_solved);
+        tvCreateAt = (TextView) itemView.findViewById(R.id.tv_create_at);
     }
 
     public ItemCommentDetailHolder(View view, ItemTimeLine itemTimeline) {
@@ -92,6 +94,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
 
         tvAuthorName.setText(itemComment.getName());
         tvComment.setText(itemComment.getContent());
+        tvCreateAt.setText(itemComment.getCreateAt());
         if (!itemComment.getAvaUrl().isEmpty()) {
             Picasso.with(mContext)
                     .load(itemComment.getAvaUrl()).fit()
@@ -212,4 +215,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         return ivCommentMenu;
     }
 
+    public TextView getTvCreateAt() {
+        return tvCreateAt;
+    }
 }

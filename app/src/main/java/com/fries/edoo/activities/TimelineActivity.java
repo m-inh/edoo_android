@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.transition.Fade;
 import android.transition.Slide;
 import android.util.Log;
@@ -231,7 +232,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         String type = jsonPostArr.getJSONObject(i).getString("type");
 
                         //author post
-                        String nameAuthorPost = "Incognito";
+                        String nameAuthorPost = "Ẩn danh";
                         String idAuthorPost = "";
                         String emailAuthorPost = "";
                         String typeAuthorPost = "";
@@ -256,14 +257,14 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         itemTimeLine.setCommentCount(commentCount);
                         itemTimeLine.setIsSeen(isSeen);
                         itemTimeLine.setSolve(isSolve);
-//                        String inputDate = "2012-08-24T12:15:00+02:00";
-                        String format = CommonVLs.TIME_FORMAT;
 
+                        String format = CommonVLs.TIME_FORMAT;
                         SimpleDateFormat sdf = new SimpleDateFormat(format);
                         try {
-                            Date d = new Date(sdf.parse(timeCreateAtPost).getTime());
-//                            Log.i(TAG, "date create: " + d.getTime());
-                            itemTimeLine.setCreateAt(d.toString());
+                            String tempTime = DateFormat.format("dd/MM/yy", sdf.parse(timeCreateAtPost)
+                                    .getTime())
+                                    .toString();
+                            itemTimeLine.setCreateAt(tempTime);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
