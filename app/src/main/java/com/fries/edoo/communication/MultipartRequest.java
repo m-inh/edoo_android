@@ -1,6 +1,9 @@
 package com.fries.edoo.communication;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -25,12 +28,14 @@ public class MultipartRequest {
     private byte[] file;
     private String filename;
     private String mimeType;
+    private Context mContext;
 
     private SessionManager session;
 
     // Request: Upload data (JSONObject)
     public MultipartRequest(Context context, int method, String url, byte[] file, String filename, String mimeType) {
         session = new SessionManager(context);
+        this.mContext = context;
         this.method = method;
         this.url = url;
         this.file = file;
@@ -108,7 +113,18 @@ public class MultipartRequest {
     }
 
     public void sendRequest(String tag) {
-        AppController.getInstance().addToRequestQueue(request, tag);
+        if (isOnline()){
+            AppController.getInstance().addToRequestQueue(request, tag);
+        } else {
+            Toast.makeText(mContext, "Vui lòng kiểm tra kết nối internet!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     // ---------------------------------------------------------------------------------------------

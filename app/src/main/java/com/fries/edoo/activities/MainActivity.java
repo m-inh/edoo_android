@@ -246,10 +246,10 @@ public class MainActivity extends AppCompatActivity
 //                toolbar.setTitle("Nhóm");
 //                showFragment(nhomFragment);
 //                break;
-            case R.id.nav_setting:
-                switchToMenu(LOP_MENU_INT);
-                toolbar.setTitle("Cài đặt");
-                break;
+//            case R.id.nav_setting:
+//                switchToMenu(LOP_MENU_INT);
+//                toolbar.setTitle("Cài đặt");
+//                break;
             case R.id.nav_share:
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);

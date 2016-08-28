@@ -1,7 +1,10 @@
 package com.fries.edoo.communication;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
@@ -25,12 +28,14 @@ public class RequestServer {
     private int method;
     private String url;
     private JSONObject jsonReq;
+    private Context mContext;
 
     private SessionManager session;
 
     // Request: Not upload data (JSONObject)
     public RequestServer(Context context, int method, String url) {
         session = new SessionManager(context);
+        this.mContext = context;
         this.method = method;
         this.url = url;
         this.jsonReq = new JSONObject();
@@ -102,7 +107,18 @@ public class RequestServer {
     }
 
     public void sendRequest(String tag) {
-        AppController.getInstance().addToRequestQueue(request, tag);
+        if (isOnline()){
+            AppController.getInstance().addToRequestQueue(request, tag);
+        } else {
+            Toast.makeText(mContext, "Vui lòng kiểm tra kết nối internet!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
 

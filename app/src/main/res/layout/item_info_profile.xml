@@ -7,38 +7,39 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:minHeight="@dimen/i_height"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_horizontal_margin"
-        android:paddingBottom="@dimen/activity_horizontal_margin"
-        android:gravity="center_vertical">
+        android:paddingTop="@dimen/activity_horizontal_margin">
 
         <TextView
             android:id="@+id/tv_info_content_hint_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/card_padding"
             android:text="Lớp khóa học"
             android:textColor="@color/black_54"
-            android:textSize="@dimen/t_size_body"
-            android:layout_marginBottom="@dimen/card_padding"/>
+            android:textSize="@dimen/t_size_body" />
 
         <TextView
             android:id="@+id/tv_info_content_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="QH-I-CQ-2013/CLC"
-            android:textSize="@dimen/t_size_subheading"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="@dimen/t_size_subheading" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/bg_divider"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@color/bg_divider" />
 
 </LinearLayout>
