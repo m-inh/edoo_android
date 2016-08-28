@@ -35,5 +35,9 @@ public class AppConfig {
 	public static final String URL_POST_IMG = URL_HOST + "/img";
 
 
+	public static final String URL_GET_PROFILE = URL_HOST + "/profile";
+
+
+
 	public static final String  URL_GET_POST_DETAIL = URL_HOST + "/post";
 }

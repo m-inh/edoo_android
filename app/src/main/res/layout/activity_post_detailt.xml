@@ -27,7 +27,9 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways" />
+                android:theme="@style/ThemeOverlay.AppCompat.Dark"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
         </android.support.design.widget.AppBarLayout>
 
     </android.support.design.widget.CoordinatorLayout>
@@ -36,8 +38,8 @@
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@android:color/white"
         android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
         android:gravity="center_vertical">
 
         <EditText
@@ -45,17 +47,17 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:inputType="textCapSentences"
             android:background="@drawable/bg_popup_comment"
             android:hint="Bình luận ..."
+            android:inputType="textCapSentences"
             android:paddingLeft="10dp" />
 
         <ImageView
             android:id="@+id/btn_send"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:scaleType="centerInside"
             android:background="@drawable/bg_btn_pressed"
+            android:scaleType="centerInside"
             android:src="@android:drawable/ic_menu_send" />
 
     </LinearLayout>

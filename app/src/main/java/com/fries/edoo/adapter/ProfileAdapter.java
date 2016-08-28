@@ -15,6 +15,8 @@ import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.holder.AbstractHolder;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -28,16 +30,19 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
     private Context mContext;
     private HashMap<String, String> user;
     private ArrayList<ItemInfoProfile> arrInfo;
+    private String countStar;
 
     public ProfileAdapter(Context context){
         mContext = context;
 
         user = new SQLiteHandler(mContext).getUserDetails();
+        arrInfo = new ArrayList<>();
+        countStar = "-";
 
         setDataInfo();
     }
+
     private void setDataInfo(){
-        arrInfo = new ArrayList<>();
 //        email, lop, mssv, type
         boolean isTeacher = user.get("type").equalsIgnoreCase("teacher");
         Resources res = mContext.getResources();
@@ -52,7 +57,16 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
         arrInfo.add(new ItemInfoProfile("11/07/1995", "Ngày sinh"));
         arrInfo.add(new ItemInfoProfile("Yêu công nghệ, yêu zai đẹp, thích màu hồng, sống thủy chung, ...", "Giới thiệu"));
         arrInfo.add(new ItemInfoProfile("Yêu công nghệ, yêu zai đẹp, thích màu hồng, sống thủy chung, ...", "Sở thích"));
-//        notifyDataSetChanged();
+    }
+
+    public void setCountPoint(String pointCount){
+        countStar = pointCount;
+        notifyDataSetChanged();
+    }
+
+    public void updateData(){
+        user = new SQLiteHandler(mContext).getUserDetails();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -95,14 +109,14 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
     public class ItemHeaderProfileHolder extends AbstractHolder {
         private CircleImageView ivAvatar;
-        private TextView tvName;
+        private TextView tvName, tvCountStar;
 
         public ItemHeaderProfileHolder(View itemView) {
             super(itemView);
 
             ivAvatar = (CircleImageView) itemView.findViewById(R.id.iv_avatar_profile);
             tvName = (TextView) itemView.findViewById(R.id.tv_name_profile);
-//            TextView tvCountStar = (TextView) itemView.findViewById(R.id.tv_count_star_profile);
+            tvCountStar = (TextView) itemView.findViewById(R.id.tv_count_star_profile);
         }
 
         public void setData(String urlAvatar, String name){
@@ -111,6 +125,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
                     .placeholder(R.mipmap.ic_user)
                     .error(R.mipmap.ic_user).into(ivAvatar);
             tvName.setText(name);
+            tvCountStar.setText(countStar);
         }
 
         @Override
