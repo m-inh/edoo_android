@@ -10,15 +10,29 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.format.DateFormat;
 import android.view.View;
 
 import java.io.ByteArrayOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by TooNies1810 on 8/13/16.
  */
 public class CommonVLs {
     public static final String TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+
+    public static String convertDate(String date){
+        String format = CommonVLs.TIME_FORMAT;
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        try {
+            return DateFormat.format("dd/MM/yy", sdf.parse(date).getTime()).toString();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
 
     public static byte[] getFileDataFromBitmap(Bitmap bmp) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

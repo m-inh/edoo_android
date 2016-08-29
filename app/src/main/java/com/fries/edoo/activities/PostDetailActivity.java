@@ -139,6 +139,8 @@ public class PostDetailActivity extends AppCompatActivity {
         toolbar.setVisibility(View.VISIBLE);
     }
 
+    // -------------------------------- RequestServer ----------------------------------------------
+
     private void getPostDetail(String idPost) {
         String url = AppConfig.URL_GET_POST_DETAIL + "/" + idPost;
         RequestServer requestServer = new RequestServer(this, Request.Method.GET, url);
@@ -182,16 +184,7 @@ public class PostDetailActivity extends AppCompatActivity {
                                 idAuthorComment, nameAuthorComment,
                                 avarAuthorComment, contentComment, isSolve);
 
-                        String format = CommonVLs.TIME_FORMAT;
-                        SimpleDateFormat sdf = new SimpleDateFormat(format);
-                        try {
-                            String tempTime = DateFormat.format("dd/MM/yy", sdf.parse(timeCreateAtCmt)
-                                    .getTime())
-                                    .toString();
-                            itemComment.setCreateAt(tempTime);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+                        itemComment.setCreateAt(CommonVLs.convertDate(timeCreateAtCmt));
 
                         cmtArr.add(itemComment);
                     }
@@ -203,6 +196,7 @@ public class PostDetailActivity extends AppCompatActivity {
         requestServer.sendRequest("get post detail");
     }
 
+    // -------------------------------------------------
     private void postCmt(final String post, final String content) {
         Log.i(TAG, "idpost " + post);
         Log.i(TAG, "content " + content);
@@ -285,5 +279,10 @@ public class PostDetailActivity extends AppCompatActivity {
 //            }
 //        }
 //    };
+
+    // -------------------------------------------
+    private void requestDeletePost(){
+
+    }
 
 }

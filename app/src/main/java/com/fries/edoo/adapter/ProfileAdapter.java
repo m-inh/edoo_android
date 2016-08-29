@@ -19,6 +19,7 @@ import com.fries.edoo.activities.ProfileActivity;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.holder.AbstractHolder;
 import com.fries.edoo.models.ItemUser;
+import com.fries.edoo.utils.CommonVLs;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -55,7 +56,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
             arrInfo.add(new ItemInfoProfile(user.getCode(), res.getString(R.string.hint_msgv), "code"));
             arrInfo.add(new ItemInfoProfile(user.getRegularClass(), res.getString(R.string.covanlop), "regular_class"));
         }
-        arrInfo.add(new ItemInfoProfile(user.getBirthday(), res.getString(R.string.txt_birthday), "birthday"));
+        arrInfo.add(new ItemInfoProfile(CommonVLs.convertDate(user.getBirthday()), res.getString(R.string.txt_birthday), "birthday"));
         arrInfo.add(new ItemInfoProfile(user.getEmail(), res.getString(R.string.txt_email), "email"));
         arrInfo.add(new ItemInfoProfile(user.getDescription(), res.getString(R.string.txt_description), "description"));
         arrInfo.add(new ItemInfoProfile(user.getFavorite(), res.getString(R.string.txt_favorite), "favorite"));
