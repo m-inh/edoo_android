@@ -76,7 +76,7 @@
     <string name="link_title">Title</string>
     <string name="dialog_title_insert_link">Thêm link</string>
     <string name="insert">Thêm</string>
-    <string name="warn">Cảnh báo</string>
+    <string name="warn">Chú ý</string>
     <string name="go_back">Quay lại</string>
     <string name="warn_exit">Thoát và hủy bài viết?</string>
     <string name="post_incognito">Đăng ở chế độ ẩn danh</string>
@@ -101,6 +101,8 @@
     <string name="txt_email">Email</string>
     <string name="txt_description">Giới thiệu</string>
     <string name="txt_favorite">Sở thích</string>
+    <string name="txt_question_delete_post">Bạn có muốn xóa bài đăng?</string>
+    <string name="txt_yes">Đồng ý</string>
 
 
 </resources>

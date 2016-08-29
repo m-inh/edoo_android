@@ -1,10 +1,12 @@
 package com.fries.edoo.activities;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,8 +45,8 @@ import java.util.HashMap;
  * Created by TooNies1810 on 2/19/16.
  */
 public class PostDetailActivity extends AppCompatActivity {
-
-    private static final String TAG = "PostDetailActivity";
+    private static final String TAG = PostDetailActivity.class.getSimpleName();
+    public static final int RESULT_DELETE_COMPLETE = 12;
 
     private ProgressDialog pDialog;
 
@@ -118,7 +120,8 @@ public class PostDetailActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.action_delete_post:
-                Toast.makeText(this, "Delete post: Coming soon", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Delete post: Coming soon", Toast.LENGTH_SHORT).show();
+                showDialogDeletePost();
                 break;
             case R.id.action_edit_post:
                 Toast.makeText(this, "Edit post: Coming soon", Toast.LENGTH_SHORT).show();
@@ -137,6 +140,20 @@ public class PostDetailActivity extends AppCompatActivity {
     public void onActionModeFinished(ActionMode mode) {
         super.onActionModeFinished(mode);
         toolbar.setVisibility(View.VISIBLE);
+    }
+
+    private void showDialogDeletePost(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.warn));
+        builder.setMessage(getResources().getString(R.string.txt_question_delete_post));
+        builder.setPositiveButton(getResources().getString(R.string.txt_yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                requestDeletePost();
+            }
+        });
+        builder.setNegativeButton(getResources().getString(R.string.txt_cancel), null);
+        builder.show();
     }
 
     // -------------------------------- RequestServer ----------------------------------------------
@@ -282,7 +299,24 @@ public class PostDetailActivity extends AppCompatActivity {
 
     // -------------------------------------------
     private void requestDeletePost(){
-
+        JSONObject params = new JSONObject();
+        try {
+            params.put("post_id", itemTimeline.getIdPost());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestServer requestServer = new RequestServer(this, Request.Method.POST, AppConfig.URL_DELETE_POST, params);
+        requestServer.setListener(new RequestServer.ServerListener() {
+            @Override
+            public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
+                if (!error){
+                    Log.i(TAG, "Delete post response: " + response.toString());
+                    setResult(RESULT_DELETE_COMPLETE);
+                    PostDetailActivity.this.finish();
+                }
+            }
+        });
+        requestServer.sendRequest("delete_post");
     }
 
 }

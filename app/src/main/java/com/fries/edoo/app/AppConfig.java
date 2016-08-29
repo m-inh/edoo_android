@@ -40,4 +40,5 @@ public class AppConfig {
 
 
 	public static final String  URL_GET_POST_DETAIL = URL_HOST + "/post";
+	public static final String  URL_DELETE_POST = URL_HOST + "/deletepost";
 }

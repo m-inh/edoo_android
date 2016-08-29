@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.fries.edoo.R;
+import com.fries.edoo.adapter.PostDetailAdapter;
 import com.fries.edoo.adapter.TimeLineAdapter;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
@@ -347,6 +348,8 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         tempItem.setSolve(itemTimeLine.isSolve());
                     }
                 }
+            }else if (resultCode== PostDetailActivity.RESULT_DELETE_COMPLETE){
+                refreshPosts();
             }
         }
 
