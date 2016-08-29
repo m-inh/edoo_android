@@ -30,13 +30,13 @@
         android:src="@drawable/ic_star" />
 
     <TextView
-        android:id="@+id/tv_count_star_profile"
+        android:id="@+id/tv_point_count_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/i_v_star_profile"
         android:layout_marginLeft="@dimen/i_class_padding_bottom_small"
         android:layout_toRightOf="@+id/i_v_star_profile"
-        android:text="1250"
+        android:text="-"
         android:textColor="@android:color/white"
         android:textSize="@dimen/t_size_title"
         android:textStyle="bold" />

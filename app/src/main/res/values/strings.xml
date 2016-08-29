@@ -95,5 +95,12 @@
     <string name="txt_edit_profile">Sửa profile</string>
     <string name="txt_edit_avatar">Đổi avatar</string>
 
+    <string name="txt_save">Lưu</string>
+    <string name="txt_cancel">Thoát</string>
+    <string name="txt_birthday">Ngày sinh</string>
+    <string name="txt_email">Email</string>
+    <string name="txt_description">Giới thiệu</string>
+    <string name="txt_favorite">Sở thích</string>
+
 
 </resources>

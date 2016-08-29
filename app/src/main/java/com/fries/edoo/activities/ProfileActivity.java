@@ -26,6 +26,7 @@ import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.MultipartRequest;
 import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
+import com.fries.edoo.models.ItemUser;
 import com.fries.edoo.utils.CommonVLs;
 import com.fries.edoo.utils.UserPicture;
 import com.soundcloud.android.crop.Crop;
@@ -43,6 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
     private static final String TAG = ProfileActivity.class.getSimpleName();
 
     private ProfileAdapter adapter;
+    private RecyclerView rvListInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +62,8 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        RecyclerView rvListInfo = (RecyclerView) findViewById(R.id.rv_list_info);
+        rvListInfo = (RecyclerView) findViewById(R.id.rv_list_info);
         rvListInfo.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ProfileAdapter(this);
-        rvListInfo.setAdapter(adapter);
     }
 
     @Override
@@ -78,9 +78,9 @@ public class ProfileActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
-            case R.id.action_edit_profile:
-                Toast.makeText(this, "Edit profile", Toast.LENGTH_SHORT).show();
-                break;
+//            case R.id.action_edit_profile:
+//                Toast.makeText(this, "Edit profile", Toast.LENGTH_SHORT).show();
+//                break;
             case R.id.action_change_avatar:
                 Crop.pickImage(this);
                 break;
@@ -94,7 +94,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-//--------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------
     // Listen for the result of the crop:
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {
@@ -132,15 +132,10 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void saveBitmapToDir(Bitmap mBitmap, String nameNewFile) {
-//        FileInputStream in = null;
-//        BufferedInputStream buf = null;
         File f = null;
         FileOutputStream fo = null;
         try {
-//            in = new FileInputStream(pathOnExStorage);
-//            buf = new BufferedInputStream(in);
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-//            Bitmap mBitmap = BitmapFactory.decodeStream(buf);
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
             // Create a new file in external storage:
             f = new File(MainActivity.PATH_TO_DIR_SAVING_IMAGE + nameNewFile + ".jpg");
@@ -157,21 +152,38 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     // ---------------------------------------------------------------------------------------------
-    public void getProfileServer(){
+    public void getProfileServer() {
         RequestServer requestServer = new RequestServer(this, Request.Method.GET, AppConfig.URL_GET_PROFILE);
         requestServer.setListener(new RequestServer.ServerListener() {
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
-                if (!error){
+                if (!error) {
                     JSONObject data = response.getJSONObject("data");
-                    String pointCount = data.getString("point_count");
-                    adapter.setCountPoint(pointCount);
-                    Log.i(TAG, "point_count = " + pointCount);
+                    Log.i(TAG, "Profile = " + data.toString());
+                    adapter = new ProfileAdapter(ProfileActivity.this, new ItemUser(data));
+                    rvListInfo.setAdapter(adapter);
                 }
             }
         });
 
         requestServer.sendRequest("get_profile");
+    }
+
+    public void updateProfile(JSONObject params) {
+        RequestServer requestServer = new RequestServer(this, Request.Method.POST, AppConfig.URL_GET_PROFILE, params);
+        requestServer.setListener(new RequestServer.ServerListener() {
+            @Override
+            public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
+                if (!error) {
+//                    Log.i(TAG, "update profile, res = " + response.toString());
+                    JSONObject data = response.getJSONObject("data");
+                    String description = data.getString("description");
+                    String favorite = data.getString("favorite");
+                    adapter.updateDataInfo(description, favorite);
+                }
+            }
+        });
+        requestServer.sendRequest("update_profile");
     }
 
     private void uploadImage(final Bitmap bmp) {
@@ -193,7 +205,7 @@ public class ProfileActivity extends AppCompatActivity {
                 //Disimissing the progress dialog
                 loading.dismiss();
 
-                if (!error){
+                if (!error) {
                     String urlAva = response.getJSONObject("data").getString("url");
 
                     //Send url avatar to handler
@@ -207,9 +219,9 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-       if (! request.sendRequest("update avatar")){
-           loading.dismiss();
-       }
+        if (!request.sendRequest("update avatar")) {
+            loading.dismiss();
+        }
     }
 
     private Handler mHandler = new Handler() {
@@ -232,7 +244,7 @@ public class ProfileActivity extends AppCompatActivity {
             sqLite.deleteUsers();
             sqLite.addUser(name, email, uid, createAt, lop, mssv, type, newAva);
 
-            adapter.updateData();
+            adapter.updateAvatar(newAva);
             //exit activity with result ok, reload avatar
             setResult(RESULT_OK);
         }
