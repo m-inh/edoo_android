@@ -28,6 +28,7 @@ import com.fries.edoo.adapter.PostDetailAdapter;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
+import com.fries.edoo.helper.SessionManager;
 import com.fries.edoo.models.ItemComment;
 import com.fries.edoo.models.ItemTimeLine;
 import com.fries.edoo.utils.CommonVLs;
@@ -110,6 +111,27 @@ public class PostDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.post_details_menu, menu);
+        MenuItem mnDeletePost = menu.findItem(R.id.action_delete_post);
+        HashMap<String, String> user = new SQLiteHandler(this).getUserDetails();
+        boolean userIsTeacher = user.get("type").equalsIgnoreCase("teacher");
+        boolean authorIsTeacher = itemTimeline.getTypeAuthor().equalsIgnoreCase("teacher");
+        boolean userIsAuthor = user.get("uid").equalsIgnoreCase(itemTimeline.getIdAuthor());
+        boolean userIsOtherStudent = !userIsTeacher && !userIsAuthor;
+
+        // Permission of User
+        if (userIsTeacher) {
+            mnDeletePost.setVisible(true);
+        }
+        if (!userIsTeacher && authorIsTeacher) {
+            mnDeletePost.setVisible(false);
+        }
+        if (userIsAuthor) {
+            mnDeletePost.setVisible(true);
+        }
+        if (userIsOtherStudent) {
+            mnDeletePost.setVisible(false);
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -120,7 +142,6 @@ public class PostDetailActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.action_delete_post:
-//                Toast.makeText(this, "Delete post: Coming soon", Toast.LENGTH_SHORT).show();
                 showDialogDeletePost();
                 break;
             case R.id.action_edit_post:
@@ -142,7 +163,7 @@ public class PostDetailActivity extends AppCompatActivity {
         toolbar.setVisibility(View.VISIBLE);
     }
 
-    private void showDialogDeletePost(){
+    private void showDialogDeletePost() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getResources().getString(R.string.warn));
         builder.setMessage(getResources().getString(R.string.txt_question_delete_post));
@@ -298,7 +319,7 @@ public class PostDetailActivity extends AppCompatActivity {
 //    };
 
     // -------------------------------------------
-    private void requestDeletePost(){
+    private void requestDeletePost() {
         JSONObject params = new JSONObject();
         try {
             params.put("post_id", itemTimeline.getIdPost());
@@ -309,7 +330,7 @@ public class PostDetailActivity extends AppCompatActivity {
         requestServer.setListener(new RequestServer.ServerListener() {
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
-                if (!error){
+                if (!error) {
                     Log.i(TAG, "Delete post response: " + response.toString());
                     setResult(RESULT_DELETE_COMPLETE);
                     PostDetailActivity.this.finish();
