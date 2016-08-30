@@ -123,8 +123,6 @@ public class ItemCommentDetailHolder extends AbstractHolder {
 
         boolean permissionDeleteComment = PermissonManager.pDeleteComment(
                 itemTimeline.getIdAuthor(),
-                itemTimeline.getTypeAuthor(),
-                itemComment.getIdAuthorComment(),
                 "student",  /*itemComment.getTypeAuthorComment*/
                 userId,
                 userType

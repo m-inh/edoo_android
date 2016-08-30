@@ -23,7 +23,7 @@ public class PermissonManager {
         return false;
     }
 
-    public static boolean pDeleteComment(String authorPostId, String authorCommentId, String authorCommentType, String userId, String userType){
+    public static boolean pDeleteComment(String authorPostId, String authorCommentType, String userId, String userType){
         boolean userIsTeacher = userType.equalsIgnoreCase("teacher");
         boolean authorCommentIsTeacher = authorCommentType.equalsIgnoreCase("teacher");
         boolean userIsAuthorPost = userId.equalsIgnoreCase(authorPostId);
