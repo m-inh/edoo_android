@@ -15,5 +15,5 @@
         android:showAsAction="never"
         android:title="@string/txt_edit_avatar" />
 
-    <item android:title="Đổi ảnh bìa" />
+    <!--<item android:title="Đổi ảnh bìa" />-->
 </menu>

@@ -3,10 +3,12 @@ package com.fries.edoo.holder;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.MenuItem;
@@ -161,7 +163,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
                         postSolve(itemComment.getIdComment(), false);
                         break;
                     case R.id.action_delete_comment:
-                        requestDeleteComment();
+                        showDialogDeleteComment();
                         break;
                 }
                 return true;
@@ -175,6 +177,19 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         else ivCommentSolved.setVisibility(View.GONE);
     }
 
+    private void showDialogDeleteComment(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle(mContext.getResources().getString(R.string.warn));
+        builder.setMessage(mContext.getResources().getString(R.string.txt_question_delete_post));
+        builder.setPositiveButton(mContext.getResources().getString(R.string.txt_yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                requestDeleteComment();
+            }
+        });
+        builder.setNegativeButton(mContext.getResources().getString(R.string.txt_cancel), null);
+        builder.show();
+    }
 
     /**
      * Post to server: Solved - Not Solved
@@ -218,7 +233,6 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         JSONObject params = new JSONObject();
         try {
             params.put("comment_id", idComment);
-            Log.i(TAG, "params = " + params.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

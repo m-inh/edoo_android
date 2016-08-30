@@ -173,12 +173,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
         @Override
         public void onClick(View view) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.DialogInput);
             builder.setTitle(hint.getText());
             View layout = LayoutInflater.from(mContext).inflate(R.layout.dialog_edit_info_profile, null);
             final EditText edtContent = (EditText) layout.findViewById(R.id.edt_info_profile);
             edtContent.setHint(hint.getText());
             edtContent.setText(content.getText());
+            edtContent.setSelection(content.getText().length());
             builder.setView(layout);
             builder.setCancelable(false);
             builder.setPositiveButton("Cập nhật", new DialogInterface.OnClickListener() {

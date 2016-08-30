@@ -34,5 +34,9 @@
         <item name="android:windowSoftInputMode">stateVisible</item>
     </style>
 
+    <style name="DialogInput" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:windowSoftInputMode">stateVisible</item>
+    </style>
+
 
 </resources>

@@ -15,13 +15,17 @@
         android:showAsAction="collapseActionView"
         android:title="@string/txt_delete_comment" />
 
-    <item
-        android:showAsAction="collapseActionView"
-        android:title="...Report..." />
+    <!--<item-->
+        <!--android:showAsAction="collapseActionView"-->
+        <!--android:title="...Edit..." />-->
+
+    <!--<item-->
+        <!--android:showAsAction="collapseActionView"-->
+        <!--android:title="...Report..." />-->
 
 
-    <item
-        android:showAsAction="collapseActionView"
-        android:title="...Hide..." />
+    <!--<item-->
+        <!--android:showAsAction="collapseActionView"-->
+        <!--android:title="...Hide..." />-->
 
 </menu>
