@@ -5,7 +5,7 @@ package com.fries.edoo.utils;
  */
 public class PermissonManager {
 
-    public static boolean pDeletePost(String authorPostId, String authorPostType, String userId, String userType){
+    public static boolean pDeletePost(String authorPostId, String authorPostType, String userId, String userType) {
         boolean userIsTeacher = userType.equalsIgnoreCase("teacher");
         boolean authorIsTeacher = authorPostType.equalsIgnoreCase("teacher");
         boolean userIsAuthor = userId.equalsIgnoreCase(authorPostId);
@@ -18,24 +18,49 @@ public class PermissonManager {
             return false;
         }
         if (userIsAuthor) {
-           return true;
+            return true;
         }
         return false;
     }
 
-    public static boolean pDeleteComment(String authorPostId, String authorCommentType, String userId, String userType){
+    public static boolean pDeleteComment(String authorPostId, String authorCommentType, String userId, String userType) {
         boolean userIsTeacher = userType.equalsIgnoreCase("teacher");
         boolean authorCommentIsTeacher = authorCommentType.equalsIgnoreCase("teacher");
         boolean userIsAuthorPost = userId.equalsIgnoreCase(authorPostId);
+
+        if (userIsTeacher) {
+            return true;
+        }
+
+        // User is student
+        if (userIsAuthorPost && !authorCommentIsTeacher) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean pSolveComment(String authorPostId, String userId, String userType, String authorCommentId) {
+        boolean userIsTeacher = userType.equalsIgnoreCase("teacher");
+        boolean userIsAuthorPost = userId.equalsIgnoreCase(authorPostId);
+        boolean userIsAuthorComment = userId.equalsIgnoreCase(authorCommentId);
+        boolean authorCommentIsAuthorPost = authorCommentId.equalsIgnoreCase(authorPostId);
+
+        if (userIsAuthorComment){
+            return false;
+        }
+
+        if (authorCommentIsAuthorPost) {
+            return false;
+        }
+
+        if (userIsAuthorPost) {
+            return true;
+        }
 
         if (userIsTeacher){
             return true;
         }
 
-        // User is student
-        if (userIsAuthorPost && !authorCommentIsTeacher){
-            return true;
-        }
         return false;
     }
 

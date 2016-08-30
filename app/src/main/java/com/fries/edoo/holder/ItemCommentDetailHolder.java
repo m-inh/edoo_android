@@ -130,17 +130,19 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         itDeleteComment.setVisible(permissionDeleteComment);
 
 
-        if (userId.equalsIgnoreCase(itemComment.getIdAuthorComment())) { // If userId == IdAuthor -> Hide Solved, NotSolved
+        boolean permissionSolveComment = PermissonManager.pSolveComment(
+                itemTimeline.getIdAuthor(),
+                userId,
+                userType,
+                itemComment.getIdAuthorComment()
+        );
+
+        if (permissionSolveComment){
+            itSolve.setVisible(!itemComment.isSolved());
+            itNotSolve.setVisible(itemComment.isSolved());
+        } else {
             itSolve.setVisible(false);
             itNotSolve.setVisible(false);
-        } else {
-            if (itemComment.isSolved()) {   // If comment is solved -> show NotSolved
-                itSolve.setVisible(false);
-                itNotSolve.setVisible(true);
-            } else {                        // // If comment is not solved -> show Solved
-                itSolve.setVisible(true);
-                itNotSolve.setVisible(false);
-            }
         }
 
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
