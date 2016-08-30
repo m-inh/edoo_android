@@ -44,17 +44,17 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/iv_type_post_detail"
-                    android:layout_width="@dimen/i_icon_size"
-                    android:layout_height="@dimen/i_icon_size"
-                    android:src="@drawable/ic_type_post_question" />
-
-                <ImageView
                     android:id="@+id/iv_bookmark"
                     android:layout_width="@dimen/i_icon_size"
                     android:layout_height="@dimen/i_icon_size"
-                    android:layout_gravity="top|right"
                     android:src="@drawable/ic_bookmark_solved" />
+
+                <ImageView
+                    android:id="@+id/iv_type_post_detail"
+                    android:layout_width="@dimen/i_icon_size"
+                    android:layout_height="@dimen/i_icon_size"
+                    android:layout_gravity="top|right"
+                    android:src="@drawable/ic_type_post_question" />
 
 
             </LinearLayout>
