@@ -4,31 +4,23 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.fries.edoo.R;
 import com.fries.edoo.activities.MainActivity;
 import com.fries.edoo.adapter.TableSubjectAdapter;
 import com.fries.edoo.app.AppConfig;
-import com.fries.edoo.app.AppController;
 import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
-import com.fries.edoo.helper.SessionManager;
+import com.fries.edoo.helper.PrefManager;
 import com.fries.edoo.models.ItemLop;
 import com.fries.edoo.models.ItemLopMonHoc;
 
@@ -51,7 +43,7 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
 
     private TableSubjectAdapter adapter;
 
-    private SessionManager sessionMgr;
+    private PrefManager sessionMgr;
     private SQLiteHandler sqlite;
 
     @Nullable
@@ -62,7 +54,7 @@ public class ThoiKhoaBieuFragment extends Fragment implements AdapterView.OnItem
 
         initViews();
 
-        sessionMgr = new SessionManager(mContext);
+        sessionMgr = new PrefManager(mContext);
         sqlite = new SQLiteHandler(mContext);
 
         listSubject = new ArrayList<>();

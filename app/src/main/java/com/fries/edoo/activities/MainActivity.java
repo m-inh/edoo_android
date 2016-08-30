@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -28,7 +26,7 @@ import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.fragment.LopMonHocFragment;
 import com.fries.edoo.fragment.ThoiKhoaBieuFragment;
 import com.fries.edoo.helper.SQLiteHandler;
-import com.fries.edoo.helper.SessionManager;
+import com.fries.edoo.helper.PrefManager;
 import com.fries.edoo.models.ItemLop;
 import com.squareup.picasso.Picasso;
 
@@ -54,7 +52,7 @@ public class MainActivity extends AppCompatActivity
 //    private NhomFragment nhomFragment = new NhomFragment();
     private ThoiKhoaBieuFragment thoiKhoaBieuFragment = new ThoiKhoaBieuFragment();
 
-    private SessionManager session;
+    private PrefManager session;
     private SQLiteHandler sqlite;
 
     private TextView tvName, tvEmail;
@@ -80,7 +78,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         //session
-        session = new SessionManager(getApplicationContext());
+        session = new PrefManager(getApplicationContext());
 
         //lay co so du lieu
         sqlite = new SQLiteHandler(getApplicationContext());
@@ -242,6 +240,10 @@ public class MainActivity extends AppCompatActivity
 //                switchToMenu(LOP_MENU_INT);
 //                toolbar.setTitle("Cài đặt");
 //                break;
+            case R.id.nav_introduction:
+                Intent intro = new Intent(this, IntroSliderActivity.class);
+                startActivity(intro);
+                break;
             case R.id.nav_share:
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);

@@ -13,7 +13,7 @@
 //import com.fries.edoo.R;
 //import com.fries.edoo.app.AppConfig;
 //import com.fries.edoo.communication.RequestServer;
-//import com.fries.edoo.helper.SessionManager;
+//import com.fries.edoo.helper.PrefManager;
 //
 //import org.json.JSONException;
 //import org.json.JSONObject;
@@ -27,7 +27,7 @@
 //    private EditText inputPassword;
 ////    private EditText inputRePassword;
 //    private ProgressDialog pDialog;
-//    private SessionManager session;
+//    private PrefManager session;
 //
 //    @Override
 //    public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@
 //        pDialog.setCancelable(false);
 //
 //        // Session manager
-//        session = new SessionManager(getApplicationContext());
+//        session = new PrefManager(getApplicationContext());
 //
 //        // Check if user is already logged in or not
 //        if (session.isLoggedIn()) {

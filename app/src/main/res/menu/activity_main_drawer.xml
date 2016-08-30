@@ -68,6 +68,11 @@
                     <!--android:icon="@mipmap/ic_setting"-->
                     <!--android:title="@string/setting" />-->
                 <item
+                    android:id="@+id/nav_introduction"
+                    android:checkable="false"
+                    android:icon="@android:drawable/ic_menu_info_details"
+                    android:title="@string/introduction" />
+                <item
                     android:id="@+id/nav_logout"
                     android:icon="@mipmap/ic_logout"
                     android:title="@string/logout" />

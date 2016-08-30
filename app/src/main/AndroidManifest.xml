@@ -34,6 +34,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activities.IntroSliderActivity"
+            android:label="Introduction"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activities.TimelineActivity"
             android:label="@string/timeline_activity"

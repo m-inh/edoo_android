@@ -10,7 +10,7 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.fries.edoo.app.AppController;
-import com.fries.edoo.helper.SessionManager;
+import com.fries.edoo.helper.PrefManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,11 +30,11 @@ public class MultipartRequest {
     private String mimeType;
     private Context mContext;
 
-    private SessionManager session;
+    private PrefManager session;
 
     // Request: Upload data (JSONObject)
     public MultipartRequest(Context context, int method, String url, byte[] file, String filename, String mimeType) {
-        session = new SessionManager(context);
+        session = new PrefManager(context);
         this.mContext = context;
         this.method = method;
         this.url = url;

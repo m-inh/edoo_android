@@ -30,6 +30,7 @@
     <string name="taikhoan">Tài khoản</string>
     <string name="share">Chia sẻ</string>
     <string name="setting">Cài đặt</string>
+    <string name="introduction">Giới thiệu</string>
     <string name="logout">Đăng xuất</string>
     <string name="nhom">Nhóm</string>
     <string name="tkb">Thời khoá biểu</string>
@@ -81,7 +82,6 @@
     <string name="warn_exit">Thoát và xóa bài viết?</string>
     <string name="post_incognito">Đăng ở chế độ ẩn danh</string>
     <string name="anonymous">Anonymous</string>
-    <string name="next">Kế tiếp</string>
 
 
     <string name="txt_gallery">Gallery</string>
@@ -105,5 +105,21 @@
     <string name="txt_yes">Đồng ý</string>
     <string name="txt_delete_comment">Xóa comment</string>
 
+    <!--IntroSliderActivity-->
+    <string name="next">Tiếp theo</string>
+    <string name="txt_skip">Đóng</string>
+    <string name="txt_start">Bắt đầu</string>
 
+    <string name="txt_intro_slide_1_title">@string/app_name</string>
+    <string name="txt_intro_slide_1_content">Một ứng dụng dành cho các trường đại học, cao đẳng đào tạo theo mô hình tín chỉ.</string>
+    <string name="txt_intro_slide_2_title">Thời khóa biểu</string>
+    <string name="txt_intro_slide_2_content">Hiển thị và cập nhật thời khóa biểu theo lịch học đã đăng kí theo từng học kỳ một cách rõ ràng!</string>
+    <string name="txt_intro_slide_3_title">Kênh trao đổi tập trung</string>
+    <string name="txt_intro_slide_3_content">Mỗi lớp môn học đều có một kênh trao đổi riêng, học tập theo giáo trình học trên lớp!</string>
+    <string name="txt_intro_slide_4_title">Hỏi đáp nhanh chóng</string>
+    <string name="txt_intro_slide_4_content">Bạn và mọi người có thể đăng bài và trả lời bài đăng, giúp đỡ nhau trong học tập!</string>
+    <string name="txt_intro_slide_5_title">Thông tin liên tục</string>
+    <string name="txt_intro_slide_5_content">Cập nhật thông báo ngay lập tức, bạn sẽ không bị bỏ lỡ một thông tin nào!</string>
+    <string name="txt_intro_slide_6_title">Điểm đánh giá</string>
+    <string name="txt_intro_slide_6_content">Hoạt động của bạn được ghi nhận, tính điểm và đánh giá công bằng nhất!</string>
 </resources>

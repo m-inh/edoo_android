@@ -3,7 +3,6 @@ package com.fries.edoo.communication;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -11,7 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.fries.edoo.app.AppController;
-import com.fries.edoo.helper.SessionManager;
+import com.fries.edoo.helper.PrefManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,11 +29,11 @@ public class RequestServer {
     private JSONObject jsonReq;
     private Context mContext;
 
-    private SessionManager session;
+    private PrefManager session;
 
     // Request: Not upload data (JSONObject)
     public RequestServer(Context context, int method, String url) {
-        session = new SessionManager(context);
+        session = new PrefManager(context);
         this.mContext = context;
         this.method = method;
         this.url = url;
@@ -45,7 +44,7 @@ public class RequestServer {
 
     // Request: Upload data (JSONObject)
     public RequestServer(Context context, int method, String url, JSONObject jsonReq) {
-        session = new SessionManager(context);
+        session = new PrefManager(context);
         this.mContext = context;
         this.method = method;
         this.url = url;

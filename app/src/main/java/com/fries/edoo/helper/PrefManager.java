@@ -5,9 +5,9 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
 
-public class SessionManager {
+public class PrefManager {
 	// LogCat tag
-	private static String TAG = "SessionManager";
+	private static String TAG = PrefManager.class.getSimpleName();
 
 	// Shared Preferences
 	SharedPreferences pref;
@@ -25,7 +25,7 @@ public class SessionManager {
 	private static final String KEY_TOKEN_LOG_IN = "token_login";
 	private static final String KEY_IS_SAVE_CLASS = "is_save_class";
 
-	public SessionManager(Context context) {
+	public PrefManager(Context context) {
 		this._context = context;
 		pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
 		editor = pref.edit();

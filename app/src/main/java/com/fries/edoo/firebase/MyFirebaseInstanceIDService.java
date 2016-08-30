@@ -5,7 +5,7 @@
 //import com.android.volley.Request;
 //import com.fries.edoo.app.AppConfig;
 //import com.fries.edoo.communication.RequestServer;
-//import com.fries.edoo.helper.SessionManager;
+//import com.fries.edoo.helper.PrefManager;
 //import com.google.firebase.iid.FirebaseInstanceId;
 //import com.google.firebase.iid.FirebaseInstanceIdService;
 //
@@ -17,7 +17,7 @@
 //
 //    private static final String TAG = "MyFirebaseIIDService";
 //
-//    private SessionManager session;
+//    private PrefManager session;
 //
 //    /**
 //     * Called if InstanceID token is updated. This may occur if the security of
@@ -29,7 +29,7 @@
 //        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 //        Log.d(TAG, "Refreshed token: " + refreshedToken);
 //
-//        session = new SessionManager(getApplicationContext());
+//        session = new PrefManager(getApplicationContext());
 //
 //        if (session.isLoggedIn()){
 //            sendRegistrationToServer(refreshedToken);

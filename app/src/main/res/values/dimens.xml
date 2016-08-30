@@ -69,5 +69,13 @@
     <dimen name="margin_item_timetable">10dp</dimen>
     <dimen name="d_height">45dp</dimen>
 
+    <!--IntroSlide-->
+    <dimen name="img_width_height">120dp</dimen>
+    <dimen name="desc_padding">40dp</dimen>
+    <dimen name="slide_desc">16dp</dimen>
+    <dimen name="dots_height">30dp</dimen>
+    <dimen name="dots_margin_bottom">20dp</dimen>
+
+
 
 </resources>

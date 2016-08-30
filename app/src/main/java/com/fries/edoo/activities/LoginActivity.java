@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,13 +15,11 @@ import com.fries.edoo.R;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
-import com.fries.edoo.helper.SessionManager;
+import com.fries.edoo.helper.PrefManager;
 import com.fries.edoo.utils.CommonVLs;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
 
 public class LoginActivity extends Activity {
     private static final String TAG = LoginActivity.class.getSimpleName();
@@ -32,7 +29,7 @@ public class LoginActivity extends Activity {
     private EditText inputEmail;
     private EditText inputPassword;
     private ProgressDialog pDialog;
-    private SessionManager session;
+    private PrefManager session;
     private SQLiteHandler db;
 
     @Override
@@ -54,7 +51,7 @@ public class LoginActivity extends Activity {
         db = new SQLiteHandler(getApplicationContext());
 
         // Session manager
-        session = new SessionManager(getApplicationContext());
+        session = new PrefManager(getApplicationContext());
 
         // Check if user is already logged in or not
         if (session.isLoggedIn()) {
