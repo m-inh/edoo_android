@@ -9,33 +9,38 @@ public class PermissonManager {
         boolean userIsTeacher = userType.equalsIgnoreCase("teacher");
         boolean authorIsTeacher = authorPostType.equalsIgnoreCase("teacher");
         boolean userIsAuthor = userId.equalsIgnoreCase(authorPostId);
-        if (userIsTeacher) {
-            return true;
-        }
+//        if (userIsTeacher) {
+//            return true;
+//        }
 
         // User is Student ...
-        if (authorIsTeacher) {
-            return false;
-        }
+//        if (authorIsTeacher) {
+//            return false;
+//        }
         if (userIsAuthor) {
             return true;
         }
         return false;
     }
 
-    public static boolean pDeleteComment(String authorPostId, String authorCommentType, String userId, String userType) {
+    public static boolean pDeleteComment(String authorPostId, String authorCommentType, String authorCommentId, String userId, String userType) {
         boolean userIsTeacher = userType.equalsIgnoreCase("teacher");
         boolean authorCommentIsTeacher = authorCommentType.equalsIgnoreCase("teacher");
         boolean userIsAuthorPost = userId.equalsIgnoreCase(authorPostId);
+        boolean userIsAuthorComment = userId.equalsIgnoreCase(authorCommentId);
 
-        if (userIsTeacher) {
+        if (userIsAuthorComment) {
             return true;
         }
 
-        // User is student
-        if (userIsAuthorPost && !authorCommentIsTeacher) {
-            return true;
-        }
+//        if (userIsTeacher) {
+//            return true;
+//        }
+//
+//        // User is student
+//        if (userIsAuthorPost && !authorCommentIsTeacher) {
+//            return true;
+//        }
         return false;
     }
 
