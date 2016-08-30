@@ -112,14 +112,15 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         });
     }
 
-    private void showMenuComment(String userId){
+    private void showMenuComment(String userId) {
         PopupMenu menu = new PopupMenu(mContext, ivCommentMenu);
         menu.getMenuInflater().inflate(R.menu.comment_menu, menu.getMenu());
 
         MenuItem itSolve = menu.getMenu().findItem(R.id.action_solve_comment);
         MenuItem itNotSolve = menu.getMenu().findItem(R.id.action_not_solve_comment);
+        MenuItem itDeleteComment = menu.getMenu().findItem(R.id.action_delete_comment);
 
-        if (userId.equalsIgnoreCase(itemComment.getIdAuthorComment())){ // If userId == IdAuthor -> Hide Solved, NotSolved
+        if (userId.equalsIgnoreCase(itemComment.getIdAuthorComment())) { // If userId == IdAuthor -> Hide Solved, NotSolved
             itSolve.setVisible(false);
             itNotSolve.setVisible(false);
         } else {
@@ -138,7 +139,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
                 switch (item.getItemId()) {
                     case R.id.action_solve_comment:
                         Toast.makeText(mContext, "Solved comment", Toast.LENGTH_SHORT).show();
-                        for (int i=0; i<itemTimeline.getItemComments().size(); i++){
+                        for (int i = 0; i < itemTimeline.getItemComments().size(); i++) {
                             itemTimeline.getItemComments().get(i).setIsSolved(false);
                         }
                         postSolve(itemComment.getIdComment(), true);
@@ -147,6 +148,9 @@ public class ItemCommentDetailHolder extends AbstractHolder {
                         Toast.makeText(mContext, "Remove Solved comment", Toast.LENGTH_SHORT).show();
                         postSolve(itemComment.getIdComment(), false);
                         break;
+                    case R.id.action_delete_comment:
+                        requestDeleteComment();
+                        break;
                 }
                 return true;
             }
@@ -154,7 +158,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         menu.show();
     }
 
-    public void updateIvIsSolved(){
+    public void updateIvIsSolved() {
         if (itemComment.isSolved()) ivCommentSolved.setVisibility(View.VISIBLE);
         else ivCommentSolved.setVisibility(View.GONE);
     }
@@ -162,7 +166,8 @@ public class ItemCommentDetailHolder extends AbstractHolder {
 
     /**
      * Post to server: Solved - Not Solved
-     * @param idCmt id of Comment
+     *
+     * @param idCmt    id of Comment
      * @param isSolved true: Solved, false: Not Solved
      */
     public void postSolve(final String idCmt, final boolean isSolved) {
@@ -182,19 +187,12 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         requestServer.setListener(new RequestServer.ServerListener() {
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
-                if (!error){
+                if (!error) {
                     Log.d(TAG, response.toString());
 
                     itemTimeline.setSolve(isSolved);
                     if (isSolved) postDetailAdapter.setSolveCmt(idCmt);
                     else postDetailAdapter.setUnsolveCmt();
-
-                    Intent mIntent = new Intent();
-                    Bundle b = new Bundle();
-                    b.putSerializable("item_timeline", itemTimeline);
-                    mIntent.putExtras(b);
-                    PostDetailActivity postDetailActivity = (PostDetailActivity) mContext;
-                    postDetailActivity.setResult(Activity.RESULT_OK, mIntent);
                 }
                 Log.d(TAG, message);
             }
@@ -203,15 +201,41 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         requestServer.sendRequest("Post solve_unsolve");
     }
 
-    private void setIsSolved(boolean isSolved){
+    private void requestDeleteComment() {
+        final String idComment = itemComment.getIdComment();
+        JSONObject params = new JSONObject();
+        try {
+            params.put("comment_id", idComment);
+            Log.i(TAG, "params = " + params.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestServer requestServer = new RequestServer(mContext, Request.Method.POST, AppConfig.URL_DELETE_COMMENT, params);
+        requestServer.setListener(new RequestServer.ServerListener() {
+            @Override
+            public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
+                if (!error) {
+                    JSONObject data = response.getJSONObject("data");
+                    Log.i(TAG, "delete comment response = " + data.toString());
+
+                    itemTimeline.deleteComment(idComment);
+                    itemTimeline.setCommentCount(itemTimeline.getCommentCount()-1);
+                    postDetailAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+        requestServer.sendRequest("delete_comment");
+    }
+
+    private void setIsSolved(boolean isSolved) {
         this.itemComment.setIsSolved(isSolved);
     }
 
-    public ImageView getIvCommentSolved(){
+    public ImageView getIvCommentSolved() {
         return ivCommentSolved;
     }
 
-    public ImageView getIvCommentMenu(){
+    public ImageView getIvCommentMenu() {
         return ivCommentMenu;
     }
 

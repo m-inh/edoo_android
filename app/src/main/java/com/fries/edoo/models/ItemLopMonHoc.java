@@ -77,7 +77,7 @@ public class ItemLopMonHoc {
 
     /**
      * Create ItemLopMonHoc by HashMap, which is init at SQLiteHandler
-     * @param item HashMap
+     * @param lesson HashMap
      */
     public ItemLopMonHoc(HashMap<String, String> lesson) {
         this.id = Integer.parseInt(lesson.get("id"));

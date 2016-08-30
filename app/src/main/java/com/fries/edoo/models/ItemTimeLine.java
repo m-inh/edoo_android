@@ -92,6 +92,15 @@ public class ItemTimeLine extends ItemBase implements Serializable {
         this.itemComments = itemComments;
     }
 
+    public void deleteComment(String idComment){
+        for (int i=0; i<itemComments.size(); i++){
+            if (idComment.equalsIgnoreCase(itemComments.get(i).getIdComment())){
+                itemComments.remove(i);
+                return;
+            }
+        }
+    }
+
     public String getTitle() {
         return title;
     }

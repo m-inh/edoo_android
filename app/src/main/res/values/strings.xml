@@ -103,6 +103,7 @@
     <string name="txt_favorite">Sở thích</string>
     <string name="txt_question_delete_post">Thao tác xóa không thể hoàn tác. Bạn có muốn tiếp tục?</string>
     <string name="txt_yes">Đồng ý</string>
+    <string name="txt_delete_comment">Xóa comment</string>
 
 
 </resources>

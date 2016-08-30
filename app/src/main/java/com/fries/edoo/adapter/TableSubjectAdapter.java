@@ -120,9 +120,20 @@ public class TableSubjectAdapter extends BaseAdapter {
 
         TextView txtName = (TextView) view.findViewById(R.id.txtItemNameSubject);
         txtName.setText(item.getAcronymOfName());
-        txtName.setBackgroundColor(mContext.getResources().getColor(COLOR_ITEM[listSubjectInTable[position]]));
+        txtName.setBackgroundColor(mContext.getResources().getColor(colorForItem(position)));
 
         return view;
+    }
+
+    private int colorForItem(int position){
+        int indexLesson = listSubjectInTable[position];
+
+        for (int i=0; i<listSubject.size(); i++){
+            if (listSubject.get(indexLesson).getCode().equalsIgnoreCase(listSubject.get(i).getCode())){
+                return COLOR_ITEM[i];
+            }
+        }
+        return COLOR_ITEM[indexLesson];
     }
 
     //---------------------------------------------------------------------------------------

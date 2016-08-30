@@ -6,6 +6,8 @@ public class AppConfig {
 	//Server vote comment
 	public static final String URL_SOLVE_COMMENT = URL_HOST + "/solve";
 	public static final String URL_UNSOLVE_COMMENT = URL_HOST + "/unsolve";
+	public static final String URL_DELETE_COMMENT = URL_HOST + "/deletecmt";
+
 	//Server post comment
 	public static final String URL_POST_COMMENT = URL_HOST + "/cmt";
 	//Server get post and comment
