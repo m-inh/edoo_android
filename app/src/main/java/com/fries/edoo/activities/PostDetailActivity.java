@@ -215,7 +215,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
                         ItemComment itemComment = new ItemComment(idComment,
                                 idAuthorComment, nameAuthorComment,
-                                avarAuthorComment, contentComment, isSolve);
+                                avarAuthorComment, contentComment, isSolve, typeAuthorComment);
 
                         itemComment.setCreateAt(CommonVLs.convertDate(timeCreateAtCmt));
 
@@ -257,8 +257,9 @@ public class PostDetailActivity extends AppCompatActivity {
                     String uid = user.get("uid");
                     String name = user.get("name");
                     String ava = user.get("avatar");
+                    String capability = user.get("type");
                     // Thay doi tren Local
-                    itemTimeline.getItemComments().add(new ItemComment(idCmt, uid, name, ava, content, false));
+                    itemTimeline.getItemComments().add(new ItemComment(idCmt, uid, name, ava, content, false, capability));
                     if (user.get("type").equalsIgnoreCase("teacher")) {
                         itemTimeline.setIsConfirmByTeacher(true);
                     }
