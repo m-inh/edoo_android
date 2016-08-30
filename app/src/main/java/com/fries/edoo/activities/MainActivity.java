@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity
         requestServer.setListener(new RequestServer.ServerListener() {
             @Override
             public void onReceive(boolean error, JSONObject response, String message) {
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
             }
         });
         requestServer.sendRequest("req_log_out");

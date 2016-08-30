@@ -160,7 +160,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private void showDialogDeletePost() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getResources().getString(R.string.warn));
+        builder.setTitle("Xóa bài đăng");
         builder.setMessage(getResources().getString(R.string.txt_question_delete_post));
         builder.setPositiveButton(getResources().getString(R.string.txt_yes), new DialogInterface.OnClickListener() {
             @Override

@@ -86,7 +86,7 @@ public abstract class LopFragment extends Fragment {
                         itemArr.add(new ItemLop(nameLop, id, idLop, nameGiangVien, soSV));
                     }
 
-                    Toast.makeText(mContext, "Lấy dữ liệu môn học thành công!", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(mContext, "Lấy dữ liệu môn học thành công!", Toast.LENGTH_LONG).show();
                     Message msg = new Message();
                     msg.setTarget(mHandler);
                     msg.sendToTarget();

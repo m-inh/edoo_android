@@ -180,14 +180,14 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
             edtContent.setHint(hint.getText());
             edtContent.setText(content.getText());
             builder.setView(layout);
-
-            builder.setPositiveButton(mContext.getResources().getString(R.string.txt_save), new DialogInterface.OnClickListener() {
+            builder.setCancelable(false);
+            builder.setPositiveButton("Cập nhật", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     updateInfo(edtContent.getText().toString());
                 }
             });
-            builder.setNegativeButton(mContext.getResources().getString(R.string.txt_cancel), null);
+            builder.setNegativeButton("Hủy", null);
 
             builder.show();
         }

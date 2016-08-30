@@ -145,7 +145,7 @@
         android:padding="@dimen/line_text_margin"
         android:text="Vào lớp"
         android:textAllCaps="true"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorAccent"
         android:textSize="@dimen/t_size_button"
         android:textStyle="bold" />
 
