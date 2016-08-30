@@ -30,6 +30,7 @@ import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.models.ItemComment;
 import com.fries.edoo.models.ItemTimeLine;
+import com.fries.edoo.utils.PermissonManager;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -89,7 +90,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         return itemComment;
     }
 
-    public void setItemComment(final ItemComment itemComment, final String userId) {
+    public void setItemComment(final ItemComment itemComment, final String userId, final String userType) {
         this.itemComment = itemComment;
 
         tvAuthorName.setText(itemComment.getName());
@@ -107,18 +108,29 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         ivCommentMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showMenuComment(userId);
+                showMenuComment(userId, userType);
             }
         });
     }
 
-    private void showMenuComment(String userId) {
+    private void showMenuComment(String userId, String userType) {
         PopupMenu menu = new PopupMenu(mContext, ivCommentMenu);
         menu.getMenuInflater().inflate(R.menu.comment_menu, menu.getMenu());
 
         MenuItem itSolve = menu.getMenu().findItem(R.id.action_solve_comment);
         MenuItem itNotSolve = menu.getMenu().findItem(R.id.action_not_solve_comment);
         MenuItem itDeleteComment = menu.getMenu().findItem(R.id.action_delete_comment);
+
+        boolean permissionDeleteComment = PermissonManager.pDeleteComment(
+                itemTimeline.getIdAuthor(),
+                itemTimeline.getTypeAuthor(),
+                itemComment.getIdAuthorComment(),
+                "student",  /*itemComment.getTypeAuthorComment*/
+                userId,
+                userType
+        );
+        itDeleteComment.setVisible(permissionDeleteComment);
+
 
         if (userId.equalsIgnoreCase(itemComment.getIdAuthorComment())) { // If userId == IdAuthor -> Hide Solved, NotSolved
             itSolve.setVisible(false);

@@ -61,7 +61,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
         if (position != 0) {
             final ItemCommentDetailHolder commentHolder = (ItemCommentDetailHolder) holder;
             final ItemComment itemComment = itemTimeline.getItemComments().get(position - 1);
-            commentHolder.setItemComment(itemComment, user.get("uid"));
+            commentHolder.setItemComment(itemComment, user.get("uid"), user.get("type"));
 
             commentHolder.updateIvIsSolved();
 
