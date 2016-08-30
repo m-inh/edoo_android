@@ -181,7 +181,7 @@ public class LoginActivity extends Activity {
                     // Temporary data
                     db.addUser(name, email, uid, "", lop, mssv, type, ava);
 
-                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                     // Launch main activity
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
