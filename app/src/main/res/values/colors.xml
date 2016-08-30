@@ -32,9 +32,9 @@
     <color name="bg_item_subject_3">#98CB02</color>
     <color name="bg_item_subject_4">#E6EE9C</color>
     <color name="bg_item_subject_5">#FEF102</color>
-    <color name="bg_item_subject_6">#FF7F26</color>
+    <color name="bg_item_subject_8">#FF7F26</color>
     <color name="bg_item_subject_7">#FFC80F</color>
-    <color name="bg_item_subject_8">#A5D6A7</color>
+    <color name="bg_item_subject_6">#A5D6A7</color>
     <color name="bg_item_subject_9">#FEAEC9</color>
     <color name="bg_item_subject_10">#E0F2F1</color>
     <color name="bg_empty_post">#f0f0f0</color>
