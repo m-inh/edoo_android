@@ -16,14 +16,16 @@ public class ItemComment implements Serializable {
     private String idComment;
     private String idAuthorComment;
     private String createAt;
+    private String capability;
 
-    public ItemComment(String idComment, String idAuthorComment, String name, String avaUrl, String content, boolean isVote) {
+    public ItemComment(String idComment, String idAuthorComment, String name, String avaUrl, String content, boolean isVote, String capability) {
         this.name = name;
         this.avaUrl = avaUrl;
         this.content = content;
         this.isSolved = isVote;
         this.idComment = idComment;
         this.idAuthorComment = idAuthorComment;
+        this.capability = capability;
     }
 
     public String getName() {
@@ -60,5 +62,9 @@ public class ItemComment implements Serializable {
 
     public void setCreateAt(String createAt) {
         this.createAt = createAt;
+    }
+
+    public String getCapability(){
+        return capability;
     }
 }

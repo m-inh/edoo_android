@@ -32,6 +32,7 @@ import com.fries.edoo.helper.SessionManager;
 import com.fries.edoo.models.ItemComment;
 import com.fries.edoo.models.ItemTimeLine;
 import com.fries.edoo.utils.CommonVLs;
+import com.fries.edoo.utils.PermissonManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -113,24 +114,18 @@ public class PostDetailActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.post_details_menu, menu);
         MenuItem mnDeletePost = menu.findItem(R.id.action_delete_post);
         HashMap<String, String> user = new SQLiteHandler(this).getUserDetails();
-        boolean userIsTeacher = user.get("type").equalsIgnoreCase("teacher");
-        boolean authorIsTeacher = itemTimeline.getTypeAuthor().equalsIgnoreCase("teacher");
-        boolean userIsAuthor = user.get("uid").equalsIgnoreCase(itemTimeline.getIdAuthor());
-        boolean userIsOtherStudent = !userIsTeacher && !userIsAuthor;
+//        boolean userIsTeacher = user.get("type").equalsIgnoreCase("teacher");
+//        boolean authorIsTeacher = itemTimeline.getTypeAuthor().equalsIgnoreCase("teacher");
+//        boolean userIsAuthor = user.get("uid").equalsIgnoreCase(itemTimeline.getIdAuthor());
 
         // Permission of User
-        if (userIsTeacher) {
-            mnDeletePost.setVisible(true);
-        }
-        if (!userIsTeacher && authorIsTeacher) {
-            mnDeletePost.setVisible(false);
-        }
-        if (userIsAuthor) {
-            mnDeletePost.setVisible(true);
-        }
-        if (userIsOtherStudent) {
-            mnDeletePost.setVisible(false);
-        }
+//        boolean permission = PermissonManager.pDeletePost(userIsTeacher, authorIsTeacher, userIsAuthor);
+        boolean permission = PermissonManager.pDeletePost(
+                itemTimeline.getIdAuthor(),
+                itemTimeline.getTypeAuthor(),
+                user.get("uid"),
+                user.get("type"));
+        mnDeletePost.setVisible(permission);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -220,7 +215,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
                         ItemComment itemComment = new ItemComment(idComment,
                                 idAuthorComment, nameAuthorComment,
-                                avarAuthorComment, contentComment, isSolve);
+                                avarAuthorComment, contentComment, isSolve, typeAuthorComment);
 
                         itemComment.setCreateAt(CommonVLs.convertDate(timeCreateAtCmt));
 
@@ -262,8 +257,9 @@ public class PostDetailActivity extends AppCompatActivity {
                     String uid = user.get("uid");
                     String name = user.get("name");
                     String ava = user.get("avatar");
+                    String capability = user.get("type");
                     // Thay doi tren Local
-                    itemTimeline.getItemComments().add(new ItemComment(idCmt, uid, name, ava, content, false));
+                    itemTimeline.getItemComments().add(new ItemComment(idCmt, uid, name, ava, content, false, capability));
                     if (user.get("type").equalsIgnoreCase("teacher")) {
                         itemTimeline.setIsConfirmByTeacher(true);
                     }
