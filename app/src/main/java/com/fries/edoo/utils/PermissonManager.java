@@ -57,9 +57,9 @@ public class PermissonManager {
             return true;
         }
 
-        if (userIsTeacher){
-            return true;
-        }
+//        if (userIsTeacher){
+//            return true;
+//        }
 
         return false;
     }
