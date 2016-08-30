@@ -11,12 +11,14 @@
         android:title="@string/txt_not_solved" />
 
     <item
+        android:id="@+id/action_delete_comment"
         android:showAsAction="collapseActionView"
-        android:title="...Report..." />
+        android:title="@string/txt_delete_comment" />
 
     <item
         android:showAsAction="collapseActionView"
-        android:title="...Delete..." />
+        android:title="...Report..." />
+
 
     <item
         android:showAsAction="collapseActionView"
