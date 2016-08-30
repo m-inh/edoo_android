@@ -48,8 +48,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
     }
 
     public void setDataUser(ItemUser user) {
+        arrInfo.clear();
         Resources res = mContext.getResources();
-        if (user.isTeacher()) {
+        if (!user.isTeacher()) {
             arrInfo.add(new ItemInfoProfile(user.getCode(), res.getString(R.string.hint_mssv), "code"));
             arrInfo.add(new ItemInfoProfile(user.getRegularClass(), res.getString(R.string.lopkhoahoc), "regular_class"));
         } else {
@@ -161,7 +162,11 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
             content.setText(info.getInfoContent());
             hint.setText(info.getInfoHint());
 
-            if (pos > 4) edit.setVisibility(View.VISIBLE);
+            if (pos > 4) {
+                edit.setVisibility(View.VISIBLE);
+            } else {
+                edit.setVisibility(View.INVISIBLE);
+            }
 
             edit.setOnClickListener(this);
         }
