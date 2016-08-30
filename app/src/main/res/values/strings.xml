@@ -78,7 +78,7 @@
     <string name="insert">Thêm</string>
     <string name="warn">Chú ý</string>
     <string name="go_back">Quay lại</string>
-    <string name="warn_exit">Thoát và hủy bài viết?</string>
+    <string name="warn_exit">Thoát và xóa bài viết?</string>
     <string name="post_incognito">Đăng ở chế độ ẩn danh</string>
     <string name="anonymous">Anonymous</string>
     <string name="next">Kế tiếp</string>
@@ -90,18 +90,18 @@
     <string name="txt_not_solved">Not solved</string>
     <string name="title_activity_profile">Profile</string>
     <string name="lert_press_back">Nhấn lần nữa để thoát</string>
-    <string name="txt_delete_post">Xóa bài post</string>
+    <string name="txt_delete_post">Xóa bài đăng</string>
     <string name="txt_edit_post">Sửa bài viết</string>
     <string name="txt_edit_profile">Sửa profile</string>
-    <string name="txt_edit_avatar">Đổi avatar</string>
+    <string name="txt_edit_avatar">Đổi ảnh đại diện</string>
 
     <string name="txt_save">Lưu</string>
-    <string name="txt_cancel">Thoát</string>
+    <string name="txt_cancel">Không</string>
     <string name="txt_birthday">Ngày sinh</string>
     <string name="txt_email">Email</string>
     <string name="txt_description">Giới thiệu</string>
     <string name="txt_favorite">Sở thích</string>
-    <string name="txt_question_delete_post">Bạn có muốn xóa bài đăng?</string>
+    <string name="txt_question_delete_post">Thao tác xóa không thể hoàn tác. Bạn có muốn tiếp tục?</string>
     <string name="txt_yes">Đồng ý</string>
 
 
