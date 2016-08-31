@@ -30,11 +30,12 @@ public class ItemTimeLine extends ItemBase implements Serializable {
     private boolean isConfirmByTeacher;
     private boolean isSeen;
     private boolean isSolve;
+    private boolean isIncognito;
     private String createAt;
     private int commentCount;
     private ArrayList<ItemComment> itemComments = new ArrayList<>();
 
-    public ItemTimeLine(String idPost, String title, String name, String ava, String content, int like, boolean isConfirmByTeacher, String type) {
+    public ItemTimeLine(String idPost, String title, String name, String ava, boolean isIncognito, String content, int like, boolean isConfirmByTeacher, String type) {
         this.name = name;
         this.idPost = idPost;
         this.title = title;
@@ -43,6 +44,7 @@ public class ItemTimeLine extends ItemBase implements Serializable {
         this.like = like;
         this.isConfirmByTeacher = isConfirmByTeacher;
         this.type = type;
+        this.isIncognito = isIncognito;
 
 //        Log.i(TAG, "name: " + name);
 //        Log.i(TAG, "title: " + title);
@@ -182,5 +184,9 @@ public class ItemTimeLine extends ItemBase implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isIncognito(){
+        return isIncognito;
     }
 }

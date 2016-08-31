@@ -34,6 +34,7 @@ import com.fries.edoo.adapter.PostDetailAdapter;
 import com.fries.edoo.adapter.TimeLineAdapter;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
+import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.models.ItemBase;
 import com.fries.edoo.models.ItemLop;
 import com.fries.edoo.models.ItemTimeLine;
@@ -58,6 +59,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
     private ArrayList<ItemBase> itemPostArr;
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout swipeRefresh;
+    private SQLiteHandler sqlite;
 
     private ItemLop itemClass;
 
@@ -91,6 +93,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        sqlite = new SQLiteHandler(this);
         currTypeFilter = 1;
 
         initAdapter();
@@ -240,18 +243,32 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         String mssvAuthorPost = "";
                         String avarAuthorPost = "okmen.com";
 
-                        if (!isIncognito) {
+                        try {
                             JSONObject jsonAuthorPost = jsonPostArr.getJSONObject(i).getJSONObject("author");
-                            nameAuthorPost = jsonAuthorPost.getString("name");
-                            idAuthorPost = jsonAuthorPost.getString("id");
-                            emailAuthorPost = jsonAuthorPost.getString("email");
-                            typeAuthorPost = jsonAuthorPost.getString("capability");
-                            mssvAuthorPost = jsonAuthorPost.getString("code");
-                            avarAuthorPost = jsonAuthorPost.getString("avatar");
+                            String userId = sqlite.getUserDetails().get("uid");
+                            String authorId = jsonAuthorPost.getString("id");
+                            if (authorId.equalsIgnoreCase(userId)) {
+                                idAuthorPost = authorId;
+                                emailAuthorPost = jsonAuthorPost.getString("email");
+                                typeAuthorPost = jsonAuthorPost.getString("capability");
+                                mssvAuthorPost = jsonAuthorPost.getString("code");
+                                avarAuthorPost = jsonAuthorPost.getString("avatar");
+                                if (!isIncognito) {
+                                    nameAuthorPost = jsonAuthorPost.getString("name");
+//                                    Toast.makeText(getApplicationContext(), "name = " + nameAuthorPost, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
 
+
+//                        if (!isIncognito || ) {
+//
+//                        }
+
                         boolean isConfirm = false;
-                        ItemTimeLine itemTimeLine = new ItemTimeLine(id, titlePost, nameAuthorPost, avarAuthorPost, contentPost, like, isConfirm, type);
+                        ItemTimeLine itemTimeLine = new ItemTimeLine(id, titlePost, nameAuthorPost, avarAuthorPost, isIncognito, contentPost, like, isConfirm, type);
                         itemTimeLine.setTypeAuthor(typeAuthorPost);
                         itemTimeLine.setDescription(desPost);
                         itemTimeLine.setIdAuthor(idAuthorPost);
@@ -296,7 +313,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
             }
         });
 
-        if (!requestServer.sendRequest("get posts")){
+        if (!requestServer.sendRequest("get posts")) {
             if (swipeRefresh.isRefreshing()) {
                 swipeRefresh.setRefreshing(false);
             }
@@ -348,7 +365,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         tempItem.setSolve(itemTimeLine.isSolve());
                     }
                 }
-            }else if (resultCode== PostDetailActivity.RESULT_DELETE_COMPLETE){
+            } else if (resultCode == PostDetailActivity.RESULT_DELETE_COMPLETE) {
                 refreshPosts();
             }
         }

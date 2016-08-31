@@ -182,7 +182,7 @@ public class PostWriterContentFragment extends Fragment {
                 imgWidth = bitmap.getWidth();
                 imgHeight = bitmap.getHeight();
                 uploadImage(bitmap);
-                mEditor.insertImage(data.getData().toString(), "alt_image");
+//                mEditor.insertImage(data.getData().toString(), "alt_image");
                 break;
             case CAMERA_REQUEST:
                 try {
@@ -328,27 +328,30 @@ public class PostWriterContentFragment extends Fragment {
         return " width = '" + imgWidth + "' height = '" + imgHeight + "' ";
     }
 
-    public void replaceUrlImage() {
-        StringBuilder content = new StringBuilder(getContentPost());
-        int posImg = 0;
-        for (String url : arrImageCloud) {
-            posImg = content.indexOf("src", posImg);
-
-            int pos1 = content.indexOf("\"", posImg);
-            int pos2 = content.indexOf("\"", pos1 + 1);
-
-            posImg++;
-
-            if (pos2<=pos1) continue;
-            content.replace(pos1 + 1, pos2, url);
-        }
-        mEditor.setHtml(content.toString());
-    }
+//    public void replaceUrlImage() {
+//        StringBuilder content = new StringBuilder(getContentPost());
+//        int posImg = 0;
+//        for (String url : arrImageCloud) {
+//            posImg = content.indexOf("src", posImg);
+//
+//            int pos1 = content.indexOf("\"", posImg);
+//            int pos2 = content.indexOf("\"", pos1 + 1);
+//
+//            posImg++;
+//
+//            if (pos2<=pos1) continue;
+//            content.replace(pos1 + 1, pos2, url);
+//        }
+//        mEditor.setHtml(content.toString());
+//    }
 
     // ---------------
     private void uploadImage(final Bitmap bmp) {
         final ProgressBar pbrUploadingImage = (ProgressBar) rootView.findViewById(R.id.pbr_uploading_image);
         pbrUploadingImage.setVisibility(View.VISIBLE);
+        pDialog = new ProgressDialog(getContext());
+        pDialog.setCancelable(false);
+        pDialog.show();
 
         byte[] fileData = CommonVLs.getFileDataFromBitmap(bmp);
         String filename = "image_post.jpg";
@@ -363,12 +366,16 @@ public class PostWriterContentFragment extends Fragment {
                 Log.d(TAG, "msg: " + message);
 
                 pbrUploadingImage.setVisibility(View.GONE);
+                pDialog.dismiss();
 
                 if (!error) {
                     String urlImg = response.getJSONObject("data").getString("url");
                     Log.d(TAG, "url = " + urlImg);
 //                    Toast.makeText(getContext(), "Post xong", Toast.LENGTH_SHORT).show();
-                    arrImageCloud.add(urlImg);
+
+//                    arrImageCloud.add(urlImg);
+                    mEditor.insertImage(urlImg, "imamge");
+
                 } else {
                     Toast.makeText(getContext(), "Upload Failed", Toast.LENGTH_SHORT).show();
                 }

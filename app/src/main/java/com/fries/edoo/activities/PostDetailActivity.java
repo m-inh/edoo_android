@@ -176,7 +176,7 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 if (!error) {
-//                    Log.i(TAG, response.toString());
+                    Log.i(TAG, response.toString());
 
                     ArrayList<ItemComment> cmtArr = new ArrayList<ItemComment>();
 

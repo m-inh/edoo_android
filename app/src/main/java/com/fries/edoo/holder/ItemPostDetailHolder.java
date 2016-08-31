@@ -80,6 +80,9 @@ public class ItemPostDetailHolder extends AbstractHolder {
                 .placeholder(R.mipmap.ic_user).error(R.mipmap.ic_user)
                 .into(ivAvatar);
 
+//        if (itemTimeLine.isIncognito()){
+//            ivAvatar.setAlpha(0.2f);
+//        }
 
         createListener();
 

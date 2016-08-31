@@ -107,7 +107,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
     // ---------------------------------------------------------------------------------------------
 
     private void postToServer() {
-        postAdapter.getPostWriterContent().replaceUrlImage();
+//        postAdapter.getPostWriterContent().replaceUrlImage();
         String titlePost = postAdapter.getPostWriterContent().getTitlePost();
         String contentPost = postAdapter.getPostWriterContent().getContentPost();
 
