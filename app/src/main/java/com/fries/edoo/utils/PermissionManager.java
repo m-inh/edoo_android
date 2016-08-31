@@ -3,7 +3,7 @@ package com.fries.edoo.utils;
 /**
  * Created by tmq on 30/08/2016.
  */
-public class PermissonManager {
+public class PermissionManager {
 
     public static boolean pDeletePost(String authorPostId, String authorPostType, String userId, String userType) {
         boolean userIsTeacher = userType.equalsIgnoreCase("teacher");

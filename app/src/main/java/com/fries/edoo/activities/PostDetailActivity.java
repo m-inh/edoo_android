@@ -29,7 +29,7 @@ import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.models.ItemComment;
 import com.fries.edoo.models.ItemTimeLine;
 import com.fries.edoo.utils.CommonVLs;
-import com.fries.edoo.utils.PermissonManager;
+import com.fries.edoo.utils.PermissionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -114,8 +114,8 @@ public class PostDetailActivity extends AppCompatActivity {
 //        boolean userIsAuthor = user.get("uid").equalsIgnoreCase(itemTimeline.getIdAuthor());
 
         // Permission of User
-//        boolean permission = PermissonManager.pDeletePost(userIsTeacher, authorIsTeacher, userIsAuthor);
-        boolean permission = PermissonManager.pDeletePost(
+//        boolean permission = PermissionManager.pDeletePost(userIsTeacher, authorIsTeacher, userIsAuthor);
+        boolean permission = PermissionManager.pDeletePost(
                 itemTimeline.getIdAuthor(),
                 itemTimeline.getTypeAuthor(),
                 user.get("uid"),

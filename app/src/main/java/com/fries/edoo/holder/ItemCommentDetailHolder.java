@@ -1,45 +1,28 @@
 package com.fries.edoo.holder;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.fries.edoo.R;
-import com.fries.edoo.activities.PostDetailActivity;
-import com.fries.edoo.activities.TimelineActivity;
 import com.fries.edoo.adapter.PostDetailAdapter;
 import com.fries.edoo.app.AppConfig;
-import com.fries.edoo.app.AppController;
 import com.fries.edoo.communication.RequestServer;
-import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.models.ItemComment;
 import com.fries.edoo.models.ItemTimeLine;
-import com.fries.edoo.utils.PermissonManager;
+import com.fries.edoo.utils.PermissionManager;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -123,7 +106,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         MenuItem itNotSolve = menu.getMenu().findItem(R.id.action_not_solve_comment);
         MenuItem itDeleteComment = menu.getMenu().findItem(R.id.action_delete_comment);
 
-        boolean permissionDeleteComment = PermissonManager.pDeleteComment(
+        boolean permissionDeleteComment = PermissionManager.pDeleteComment(
                 itemTimeline.getIdAuthor(),
                 itemComment.getCapability(),
                 itemComment.getIdAuthorComment(),
@@ -133,7 +116,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         itDeleteComment.setVisible(permissionDeleteComment);
 
 
-        boolean permissionSolveComment = PermissonManager.pSolveComment(
+        boolean permissionSolveComment = PermissionManager.pSolveComment(
                 itemTimeline.getIdAuthor(),
                 userId,
                 userType,

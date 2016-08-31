@@ -337,9 +337,10 @@ public class PostWriterContentFragment extends Fragment {
             int pos1 = content.indexOf("\"", posImg);
             int pos2 = content.indexOf("\"", pos1 + 1);
 
-            content.replace(pos1 + 1, pos2, url);
-
             posImg++;
+
+            if (pos2<=pos1) continue;
+            content.replace(pos1 + 1, pos2, url);
         }
         mEditor.setHtml(content.toString());
     }
