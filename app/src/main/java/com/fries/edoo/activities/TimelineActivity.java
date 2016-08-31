@@ -59,7 +59,6 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
     private ArrayList<ItemBase> itemPostArr;
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout swipeRefresh;
-    private SQLiteHandler sqlite;
 
     private ItemLop itemClass;
 
@@ -93,7 +92,6 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        sqlite = new SQLiteHandler(this);
         currTypeFilter = 1;
 
         initAdapter();
