@@ -12,15 +12,16 @@
         android:orientation="vertical">
 
         <ImageView
-            android:transitionName="tran_introduce"
             android:layout_width="@dimen/img_width_height"
             android:layout_height="@dimen/img_width_height"
-            android:src="@drawable/ic_information_update" />
+            android:src="@drawable/ic_information_update"
+            android:transitionName="tran_introduce" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/txt_intro_slide_5_title"
+            android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="@dimen/t_size_display_1"
             android:textStyle="bold" />
