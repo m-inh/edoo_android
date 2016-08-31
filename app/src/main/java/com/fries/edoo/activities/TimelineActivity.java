@@ -25,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +60,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
     private ArrayList<ItemBase> itemPostArr;
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout swipeRefresh;
+    private ProgressBar pbLoading;
 
     private ItemLop itemClass;
 
@@ -111,6 +113,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
     private boolean isLoadable = true;
 
     private void initViews() {
+        pbLoading = (ProgressBar) findViewById(R.id.pb_loading_timeline);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
         linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -212,6 +215,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 if (!error) {
+                    pbLoading.setVisibility(View.GONE);
 //                    Log.i(TAG, response.toString());
 
                     //lay jsonItem nhet vao item

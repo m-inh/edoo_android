@@ -103,7 +103,7 @@
                     android:layout_marginRight="@dimen/action_padding"
                     android:src="@mipmap/avatar_test"
                     app:civ_border_color="@color/colorPrimary"
-                    app:civ_border_width="2dp" />
+                    app:civ_border_width="1dp" />
 
                 <TextView
                     android:id="@+id/txt_post_writer_user"

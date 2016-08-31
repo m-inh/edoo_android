@@ -105,7 +105,7 @@ public class PostWriterTagFragment extends Fragment {
             txtUser.setText(user.get("name"));
         } else {
             ivAvatar.setImageResource(R.drawable.ic_incognito_mode);
-            txtUser.setText(R.string.anonymous);
+            txtUser.setText(R.string.icognito);
         }
     }
 

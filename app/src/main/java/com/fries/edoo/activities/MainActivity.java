@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity
                 .placeholder(R.mipmap.ic_user)
                 .error(R.mipmap.ic_user)
                 .into(ivAva);
+        Log.i(TAG, "update avatar + " + user.get("avatar"));
     }
 
     private void showFragment(Fragment lopFragment) {
