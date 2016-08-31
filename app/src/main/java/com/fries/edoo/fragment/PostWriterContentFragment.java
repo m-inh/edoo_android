@@ -117,19 +117,6 @@ public class PostWriterContentFragment extends Fragment {
             }
         });
 
-        mEditor.setOnTextChangeListener(new RichEditor.OnTextChangeListener() {
-            @Override
-            public void onTextChange(String text) {
-                if (newImageInserted) {
-                    int posTagImg = text.lastIndexOf("img") + 3;
-
-                    String html = text.substring(0, posTagImg) + resizeImage() + text.substring(posTagImg, text.length()) + "<br><br>";
-                    mEditor.setHtml(html);
-                    newImageInserted = false;
-                    mEditor.focusEditor();
-                }
-            }
-        });
     }
 
     /**
@@ -173,26 +160,18 @@ public class PostWriterContentFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "result code = " + resultCode);
         if (resultCode != Activity.RESULT_OK) return;
-        newImageInserted = true;
         switch (requestCode) {
             case IMAGE_LOCAL_REQUEST:
 //                Log.i(TAG, data.getData().toString());
                 File file = new File(FileManager.getPath(getContext(), data.getData()));
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
-                imgWidth = bitmap.getWidth();
-                imgHeight = bitmap.getHeight();
                 uploadImage(bitmap);
-//                mEditor.insertImage(data.getData().toString(), "alt_image");
                 break;
             case CAMERA_REQUEST:
                 try {
                     Bitmap photo = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), photoUri);
                     if (photo == null) return;
-                    imgWidth = photo.getWidth();
-                    imgHeight = photo.getHeight();
                     uploadImage(photo);
-                    mEditor.insertImage(FileManager.getPath(getContext(), photoUri), "alt_photo");
-                    Log.d(TAG, "Size = " + imgWidth + ", " + imgHeight);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -214,7 +193,6 @@ public class PostWriterContentFragment extends Fragment {
         link.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-
                 if (!b) {
                     String strLink = link.getText().toString();
                     if (!strLink.contains("http")) {
@@ -254,10 +232,6 @@ public class PostWriterContentFragment extends Fragment {
 
     // --------------------------------------- Insert Image ----------------------------------------
 
-    private String preHTMLEditor = HTML_PLACE_HOLDER;
-    private int imgWidth, imgHeight;
-    private boolean newImageInserted = false;
-    private ArrayList<String> arrImageCloud = new ArrayList<>(); // Save link Image, what is uploaded to server
     private Uri photoUri;
 
     private void pickImage() {
@@ -283,7 +257,6 @@ public class PostWriterContentFragment extends Fragment {
 
     private void pickImageFromMemory() {
         Intent iImage = (new Intent("android.intent.action.GET_CONTENT")).setType("image/*");
-        preHTMLEditor = mEditor.getHtml() + "";
 
         if (CommonVLs.isHasStoragePermissions(getActivity())){
             startActivityForResult(iImage, IMAGE_LOCAL_REQUEST);
@@ -309,41 +282,6 @@ public class PostWriterContentFragment extends Fragment {
             CommonVLs.verifyCameraPermissions(getActivity());
         }
     }
-
-    private String resizeImage() {
-        int screenWidth = mEditor.getWidth() - 2 * mEditor.getPaddingLeft() - 2 * mEditor.getPaddingRight();
-        Log.d(TAG, "Screen width = " + screenWidth);
-        float scale = ((float) screenWidth) / imgWidth;
-        imgWidth = screenWidth;
-        imgHeight *= scale;
-
-        DisplayMetrics metrics = new DisplayMetrics();
-        ((PostWriterActivity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        float logicalDensity = metrics.density;
-
-        imgWidth = (int) Math.ceil(imgWidth / logicalDensity);
-        imgHeight = (int) Math.ceil(imgHeight / logicalDensity);
-
-        Log.d(TAG, "Resize = " + imgWidth + ", " + imgHeight);
-        return " width = '" + imgWidth + "' height = '" + imgHeight + "' ";
-    }
-
-//    public void replaceUrlImage() {
-//        StringBuilder content = new StringBuilder(getContentPost());
-//        int posImg = 0;
-//        for (String url : arrImageCloud) {
-//            posImg = content.indexOf("src", posImg);
-//
-//            int pos1 = content.indexOf("\"", posImg);
-//            int pos2 = content.indexOf("\"", pos1 + 1);
-//
-//            posImg++;
-//
-//            if (pos2<=pos1) continue;
-//            content.replace(pos1 + 1, pos2, url);
-//        }
-//        mEditor.setHtml(content.toString());
-//    }
 
     // ---------------
     private void uploadImage(final Bitmap bmp) {
