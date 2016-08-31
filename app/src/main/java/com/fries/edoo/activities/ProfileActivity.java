@@ -159,7 +159,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 if (!error) {
                     JSONObject data = response.getJSONObject("data");
-                    Log.i(TAG, "Profile = " + data.toString());
+//                    Log.i(TAG, "Profile = " + data.toString());
                     adapter = new ProfileAdapter(ProfileActivity.this, new ItemUser(data));
                     rvListInfo.setAdapter(adapter);
                 }
@@ -200,8 +200,8 @@ public class ProfileActivity extends AppCompatActivity {
         request.setListener(new MultipartRequest.ServerListener() {
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
-                Log.d(TAG, "response: " + response);
-                Log.d(TAG, "msg: " + message);
+//                Log.d(TAG, "response: " + response);
+//                Log.d(TAG, "msg: " + message);
                 //Disimissing the progress dialog
                 loading.dismiss();
 

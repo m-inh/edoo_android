@@ -22,7 +22,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class LopAdapter extends BaseAdapter {
 
     private ArrayList<ItemLop> itemArr = new ArrayList<>();
-    private ArrayList<Integer> resBgId = new ArrayList<>();
+//    private ArrayList<Integer> resBgId = new ArrayList<>();
     private Context mContext;
     private LayoutInflater lf;
 
@@ -48,11 +48,11 @@ public class LopAdapter extends BaseAdapter {
 //        itemArr.add(new ItemLop("Tin hoc co so 4", "INT2204 1", "Le Nguyen Khoi", 90));
 //        itemArr.add(new ItemLop("Tin hoc co so 4", "INT2204 1", "Le Nguyen Khoi", 90));
 
-        resBgId.add(R.drawable.avar_item_bg_1);
-        resBgId.add(R.drawable.avar_item_bg_2);
-        resBgId.add(R.drawable.avar_item_bg_3);
-        resBgId.add(R.drawable.avar_item_bg_4);
-        resBgId.add(R.drawable.avar_item_bg_5);
+//        resBgId.add(R.drawable.avar_item_bg_1);
+//        resBgId.add(R.drawable.avar_item_bg_2);
+//        resBgId.add(R.drawable.avar_item_bg_3);
+//        resBgId.add(R.drawable.avar_item_bg_4);
+//        resBgId.add(R.drawable.avar_item_bg_5);
     }
 
     @Override

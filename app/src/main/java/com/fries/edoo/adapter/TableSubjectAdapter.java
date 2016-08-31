@@ -110,7 +110,7 @@ public class TableSubjectAdapter extends BaseAdapter {
         }
 
         if (listSubjectInTable==null) Log.i(TAG, "list null");
-        if (view==null) Log.i(TAG, "view null");
+//        if (view==null) Log.i(TAG, "view null");
         if (listSubjectInTable[position] == -1) return view;
 
         Animation myAni = AnimationUtils.loadAnimation(mContext, R.anim.anim_show_item_subject);

@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity
     public void updateAvatar() {
         HashMap<String, String> user = sqlite.getUserDetails();
         Picasso.with(this).invalidate(user.get("avatar"));
-        Log.i(TAG, "update ava: " + user.get("avatar"));
+//        Log.i(TAG, "update ava: " + user.get("avatar"));
         Picasso.with(this)
                 .load(user.get("avatar")).fit()
                 .placeholder(R.mipmap.ic_user)
@@ -314,8 +314,8 @@ public class MainActivity extends AppCompatActivity
         //Lay thong tin cac bai dang tren server ve
         //goi timelinefragment
         //set data cho listview
-        Log.i(TAG, itemLop.getId());
-        Log.i(TAG, itemLop.getIdData());
+//        Log.i(TAG, itemLop.getId());
+//        Log.i(TAG, itemLop.getIdData());
         Intent mIntent = new Intent(this, TimelineActivity.class);
         Bundle b = new Bundle();
         b.putSerializable("item_class", itemLop);

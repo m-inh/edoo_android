@@ -148,31 +148,31 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                 finish();
                 break;
             case R.id.item_post:
-                Log.i(TAG, "new post");
+//                Log.i(TAG, "new post");
                 startPostWriterActivity(itemClass.getIdData());
                 break;
 
             // filter
             case R.id.item_tatcabaidang:
-                Log.i(TAG, "tat ca bai dang");
+//                Log.i(TAG, "tat ca bai dang");
                 currPage = 1;
                 requestPost(itemClass.getIdData(), currPage, BAI_DANG_BINH_THUONG);
                 currTypeFilter = BAI_DANG_BINH_THUONG;
                 break;
             case R.id.item_locbaidangchuatraloi:
-                Log.i(TAG, "loc bai dang chua tl");
+//                Log.i(TAG, "loc bai dang chua tl");
                 currPage = 1;
                 requestPost(itemClass.getIdData(), currPage, BAI_DANG_LOC_THEO_CHUA_TRA_LOI);
                 currTypeFilter = BAI_DANG_LOC_THEO_CHUA_TRA_LOI;
                 break;
             case R.id.item_locbaidanggiaovien:
-                Log.i(TAG, "loc bai dang giao vien");
+//                Log.i(TAG, "loc bai dang giao vien");
                 currPage = 1;
                 requestPost(itemClass.getIdData(), currPage, BAI_DANG_LOC_THEO_GIAO_VIEN);
                 currTypeFilter = BAI_DANG_LOC_THEO_GIAO_VIEN;
                 break;
             case R.id.item_locbaidangchuadoc:
-                Log.i(TAG, "tat ca bai dang");
+//                Log.i(TAG, "tat ca bai dang");
                 currPage = 1;
                 requestPost(itemClass.getIdData(), currPage, BAI_DANG_CHUA_DOC);
                 currTypeFilter = BAI_DANG_CHUA_DOC;
@@ -211,7 +211,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 if (!error) {
-                    Log.i(TAG, response.toString());
+//                    Log.i(TAG, response.toString());
 
                     //lay jsonItem nhet vao item
                     JSONArray jsonPostArr = response.getJSONObject("data").getJSONArray("posts");
@@ -277,8 +277,8 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                     int curPage = jsonPage.getInt("page");
                     int pageCount = jsonPage.getInt("pageCount");
 
-                    Log.i(TAG, "curPage json: " + curPage);
-                    Log.i(TAG, "page count json: " + pageCount);
+//                    Log.i(TAG, "curPage json: " + curPage);
+//                    Log.i(TAG, "page count json: " + pageCount);
 
                     isLoadable = curPage < pageCount;
                     TimelineActivity.this.itemPostArr = itemPostArr;
@@ -372,7 +372,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                 swipeRefresh.setRefreshing(false);
             }
 
-            Log.i(TAG, "current page: " + currPage);
+//            Log.i(TAG, "current page: " + currPage);
 
             mAdapter.setLoadable(isLoadable);
             if (msg.what == SUCCESS) {
@@ -380,7 +380,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                     mAdapter.updateList(itemPostArr);
                 } else {
                     mAdapter.addItems(itemPostArr);
-                    Log.i(TAG, "add items");
+//                    Log.i(TAG, "add items");
                 }
             }
 

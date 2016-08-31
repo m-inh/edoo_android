@@ -159,12 +159,12 @@ public class LoginActivity extends Activity {
 
 //                    String created_at = "";
 
-                    Log.i(TAG, "login: " + name);
-                    Log.i(TAG, "ava: " + ava);
-                    Log.i(TAG, "login: " + email);
-                    Log.i(TAG, "login: " + lop);
-                    Log.i(TAG, "login: " + mssv);
-                    Log.i(TAG, "login: " + type);
+//                    Log.i(TAG, "login: " + name);
+//                    Log.i(TAG, "ava: " + ava);
+//                    Log.i(TAG, "login: " + email);
+//                    Log.i(TAG, "login: " + lop);
+//                    Log.i(TAG, "login: " + mssv);
+//                    Log.i(TAG, "login: " + type);
 
                     // Inserting row in users table
 //                  db.addUser(name, email, uid, created_at, lop, mssv, type, ava);
@@ -184,7 +184,7 @@ public class LoginActivity extends Activity {
                     startActivity(intent);
                     finish();
                 } else {
-                    Log.d(TAG, message);
+                    Log.e(TAG, message);
                 }
 
                 pDialog.dismiss();

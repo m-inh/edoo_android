@@ -71,10 +71,10 @@ public abstract class LopFragment extends Fragment {
                         int soSV = lopHoc.getInt("student_count");
                         String nameGiangVien = lopHoc.getString("teacher_name");
 
-                        Log.i(TAG, "id: " + id);
-                        Log.i(TAG, "idLop: " + idLop);
-                        Log.i(TAG, "name lop: " + nameLop);
-                        Log.i(TAG, "so sv: " + soSV);
+//                        Log.i(TAG, "id: " + id);
+//                        Log.i(TAG, "idLop: " + idLop);
+//                        Log.i(TAG, "name lop: " + nameLop);
+//                        Log.i(TAG, "so sv: " + soSV);
 
 //                        JSONObject jsonGiangVien = jsonLopHocArray.getJSONObject(i).getJSONObject("teacher");
 //

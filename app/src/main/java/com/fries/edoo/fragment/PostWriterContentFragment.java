@@ -171,12 +171,12 @@ public class PostWriterContentFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG, "result code = " + resultCode);
+        Log.d(TAG, "result code = " + resultCode);
         if (resultCode != Activity.RESULT_OK) return;
         newImageInserted = true;
         switch (requestCode) {
             case IMAGE_LOCAL_REQUEST:
-                Log.i(TAG, data.getData().toString());
+//                Log.i(TAG, data.getData().toString());
                 File file = new File(FileManager.getPath(getContext(), data.getData()));
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
                 imgWidth = bitmap.getWidth();
@@ -192,7 +192,7 @@ public class PostWriterContentFragment extends Fragment {
                     imgHeight = photo.getHeight();
                     uploadImage(photo);
                     mEditor.insertImage(FileManager.getPath(getContext(), photoUri), "alt_photo");
-                    Log.i(TAG, "Size = " + imgWidth + ", " + imgHeight);
+                    Log.d(TAG, "Size = " + imgWidth + ", " + imgHeight);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -312,7 +312,7 @@ public class PostWriterContentFragment extends Fragment {
 
     private String resizeImage() {
         int screenWidth = mEditor.getWidth() - 2 * mEditor.getPaddingLeft() - 2 * mEditor.getPaddingRight();
-        Log.i(TAG, "Screen width = " + screenWidth);
+        Log.d(TAG, "Screen width = " + screenWidth);
         float scale = ((float) screenWidth) / imgWidth;
         imgWidth = screenWidth;
         imgHeight *= scale;
@@ -324,7 +324,7 @@ public class PostWriterContentFragment extends Fragment {
         imgWidth = (int) Math.ceil(imgWidth / logicalDensity);
         imgHeight = (int) Math.ceil(imgHeight / logicalDensity);
 
-        Log.i(TAG, "Resize = " + imgWidth + ", " + imgHeight);
+        Log.d(TAG, "Resize = " + imgWidth + ", " + imgHeight);
         return " width = '" + imgWidth + "' height = '" + imgHeight + "' ";
     }
 
@@ -365,7 +365,7 @@ public class PostWriterContentFragment extends Fragment {
 
                 if (!error) {
                     String urlImg = response.getJSONObject("data").getString("url");
-                    Log.i(TAG, "url = " + urlImg);
+                    Log.d(TAG, "url = " + urlImg);
 //                    Toast.makeText(getContext(), "Post xong", Toast.LENGTH_SHORT).show();
                     arrImageCloud.add(urlImg);
                 } else {

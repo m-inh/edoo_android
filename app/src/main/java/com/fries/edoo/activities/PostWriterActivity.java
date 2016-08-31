@@ -165,7 +165,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
             case R.id.action_post:
                 postToServer();
 //                postAdapter.getPostWriterContent().replaceUrlImage();
-                Log.i(TAG, "post = " + postAdapter.getPostWriterContent().getContentPost());
+//                Log.i(TAG, "post = " + postAdapter.getPostWriterContent().getContentPost());
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -215,7 +215,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 pDialog.dismiss();
                 if (!error) {
-                    Log.i(TAG, response.toString());
+//                    Log.i(TAG, response.toString());
 
                     Message msg = new Message();
                     msg.setTarget(mHandler);
@@ -224,7 +224,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
                 } else {
 //                    ivPost.setClickable(true);
 //                    isAllowedClick = true;
-                    Log.i(TAG, "Post error: " + message);
+//                    Log.i(TAG, "Post error: " + message);
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 }
             }

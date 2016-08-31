@@ -97,7 +97,7 @@ public class WebviewActivity extends AppCompatActivity {
             if (view instanceof WebView){
                 WebView webView = (WebView) view;
                 webView.loadUrl("about:blank");
-                Log.i(TAG, "ok load blank");
+//                Log.i(TAG, "ok load blank");
             }
         }
         container.removeAllViews();

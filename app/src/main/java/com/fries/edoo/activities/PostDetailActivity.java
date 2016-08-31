@@ -176,7 +176,7 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 if (!error) {
-                    Log.i(TAG, response.toString());
+//                    Log.i(TAG, response.toString());
 
                     ArrayList<ItemComment> cmtArr = new ArrayList<ItemComment>();
 
@@ -226,8 +226,8 @@ public class PostDetailActivity extends AppCompatActivity {
 
     // -------------------------------------------------
     private void postCmt(final String post, final String content) {
-        Log.i(TAG, "idpost " + post);
-        Log.i(TAG, "content " + content);
+//        Log.i(TAG, "idpost " + post);
+//        Log.i(TAG, "content " + content);
 
         String url = AppConfig.URL_POST_COMMENT;
         JSONObject params = new JSONObject();
@@ -322,7 +322,7 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 if (!error) {
-                    Log.i(TAG, "Delete post response: " + response.toString());
+//                    Log.i(TAG, "Delete post response: " + response.toString());
                     setResult(RESULT_DELETE_COMPLETE);
                     PostDetailActivity.this.finish();
                 }

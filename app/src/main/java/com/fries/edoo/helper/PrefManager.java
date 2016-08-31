@@ -49,7 +49,7 @@ public class PrefManager {
 		// commit changes
 		editor.commit();
 
-		Log.d(TAG, "Saved token: " + token);
+//		Log.d(TAG, "Saved token: " + token);
 	}
 	
 	public boolean isLoggedIn(){
