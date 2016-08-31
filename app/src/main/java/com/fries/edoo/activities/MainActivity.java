@@ -28,6 +28,7 @@ import com.fries.edoo.fragment.ThoiKhoaBieuFragment;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.helper.PrefManager;
 import com.fries.edoo.models.ItemLop;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -108,11 +109,11 @@ public class MainActivity extends AppCompatActivity
         }
 
         // Register FCM token to server
-//        String fcmToken = FirebaseInstanceId.getInstance().getToken();
-//        Log.d(TAG, "FCM token: " + fcmToken);
-//        if (fcmToken == null || fcmToken.isEmpty()){
-//            sendRegistrationToServer(fcmToken);
-//        }
+        String fcmToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "FCM token: " + fcmToken);
+        if (fcmToken == null || fcmToken.isEmpty()){
+            sendRegistrationToServer(fcmToken);
+        }
     }
 
     private void initViews() {
