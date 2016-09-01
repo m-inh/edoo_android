@@ -97,6 +97,13 @@ public class MainActivity extends AppCompatActivity
 
         initViews();
 
+        if (session.isFirstLoggedIn()){
+            Intent intro = new Intent(this, IntroSliderActivity.class);
+            startActivity(intro);
+
+            session.setIsFirstLogin(false);
+        }
+
         //replace fragment moi
         showFragment(thoiKhoaBieuFragment);
         toolbar.setTitle("Thời khoá biểu");

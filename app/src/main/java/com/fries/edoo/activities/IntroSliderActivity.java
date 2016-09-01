@@ -82,6 +82,7 @@ public class IntroSliderActivity extends AppCompatActivity {
                 }
             }
         });
+        btnSkip.setVisibility(View.GONE);
     }
 
     private void addBottomDots(int currentPage) {
@@ -123,7 +124,11 @@ public class IntroSliderActivity extends AppCompatActivity {
                 btnSkip.setVisibility(View.GONE);
             } else {
                 btnNext.setText(getString(R.string.next));
-                btnSkip.setVisibility(View.VISIBLE);
+                if (position < 2){
+                    btnSkip.setVisibility(View.GONE);
+                }else {
+                    btnSkip.setVisibility(View.VISIBLE);
+                }
             }
         }
 

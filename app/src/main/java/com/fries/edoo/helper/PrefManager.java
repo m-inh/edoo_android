@@ -22,6 +22,7 @@ public class PrefManager {
 	private static final String PREF_NAME = "edoo_session";
 	
 	private static final String KEY_IS_LOGGED_IN = "is_login";
+	private static final String KEY_IS_FIRST_LOGGED_IN = "is_first_login";
 	private static final String KEY_TOKEN_LOG_IN = "token_login";
 	private static final String KEY_IS_SAVE_CLASS = "is_save_class";
 
@@ -29,6 +30,18 @@ public class PrefManager {
 		this._context = context;
 		pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
 		editor = pref.edit();
+	}
+
+	public void setIsFirstLogin(boolean isFirstLogin) {
+		editor.putBoolean(KEY_IS_FIRST_LOGGED_IN, isFirstLogin);
+
+		// Delete token
+//		if (!isLoggedIn) editor.remove(KEY_TOKEN_LOG_IN);
+
+		// commit changes
+		editor.commit();
+
+		Log.d(TAG, "User login first login modified!");
 	}
 
 	public void setLogin(boolean isLoggedIn) {
@@ -50,6 +63,10 @@ public class PrefManager {
 		editor.commit();
 
 //		Log.d(TAG, "Saved token: " + token);
+	}
+
+	public boolean isFirstLoggedIn(){
+		return pref.getBoolean(KEY_IS_FIRST_LOGGED_IN, true);
 	}
 	
 	public boolean isLoggedIn(){
