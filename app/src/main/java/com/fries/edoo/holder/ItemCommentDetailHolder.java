@@ -1,7 +1,10 @@
 package com.fries.edoo.holder;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.fries.edoo.R;
+import com.fries.edoo.activities.PostDetailActivity;
 import com.fries.edoo.adapter.PostDetailAdapter;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
@@ -123,7 +127,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
                 itemComment.getIdAuthorComment()
         );
 
-        if (permissionSolveComment){
+        if (permissionSolveComment) {
             itSolve.setVisible(!itemComment.isSolved());
             itNotSolve.setVisible(itemComment.isSolved());
         } else {
@@ -161,7 +165,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         else ivCommentSolved.setVisibility(View.GONE);
     }
 
-    private void showDialogDeleteComment(){
+    private void showDialogDeleteComment() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setTitle(mContext.getResources().getString(R.string.warn));
         builder.setMessage(mContext.getResources().getString(R.string.txt_question_delete_post));
@@ -210,6 +214,13 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         });
 
         requestServer.sendRequest("Post solve_unsolve");
+
+        Intent mIntent = new Intent();
+        Bundle b = new Bundle();
+        b.putSerializable("item_timeline", itemTimeline);
+        mIntent.putExtras(b);
+        PostDetailActivity postDetailActivity = (PostDetailActivity) mContext;
+        postDetailActivity.setResult(Activity.RESULT_OK, mIntent);
     }
 
     private void requestDeleteComment() {
@@ -229,7 +240,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
                     Log.i(TAG, "delete comment response = " + data.toString());
 
                     itemTimeline.deleteComment(idComment);
-                    itemTimeline.setCommentCount(itemTimeline.getCommentCount()-1);
+                    itemTimeline.setCommentCount(itemTimeline.getCommentCount() - 1);
                     postDetailAdapter.notifyDataSetChanged();
                 }
             }
