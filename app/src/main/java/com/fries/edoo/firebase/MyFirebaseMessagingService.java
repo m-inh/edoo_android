@@ -80,7 +80,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
             notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
         } else {
-            notificationBuilder.setSmallIcon(R.mipmap.ic_noti)
+            notificationBuilder.setSmallIcon(R.mipmap.ic_stat_ic_noti)
                     .setColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
 
