@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:gravity="top"
+    android:orientation="horizontal"
+    android:weightSum="6">
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="vertical"
+        android:gravity="bottom"
+        android:weightSum="10">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_logo_large"
+            android:layout_weight="5"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:text="Fries"
+            android:textSize="@dimen/t_size_headline"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:gravity="center|bottom"
+            android:paddingBottom="@dimen/dialog_padding_around_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

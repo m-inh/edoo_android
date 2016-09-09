@@ -38,5 +38,8 @@
         <item name="android:windowSoftInputMode">stateVisible</item>
     </style>
 
+    <style name="splashScreenTheme" parent="AppTheme">
+        <item name="android:windowBackground">@color/colorPrimary</item>
+    </style>
 
 </resources>
