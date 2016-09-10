@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -73,9 +74,9 @@ public class TimetableFragment extends Fragment {
         initViews();
 
         if (!sessionMgr.isSaveClass())
-        getDataFromServer();
+            getDataFromServer();
         else
-        getDataFromSQLite();
+            getDataFromSQLite();
 
         return rootView;
     }
@@ -203,9 +204,6 @@ public class TimetableFragment extends Fragment {
 
     private void addView(LinearLayout col, int bgCellId, int weight, final ItemLopMonHoc lmh) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_cell_timetable, null);
-        TextView name = (TextView) view.findViewById(R.id.tv_name_subject);
-        name.setText(lmh.getName());
-//        name.setText(lmh.getAcronymOfName());
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -213,8 +211,21 @@ public class TimetableFragment extends Fragment {
             }
         });
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, weight);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            view.setElevation(10);
+        }
         view.setLayoutParams(params);
-        view.setBackgroundResource(bgCellId);
+        view.findViewById(R.id.bg_cell).setBackgroundResource(bgCellId);
+
+        TextView name = (TextView) view.findViewById(R.id.tv_name_subject);
+        TextView timeStart = (TextView) view.findViewById(R.id.tv_time_start_subject);
+        TextView timeEnd = (TextView) view.findViewById(R.id.tv_time_end_subject);
+
+        name.setText(lmh.getAcronymOfName());
+        int pos = lmh.getPosOfPeriod();
+        pos = (pos < 6 ? pos : pos + 1) + 6;
+        timeStart.setText(pos + ":00");
+        timeEnd.setText((pos+lmh.getLengthOfPeriod()) + ":00");
 
         Animation myAni = AnimationUtils.loadAnimation(mContext, R.anim.anim_show_item_subject);
         view.startAnimation(myAni);
@@ -226,7 +237,6 @@ public class TimetableFragment extends Fragment {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_cell_empty_timetable, null);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, weight);
         view.setLayoutParams(params);
-        view.setBackgroundColor(Color.WHITE);
         col.addView(view);
     }
 

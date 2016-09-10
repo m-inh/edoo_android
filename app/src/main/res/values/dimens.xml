@@ -10,6 +10,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="cell_margin">0.5dp</dimen>
+    <dimen name="cell_radius_bg">5dp</dimen>
 
     <dimen name="description">12sp</dimen>
     <dimen name="height_item_subject">50dp</dimen>

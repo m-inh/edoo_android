@@ -9,6 +9,7 @@
     <color name="black_87">#DE000000</color>
     <color name="black_54">#8A000000</color>
     <color name="black_12">#1E000000</color>
+    <color name="black_6">#0F000000</color>
 
     <color name="hint">#b7b7b7</color>
     <color name="bg_login">#26ae90</color>
@@ -94,7 +95,8 @@
     </array>
 
     <!--TimeTable-->
-    <color name="cell_background_default">@android:color/white</color>
+    <!--<color name="cell_background_default">@null</color>-->
+    <color name="cell_background_default">@android:color/transparent</color>
     <array name="arr_color_cell_background">
         <item>#03DDFF</item>
         <item>#33B5E6</item>

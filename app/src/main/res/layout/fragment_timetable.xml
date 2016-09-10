@@ -184,11 +184,22 @@
 
         </LinearLayout>
 
-        <include
-            layout="@layout/time_table"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="6" />
+            android:layout_weight="6">
+
+            <include
+                layout="@layout/time_table_empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <include
+                layout="@layout/time_table"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
 
     </LinearLayout>
 
