@@ -55,7 +55,10 @@ public class TimetableFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (!firstLoading) return rootView;
+        if (!firstLoading) {
+            startAnim();
+            return rootView;
+        }
 
         firstLoading = false;
         rootView = inflater.inflate(R.layout.fragment_timetable, null);
@@ -202,6 +205,15 @@ public class TimetableFragment extends Fragment {
         bgCell.recycle();
     }
 
+    ArrayList<View> listViewSubject = new ArrayList();
+
+    private void startAnim() {
+        Animation myAni = AnimationUtils.loadAnimation(mContext, R.anim.anim_show_item_subject);
+        for (View view : listViewSubject) {
+            view.startAnimation(myAni);
+        }
+    }
+
     private void addView(LinearLayout col, int bgCellId, int weight, final ItemLopMonHoc lmh) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_cell_timetable, null);
         view.setOnClickListener(new View.OnClickListener() {
@@ -225,11 +237,12 @@ public class TimetableFragment extends Fragment {
         int pos = lmh.getPosOfPeriod();
         pos = (pos < 6 ? pos : pos + 1) + 6;
         timeStart.setText(pos + ":00");
-        timeEnd.setText((pos+lmh.getLengthOfPeriod()) + ":00");
+        timeEnd.setText((pos + lmh.getLengthOfPeriod()) + ":00");
 
         Animation myAni = AnimationUtils.loadAnimation(mContext, R.anim.anim_show_item_subject);
         view.startAnimation(myAni);
 
+        listViewSubject.add(view);
         col.addView(view);
     }
 
