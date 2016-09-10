@@ -76,10 +76,10 @@ public class TimetableFragment extends Fragment {
 
         initViews();
 
-        if (!sessionMgr.isSaveClass())
+//        if (!sessionMgr.isSaveClass())
             getDataFromServer();
-        else
-            getDataFromSQLite();
+//        else
+//            getDataFromSQLite();
 
         return rootView;
     }
@@ -93,11 +93,11 @@ public class TimetableFragment extends Fragment {
         columns[5] = (LinearLayout) rootView.findViewById(R.id.tt_col_7);
     }
 
-    private void showDialogInfo(final ItemLopMonHoc item) {
+    private void showDialogInfo(final ItemLopMonHoc item, int bgCellId) {
         final Dialog dialogInfo = new Dialog(mContext, R.style.DialogNoActionBar);
-        dialogInfo.setContentView(R.layout.dialog_item_subject_info);
-
-        dialogInfo.setTitle("Thông tin:");
+        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_item_subject_info, null);
+        dialogInfo.setContentView(view);
+        view.setBackgroundResource(bgCellId);
 
         // InitViews
         TextView ten = (TextView) dialogInfo.findViewById(R.id.dialogTenMH);
@@ -214,12 +214,12 @@ public class TimetableFragment extends Fragment {
         }
     }
 
-    private void addView(LinearLayout col, int bgCellId, int weight, final ItemLopMonHoc lmh) {
+    private void addView(LinearLayout col, final int bgCellId, int weight, final ItemLopMonHoc lmh) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_cell_timetable, null);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogInfo(lmh);
+                showDialogInfo(lmh, bgCellId);
             }
         });
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, weight);

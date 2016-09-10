@@ -2,36 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
+    android:background="@color/bg_item_subject_1"
     android:minWidth="300dp"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/action_padding"
-    >
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialogTenMH"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black_6"
+        android:paddingBottom="@dimen/dialog_padding_around_content"
+        android:paddingLeft="@dimen/dialog_padding_around_content"
+        android:paddingRight="@dimen/dialog_padding_around_content"
+        android:paddingTop="@dimen/dialog_padding_around_content"
+        android:text="Ten mon hoc"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical"
         android:paddingBottom="@dimen/dialog_margin_icon"
         android:paddingLeft="@dimen/dialog_padding_around_content"
-        android:paddingRight="@dimen/dialog_padding_around_content"
-        android:paddingTop="@dimen/dialog_padding_around_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/dialogTenMH"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ten mon hoc"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+        android:paddingRight="@dimen/dialog_padding_around_content">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="8dp"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
+            android:layout_marginTop="@dimen/action_padding"
             android:gravity="center_vertical"
             android:minHeight="@dimen/d_height"
             android:orientation="vertical">
@@ -56,7 +60,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:gravity="center_vertical"
             android:minHeight="@dimen/d_height"
             android:orientation="vertical">
@@ -80,7 +83,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:gravity="center_vertical"
             android:minHeight="@dimen/d_height"
             android:orientation="vertical">
@@ -104,7 +106,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:gravity="center_vertical"
             android:minHeight="@dimen/d_height"
             android:orientation="vertical">
@@ -128,26 +129,30 @@
     </LinearLayout>
 
 
-
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/bg_divider" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/action_padding">
 
-    <Button
-        android:id="@+id/btn_direct_to_class_dialog"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/btn_dialog_height"
-        android:layout_gravity="right"
-        android:layout_marginTop="@dimen/action_padding"
-        android:layout_marginRight="@dimen/action_padding"
-        android:background="@drawable/bg_btn_pressed"
-        android:padding="@dimen/line_text_margin"
-        android:text="Vào lớp"
-        android:textAllCaps="true"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/t_size_button"
-        android:textStyle="bold" />
+        <Button
+            android:id="@+id/btn_direct_to_class_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/btn_dialog_height"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/action_padding"
+            android:layout_marginTop="@dimen/action_padding"
+            android:background="@drawable/bg_btn_pressed"
+            android:padding="@dimen/line_text_margin"
+            android:text="Vào lớp"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/t_size_button"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -1,7 +1,8 @@
 package com.fries.edoo.app;
 
 public class AppConfig {
-	public static final String URL_HOST = "http://api.uetf.me";
+	public static final String URL_HOST = "http://api-v2.uetf.me";
+//	public static final String URL_HOST = "http://api.uetf.me";
 //	public static final String URL_HOST = "http://10.0.2.2:2344";
 	//Server vote comment
 	public static final String URL_SOLVE_COMMENT = URL_HOST + "/solve";

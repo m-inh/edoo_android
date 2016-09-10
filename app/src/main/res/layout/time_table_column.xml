@@ -70,11 +70,10 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <include
-        layout="@layout/time_table_cell"
+    <View
         android:layout_width="match_parent"
+        android:background="@android:color/white"
         android:layout_height="0dp"
-        android:layout_weight="1" />
-
+        android:layout_weight="1"/>
 
 </LinearLayout>
