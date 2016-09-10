@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="@dimen/cell_margin">
+
+    <LinearLayout
+        android:id="@+id/tt_col_2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/cell_margin"
+        android:layout_weight="1"
+        android:background="@color/cell_background_default"
+        android:orientation="vertical">
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tt_col_3"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/cell_margin"
+        android:layout_weight="1"
+        android:background="@color/cell_background_default"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tt_col_4"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/cell_margin"
+        android:layout_weight="1"
+        android:background="@color/cell_background_default"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tt_col_5"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/cell_margin"
+        android:layout_weight="1"
+        android:background="@color/cell_background_default"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tt_col_6"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/cell_margin"
+        android:layout_weight="1"
+        android:background="@color/cell_background_default"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tt_col_7"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/cell_margin"
+        android:layout_weight="1"
+        android:background="@color/cell_background_default"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+
+</LinearLayout>

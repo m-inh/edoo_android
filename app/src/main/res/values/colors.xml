@@ -26,16 +26,16 @@
     <color name="btn_logut_bg">#ff6861</color>
     <color name="bg_editmode">#ff6861</color>
 
-    <color name="bg_item_subject_0">#03DDFF</color>
-    <color name="bg_item_subject_1">#33B5E6</color>
-    <color name="bg_item_subject_2">#CE93D8</color>
+    <color name="bg_item_subject_0">#FF7F26</color>
+    <color name="bg_item_subject_1">#CE93D8</color>
+    <color name="bg_item_subject_2">#03DDFF</color>
     <color name="bg_item_subject_3">#98CB02</color>
-    <color name="bg_item_subject_4">#E6EE9C</color>
-    <color name="bg_item_subject_5">#FEF102</color>
-    <color name="bg_item_subject_8">#FF7F26</color>
-    <color name="bg_item_subject_7">#FFC80F</color>
-    <color name="bg_item_subject_6">#A5D6A7</color>
-    <color name="bg_item_subject_9">#FEAEC9</color>
+    <color name="bg_item_subject_4">#A5D6A7</color>
+    <color name="bg_item_subject_5">#33B5E6</color>
+    <color name="bg_item_subject_6">#FFC80F</color>
+    <color name="bg_item_subject_7">#FEF102</color>
+    <color name="bg_item_subject_8">#FEAEC9</color>
+    <color name="bg_item_subject_9">#E6EE9C</color>
     <color name="bg_item_subject_10">#E0F2F1</color>
     <color name="bg_empty_post">#f0f0f0</color>
 
@@ -92,6 +92,26 @@
         <item>@color/dot_dark_screen5</item>
         <item>@color/dot_dark_screen6</item>
     </array>
+
+    <!--TimeTable-->
+    <color name="cell_background_default">@android:color/white</color>
+    <array name="arr_color_cell_background">
+        <item>#03DDFF</item>
+        <item>#33B5E6</item>
+        <item>#CE93D8</item>
+        <item>#98CB02</item>
+        <item>#E6EE9C</item>
+        <item>#FEF102</item>
+        <item>#FF7F26</item>
+        <item>#FFC80F</item>
+        <item>#A5D6A7</item>
+        <item>#FEAEC9</item>
+        <item>#E0F2F1</item>
+    </array>
+    <color name="lighter_gray">#addd</color>
+
+
+    <!--Other-->
 
 
 </resources>

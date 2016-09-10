@@ -24,7 +24,7 @@ import com.fries.edoo.R;
 import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.fragment.LopMonHocFragment;
-import com.fries.edoo.fragment.ThoiKhoaBieuFragment;
+import com.fries.edoo.fragment.TimetableFragment;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.helper.PrefManager;
 import com.fries.edoo.models.ItemLop;
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity
     private LopMonHocFragment lopMonHocFragment = new LopMonHocFragment();
     //    private LopKhoaHocFragment lopKhoaHocFragment = new LopKhoaHocFragment();
 //    private NhomFragment nhomFragment = new NhomFragment();
-    private ThoiKhoaBieuFragment thoiKhoaBieuFragment = new ThoiKhoaBieuFragment();
+    private TimetableFragment thoiKhoaBieuFragment = new TimetableFragment();
 
     private PrefManager session;
     private SQLiteHandler sqlite;

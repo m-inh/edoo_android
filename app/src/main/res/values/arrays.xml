@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="arr_bg_cell_background">
+        <item>@drawable/bg_item_subject_1</item>
+        <item>@drawable/bg_item_subject_2</item>
+        <item>@drawable/bg_item_subject_3</item>
+        <item>@drawable/bg_item_subject_4</item>
+        <item>@drawable/bg_item_subject_5</item>
+        <item>@drawable/bg_item_subject_6</item>
+        <item>@drawable/bg_item_subject_7</item>
+        <item>@drawable/bg_item_subject_8</item>
+        <item>@drawable/bg_item_subject_9</item>
+        <item>@drawable/bg_item_subject_10</item>
+    </array>
+
+</resources>
