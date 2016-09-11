@@ -17,7 +17,6 @@ import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.helper.PrefManager;
 import com.fries.edoo.utils.CommonVLs;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,16 +62,16 @@ public class LoginActivity extends Activity {
             startActivity(intent);
             finish();
         } else {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        FirebaseInstanceId.getInstance().deleteInstanceId();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        FirebaseInstanceId.getInstance().deleteInstanceId();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }).start();
         }
 
         // Login button Click Event
