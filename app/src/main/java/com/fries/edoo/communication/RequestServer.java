@@ -37,12 +37,12 @@ public class RequestServer {
     private Context mContext;
 
     private PrefManager session;
-    private SQLiteHandler sqlite;
+
 
     // Request: Not upload data (JSONObject)
     public RequestServer(Context context, int method, String url) {
         session = new PrefManager(context);
-        sqlite = new SQLiteHandler(context);
+
         this.mContext = context;
         this.method = method;
         this.url = url;
@@ -142,6 +142,8 @@ public class RequestServer {
         session.setIsSaveClass(false);
 
         // xoa user, classes
+        SQLiteHandler sqlite;
+        sqlite = new SQLiteHandler(mContext);
         sqlite.deleteUsers();
         sqlite.deleteClasses();
 
