@@ -1,5 +1,6 @@
 package com.fries.edoo.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -9,13 +10,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.fries.edoo.R;
 import com.fries.edoo.activities.ProfileActivity;
+import com.fries.edoo.app.AppConfig;
+import com.fries.edoo.communication.RequestServer;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.holder.AbstractHolder;
 import com.fries.edoo.models.ItemUser;
@@ -61,6 +66,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
         arrInfo.add(new ItemInfoProfile(user.getEmail(), res.getString(R.string.txt_email), "email"));
         arrInfo.add(new ItemInfoProfile(user.getDescription(), res.getString(R.string.txt_description), "description"));
         arrInfo.add(new ItemInfoProfile(user.getFavorite(), res.getString(R.string.txt_favorite), "favorite"));
+        arrInfo.add(new ItemInfoProfile("****", res.getString(R.string.txt_password), "change_password"));
     }
 
     public void updateAvatar(String urlAvatar) {
@@ -68,7 +74,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
         notifyDataSetChanged();
     }
 
-    public void updateDataInfo(String description, String favorite){
+    public void updateDataInfo(String description, String favorite) {
         user.setDescription(description);
         user.setFavorite(favorite);
         setDataUser(user);
@@ -173,6 +179,74 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
         @Override
         public void onClick(View view) {
+            ItemInfoProfile item = arrInfo.get(position);
+            if (item.getInfoKey().equalsIgnoreCase("change_password")) {
+                caseUpdatePassword();
+            } else {
+                caseUpdateInfo();
+            }
+
+        }
+
+        private void caseUpdatePassword() {
+            final Dialog dialog = new Dialog(mContext, R.style.DialogInput);
+            dialog.setContentView(R.layout.dialog_change_password);
+            dialog.setTitle(R.string.txt_change_password);
+            dialog.setCancelable(false);
+
+            final EditText edtOldPass = (EditText) dialog.findViewById(R.id.edt_old_password);
+            final EditText edtNewPass = (EditText) dialog.findViewById(R.id.edt_new_password);
+            final EditText edtConfirmNewPass = (EditText) dialog.findViewById(R.id.edt_confirm_new__password);
+            final TextView tvAlertNotMatch = (TextView) dialog.findViewById(R.id.tv_new_password_not_match);
+            final TextView tvAlertOldPassIncorrect = (TextView) dialog.findViewById(R.id.tv_old_password_incorrect);
+
+            View.OnClickListener onClick = new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    switch (view.getId()) {
+                        case R.id.btn_cancel_change_pass:
+                            dialog.dismiss();
+                            break;
+                        case R.id.btn_ok_change_pass:
+                            String oldPass = edtOldPass.getText().toString();
+                            String newPass = edtNewPass.getText().toString();
+                            String confirmNewPass = edtConfirmNewPass.getText().toString();
+
+                            if (oldPass.isEmpty() || newPass.isEmpty() || confirmNewPass.isEmpty()) {
+                                Toast.makeText(mContext, "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                                break;
+                            }
+
+                            if (!newPass.equals(confirmNewPass)) {
+                                tvAlertNotMatch.setVisibility(View.VISIBLE);
+                                break;
+                            } else {
+                                changePasswordRequest(oldPass, newPass, dialog, tvAlertOldPassIncorrect);
+                            }
+                            break;
+                    }
+                }
+            };
+
+            View.OnFocusChangeListener onFocusChange = new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (b) {
+                        tvAlertNotMatch.setVisibility(View.GONE);
+                        tvAlertOldPassIncorrect.setVisibility(View.GONE);
+                    }
+                }
+            };
+
+            edtNewPass.setOnFocusChangeListener(onFocusChange);
+            edtConfirmNewPass.setOnFocusChangeListener(onFocusChange);
+            dialog.findViewById(R.id.btn_cancel_change_pass).setOnClickListener(onClick);
+            dialog.findViewById(R.id.btn_ok_change_pass).setOnClickListener(onClick);
+
+            dialog.show();
+        }
+
+        private void caseUpdateInfo() {
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.DialogInput);
             builder.setTitle(hint.getText());
             View layout = LayoutInflater.from(mContext).inflate(R.layout.dialog_edit_info_profile, null);
@@ -191,6 +265,36 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
             builder.setNegativeButton("Hủy", null);
 
             builder.show();
+        }
+
+        // ------------------------ RequestServer --------------------------------------------------
+        private void changePasswordRequest(String oldPass, String newPass, final Dialog dialog, final TextView tvAlertOldPassIncorrect) {
+            JSONObject json = new JSONObject();
+            try {
+                json.put("old_password", oldPass);
+                json.put("new_password", newPass);
+                Log.d(TAG, "old = " + oldPass);
+                Log.d(TAG, "new = " + newPass);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            final RequestServer requestServer = new RequestServer(mContext, Request.Method.POST, AppConfig.URL_POST_CHANGE_PASS, json);
+            requestServer.setListener(new RequestServer.ServerListener() {
+                @Override
+                public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
+                    if (!error) {
+                        Toast.makeText(mContext, "Xong cmnr", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                        requestServer.logout();
+                    } else {
+                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                        tvAlertOldPassIncorrect.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+
+            requestServer.sendRequest("change_password");
         }
 
         private void updateInfo(String newContent) {

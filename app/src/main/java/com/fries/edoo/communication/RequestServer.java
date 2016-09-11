@@ -136,7 +136,7 @@ public class RequestServer {
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
-    private void logout(){
+    public void logout(){
         // xoa session
         session.setLogin(false);
         session.setIsSaveClass(false);

@@ -94,6 +94,14 @@
     <string name="txt_edit_post">Sửa bài viết</string>
     <string name="txt_edit_profile">Sửa profile</string>
     <string name="txt_edit_avatar">Đổi ảnh đại diện</string>
+    <string name="txt_change_password">Đổi mật khẩu</string>
+    <string name="txt_old_password">Mật khẩu cũ</string>
+    <string name="txt_old_password_incorrect">Mật khẩu cũ không đúng!</string>
+    <string name="txt_new_password">Mật khẩu mới</string>
+    <string name="txt_confirm_new_password">Nhập lại mật khẩu mới</string>
+    <string name="txt_new_password_not_match">Mật khẩu mới không khớp với nhau!</string>
+    <string name="txt_reset_password">Đặt lại mật khẩu</string>
+    <string name="txt_forgot_password"><i>Quên mật khẩu?</i></string>
 
     <string name="txt_save">Lưu</string>
     <string name="txt_cancel">Không</string>
@@ -101,6 +109,7 @@
     <string name="txt_email">Email</string>
     <string name="txt_description">Giới thiệu</string>
     <string name="txt_favorite">Sở thích</string>
+    <string name="txt_password">Mật khẩu</string>
     <string name="txt_question_delete_post">Thao tác xóa không thể hoàn tác. Bạn có muốn tiếp tục?</string>
     <string name="txt_yes">Đồng ý</string>
     <string name="txt_delete_comment">Xóa comment</string>

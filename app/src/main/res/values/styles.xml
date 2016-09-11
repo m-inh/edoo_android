@@ -37,6 +37,10 @@
     <style name="DialogInput" parent="Theme.AppCompat.DayNight.Dialog.Alert">
         <item name="android:windowSoftInputMode">stateVisible</item>
     </style>
+    <style name="DialogInputActionBar" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowSoftInputMode">stateVisible</item>
+        <item name="android:windowNoTitle">false</item>
+    </style>
 
     <style name="splashScreenTheme" parent="AppTheme">
         <item name="android:windowBackground">@color/colorPrimary</item>

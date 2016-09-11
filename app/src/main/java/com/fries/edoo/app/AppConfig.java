@@ -39,6 +39,7 @@ public class AppConfig {
 
 
 	public static final String URL_GET_PROFILE = URL_HOST + "/profile";
+	public static final String URL_POST_CHANGE_PASS = URL_HOST + "/changepass";
 
 
 
