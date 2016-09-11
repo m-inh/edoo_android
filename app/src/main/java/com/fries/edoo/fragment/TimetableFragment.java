@@ -152,7 +152,7 @@ public class TimetableFragment extends Fragment {
 
                     setDataForTimeTable();
 
-                    saveClassesToSQLite();
+//                    saveClassesToSQLite();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

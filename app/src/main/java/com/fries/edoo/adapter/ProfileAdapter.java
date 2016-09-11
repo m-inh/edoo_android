@@ -188,7 +188,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
         }
 
         private void caseUpdatePassword() {
-            final Dialog dialog = new Dialog(mContext, R.style.DialogInput);
+            final Dialog dialog = new Dialog(mContext, R.style.DialogInputActionBar);
             dialog.setContentView(R.layout.dialog_change_password);
             dialog.setTitle(R.string.txt_change_password);
             dialog.setCancelable(false);

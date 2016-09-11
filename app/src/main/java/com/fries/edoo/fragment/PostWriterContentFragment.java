@@ -226,6 +226,7 @@ public class PostWriterContentFragment extends Fragment {
                 }
             }
         });
+        dialog.setNegativeButton("Hủy", null);
 
         dialog.show();
     }
