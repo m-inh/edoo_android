@@ -1,16 +1,21 @@
 package com.fries.edoo.activities;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -40,8 +45,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements DialogInterface.OnClickListener {
     private static final String TAG = ProfileActivity.class.getSimpleName();
+    private static final int CAMERA_REQUEST = 23423;
 
     private ProfileAdapter adapter;
     private RecyclerView rvListInfo;
@@ -82,7 +88,7 @@ public class ProfileActivity extends AppCompatActivity {
 //                Toast.makeText(this, "Edit profile", Toast.LENGTH_SHORT).show();
 //                break;
             case R.id.action_change_avatar:
-                Crop.pickImage(this);
+                pickImage();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -93,11 +99,46 @@ public class ProfileActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    // ----------------------
+
+    private void pickImage() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        CharSequence[] selection = {getString(R.string.txt_gallery), getString(R.string.txt_camera)};
+        dialog.setItems(selection, this);
+        dialog.show();
+    }
+
+    @Override
+    public void onClick(DialogInterface dialogInterface, int i) {
+        if (i==0) Crop.pickImage(this);
+        else pickImageFromCamera();
+    }
+
+    private Uri photoUri;
+
+    private void pickImageFromCamera() {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "New Picture");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+        photoUri = getContentResolver().insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+
+        if (CommonVLs.isHasCameraPermissions(this)) {
+            startActivityForResult(intent, CAMERA_REQUEST);
+        } else {
+            CommonVLs.verifyCameraPermissions(this);
+        }
+    }
+
     //--------------------------------------------------------------------------------------------------
     // Listen for the result of the crop:
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Crop.REQUEST_PICK && resultCode == RESULT_OK) {
             beginCrop(data.getData());
+        } else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            beginCrop(photoUri);
         } else if (requestCode == Crop.REQUEST_CROP) {
             handleCrop(resultCode, data);
         }

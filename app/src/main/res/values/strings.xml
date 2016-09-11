@@ -94,6 +94,7 @@
     <string name="txt_edit_post">Sửa bài viết</string>
     <string name="txt_edit_profile">Sửa profile</string>
     <string name="txt_edit_avatar">Đổi ảnh đại diện</string>
+    <string name="txt_get_image_from">Lấy ảnh từ:</string>
     <string name="txt_change_password">Đổi mật khẩu</string>
     <string name="txt_old_password">Mật khẩu cũ</string>
     <string name="txt_old_password_incorrect">Mật khẩu cũ không đúng!</string>
