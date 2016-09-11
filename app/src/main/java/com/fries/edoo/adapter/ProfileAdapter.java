@@ -185,7 +185,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
             } else {
                 caseUpdateInfo();
             }
-
         }
 
         private void caseUpdatePassword() {
@@ -284,7 +283,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
                 @Override
                 public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                     if (!error) {
-                        Toast.makeText(mContext, "Xong cmnr", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Thay đổi thành công! Vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                         requestServer.logout();
                     } else {
