@@ -1,16 +1,23 @@
 package com.fries.edoo.communication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.fries.edoo.activities.LoginActivity;
+import com.fries.edoo.app.AppConfig;
 import com.fries.edoo.app.AppController;
 import com.fries.edoo.helper.PrefManager;
+import com.fries.edoo.helper.SQLiteHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,10 +37,12 @@ public class RequestServer {
     private Context mContext;
 
     private PrefManager session;
+    private SQLiteHandler sqlite;
 
     // Request: Not upload data (JSONObject)
     public RequestServer(Context context, int method, String url) {
         session = new PrefManager(context);
+        sqlite = new SQLiteHandler(context);
         this.mContext = context;
         this.method = method;
         this.url = url;
@@ -75,6 +84,10 @@ public class RequestServer {
                     JSONObject jsonError = new JSONObject(new String(data));
                     if (mListener != null){
                         mListener.onReceive(true, jsonError, jsonError.getString("message"));
+                        if (jsonError.getString("error").equalsIgnoreCase("Unauthorized")) {
+                            Toast.makeText(mContext, "Xác thực lỗi! Vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
+                            logout();
+                        }
                     }
                 } catch (Exception e) {
                     if (mListener != null){
@@ -88,13 +101,13 @@ public class RequestServer {
             }
         };
 
-        final boolean isLoggin = session.isLoggedIn();
+        final boolean isLogin = session.isLoggedIn();
         final String token = session.getTokenLogin();
 
         request = new JsonObjectRequest(method, url, jsonReq, listener, error) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                if (isLoggin) {
+                if (isLogin) {
                     Map<String, String> params = new HashMap<String, String>();
                     // Send token to server -> finish a session
                     params.put("Authorization", token);
@@ -123,6 +136,20 @@ public class RequestServer {
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
+    private void logout(){
+        // xoa session
+        session.setLogin(false);
+        session.setIsSaveClass(false);
+
+        // xoa user, classes
+        sqlite.deleteUsers();
+        sqlite.deleteClasses();
+
+        // thoat ra man hinh dang nhap
+        Intent intent = new Intent(mContext, LoginActivity.class);
+        mContext.startActivity(intent);
+        ((AppCompatActivity)mContext).finish();
+    }
 
     // ---------------------------------------------------------------------------------------------
     private ServerListener mListener;
