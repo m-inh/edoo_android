@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dialog_padding_around_content"
         android:layout_marginRight="@dimen/dialog_padding_around_content"
-        android:layout_marginTop="@dimen/paragraph_margin">
+        android:layout_marginBottom="@dimen/paragraph_margin"
+        >
 
         <EditText
             android:id="@+id/edt_info_profile"

@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_edit_post"
-        android:title="@string/txt_edit_post"
-        android:icon="@drawable/ic_edit"
-        android:orderInCategory="100"
-        app:showAsAction="always"/>
+    <!--<item android:id="@+id/action_edit_post"-->
+        <!--android:title="@string/txt_edit_post"-->
+        <!--android:icon="@drawable/ic_edit"-->
+        <!--android:orderInCategory="100"-->
+        <!--app:showAsAction="always"/>-->
 
 
     <item android:id="@+id/action_delete_post"

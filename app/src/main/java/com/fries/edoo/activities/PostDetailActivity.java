@@ -134,9 +134,9 @@ public class PostDetailActivity extends AppCompatActivity {
             case R.id.action_delete_post:
                 showDialogDeletePost();
                 break;
-            case R.id.action_edit_post:
-                Toast.makeText(this, "Edit post: Coming soon", Toast.LENGTH_SHORT).show();
-                break;
+//            case R.id.action_edit_post:
+//                Toast.makeText(this, "Edit post: Coming soon", Toast.LENGTH_SHORT).show();
+//                break;
         }
         return true;
     }

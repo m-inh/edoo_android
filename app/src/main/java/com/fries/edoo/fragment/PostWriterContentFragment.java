@@ -184,7 +184,7 @@ public class PostWriterContentFragment extends Fragment {
     private void showDialogInsertLink() {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(getContext(), R.style.DialogAnimation);
         dialog.setTitle(R.string.dialog_title_insert_link);
-        dialog.setIcon(R.drawable.ic_editor_insert_link_color);
+//        dialog.setIcon(R.drawable.ic_editor_insert_link_color);
         final View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_insert_link_editor, null);
         dialog.setView(view);
 
