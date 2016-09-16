@@ -135,7 +135,6 @@ public class LoginActivity extends Activity {
         pDialog.setCancelable(false);
         pDialog.setMessage("Đăng nhập ...");
         pDialog.show();
-//        showDialog();
 
         JSONObject objRequest = new JSONObject();
         try {
