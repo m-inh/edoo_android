@@ -35,6 +35,9 @@ public class ItemTimeLine extends ItemBase implements Serializable {
     private int commentCount;
     private ArrayList<ItemComment> itemComments = new ArrayList<>();
 
+    public ItemTimeLine() {
+    }
+
     public ItemTimeLine(String idPost, String title, String name, String ava, boolean isIncognito, String content, int like, boolean isConfirmByTeacher, String type) {
         this.name = name;
         this.idPost = idPost;

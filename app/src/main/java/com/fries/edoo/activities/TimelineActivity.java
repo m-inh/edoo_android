@@ -320,6 +320,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
     public void startPostDetailActivity(ItemTimeLine itemTimeLine) {
         Intent mIntent = new Intent();
         mIntent.putExtra("timelineItem", itemTimeLine);
+        mIntent.putExtra("post_id", itemTimeLine.getIdPost());
         mIntent.setClass(this, PostDetailActivity.class);
 
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {

@@ -101,7 +101,11 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
     @Override
     public int getItemCount() {
-        return itemTimeline.getItemComments().size() + 1;
+        if (itemTimeline == null){
+            return 0;
+        } else {
+            return itemTimeline.getItemComments().size() + 1;
+        }
     }
 
     public void setItemTimeline(ItemTimeLine itemTimeline) {

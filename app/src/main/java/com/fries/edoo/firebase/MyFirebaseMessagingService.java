@@ -15,6 +15,7 @@ import android.util.Log;
 import com.fries.edoo.R;
 import com.fries.edoo.activities.MainActivity;
 import com.fries.edoo.models.ItemLop;
+import com.fries.edoo.models.ItemTimeLine;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -54,28 +55,62 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param msgData FCM message body received.
      */
     private void sendNotification(Map<String, String> msgData) {
-        String classId = msgData.get("class_id]");
-        String className = msgData.get("class_name]");
-        String teacherName = msgData.get("teacher_name]");
-        String classTitle = msgData.get("title]");
-
-        ItemLop itemLop = new ItemLop(className, classId, "", teacherName, 0);
-        Bundle b = new Bundle();
-        b.putSerializable("item_class", itemLop);
-
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtras(b);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setContentTitle("Thông báo mới từ lớp " + className)
-                .setContentText("Gv " + teacherName + ": " + classTitle)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+
+        String notiType = msgData.get("type]");
+
+        if (notiType != null){
+            if (notiType.equalsIgnoreCase("teacher_post")){
+                String classId = msgData.get("class_id]");
+                String className = msgData.get("class_name]");
+                String teacherName = msgData.get("teacher_name]");
+                String classTitle = msgData.get("title]");
+
+                ItemLop itemLop = new ItemLop(className, classId, "", teacherName, 0);
+                Bundle b = new Bundle();
+                b.putSerializable("item_class", itemLop);
+                b.putString("type", "teacher_post");
+
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtras(b);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                        PendingIntent.FLAG_ONE_SHOT);
+                notificationBuilder.setContentTitle("Thông báo mới từ lớp " + className)
+                        .setContentText("Gv " + teacherName + ": " + classTitle)
+                        .setAutoCancel(true)
+                        .setSound(defaultSoundUri)
+                        .setContentIntent(pendingIntent);
+
+            } else if (notiType.equalsIgnoreCase("comment")){
+                String postId = msgData.get("post_id]");
+                boolean isIncognito = Boolean.parseBoolean(msgData.get("is_incognito]"));
+                String content = msgData.get("content]");
+                String name = "Ẩn danh";
+
+                if (!isIncognito){
+                    name = msgData.get("name]");
+                }
+
+                ItemTimeLine itemTimeLine = new ItemTimeLine();
+                itemTimeLine.setIdPost(postId);
+                Bundle b = new Bundle();
+                b.putSerializable("item_timeline", itemTimeLine);
+                b.putString("type", "comment");
+
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtras(b);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                        PendingIntent.FLAG_ONE_SHOT);
+                notificationBuilder.setContentTitle("Bạn nhận được câu trả lời mới!")
+                        .setContentText(name + ": " + content)
+                        .setAutoCancel(true)
+                        .setSound(defaultSoundUri)
+                        .setContentIntent(pendingIntent);
+            }
+        }
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
             notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);

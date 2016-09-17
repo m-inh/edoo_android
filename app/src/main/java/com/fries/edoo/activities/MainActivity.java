@@ -28,6 +28,7 @@ import com.fries.edoo.fragment.TimetableFragment;
 import com.fries.edoo.helper.SQLiteHandler;
 import com.fries.edoo.helper.PrefManager;
 import com.fries.edoo.models.ItemLop;
+import com.fries.edoo.models.ItemTimeLine;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
@@ -110,9 +111,20 @@ public class MainActivity extends AppCompatActivity
 
         //start timeline activity if click noti
         Intent mIntent = getIntent();
-        ItemLop itemLop = (ItemLop) mIntent.getSerializableExtra("item_class");
-        if (itemLop != null) {
-            goToTimeLine(itemLop, "");
+
+        String notiType = mIntent.getStringExtra("type");
+        if (notiType != null){
+            if (notiType.equalsIgnoreCase("teacher_post")){
+                ItemLop itemLop = (ItemLop) mIntent.getSerializableExtra("item_class");
+                if (itemLop != null) {
+                    goToTimeLine(itemLop, "");
+                }
+            } else if (notiType.equalsIgnoreCase("comment")){
+                ItemTimeLine itemTimeLine = (ItemTimeLine) mIntent.getSerializableExtra("item_timeline");
+                Intent intent = new Intent(this, PostDetailActivity.class);
+                intent.putExtra("post_id", itemTimeLine.getIdPost());
+                startActivity(intent);
+            }
         }
 
         // Register FCM token to server

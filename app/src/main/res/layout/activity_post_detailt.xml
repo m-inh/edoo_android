@@ -48,7 +48,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/bg_popup_comment"
-            android:hint="Bình luận ..."
+            android:hint="Trả lời ..."
             android:inputType="textCapSentences"
             android:paddingLeft="10dp" />
 

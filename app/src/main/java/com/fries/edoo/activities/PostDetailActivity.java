@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -35,6 +36,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -71,29 +74,27 @@ public class PostDetailActivity extends AppCompatActivity {
         Intent mIntent = getIntent();
         this.itemTimeline = (ItemTimeLine) mIntent.getSerializableExtra("timelineItem");
 
-        initViews(itemTimeline);
-
-        getPostDetail(itemTimeline.getIdPost());
-    }
-
-    private void initViews(final ItemTimeLine itemTimeline) {
-        rvMain = (RecyclerView) findViewById(R.id.rv_main);
-        mAdapter = new PostDetailAdapter(this, itemTimeline);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rvMain.setLayoutManager(linearLayoutManager);
-        rvMain.setAdapter(mAdapter);
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            rvMain.setOnScrollChangeListener((View.OnScrollChangeListener) onScrollListener);
+//        if (this.itemTimeline != null) {
+//            initViews(this.itemTimeline);
+//        } else {
+//            initViews();
 //        }
 
+        initViews(this.itemTimeline);
+
+        getPostDetail(mIntent.getStringExtra("post_id"));
+    }
+
+    private void initViews() {
+        rvMain = (RecyclerView) findViewById(R.id.rv_main);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rvMain.setLayoutManager(linearLayoutManager);
         edtComment = (EditText) findViewById(R.id.edt_comment);
         btnSend = (ImageView) findViewById(R.id.btn_send);
-
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!edtComment.getText().toString().isEmpty()) {
+                if (PostDetailActivity.this.itemTimeline != null && !edtComment.getText().toString().isEmpty()) {
                     postCmt(itemTimeline.getIdPost(), edtComment.getText().toString());
                     InputMethodManager inputMgr = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                     inputMgr.hideSoftInputFromWindow(edtComment.getWindowToken(), 0);
@@ -102,6 +103,13 @@ public class PostDetailActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void initViews(final ItemTimeLine itemTimeline) {
+        initViews();
+
+        mAdapter = new PostDetailAdapter(this, itemTimeline);
+        rvMain.setAdapter(mAdapter);
     }
 
     @Override
@@ -115,12 +123,14 @@ public class PostDetailActivity extends AppCompatActivity {
 
         // Permission of User
 //        boolean permission = PermissionManager.pDeletePost(userIsTeacher, authorIsTeacher, userIsAuthor);
-        boolean permission = PermissionManager.pDeletePost(
-                itemTimeline.getIdAuthor(),
-                itemTimeline.getTypeAuthor(),
-                user.get("uid"),
-                user.get("type"));
-        mnDeletePost.setVisible(permission);
+        if (itemTimeline != null) {
+            boolean permission = PermissionManager.pDeletePost(
+                    itemTimeline.getIdAuthor(),
+                    itemTimeline.getTypeAuthor(),
+                    user.get("uid"),
+                    user.get("type"));
+            mnDeletePost.setVisible(permission);
+        }
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -178,7 +188,67 @@ public class PostDetailActivity extends AppCompatActivity {
                 if (!error) {
                     Log.i(TAG, response.toString());
 
-                    ArrayList<ItemComment> cmtArr = new ArrayList<ItemComment>();
+                    JSONObject jsonPost = response.getJSONObject("data");
+
+                    String id = jsonPost.getString("id");
+                    String titlePost = jsonPost.getString("title");
+                    String contentPost = jsonPost.getString("content");
+                    String desPost = jsonPost.getString("description");
+                    int like = jsonPost.getInt("vote_count");
+                    int commentCount = jsonPost.getInt("comment_count");
+                    boolean isIncognito = jsonPost.getInt("is_incognito") == 1;
+//                    boolean isSeen = jsonPost.getInt("is_seen") == 1;
+                    boolean isSeen = true;
+                    boolean isPostSolve = jsonPost.getInt("is_solve") == 1;
+                    String timeCreateAtPost = jsonPost.getString("created_at");
+                    String type = jsonPost.getString("type");
+
+                    //author post
+                    String nameAuthorPost = "Ẩn danh";
+                    String idAuthorPost = "";
+                    String emailAuthorPost = "";
+                    String typeAuthorPost = "";
+                    String mssvAuthorPost = "";
+                    String avarAuthorPost = "okmen.com";
+
+                    try {
+                        JSONObject jsonAuthorPost = jsonPost.getJSONObject("author");
+                        idAuthorPost = jsonAuthorPost.getString("id");
+                        emailAuthorPost = jsonAuthorPost.getString("email");
+                        typeAuthorPost = jsonAuthorPost.getString("capability");
+                        mssvAuthorPost = jsonAuthorPost.getString("code");
+                        avarAuthorPost = jsonAuthorPost.getString("avatar");
+                        nameAuthorPost = jsonAuthorPost.getString("name");
+
+                        if (isIncognito) {
+                            nameAuthorPost = "Ẩn danh";
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    boolean isConfirm = false;
+                    final ItemTimeLine itemTimeLine = new ItemTimeLine(id, titlePost, nameAuthorPost, avarAuthorPost, isIncognito, contentPost, like, isConfirm, type);
+                    itemTimeLine.setTypeAuthor(typeAuthorPost);
+                    itemTimeLine.setDescription(desPost);
+                    itemTimeLine.setIdAuthor(idAuthorPost);
+                    itemTimeLine.setCommentCount(commentCount);
+                    itemTimeLine.setIsSeen(isSeen);
+                    itemTimeLine.setSolve(isPostSolve);
+
+                    String format = CommonVLs.TIME_FORMAT;
+                    SimpleDateFormat sdf = new SimpleDateFormat(format);
+                    try {
+                        String tempTime = DateFormat.format("dd/MM/yy", sdf.parse(timeCreateAtPost)
+                                .getTime())
+                                .toString();
+                        itemTimeLine.setCreateAt(tempTime);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    // parse cmt
+                    final ArrayList<ItemComment> cmtArr = new ArrayList<>();
 
                     JSONArray commentJsonArr = response.getJSONObject("data").getJSONArray("comments");
                     for (int i = 0; i < commentJsonArr.length(); i++) {
@@ -216,7 +286,21 @@ public class PostDetailActivity extends AppCompatActivity {
 
                         cmtArr.add(itemComment);
                     }
-                    mAdapter.setItemComments(cmtArr);
+
+                    itemTimeLine.setItemComments(cmtArr);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (PostDetailActivity.this.itemTimeline == null) {
+                                PostDetailActivity.this.itemTimeline = itemTimeLine;
+
+                                mAdapter.setItemTimeline(PostDetailActivity.this.itemTimeline);
+                            } else {
+                                mAdapter.setItemComments(cmtArr);
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -283,31 +367,6 @@ public class PostDetailActivity extends AppCompatActivity {
         mIntent.putExtras(b);
         setResult(RESULT_OK, mIntent);
     }
-
-//    public RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
-//        boolean hideToolBar = false;
-//
-//        @Override
-//        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//            super.onScrollStateChanged(recyclerView, newState);
-//            if (hideToolBar) {
-//                PostDetailActivity.this.getSupportActionBar().hide();
-//            } else {
-//                PostDetailActivity.this.getSupportActionBar().show();
-//            }
-//        }
-//
-//        @Override
-//        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//            super.onScrolled(recyclerView, dx, dy);
-//            if (dy > 20) {
-//                hideToolBar = true;
-//
-//            } else if (dy < -5) {
-//                hideToolBar = false;
-//            }
-//        }
-//    };
 
     // -------------------------------------------
     private void requestDeletePost() {
