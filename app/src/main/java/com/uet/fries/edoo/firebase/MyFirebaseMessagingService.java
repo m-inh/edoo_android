@@ -8,10 +8,12 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.uet.fries.edoo.R;
 import com.uet.fries.edoo.activities.MainActivity;
 import com.uet.fries.edoo.models.ItemLop;
 import com.uet.fries.edoo.models.ItemTimeLine;
@@ -111,11 +113,33 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
-            notificationBuilder.setSmallIcon(com.uet.fries.edoo.R.mipmap.ic_launcher);
+            notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
         } else {
-            notificationBuilder.setSmallIcon(com.uet.fries.edoo.R.mipmap.ic_stat_ic_noti)
-                    .setColor(ContextCompat.getColor(this, com.uet.fries.edoo.R.color.colorPrimary));
+            notificationBuilder.setSmallIcon(R.mipmap.ic_stat_ic_noti)
+                    .setColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
+
+        PowerManager pm = (PowerManager)getSystemService(
+                Context.POWER_SERVICE);
+        PowerManager.WakeLock wl = pm.newWakeLock(
+                PowerManager.SCREEN_DIM_WAKE_LOCK
+                        | PowerManager.ON_AFTER_RELEASE,
+                TAG);
+
+        wl.acquire();
+        wl.release();
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+//            if (!pm.isInteractive()){
+//                wl.acquire();
+//                wl.release();
+//            }
+//        } else {
+//            if (!pm.isScreenOn()){
+//                wl.acquire();
+//                wl.release();
+//            }
+//        }
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
