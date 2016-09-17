@@ -119,11 +119,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
 
-        PowerManager pm = (PowerManager)getSystemService(
-                Context.POWER_SERVICE);
+        PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wl = pm.newWakeLock(
-                PowerManager.SCREEN_DIM_WAKE_LOCK
-                        | PowerManager.ON_AFTER_RELEASE,
+                PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP,
                 TAG);
 
         wl.acquire();
