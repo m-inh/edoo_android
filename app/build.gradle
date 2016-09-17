@@ -5,11 +5,11 @@ android {
     buildToolsVersion "24.0.1"
 
     defaultConfig {
-        applicationId "com.fries.edoo"
+        applicationId "com.uet.fries.edoo"
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
-        versionName "1.2"
+        versionName "1.0"
 
         // Enabling multidex support.
         multiDexEnabled true

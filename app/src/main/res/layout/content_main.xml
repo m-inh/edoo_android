@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity"
+    tools:context="uet.fries.edoo.activities.MainActivity"
     android:orientation="vertical"
     tools:showIn="@layout/app_bar_main">
 
