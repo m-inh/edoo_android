@@ -224,8 +224,10 @@ th {
 /*
 Edit here
 */
+
 * {
     font-family: "Open Sans", sans-serif;
+    word-wrap: break-word;
 }
 
 h1 {

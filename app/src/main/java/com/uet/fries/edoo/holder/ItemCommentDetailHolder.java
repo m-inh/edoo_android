@@ -10,13 +10,17 @@ import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 
+import com.uet.fries.edoo.R;
 import com.uet.fries.edoo.activities.PostDetailActivity;
+import com.uet.fries.edoo.activities.WebviewActivity;
 import com.uet.fries.edoo.adapter.PostDetailAdapter;
 import com.uet.fries.edoo.app.AppConfig;
 import com.uet.fries.edoo.communication.RequestServer;
@@ -42,7 +46,8 @@ public class ItemCommentDetailHolder extends AbstractHolder {
 
     private TextView tvAuthorName;
     private CircleImageView ivAuthorAvatar;
-    private TextView tvComment;
+//    private TextView tvComment;
+    private WebView wvCmt;
     private TextView tvCreateAt;
     private ImageView ivCommentSolved, ivCommentMenu;
     private PostDetailAdapter postDetailAdapter;
@@ -54,7 +59,8 @@ public class ItemCommentDetailHolder extends AbstractHolder {
 
         tvAuthorName = (TextView) itemView.findViewById(com.uet.fries.edoo.R.id.tv_authorname);
         ivAuthorAvatar = (CircleImageView) itemView.findViewById(com.uet.fries.edoo.R.id.iv_avatar);
-        tvComment = (TextView) itemView.findViewById(com.uet.fries.edoo.R.id.tv_comment);
+//        tvComment = (TextView) itemView.findViewById(com.uet.fries.edoo.R.id.tv_comment);
+        wvCmt = (WebView) itemView.findViewById(R.id.wv_comment);
         ivCommentMenu = (ImageView) itemView.findViewById(com.uet.fries.edoo.R.id.iv_comment_menu);
         ivCommentSolved = (ImageView) itemView.findViewById(com.uet.fries.edoo.R.id.iv_comment_solved);
         tvCreateAt = (TextView) itemView.findViewById(com.uet.fries.edoo.R.id.tv_create_at);
@@ -83,7 +89,8 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         this.itemComment = itemComment;
 
         tvAuthorName.setText(itemComment.getName());
-        tvComment.setText(itemComment.getContent());
+//        tvComment.setText(itemComment.getContent());
+        setContentToWebview(itemComment.getContent());
         tvCreateAt.setText(itemComment.getCreateAt());
         if (!itemComment.getAvaUrl().isEmpty()) {
             Picasso.with(mContext)
@@ -100,6 +107,31 @@ public class ItemCommentDetailHolder extends AbstractHolder {
                 showMenuComment(userId, userType);
             }
         });
+    }
+
+    public void setContentToWebview(String content){
+        String htmlData = "<html>"
+                + "<head>"
+                + "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />"
+                + "</head>"
+                + "<body>"
+                + content
+                + "</body>"
+                + "</html>";
+        wvCmt.loadDataWithBaseURL("file:///android_asset/", htmlData, "text/html", "UTF-8", null);
+
+        wvCmt.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Intent mIntent = new Intent();
+                mIntent.setClass(mContext, WebviewActivity.class);
+                mIntent.putExtra("url", url);
+                mContext.startActivity(mIntent);
+                return true;
+            }
+
+        });
+
     }
 
     private void showMenuComment(String userId, String userType) {

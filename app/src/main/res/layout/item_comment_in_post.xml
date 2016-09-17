@@ -85,14 +85,11 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_comment"
-        android:layout_width="wrap_content"
+    <WebView
+        android:id="@+id/wv_comment"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/i_block_margin_top"
         android:layout_marginTop="@dimen/paragraph_margin"
-        android:text="@string/comment_author"
-        android:textColor="@color/black_87"
-        android:textSize="@dimen/t_size_body"
-        android:textStyle="normal" />
+        />
 </LinearLayout>
