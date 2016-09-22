@@ -82,7 +82,7 @@ public class RequestServer {
                     if (mListener != null){
                         mListener.onReceive(true, jsonError, jsonError.getString("message"));
                         if (jsonError.getString("error").equalsIgnoreCase("Unauthorized")) {
-                            Toast.makeText(mContext, "Xác thực lỗi! Vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "Phiên làm việc của bạn đã hết! Vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
                             logout();
                         }
                     }
