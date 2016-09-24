@@ -5,7 +5,7 @@
     android:background="@color/bg_login"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -13,15 +13,15 @@
         android:layout_gravity="center"
         android:orientation="vertical"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp" >
+        android:paddingRight="20dp">
 
         <ImageView
+            android:id="@+id/imageView3"
             android:layout_width="129dp"
             android:layout_height="133dp"
+            android:layout_gravity="center_horizontal"
             android:scaleType="fitCenter"
-            android:id="@+id/imageView3"
-            android:src="@mipmap/ic_logo"
-            android:layout_gravity="center_horizontal" />
+            android:src="@mipmap/ic_logo" />
 
         <EditText
             android:id="@+id/email"
@@ -31,8 +31,8 @@
             android:background="@color/white"
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
+            android:maxLines="1"
             android:padding="10dp"
-            android:singleLine="true"
             android:textColor="@color/input_login"
             android:textColorHint="@color/input_login_hint" />
 
@@ -44,8 +44,8 @@
             android:background="@color/white"
             android:hint="@string/hint_password"
             android:inputType="textPassword"
+            android:maxLines="1"
             android:padding="10dp"
-            android:singleLine="true"
             android:textColor="@color/input_login"
             android:textColorHint="@color/input_login_hint" />
 
@@ -59,17 +59,31 @@
             android:text="@string/btn_login"
             android:textColor="@color/btn_login" />
 
+        <Button
+            android:id="@+id/btn_forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/paragraph_margin"
+            android:background="@null"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:text="@string/btn_link_to_forgot_pass"
+            android:textAllCaps="false"
+            android:textColor="@color/white_87"
+            android:textSize="@dimen/t_size_button" />
+
 
         <Button
             android:id="@+id/btnLinkToRegisterScreen"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dip"
+            android:layout_marginTop="@dimen/dialog_margin_icon"
             android:background="@null"
             android:text="@string/btn_link_to_register"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="15dp" />
+            android:textSize="@dimen/t_size_button" />
     </LinearLayout>
 
 </LinearLayout>

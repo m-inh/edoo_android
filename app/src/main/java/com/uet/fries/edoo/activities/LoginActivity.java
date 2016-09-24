@@ -1,10 +1,14 @@
 package com.uet.fries.edoo.activities;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,8 +31,7 @@ import java.io.IOException;
 public class LoginActivity extends Activity {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private static final int REQUEST_CODE_REGISTER = 1234;
-    private Button btnLogin;
-    private Button btnLinkToRegister;
+    private Button btnLogin, btnLinkToRegister, btnForgotPass;
     private EditText inputEmail;
     private EditText inputPassword;
     private ProgressDialog pDialog;
@@ -44,6 +47,7 @@ public class LoginActivity extends Activity {
         inputPassword = (EditText) findViewById(R.id.password);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLinkToRegister = (Button) findViewById(R.id.btnLinkToRegisterScreen);
+        btnForgotPass = (Button) findViewById(R.id.btn_forgot_password);
 
         //lay du lieu tu intent do vao edittext
 //        Intent mIntent = getIntent();
@@ -95,6 +99,12 @@ public class LoginActivity extends Activity {
             }
 
         });
+        btnForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogForgotPass();
+            }
+        });
 
         // Link to Register Screen
 //        btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +119,7 @@ public class LoginActivity extends Activity {
 
         btnLinkToRegister.setVisibility(View.INVISIBLE);
 
-        if (!CommonVLs.isHasNetworkPermissions(this)){
+        if (!CommonVLs.isHasNetworkPermissions(this)) {
             CommonVLs.verifyInternetStatePermissions(this);
         }
     }
@@ -192,10 +202,74 @@ public class LoginActivity extends Activity {
                 pDialog.dismiss();
             }
         });
-        if (!requestServer.sendRequest("req_log_in")){
+        if (!requestServer.sendRequest("req_log_in")) {
             pDialog.dismiss();
 //            startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
         }
 
+    }
+
+    private void showDialogForgotPass() {
+        final Dialog dialog = new Dialog(this, R.style.DialogInputActionBar);
+        View layout = LayoutInflater.from(this).inflate(R.layout.dialog_forgot_password, null);
+        dialog.setContentView(layout);
+        dialog.setTitle("Reset password");
+        dialog.setCancelable(false);
+
+        final EditText edtCode = (EditText) layout.findViewById(R.id.edt_code_forget_pass);
+        final EditText edtEmail = (EditText) layout.findViewById(R.id.edt_email_forget_pass);
+        Button btnCancel = (Button) layout.findViewById(R.id.btn_cancel_forgot_pass);
+        Button btnSend = (Button) layout.findViewById(R.id.btn_send_forgot_pass);
+
+        View.OnClickListener onClick = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.btn_cancel_forgot_pass:
+                        dialog.dismiss();
+                        break;
+                    case R.id.btn_send_forgot_pass:
+                        String code = edtCode.getText().toString();
+                        String email = edtEmail.getText().toString();
+                        if (code.isEmpty() || email.isEmpty()) {
+                            Toast.makeText(LoginActivity.this, "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            requestResetPassword(email, code);
+                            dialog.dismiss();
+                        }
+                        break;
+                }
+            }
+        };
+        btnCancel.setOnClickListener(onClick);
+        btnSend.setOnClickListener(onClick);
+
+        dialog.show();
+    }
+
+    private void requestResetPassword(String email, String code){
+        JSONObject params = new JSONObject();
+        try {
+            params.put("email", email);
+            params.put("code", code);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestServer requestServer = new RequestServer(this, Method.POST, AppConfig.URL_RESET_PASSWORD, params);
+        requestServer.setListener(new RequestServer.ServerListener() {
+            @Override
+            public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
+                Log.i(TAG, "res = " + response.toString());
+                if (!error){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    builder.setMessage("Kiểm tra email để lấy mật khẩu mới.");
+                    builder.setPositiveButton("OK", null);
+                    builder.show();
+                } else {
+                    Log.d(TAG, "Request Error");
+                }
+            }
+        });
+        requestServer.sendRequest("reset_password");
     }
 }

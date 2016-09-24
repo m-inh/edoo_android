@@ -17,6 +17,7 @@ public class AppConfig {
 	public static final String URL_GET_LOPKHOAHOC = URL_HOST + "/classes";
 	//Server post posts
 	public static final String URL_POST_POST = URL_HOST + "/post";
+	public static final String URL_EDIT_POST = URL_HOST + "/updatepost";
 
 	public static final String URL_POST_LIKE = URL_HOST + "/votepost";
 	public static final String URL_REGISTER_FCM = URL_HOST + "/resfcm";
@@ -29,6 +30,10 @@ public class AppConfig {
 	public static String URL_LOGIN = URL_HOST + "/login";
 	// Server user logout url
 	public static String URL_LOGOUT = URL_HOST + "/logout";
+	// Reset password
+	public static String URL_RESET_PASSWORD = URL_HOST + "/resetpass";
+
+
 	public static final String URL_GET_USER_SOLVE_VOTE = URL_HOST + "/usersolvevote";
 
 	public static final String URL_GET_TKB = URL_HOST + "/timetable";

@@ -16,6 +16,7 @@
     <string name="btn_register">ĐĂNG KÍ</string>
     <string name="btn_link_to_register">Chưa có tài khoản? <u><b>Đăng kí ngay</b></u>.</string>
     <string name="btn_link_to_login">Đã có tài khoản? <u><b>Đăng nhập ngay</b></u>.</string>
+    <string name="btn_link_to_forgot_pass">Quên mật khẩu?</string>
     <string name="welcome">Chào mừng</string>
     <string name="btn_logout">Đăng xuất</string>
     <string name="name">Họ và tên</string>
@@ -105,7 +106,8 @@
     <string name="txt_forgot_password"><i>Quên mật khẩu?</i></string>
 
     <string name="txt_save">Lưu</string>
-    <string name="txt_cancel">Không</string>
+    <string name="txt_no">Không</string>
+    <string name="txt_cancel">Thoát</string>
     <string name="txt_birthday">Ngày sinh</string>
     <string name="txt_email">Email</string>
     <string name="txt_description">Giới thiệu</string>
@@ -114,6 +116,7 @@
     <string name="txt_question_delete_post">Thao tác xóa không thể hoàn tác. Bạn có muốn tiếp tục?</string>
     <string name="txt_yes">Đồng ý</string>
     <string name="txt_delete_comment">Xóa comment</string>
+    <string name="txt_send">Gửi</string>
 
     <!--IntroSliderActivity-->
     <string name="next">Tiếp theo</string>
