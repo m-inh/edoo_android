@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
@@ -30,57 +31,64 @@
             android:layout_gravity="top"
             android:src="@mipmap/avatar_test" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+
+            <TextView
+                android:id="@+id/tv_authorname"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
                 android:layout_marginLeft="@dimen/i_class_padding_bottom"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                android:layout_toStartOf="@+id/l_l_iv"
+                android:text="Username"
+                android:textColor="@color/black"
+                android:textSize="@dimen/t_size_subheading"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_authorname"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="User name"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/t_size_subheading"
-                    android:textStyle="bold" />
-
+            <LinearLayout
+                android:id="@+id/l_l_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:id="@+id/iv_comment_solved"
                     android:layout_width="@dimen/i_icon_size"
                     android:layout_height="@dimen/i_icon_size"
-                    android:clickable="true"
+                    android:layout_marginRight="@dimen/card_elevation"
                     android:src="@drawable/ic_bookmark_solved" />
 
                 <ImageView
                     android:id="@+id/iv_comment_menu"
-                    android:layout_width="@dimen/i_icon_size"
-                    android:layout_height="@dimen/i_icon_size"
+                    android:layout_width="@dimen/i_icon_size_large"
+                    android:layout_height="@dimen/i_icon_size_large"
+                    android:background="@drawable/bg_btn_pressed"
                     android:clickable="true"
-                    android:src="@drawable/ic_menu"
-                    android:background="@drawable/bg_btn_pressed"/>
-
+                    android:padding="@dimen/action_padding"
+                    android:src="@drawable/ic_menu" />
 
             </LinearLayout>
 
+
             <TextView
                 android:id="@+id/tv_create_at"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_authorname"
                 android:layout_marginLeft="@dimen/i_class_padding_bottom"
                 android:text="1/1/16"
                 android:textColor="@color/black_54"
                 android:textSize="@dimen/t_size_caption" />
-        </LinearLayout>
+
+
+        </RelativeLayout>
 
 
     </LinearLayout>
@@ -91,5 +99,5 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/i_block_margin_top"
         android:layout_marginTop="@dimen/paragraph_margin"
-        />
+        tools:ignore="WebViewLayout" />
 </LinearLayout>

@@ -23,6 +23,14 @@ public class PermissionManager {
         return false;
     }
 
+    public static boolean pEditPost(String authorPostId, String userId) {
+        boolean userIsAuthor = userId.equalsIgnoreCase(authorPostId);
+        if (userIsAuthor) {
+            return true;
+        }
+        return false;
+    }
+
     public static boolean pDeleteComment(String authorPostId, String authorCommentType, String authorCommentId, String userId, String userType) {
         boolean userIsTeacher = userType.equalsIgnoreCase("teacher");
         boolean authorCommentIsTeacher = authorCommentType.equalsIgnoreCase("teacher");

@@ -119,6 +119,7 @@ public class PostDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.post_details_menu, menu);
         MenuItem mnDeletePost = menu.findItem(R.id.action_delete_post);
+        MenuItem mnEditPost = menu.findItem(R.id.action_edit_post);
         HashMap<String, String> user = new SQLiteHandler(this).getUserDetails();
 //        boolean userIsTeacher = user.get("type").equalsIgnoreCase("teacher");
 //        boolean authorIsTeacher = itemTimeline.getTypeAuthor().equalsIgnoreCase("teacher");
@@ -127,12 +128,16 @@ public class PostDetailActivity extends AppCompatActivity {
         // Permission of User
 //        boolean permission = PermissionManager.pDeletePost(userIsTeacher, authorIsTeacher, userIsAuthor);
         if (itemTimeline != null) {
-            boolean permission = PermissionManager.pDeletePost(
+            boolean permissionDelete = PermissionManager.pDeletePost(
                     itemTimeline.getIdAuthor(),
                     itemTimeline.getTypeAuthor(),
                     user.get("uid"),
                     user.get("type"));
-            mnDeletePost.setVisible(permission);
+            mnDeletePost.setVisible(permissionDelete);
+            boolean permissionEdit = PermissionManager.pEditPost(
+                    itemTimeline.getIdAuthor(),
+                    user.get("uid"));
+            mnEditPost.setVisible(permissionEdit);
         }
 
         return super.onCreateOptionsMenu(menu);
