@@ -64,7 +64,7 @@
     <string name="diemtongket">Điểm tổng kết</string>
     <string name="postDetailActivity">Chi tiết bài đăng</string>
     <string name="locbaidang">Lọc bài đăng giáo viên</string>
-    <string name="locbaidangchuatraloi">Lọc theo bài đăng chưa trả lời</string>
+    <string name="locbaidangchuatraloi">Lọc bài đăng chưa được giải quyết</string>
     <string name="post">Đăng bài</string>
     <string name="tatcabaidang">Tất cả bài đăng</string>
     <string name="feed">Bảng tin</string>
