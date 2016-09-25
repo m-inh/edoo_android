@@ -68,8 +68,6 @@ public class PostWriterTagFragment extends Fragment {
     }
 
     private void setData() {
-        oldType = typeQuestion;
-
         typeQuestion.setOnClickListener(clickTypePost);
         typeNote.setOnClickListener(clickTypePost);
         typeNotification.setOnClickListener(clickTypePost);
@@ -79,39 +77,51 @@ public class PostWriterTagFragment extends Fragment {
 
         // Type post default for Teacher and Student
         if (typePost.equals("")) {
-            if (!getIsTeacher()) {
+//            if (!getIsTeacher()) {
+                oldType = typeQuestion;
                 typePost = ItemTimeLine.TYPE_POST_QUESTION;
                 typeQuestion.setTextSize(14f);
-            } else {
-                typePost = ItemTimeLine.TYPE_POST_NOTIFICATION;
-                typeNotification.setTextSize(14f);
-            }
+//            } else {
+//                typePost = ItemTimeLine.TYPE_POST_NOTIFICATION;
+//                typeNotification.setTextSize(14f);
+//            }
         } else {
+            int idColor = 0;
             switch (typePost){
                 case ItemTimeLine.TYPE_POST_QUESTION:
+                    oldType = typeQuestion;
                     typeQuestion.setTextSize(14f);
+                    idColor = R.color.type_post_question;
                     break;
                 case ItemTimeLine.TYPE_POST_NOTE:
+                    oldType = typeNote;
                     typeNote.setTextSize(14f);
+                    idColor = R.color.type_post_note;
                     break;
                 case ItemTimeLine.TYPE_POST_NOTIFICATION:
+                    oldType = typeNotification;
                     typeNotification.setTextSize(14f);
+                    idColor = R.color.type_post_notification;
                     break;
                 case ItemTimeLine.TYPE_POST_POLL:
+                    oldType = typePoll;
                     typePoll.setTextSize(14f);
+                    idColor = R.color.type_post_poll;
                     break;
             }
+            CommonVLs.setBackgroundColorForView(ivLineTypePost, idColor, getContext());
         }
-        setDataUser(isIncognito);
+        setDataUser(!isIncognito);
+        scIncognitoMode.setChecked(isIncognito);
         if (!getIsTeacher()) {
             typeNotification.setVisibility(View.GONE);
         } else {
-            scIncognitoMode.setVisibility(View.GONE);
+//            scIncognitoMode.setVisibility(View.GONE);
         }
     }
 
-    private void setDataUser(boolean isIncognito) {
-        if (!isIncognito) {
+    private void setDataUser(boolean isUser) {
+        if (isUser) {
             HashMap<String, String> user = sqlite.getUserDetails();
             String urlAvatar = user.get("avatar");
             Picasso.with(getContext())
