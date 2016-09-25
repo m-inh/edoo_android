@@ -22,6 +22,7 @@ import com.uet.fries.edoo.helper.SQLiteHandler;
 import com.uet.fries.edoo.helper.PrefManager;
 import com.uet.fries.edoo.utils.CommonVLs;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.uet.fries.edoo.utils.Reporter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +42,9 @@ public class LoginActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Reporter.register(this);// Crash Reporter
+
         setContentView(R.layout.activity_login);
 
         inputEmail = (EditText) findViewById(R.id.email);

@@ -29,6 +29,7 @@ import com.uet.fries.edoo.communication.RequestServer;
 import com.uet.fries.edoo.helper.SQLiteHandler;
 import com.uet.fries.edoo.models.ItemUser;
 import com.uet.fries.edoo.utils.CommonVLs;
+import com.uet.fries.edoo.utils.Reporter;
 import com.uet.fries.edoo.utils.UserPicture;
 import com.soundcloud.android.crop.Crop;
 
@@ -51,6 +52,9 @@ public class ProfileActivity extends AppCompatActivity implements DialogInterfac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Reporter.register(this);// Crash Reporter
+
         setContentView(R.layout.activity_profile);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tb_profile);

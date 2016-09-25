@@ -31,6 +31,7 @@ import com.uet.fries.edoo.models.ItemComment;
 import com.uet.fries.edoo.models.ItemTimeLine;
 import com.uet.fries.edoo.utils.CommonVLs;
 import com.uet.fries.edoo.utils.PermissionManager;
+import com.uet.fries.edoo.utils.Reporter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,6 +65,9 @@ public class PostDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Reporter.register(this);// Crash Reporter
+
         setContentView(R.layout.activity_post_detailt);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
