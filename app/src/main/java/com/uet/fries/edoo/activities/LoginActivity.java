@@ -106,7 +106,8 @@ public class LoginActivity extends Activity {
         btnForgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialogForgotPass();
+//                showDialogForgotPass();
+                showDialogForgotPass_temp();
             }
         });
 
@@ -213,6 +214,13 @@ public class LoginActivity extends Activity {
 
     }
 
+    private void showDialogForgotPass_temp(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        builder.setTitle("Thông báo");
+        builder.setMessage("Chức năng đang được phát triển. \nĐể khôi phục mật khẩu, bạn vui lòng liên hệ với đội phát triển thông qua mail:\nFries.uet@gmail.com");
+        builder.setPositiveButton("OK", null);
+        builder.show();
+    }
     private void showDialogForgotPass() {
         final Dialog dialog = new Dialog(this, R.style.DialogInputActionBar);
         View layout = LayoutInflater.from(this).inflate(R.layout.dialog_forgot_password, null);

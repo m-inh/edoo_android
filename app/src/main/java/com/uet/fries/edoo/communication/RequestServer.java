@@ -89,7 +89,7 @@ public class RequestServer {
                 } catch (Exception e) {
                     if (mListener != null){
                         try {
-                            mListener.onReceive(true, null, "");
+                            mListener.onReceive(true, new JSONObject(), "");
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }
