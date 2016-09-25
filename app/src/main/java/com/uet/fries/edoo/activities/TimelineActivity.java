@@ -338,9 +338,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                 for (int i = 0; i < mAdapter.getItemArr().size() - 1; i++) {
                     ItemTimeLine tempItem = (ItemTimeLine) mAdapter.getItemArr().get(i);
                     if (idPost.equalsIgnoreCase(tempItem.getIdPost())) {
-                        tempItem.setLike(itemTimeLine.getLike());
-                        tempItem.setCommentCount(itemTimeLine.getCommentCount());
-                        tempItem.setSolve(itemTimeLine.isSolve());
+                        mAdapter.getItemArr().set(i, itemTimeLine);
                     }
                 }
             } else if (resultCode == PostDetailActivity.RESULT_DELETE_COMPLETE) {

@@ -273,7 +273,9 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
                 pDialog.dismiss();
                 if (!error){
                     Toast.makeText(getApplicationContext(), "Update thanh cmn cong", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "Update success: " + response.toString());
+                    Message msg = new Message();
+                    msg.setTarget(mHandler);
+                    msg.sendToTarget();
                 }else {
                     Log.d(TAG, "Error update post: " + response.toString());
                 }

@@ -57,6 +57,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private EditText edtComment;
     private ImageView btnSend;
     private ItemTimeLine itemTimeline;
+    private boolean postIsChanged;
 
     private Toolbar toolbar;
 
@@ -83,6 +84,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
         initViews(this.itemTimeline);
 
+        postIsChanged = false;
         getPostDetail(mIntent.getStringExtra("post_id"));
     }
 
@@ -181,6 +183,16 @@ public class PostDetailActivity extends AppCompatActivity {
         builder.setNegativeButton(getString(R.string.txt_no), null);
         builder.show();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode==RESULT_OK){
+            postIsChanged = true;
+            getPostDetail(itemTimeline.getIdPost());
+
+        }
+    }
+
 
     // -------------------------------- RequestServer ----------------------------------------------
 
@@ -297,10 +309,15 @@ public class PostDetailActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (PostDetailActivity.this.itemTimeline == null) {
+                            if (postIsChanged) {
                                 PostDetailActivity.this.itemTimeline = itemTimeLine;
-
                                 mAdapter.setItemTimeline(PostDetailActivity.this.itemTimeline);
+                                postIsChanged = false;
+                                Intent mIntent = new Intent();
+                                Bundle b = new Bundle();
+                                b.putSerializable("item_timeline", itemTimeline);
+                                mIntent.putExtras(b);
+                                setResult(RESULT_OK, mIntent);
                             } else {
                                 mAdapter.setItemComments(cmtArr);
                             }
