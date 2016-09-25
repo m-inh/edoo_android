@@ -2,22 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--<item android:id="@+id/action_edit_post"-->
-        <!--android:title="@string/txt_edit_post"-->
-        <!--android:icon="@drawable/ic_edit"-->
-        <!--android:orderInCategory="100"-->
-        <!--app:showAsAction="always"/>-->
-
-
-    <item android:id="@+id/action_delete_post"
-        android:title="@string/txt_delete_post"
-        android:showAsAction="never"
-        />
-
-    <item android:id="@+id/action_edit_post"
-        android:title="@string/txt_edit_post"
+    <item
+        android:id="@+id/action_edit_post"
         android:icon="@drawable/ic_edit"
-        android:showAsAction="ifRoom"
-        />
+        android:orderInCategory="100"
+        android:title="@string/txt_edit_post"
+        app:showAsAction="always" />
+
+
+    <item
+        android:id="@+id/action_delete_post"
+        android:showAsAction="never"
+        android:title="@string/txt_delete_post" />
 
 </menu>

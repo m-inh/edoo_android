@@ -276,7 +276,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 pDialog.dismiss();
                 if (!error){
-                    Toast.makeText(getApplicationContext(), "Update thanh cmn cong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Đã chỉnh sửa bài viết", Toast.LENGTH_SHORT).show();
                     Message msg = new Message();
                     msg.setTarget(mHandler);
                     msg.sendToTarget();
