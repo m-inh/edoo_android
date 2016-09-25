@@ -7,6 +7,7 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,6 +147,7 @@ public class TimetableFragment extends Fragment {
                         for (int j = 0; j < lessons.length(); j++) {
                             JSONObject lesson = lessons.getJSONObject(j);
                             listSubject.add(new ItemLopMonHoc(lesson));
+//                            Log.i(TAG, i+ " ----- " + lesson.toString());
                         }
                     }
 

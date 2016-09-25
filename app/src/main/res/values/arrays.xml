@@ -12,6 +12,8 @@
         <item>@drawable/bg_item_subject_8</item>
         <item>@drawable/bg_item_subject_9</item>
         <item>@drawable/bg_item_subject_10</item>
+        <item>@drawable/bg_item_subject_11</item>
+        <item>@drawable/bg_item_subject_12</item>
     </array>
 
 </resources>

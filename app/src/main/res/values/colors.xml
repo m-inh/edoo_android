@@ -35,10 +35,12 @@
     <color name="bg_item_subject_4">#cddc39</color>
     <color name="bg_item_subject_5">#ffc107</color>
     <color name="bg_item_subject_6">#2196f3</color>
-    <color name="bg_item_subject_7">#ffeb3b</color>
+    <color name="bg_item_subject_7">#8bc34a</color>
     <color name="bg_item_subject_8">#ec407a</color>
-    <color name="bg_item_subject_9">#8bc34a</color>
+    <color name="bg_item_subject_9">#ffeb3b</color>
     <color name="bg_item_subject_10">#3f51b5</color>
+    <color name="bg_item_subject_11">#FF7043</color>
+    <color name="bg_item_subject_12">#29B6F6</color>
     <color name="bg_empty_post">#f0f0f0</color>
 
     <color name="type_post_question">#FFC80F</color>
