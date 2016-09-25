@@ -47,6 +47,7 @@ import java.util.HashMap;
 public class PostDetailActivity extends AppCompatActivity {
     private static final String TAG = PostDetailActivity.class.getSimpleName();
     public static final int RESULT_DELETE_COMPLETE = 12;
+    private static final int REQUEST_EDIT_POST = 12112;
 
     private ProgressDialog pDialog;
 
@@ -144,9 +145,13 @@ public class PostDetailActivity extends AppCompatActivity {
             case R.id.action_delete_post:
                 showDialogDeletePost();
                 break;
-//            case R.id.action_edit_post:
-//                Toast.makeText(this, "Edit post: Coming soon", Toast.LENGTH_SHORT).show();
-//                break;
+            case R.id.action_edit_post:
+                Intent mIntent = new Intent();
+                mIntent.putExtra("timelineItem", itemTimeline);
+                mIntent.putExtra("post_id", itemTimeline.getIdPost());
+                mIntent.setClass(this, PostWriterActivity.class);
+                startActivityForResult(mIntent, REQUEST_EDIT_POST);
+                break;
         }
         return true;
     }
@@ -173,7 +178,7 @@ public class PostDetailActivity extends AppCompatActivity {
                 requestDeletePost();
             }
         });
-        builder.setNegativeButton(getResources().getString(R.string.txt_cancel), null);
+        builder.setNegativeButton(getString(R.string.txt_no), null);
         builder.show();
     }
 

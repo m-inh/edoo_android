@@ -207,7 +207,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
                 requestDeleteComment();
             }
         });
-        builder.setNegativeButton(mContext.getResources().getString(com.uet.fries.edoo.R.string.txt_cancel), null);
+        builder.setNegativeButton(mContext.getString(R.string.txt_no), null);
         builder.show();
     }
 

@@ -14,4 +14,10 @@
         android:showAsAction="never"
         />
 
+    <item android:id="@+id/action_edit_post"
+        android:title="@string/txt_edit_post"
+        android:icon="@drawable/ic_edit"
+        android:showAsAction="ifRoom"
+        />
+
 </menu>

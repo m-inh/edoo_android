@@ -17,6 +17,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
@@ -24,10 +25,12 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 
+import com.uet.fries.edoo.R;
 import com.uet.fries.edoo.app.AppConfig;
 import com.uet.fries.edoo.communication.RequestServer;
 import com.uet.fries.edoo.fragment.PostWriterContentFragment;
 import com.uet.fries.edoo.fragment.PostWriterTagFragment;
+import com.uet.fries.edoo.models.ItemTimeLine;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,17 +40,28 @@ import org.json.JSONObject;
  */
 public class PostWriterActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
     private static final String TAG = PostWriterActivity.class.getSimpleName();
+
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Toolbar toolbar;
     private PostAdapter postAdapter;
 
     private ProgressDialog pDialog;
+    private boolean isModeWritePost = true;
+    private ItemTimeLine itemTimeLine = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.uet.fries.edoo.R.layout.activity_post_writer_view_pager);
+        toolbar = (Toolbar) findViewById(R.id.tb_post_writer);
+        setSupportActionBar(toolbar);
+
+        itemTimeLine = (ItemTimeLine) getIntent().getSerializableExtra("timelineItem");
+        if (itemTimeLine != null) {
+            toolbar.setTitle(R.string.txt_edit_post);
+            isModeWritePost = false;
+        }
 
         initViews();
     }
@@ -118,7 +132,10 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
 
         PostWriterTagFragment pTag = postAdapter.getPostWriterTagFragment();
 
-        postPost(idLop, titlePost, contentPost, pTag.getTypePost(), pTag.getIsIncognitoPost(), pTag.getIsTeacher());
+        if (isModeWritePost)
+            postPost(idLop, titlePost, contentPost, pTag.getTypePost(), pTag.getIsIncognitoPost(), pTag.getIsTeacher());
+        else
+            updatePost(itemTimeLine.getIdPost(), titlePost, contentPost, pTag.getIsIncognitoPost(), pTag.getTypePost());
     }
 
     private MenuItem actionNextPage, actionPost;
@@ -157,8 +174,6 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
                 break;
             case com.uet.fries.edoo.R.id.action_post:
                 postToServer();
-//                postAdapter.getPostWriterContent().replaceUrlImage();
-//                Log.i(TAG, "post = " + postAdapter.getPostWriterContent().getContentPost());
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -171,11 +186,24 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
     }
 
     public void exitWriterPost() {
-        String titlePost = postAdapter.getPostWriterContent().getTitlePost();
-        if (!postAdapter.getPostWriterContent().contentIsEmpty() || !titlePost.isEmpty()) {
+        PostWriterContentFragment writer = postAdapter.getPostWriterContent();
+        String titlePost = writer.getTitlePost();
+        if (isModeWritePost && (!writer.contentIsEmpty() || !titlePost.isEmpty())) {
             AlertDialog.Builder notiBack = new AlertDialog.Builder(this)
-                    .setTitle("Xóa bài viết?")
-                    .setMessage(com.uet.fries.edoo.R.string.warn_exit)
+//                    .setTitle("Xóa bài viết?")
+                    .setMessage(R.string.warn_exit_and_delete)
+                    .setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            PostWriterActivity.super.onBackPressed();
+                        }
+                    })
+                    .setNegativeButton("Không", null);
+            notiBack.show();
+        } else if (!isModeWritePost && !writer.contentIsNotChanged()) {
+            AlertDialog.Builder notiBack = new AlertDialog.Builder(this)
+//                    .setTitle("Thoát?")
+                    .setMessage(R.string.warn_exit_edit)
                     .setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -226,6 +254,34 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
         requestServer.sendRequest("post new post");
     }
 
+    private void updatePost(String postId, String title, String content, boolean isIncognito, String type){
+        JSONObject params = new JSONObject();
+        try {
+            params.put("post_id", postId);
+            params.put("title", title);
+            params.put("content", content);
+            params.put("is_incognito", isIncognito);
+            params.put("type", type);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestServer request = new RequestServer(this, Request.Method.POST, AppConfig.URL_EDIT_POST, params);
+        request.setListener(new RequestServer.ServerListener() {
+            @Override
+            public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
+                pDialog.dismiss();
+                if (!error){
+                    Toast.makeText(getApplicationContext(), "Update thanh cmn cong", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Update success: " + response.toString());
+                }else {
+                    Log.d(TAG, "Error update post: " + response.toString());
+                }
+            }
+        });
+        request.sendRequest("update_post");
+    }
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -234,6 +290,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
         }
     };
 
+
     // ----------------------------------------- Adapter -------------------------------------------
     private class PostAdapter extends FragmentStatePagerAdapter {
         private PostWriterContentFragment postWriterContent;
@@ -241,8 +298,10 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
 
         public PostAdapter(FragmentManager fm) {
             super(fm);
-            postWriterContent = new PostWriterContentFragment();
-            postWriterTagFragment = new PostWriterTagFragment();
+            postWriterContent = PostWriterContentFragment.newInstance(
+                    isModeWritePost ? "" : itemTimeLine.getTitle(), isModeWritePost ? "" : itemTimeLine.getContent());
+            postWriterTagFragment = PostWriterTagFragment.newInstance(
+                    isModeWritePost ? "" : itemTimeLine.getType(), !isModeWritePost && itemTimeLine.isIncognito());
         }
 
         @Override

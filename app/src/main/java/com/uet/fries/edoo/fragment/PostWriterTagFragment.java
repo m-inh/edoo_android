@@ -37,11 +37,19 @@ public class PostWriterTagFragment extends Fragment {
     private TextView typeQuestion, typeNote, typeNotification, typePoll;
     private ImageView ivLineTypePost;
     private SwitchCompat scIncognitoMode;
-    private String typePost;
+    private String typePost = "";
+    private boolean isIncognito = false;
     private TextView oldType;
     private FloatingActionButton fabAddTagPost;
     private CircleImageView ivAvatar;
     private TextView txtUser;
+
+    public static PostWriterTagFragment newInstance(String typePost, boolean isIncognito) {
+        PostWriterTagFragment writer = new PostWriterTagFragment();
+        writer.typePost = typePost;
+        writer.isIncognito = isIncognito;
+        return writer;
+    }
 
     @Nullable
     @Override
@@ -61,7 +69,6 @@ public class PostWriterTagFragment extends Fragment {
 
     private void setData() {
         oldType = typeQuestion;
-        typeQuestion.setTextSize(14f);
 
         typeQuestion.setOnClickListener(clickTypePost);
         typeNote.setOnClickListener(clickTypePost);
@@ -70,21 +77,41 @@ public class PostWriterTagFragment extends Fragment {
         scIncognitoMode.setOnCheckedChangeListener(checkIncognitoMode);
         fabAddTagPost.setOnClickListener(clickTypePost);
 
+        // Type post default for Teacher and Student
+        if (typePost.equals("")) {
+            if (!getIsTeacher()) {
+                typePost = ItemTimeLine.TYPE_POST_QUESTION;
+                typeQuestion.setTextSize(14f);
+            } else {
+                typePost = ItemTimeLine.TYPE_POST_NOTIFICATION;
+                typeNotification.setTextSize(14f);
+            }
+        } else {
+            switch (typePost){
+                case ItemTimeLine.TYPE_POST_QUESTION:
+                    typeQuestion.setTextSize(14f);
+                    break;
+                case ItemTimeLine.TYPE_POST_NOTE:
+                    typeNote.setTextSize(14f);
+                    break;
+                case ItemTimeLine.TYPE_POST_NOTIFICATION:
+                    typeNotification.setTextSize(14f);
+                    break;
+                case ItemTimeLine.TYPE_POST_POLL:
+                    typePoll.setTextSize(14f);
+                    break;
+            }
+        }
+        setDataUser(isIncognito);
         if (!getIsTeacher()) {
-            typePost = ItemTimeLine.TYPE_POST_QUESTION;
-            typeQuestion.setTextSize(14f);
             typeNotification.setVisibility(View.GONE);
         } else {
-            typePost = ItemTimeLine.TYPE_POST_NOTIFICATION;
-            typeNotification.setTextSize(14f);
             scIncognitoMode.setVisibility(View.GONE);
         }
-
-        setDataUser(true);
     }
 
-    private void setDataUser(boolean isUser) {
-        if (isUser) {
+    private void setDataUser(boolean isIncognito) {
+        if (!isIncognito) {
             HashMap<String, String> user = sqlite.getUserDetails();
             String urlAvatar = user.get("avatar");
             Picasso.with(getContext())
@@ -169,11 +196,16 @@ public class PostWriterTagFragment extends Fragment {
                         }
 
                         @Override
-                        public void onAnimationStart(Animator animation) {}
+                        public void onAnimationStart(Animator animation) {
+                        }
+
                         @Override
-                        public void onAnimationCancel(Animator animation) {}
+                        public void onAnimationCancel(Animator animation) {
+                        }
+
                         @Override
-                        public void onAnimationRepeat(Animator animation) {}
+                        public void onAnimationRepeat(Animator animation) {
+                        }
                     })
                     .duration(500)
                     .playOn(txtUser);
@@ -184,15 +216,15 @@ public class PostWriterTagFragment extends Fragment {
     };
 
     // ---------------------------------------------------------------------------------------------
-    public String getTypePost(){
+    public String getTypePost() {
         return typePost;
     }
 
-    public boolean getIsIncognitoPost(){
+    public boolean getIsIncognitoPost() {
         return scIncognitoMode.isChecked();
     }
 
-    public boolean getIsTeacher(){
+    public boolean getIsTeacher() {
         return sqlite.getUserDetails().get("type").equalsIgnoreCase("teacher");
     }
 

@@ -164,7 +164,7 @@
                 android:padding="@dimen/card_elevation"
                 android:text="@string/type_post_question"
                 android:textColor="@android:color/white"
-                android:textSize="12sp"
+                android:textSize="@dimen/t_size_caption"
                 android:textStyle="bold" />
 
             <TextView
@@ -177,7 +177,7 @@
                 android:padding="@dimen/card_elevation"
                 android:text="@string/type_post_note"
                 android:textColor="@android:color/white"
-                android:textSize="12sp"
+                android:textSize="@dimen/t_size_caption"
                 android:textStyle="bold" />
 
             <TextView
@@ -190,7 +190,7 @@
                 android:padding="@dimen/card_elevation"
                 android:text="@string/type_post_notification"
                 android:textColor="@android:color/white"
-                android:textSize="12sp"
+                android:textSize="@dimen/t_size_caption"
                 android:textStyle="bold" />
 
             <TextView
@@ -203,7 +203,7 @@
                 android:padding="@dimen/card_elevation"
                 android:text="@string/type_post_poll"
                 android:textColor="@android:color/white"
-                android:textSize="12sp"
+                android:textSize="@dimen/t_size_caption"
                 android:textStyle="bold" />
 
         </LinearLayout>

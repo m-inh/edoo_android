@@ -80,7 +80,8 @@
     <string name="insert">Thêm</string>
     <string name="warn">Chú ý</string>
     <string name="go_back">Quay lại</string>
-    <string name="warn_exit">Thoát và xóa bài viết?</string>
+    <string name="warn_exit_and_delete">Thoát và xóa bài viết?</string>
+    <string name="warn_exit_edit">Thoát chỉnh sửa?</string>
     <string name="post_incognito">Đăng ở chế độ ẩn danh</string>
     <string name="anonymous">Anonymous</string>
 
@@ -91,7 +92,7 @@
     <string name="txt_not_solved">Not solved</string>
     <string name="title_activity_profile">Profile</string>
     <string name="lert_press_back">Nhấn lần nữa để thoát</string>
-    <string name="txt_delete_post">Xóa bài đăng</string>
+    <string name="txt_delete_post">Xóa bài viết</string>
     <string name="txt_edit_post">Sửa bài viết</string>
     <string name="txt_edit_profile">Sửa profile</string>
     <string name="txt_edit_avatar">Đổi ảnh đại diện</string>
