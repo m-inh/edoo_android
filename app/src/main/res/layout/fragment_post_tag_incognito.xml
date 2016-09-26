@@ -43,7 +43,7 @@
                     android:id="@+id/iv_line_type_post"
                     android:layout_width="8dp"
                     android:layout_height="match_parent"
-                    android:background="@color/type_post_note" />
+                    android:background="@color/type_post_question" />
 
                 <LinearLayout
                     android:layout_width="0dp"

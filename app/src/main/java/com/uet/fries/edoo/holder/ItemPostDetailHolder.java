@@ -145,7 +145,7 @@ public class ItemPostDetailHolder extends AbstractHolder {
             public void onClick(View v) {
                 if (!PermissionManager.pVotePost(itemTimeLine.getIdAuthor(), userId))
                     Toast.makeText(mContext, "Bạn không thể tự đánh giá bài viết của chính mình", Toast.LENGTH_SHORT).show();
-                postLike(itemTimeLine.getIdPost(), -1);
+                else postLike(itemTimeLine.getIdPost(), -1);
             }
         });
     }
