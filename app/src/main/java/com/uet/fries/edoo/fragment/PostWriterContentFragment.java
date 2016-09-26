@@ -340,7 +340,9 @@ public class PostWriterContentFragment extends Fragment {
 
     public String getTitlePost() {
         try {// Case: edtTitlePost is NULL
-            return "" + edtTitlePost.getText().toString();
+            String txt = "" + edtTitlePost.getText().toString().trim();
+            edtTitlePost.setText(txt);
+            return txt;
         } catch (NullPointerException e) {
             e.printStackTrace();
             return "";
@@ -348,7 +350,12 @@ public class PostWriterContentFragment extends Fragment {
     }
 
     public String getContentPost() {
-        return "" + mEditor.getHtml();
+        String txt = "" + mEditor.getHtml();
+        // Replace white space (encode = "&nbsp; ")
+        txt = txt.replaceAll("&nbsp;", " ");
+        txt = txt.trim();
+        if (!txt.equals("" + mEditor.getHtml())) mEditor.setHtml(txt);
+        return txt;
     }
 
     public boolean checkFillContent() {
@@ -378,7 +385,12 @@ public class PostWriterContentFragment extends Fragment {
         return contentPost.isEmpty() || contentPost.equals(HTML_PLACE_HOLDER);
     }
 
-    public boolean contentIsNotChanged(){
+    /**
+     * Use when Edit post: Title and Content is not changed
+     *
+     * @return True: Not changed,    False: Changed
+     */
+    public boolean contentIsNotChanged() {
         String content = getContentPost();
         String title = getTitlePost();
         return (this.content.equals(content) && this.title.equals(title));
