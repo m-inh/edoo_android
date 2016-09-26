@@ -58,7 +58,7 @@ public class PermissionManager {
         boolean userIsAuthorComment = userId.equalsIgnoreCase(authorCommentId);
         boolean authorCommentIsAuthorPost = authorCommentId.equalsIgnoreCase(authorPostId);
 
-        if (userIsAuthorComment){
+        if (userIsAuthorComment) {
             return false;
         }
 
@@ -75,6 +75,10 @@ public class PermissionManager {
 //        }
 
         return false;
+    }
+
+    public static boolean pVotePost(String authorPostId, String userId) {
+        return !userId.equalsIgnoreCase(authorPostId);
     }
 
 }

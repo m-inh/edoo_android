@@ -47,7 +47,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
     public AbstractHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {
             View view = LayoutInflater.from(mContext).inflate(com.uet.fries.edoo.R.layout.item_post_detail, parent, false);
-            return new ItemPostDetailHolder(view, itemTimeline);
+            return new ItemPostDetailHolder(view, itemTimeline, user.get("uid"));
         } else {
             View view = LayoutInflater.from(mContext).inflate(com.uet.fries.edoo.R.layout.item_comment_in_post, parent, false);
             return new ItemCommentDetailHolder(view, itemTimeline, this);

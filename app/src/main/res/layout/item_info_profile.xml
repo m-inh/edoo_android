@@ -57,7 +57,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:padding="@dimen/card_padding"
-        android:src="@drawable/ic_edit_dark"
-        android:visibility="gone" />
+        android:src="@drawable/ic_edit_info"
+        android:visibility="visible" />
 
 </RelativeLayout>

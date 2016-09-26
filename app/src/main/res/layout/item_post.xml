@@ -123,26 +123,34 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/i_icon_size"
+                    android:layout_marginLeft="@dimen/action_padding"
                     android:layout_weight="1"
                     android:gravity="center_vertical|right"
                     android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
 
                     <TextView
                         android:id="@+id/tv_name_postauthor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
+                        android:ellipsize="start"
+                        android:maxLines="1"
                         android:text="@string/author_name"
-                        android:textSize="@dimen/t_size_body"
-                        android:textColor="@color/black_54"/>
+                        android:textColor="@color/black_54"
+                        android:textSize="@dimen/t_size_body" />
 
                     <TextView
                         android:id="@+id/tv_time_post"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/time_post"
-                        android:textSize="@dimen/t_size_body"
-                        android:textColor="@color/black_54"/>
+                        android:textColor="@color/black_54"
+                        android:textSize="@dimen/t_size_body" />
                 </LinearLayout>
 
             </LinearLayout>

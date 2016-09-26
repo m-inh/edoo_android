@@ -88,7 +88,9 @@ public class PostDetailActivity extends AppCompatActivity {
 
         initViews(this.itemTimeline);
 
-        postIsChanged = false;
+        if (itemTimeline == null) {
+            postIsChanged = true;
+        } else postIsChanged = false;
         getPostDetail(mIntent.getStringExtra("post_id"));
     }
 
@@ -195,7 +197,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode==RESULT_OK){
+        if (resultCode == RESULT_OK) {
             postIsChanged = true;
             getPostDetail(itemTimeline.getIdPost());
 

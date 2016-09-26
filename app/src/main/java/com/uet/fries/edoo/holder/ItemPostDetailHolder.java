@@ -9,6 +9,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.uet.fries.edoo.activities.PostDetailActivity;
@@ -18,6 +19,7 @@ import com.uet.fries.edoo.app.AppConfig;
 import com.uet.fries.edoo.communication.RequestServer;
 import com.uet.fries.edoo.models.ItemTimeLine;
 import com.squareup.picasso.Picasso;
+import com.uet.fries.edoo.utils.PermissionManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +33,7 @@ public class ItemPostDetailHolder extends AbstractHolder {
 
     private static final String TAG = "ItemPostDetailHolder";
     private ItemTimeLine itemTimeLine;
+    private String userId;
     private Context mContext;
 
     private TextView tvTitle;
@@ -51,9 +54,10 @@ public class ItemPostDetailHolder extends AbstractHolder {
         super(itemView);
     }
 
-    public ItemPostDetailHolder(View itemView, ItemTimeLine itemTimeLine) {
+    public ItemPostDetailHolder(View itemView, ItemTimeLine itemTimeLine, String userId) {
         this(itemView);
         this.itemTimeLine = itemTimeLine;
+        this.userId = userId;
         this.mContext = itemView.getContext();
 
         ivAvatar = (CircleImageView) itemView.findViewById(R.id.iv_avatar);
@@ -130,13 +134,17 @@ public class ItemPostDetailHolder extends AbstractHolder {
         btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postLike(itemTimeLine.getIdPost(), 1);
+                if (!PermissionManager.pVotePost(itemTimeLine.getIdAuthor(), userId))
+                    Toast.makeText(mContext, "Bạn không thể tự đánh giá bài viết của chính mình", Toast.LENGTH_SHORT).show();
+                else postLike(itemTimeLine.getIdPost(), 1);
             }
         });
 
         btnDisLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!PermissionManager.pVotePost(itemTimeLine.getIdAuthor(), userId))
+                    Toast.makeText(mContext, "Bạn không thể tự đánh giá bài viết của chính mình", Toast.LENGTH_SHORT).show();
                 postLike(itemTimeLine.getIdPost(), -1);
             }
         });
@@ -149,7 +157,6 @@ public class ItemPostDetailHolder extends AbstractHolder {
 
     //Post like and cmt to server
     private void postLike(String idPost, int content) {
-        String url = AppConfig.URL_POST_LIKE;
         JSONObject params = new JSONObject();
         try {
             params.put("post_id", idPost);
@@ -158,7 +165,7 @@ public class ItemPostDetailHolder extends AbstractHolder {
             e.printStackTrace();
         }
 
-        RequestServer requestServer = new RequestServer(mContext, Request.Method.POST, url, params);
+        RequestServer requestServer = new RequestServer(mContext, Request.Method.POST, AppConfig.URL_POST_LIKE, params);
         requestServer.setListener(new RequestServer.ServerListener() {
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
