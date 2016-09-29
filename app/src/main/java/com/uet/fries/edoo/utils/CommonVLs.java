@@ -62,8 +62,21 @@ public class CommonVLs {
     public static String getDateTime(String timestamp) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(Long.parseLong(timestamp));
-        String date = DateFormat.format("hh:mm, dd-MM-yyyy", cal).toString();
+        String date = DateFormat.format("hh:mm, dd/MM/yyyy", cal).toString();
         return date;
+    }
+
+    public static String getDateTime2(String datetime) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd'T'HH:mm:ss");
+        Date date = null;
+        try {
+            date = dateFormat.parse(datetime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("hh:mm, dd/MM/yyyy");
+        return dateFormat2.format(date);
     }
 
     // Storage Permissions

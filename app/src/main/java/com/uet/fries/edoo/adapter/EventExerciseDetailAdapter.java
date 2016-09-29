@@ -76,7 +76,7 @@ public class EventExerciseDetailAdapter extends RecyclerView.Adapter<AbstractHol
 
             postDetailHolder.setDeadline(itemTimeline.getRemainingTime());
             postDetailHolder.setPercentSubmitted(itemTimeline.getPercentSubmitted());
-            Log.i("set", "percent = " + itemTimeline.getPercentSubmitted());
+            Log.i("set" + position, "percent = " + itemTimeline.getPercentSubmitted());
         }
     }
 

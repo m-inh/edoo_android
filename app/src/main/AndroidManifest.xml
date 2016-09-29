@@ -94,7 +94,7 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".activities.ListSubmittedExercise"
+            android:name=".activities.ListSubmittedActivity"
             android:label="@string/txt_list_submitted"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />

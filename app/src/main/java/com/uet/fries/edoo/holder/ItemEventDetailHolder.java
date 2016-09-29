@@ -1,45 +1,21 @@
 package com.uet.fries.edoo.holder;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Message;
-import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.PopupMenu;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.soundcloud.android.crop.Crop;
 import com.squareup.picasso.Picasso;
 import com.uet.fries.edoo.R;
-import com.uet.fries.edoo.activities.ListSubmittedExercise;
+import com.uet.fries.edoo.activities.ListSubmittedActivity;
 import com.uet.fries.edoo.activities.PostDetailActivity;
 import com.uet.fries.edoo.activities.WebviewActivity;
-import com.uet.fries.edoo.adapter.PostDetailAdapter;
-import com.uet.fries.edoo.app.AppConfig;
-import com.uet.fries.edoo.communication.MultipartRequest;
-import com.uet.fries.edoo.communication.RequestServer;
 import com.uet.fries.edoo.models.ItemTimeLine;
-import com.uet.fries.edoo.utils.CommonVLs;
-import com.uet.fries.edoo.utils.PermissionManager;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -127,21 +103,24 @@ public class ItemEventDetailHolder extends AbstractHolder {
             btnSubmitCheckExercise.setText(mContext.getString(R.string.txt_submit));
         }
 
-        btnSubmitCheckExercise.setOnClickListener(click);
+        setEventClick();
     }
 
-    private View.OnClickListener click = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (userType.equalsIgnoreCase("teacher")) {
-                checkSubmitExercise();
-            } else {
-                pickImage();
+    public void setEventClick(){
+        btnSubmitCheckExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userType.equalsIgnoreCase("teacher")) {
+                    checkSubmitExercise();
+                } else {
+                    pickImage();
+                }
             }
-        }
-    };
+        });
+    }
 
     // ---------------------------------------------------------------------------
+
     /**
      * pick image
      */
@@ -153,16 +132,19 @@ public class ItemEventDetailHolder extends AbstractHolder {
         dialog.setItems(selection, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (which==0) ((PostDetailActivity)mContext).pickImageFromMemory();
-                else ((PostDetailActivity)mContext).pickImageFromCamera();
+                if (which == 0) ((PostDetailActivity) mContext).pickImageFromMemory();
+                else ((PostDetailActivity) mContext).pickImageFromCamera();
             }
         });
         dialog.show();
     }
 
-    private void checkSubmitExercise(){
-        Intent intent = new Intent(mContext, ListSubmittedExercise.class);
+    private void checkSubmitExercise() {
+        Intent intent = new Intent(mContext, ListSubmittedActivity.class);
         intent.putExtra("post_id", itemTimeLine.getIdPost());
+        String percent = itemTimeLine.getPercentSubmitted();
+        Log.i(TAG, "percent=" + percent);
+//        intent.putExtra("student_count", percent.substring(percent.indexOf("/"), percent.length()));
         mContext.startActivity(intent);
     }
 
@@ -193,7 +175,7 @@ public class ItemEventDetailHolder extends AbstractHolder {
         tvDeadline.setText(deadline);
     }
 
-    public void setPercentSubmitted(String percent){
+    public void setPercentSubmitted(String percent) {
         tvPercentSubmitted.setText(percent);
     }
 }
