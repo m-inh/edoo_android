@@ -16,6 +16,7 @@ import com.uet.fries.edoo.activities.ListSubmittedActivity;
 import com.uet.fries.edoo.activities.PostDetailActivity;
 import com.uet.fries.edoo.activities.WebviewActivity;
 import com.uet.fries.edoo.models.ItemTimeLine;
+import com.uet.fries.edoo.utils.CommonVLs;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -61,10 +62,6 @@ public class ItemEventDetailHolder extends AbstractHolder {
                 .load(itemTimeLine.getAva()).fit()
                 .placeholder(R.mipmap.ic_user).error(R.mipmap.ic_user)
                 .into(ivAvatar);
-
-//        if (itemTimeLine.isIncognito()){
-//            ivAvatar.setAlpha(0.2f);
-//        }
 
         webView = (WebView) itemView.findViewById(R.id.webview);
 
@@ -177,5 +174,17 @@ public class ItemEventDetailHolder extends AbstractHolder {
 
     public void setPercentSubmitted(String percent) {
         tvPercentSubmitted.setText(percent);
+    }
+
+    public TextView getBtnSubmitCheckExercise() {
+        return btnSubmitCheckExercise;
+    }
+
+    public void setIsSendFile(boolean isSendFile){
+        if (isSendFile){
+            btnSubmitCheckExercise.setText("Đã nộp bài");
+            btnSubmitCheckExercise.setTextColor(CommonVLs.getColor(R.color.black_54, mContext));
+            btnSubmitCheckExercise.setClickable(false);
+        }
     }
 }

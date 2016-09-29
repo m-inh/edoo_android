@@ -202,6 +202,7 @@ public class ItemTimeLine extends ItemBase implements Serializable {
 
     private String remainingTime = "";
     private String percentSubmitted = "0";
+    private boolean isSendFile = false;
 
     public String getRemainingTime() {
         return remainingTime;
@@ -217,5 +218,12 @@ public class ItemTimeLine extends ItemBase implements Serializable {
 
     public void setPercentSubmitted(String percentSubmitted) {
         this.percentSubmitted = percentSubmitted;
+    }
+
+    public void setIsSendFile(boolean is){
+        this.isSendFile = is;
+    }
+    public boolean getIsSendFile(){
+        return isSendFile;
     }
 }

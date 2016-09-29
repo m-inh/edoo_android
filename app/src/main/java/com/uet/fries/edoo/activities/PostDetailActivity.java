@@ -26,6 +26,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -38,6 +39,7 @@ import com.uet.fries.edoo.communication.MultipartRequest;
 import com.uet.fries.edoo.communication.RequestServer;
 import com.uet.fries.edoo.helper.SQLiteHandler;
 import com.uet.fries.edoo.holder.AbstractHolder;
+import com.uet.fries.edoo.holder.ItemEventDetailHolder;
 import com.uet.fries.edoo.io.FileManager;
 import com.uet.fries.edoo.models.ItemComment;
 import com.uet.fries.edoo.models.ItemTimeLine;
@@ -225,7 +227,7 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 if (!error) {
-                    Log.i(TAG, response.toString());
+                    Log.i(TAG, "details = " + response.toString());
 
                     JSONObject jsonPost = response.getJSONObject("data");
 
@@ -245,12 +247,15 @@ public class PostDetailActivity extends AppCompatActivity {
                     // Exercise
                     String remainingTime = "";
                     String percentSubmitted = "0";
+                    boolean isSendFile = false;
                     if (itemTimeline.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
                         remainingTime = jsonPost.getString("time_end");
 
                         String countFile = jsonPost.getString("attach_file_count");
                         int studentCount = jsonPost.getJSONObject("class").getInt("student_count");
                         percentSubmitted = countFile + "/" + studentCount;
+
+                        isSendFile = jsonPost.getBoolean("is_send_file");
                     }
 
                     //author post
@@ -289,6 +294,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     if (itemTimeline.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
                         itemTimeLine.setPercentSubmitted(percentSubmitted);
                         itemTimeLine.setRemainingTime(CommonVLs.getDateTime(remainingTime));
+                        itemTimeLine.setIsSendFile(isSendFile);
                     }
 
                     String format = CommonVLs.TIME_FORMAT;
@@ -514,7 +520,9 @@ public class PostDetailActivity extends AppCompatActivity {
                 if (!error) {
                     String urlImg = response.getJSONObject("data").getString("url");
                     Toast.makeText(PostDetailActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "url = " + urlImg);
+
+                    ((EventExerciseDetailAdapter)mAdapter).getEventDetail().setIsSendFile(true);
+//                    Log.d(TAG, "url = " + urlImg);
                 } else {
                     Toast.makeText(PostDetailActivity.this, "Upload Failed", Toast.LENGTH_SHORT).show();
                 }

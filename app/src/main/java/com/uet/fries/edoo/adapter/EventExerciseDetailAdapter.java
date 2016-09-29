@@ -27,6 +27,7 @@ public class EventExerciseDetailAdapter extends RecyclerView.Adapter<AbstractHol
     private Context mContext;
     private ItemTimeLine itemTimeline;
     private HashMap<String, String> user;
+    private ItemEventDetailHolder eventDetail;
 
     public EventExerciseDetailAdapter(Context mContext, ItemTimeLine itemTimeline) {
         this.mContext = mContext;
@@ -49,7 +50,8 @@ public class EventExerciseDetailAdapter extends RecyclerView.Adapter<AbstractHol
     public AbstractHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_exercise_detail, parent, false);
-            return new ItemEventDetailHolder(view, itemTimeline, user.get("uid"), user.get("type"));
+            eventDetail = new ItemEventDetailHolder(view, itemTimeline, user.get("uid"), user.get("type"));
+            return eventDetail;
         } else {
             View view = LayoutInflater.from(mContext).inflate(com.uet.fries.edoo.R.layout.item_comment_in_post, parent, false);
             return new ItemCommentDetailHolder(view, itemTimeline, this);
@@ -76,6 +78,7 @@ public class EventExerciseDetailAdapter extends RecyclerView.Adapter<AbstractHol
 
             postDetailHolder.setDeadline(itemTimeline.getRemainingTime());
             postDetailHolder.setPercentSubmitted(itemTimeline.getPercentSubmitted());
+            postDetailHolder.setIsSendFile(itemTimeline.getIsSendFile());
             Log.i("set" + position, "percent = " + itemTimeline.getPercentSubmitted());
         }
     }
@@ -118,5 +121,9 @@ public class EventExerciseDetailAdapter extends RecyclerView.Adapter<AbstractHol
             cmts.get(i).setIsSolved(false);
         }
         notifyDataSetChanged();
+    }
+
+    public ItemEventDetailHolder getEventDetail(){
+        return eventDetail;
     }
 }

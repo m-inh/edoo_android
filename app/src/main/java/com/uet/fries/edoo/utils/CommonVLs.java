@@ -63,7 +63,7 @@ public class CommonVLs {
         if (timestamp.equals("")) return "";
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(Long.parseLong(timestamp));
-        String date = DateFormat.format("hh:mm, dd/MM/yyyy", cal).toString();
+        String date = DateFormat.format("HH:mm, dd/MM/yyyy", cal).toString();
         return date;
     }
 
@@ -76,7 +76,7 @@ public class CommonVLs {
             e.printStackTrace();
         }
 
-        SimpleDateFormat dateFormat2 = new SimpleDateFormat("hh:mm, dd/MM/yyyy");
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm, dd/MM/yyyy");
         return dateFormat2.format(date);
     }
 
