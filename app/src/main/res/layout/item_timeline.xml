@@ -5,12 +5,13 @@
     android:background="?android:attr/selectableItemBackground"
     android:orientation="vertical"
     android:paddingLeft="@dimen/paragraph_margin"
-    android:paddingRight="@dimen/paragraph_margin"
     android:paddingTop="@dimen/i_class_padding_top">
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+
+        android:paddingRight="@dimen/paragraph_margin">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_marker_seen"
@@ -122,8 +123,8 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/i_icon_size"
                     android:layout_marginLeft="@dimen/action_padding"
+                    android:layout_marginRight="@dimen/i_icon_size"
                     android:layout_weight="1"
                     android:gravity="center_vertical|right"
                     android:orientation="horizontal">
@@ -131,8 +132,7 @@
                     <View
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        />
+                        android:layout_weight="1" />
 
                     <TextView
                         android:id="@+id/tv_name_postauthor"
@@ -161,6 +161,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:background="@color/hint" />
 
 </LinearLayout>

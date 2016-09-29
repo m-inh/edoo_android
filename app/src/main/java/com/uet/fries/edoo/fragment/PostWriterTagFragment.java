@@ -353,7 +353,7 @@ public class PostWriterTagFragment extends Fragment {
         String timestamp = "1";
 
         try {
-            Date date = new SimpleDateFormat("dd/MM/yyyy'T'HH:mm:ss.SSS").parse(dateTime);
+            Date date = new SimpleDateFormat("dd/MM/yyyy'T'hh:mm:ss.SSS").parse(dateTime);
             timestamp = date.getTime() + "";
 
         } catch (ParseException e) {

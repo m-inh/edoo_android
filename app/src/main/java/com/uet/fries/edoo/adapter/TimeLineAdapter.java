@@ -69,7 +69,6 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
             return ITEM_LOADMORE;
         } else {
             ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(position);
-            Log.i(TAG, "tupe" + itemTimeLine.getType());
             if (itemTimeLine.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
                 return ITEM_EXERCISE;
             } else return ITEM_TIMELINE;
@@ -90,10 +89,10 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_timeline_exercise, parent, false);
             holder = new ItemTimelineExerciseHolder(view);
         }
-        Animation myAni = AnimationUtils.loadAnimation(mContext, R.anim.anim_show_itemtimeline_fadein);
-        if (view != null) {
-            view.startAnimation(myAni);
-        }
+//        Animation myAni = AnimationUtils.loadAnimation(mContext, R.anim.anim_show_itemtimeline_fadein);
+//        if (view != null) {
+//            view.startAnimation(myAni);
+//        }
         return holder;
     }
 

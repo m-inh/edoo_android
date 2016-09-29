@@ -286,8 +286,10 @@ public class PostDetailActivity extends AppCompatActivity {
                     itemTimeLine.setIsSeen(isSeen);
                     itemTimeLine.setSolve(isPostSolve);
 
-                    itemTimeLine.setPercentSubmitted(percentSubmitted);
-                    itemTimeLine.setRemainingTime(CommonVLs.getDateTime(remainingTime));
+                    if (itemTimeline.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
+                        itemTimeLine.setPercentSubmitted(percentSubmitted);
+                        itemTimeLine.setRemainingTime(CommonVLs.getDateTime(remainingTime));
+                    }
 
                     String format = CommonVLs.TIME_FORMAT;
                     SimpleDateFormat sdf = new SimpleDateFormat(format);

@@ -60,6 +60,7 @@ public class CommonVLs {
 
     // get time
     public static String getDateTime(String timestamp) {
+        if (timestamp.equals("")) return "";
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(Long.parseLong(timestamp));
         String date = DateFormat.format("hh:mm, dd/MM/yyyy", cal).toString();

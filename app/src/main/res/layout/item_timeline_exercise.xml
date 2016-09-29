@@ -2,15 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground"
+    android:background="@color/red_500_6"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/paragraph_margin"
-    android:paddingRight="@dimen/paragraph_margin"
-    android:paddingTop="@dimen/i_class_padding_top">
+    android:paddingLeft="@dimen/paragraph_margin">
+
+    <!--android:background="?android:attr/selectableItemBackground"-->
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+
+        android:paddingRight="@dimen/paragraph_margin"
+        android:paddingTop="@dimen/i_class_padding_top">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_marker_seen"
@@ -66,10 +70,10 @@
                     android:textSize="@dimen/t_size_body" />
 
                 <TextView
-                    android:layout_marginEnd="@dimen/i_icon_size"
                     android:id="@+id/tv_create_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/i_icon_size"
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="01/10/16"
@@ -84,6 +88,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:background="@color/hint" />
 
 </LinearLayout>

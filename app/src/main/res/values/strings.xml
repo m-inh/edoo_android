@@ -156,4 +156,9 @@
         <item>Nộp muộn</item>
         <item>Chưa nộp bài</item>
     </string-array>
+
+    <string name="txt_filter_all">Tất cả</string>
+    <string name="txt_filter_on_time">Đã nộp bài</string>
+    <string name="txt_filter_late">Nộp muộn</string>
+    <string name="txt_filter_none">Chưa nộp bài</string>
 </resources>
