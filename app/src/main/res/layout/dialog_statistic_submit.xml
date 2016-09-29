@@ -17,35 +17,36 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/paragraph_margin"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="@dimen/paragraph_margin"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:orientation="horizontal">-->
 
-            <Spinner
-                android:id="@+id/sp_filter_submitted"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+            <!--<Spinner-->
+                <!--android:id="@+id/sp_filter_submitted"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1" -->
+                <!--android:visibility="visible"/>-->
 
-            <TextView
-                android:id="@+id/tv_percent_submit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="end"
-                android:text="10/20"
-                android:textSize="@dimen/t_size_body"
-                android:textStyle="bold" />
+            <!--<TextView-->
+                <!--android:id="@+id/tv_percent_submit"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="2"-->
+                <!--android:gravity="end"-->
+                <!--android:text="10/20"-->
+                <!--android:textSize="@dimen/t_size_body"-->
+                <!--android:textStyle="bold" />-->
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/hint" />
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0.5dp"-->
+            <!--android:background="@color/hint" />-->
 
         <FrameLayout
             android:layout_width="match_parent"

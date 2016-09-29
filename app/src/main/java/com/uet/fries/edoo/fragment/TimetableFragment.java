@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 
+import com.uet.fries.edoo.R;
 import com.uet.fries.edoo.activities.MainActivity;
 import com.uet.fries.edoo.app.AppConfig;
 import com.uet.fries.edoo.communication.RequestServer;
@@ -188,6 +189,7 @@ public class TimetableFragment extends Fragment {
         convertSubjectToTable();
 //        int[] colorsBackground = getResources().getIntArray(R.array.arr_color_cell_background);
         TypedArray bgCell = getResources().obtainTypedArray(com.uet.fries.edoo.R.array.arr_bg_cell_background);
+        TypedArray bgItem = getResources().obtainTypedArray(R.array.arr_background_item);
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < listSubjectInTable[0].length; j++) {
                 int posSubject = listSubjectInTable[i][j];

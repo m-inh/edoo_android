@@ -279,6 +279,13 @@ public class ItemCommentDetailHolder extends AbstractHolder {
             }
         });
         requestServer.sendRequest("delete_comment");
+
+        Intent mIntent = new Intent();
+        Bundle b = new Bundle();
+        b.putSerializable("item_timeline", itemTimeline);
+        mIntent.putExtras(b);
+        PostDetailActivity postDetailActivity = (PostDetailActivity) mContext;
+        postDetailActivity.setResult(Activity.RESULT_OK, mIntent);
     }
 
     private void setIsSolved(boolean isSolved) {

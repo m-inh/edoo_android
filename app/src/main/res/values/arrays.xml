@@ -16,4 +16,19 @@
         <item>@drawable/bg_item_subject_12</item>
     </array>
 
+    <array name="arr_background_item">
+        <item>@drawable/bg_item_1</item>
+        <item>@drawable/bg_item_2</item>
+        <item>@drawable/bg_item_3</item>
+        <item>@drawable/bg_item_4</item>
+        <item>@drawable/bg_item_5</item>
+        <item>@drawable/bg_item_6</item>
+        <item>@drawable/bg_item_7</item>
+        <item>@drawable/bg_item_8</item>
+        <item>@drawable/bg_item_9</item>
+        <item>@drawable/bg_item_10</item>
+        <item>@drawable/bg_item_11</item>
+        <item>@drawable/bg_item_12</item>
+    </array>
+
 </resources>

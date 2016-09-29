@@ -54,16 +54,16 @@ public class ListSubmittedActivity extends AppCompatActivity {
     private void initViews() {
         adapter = new StudentSubmittedExerciseAdapter(this);
 
-        tvPercent = (TextView) findViewById(R.id.tv_percent_submit);
-        tvPercent.setVisibility(View.INVISIBLE);
+//        tvPercent = (TextView) findViewById(R.id.tv_percent_submit);
+//        tvPercent.setVisibility(View.INVISIBLE);
 
         ListView lvStudentSubmitted = (ListView) findViewById(R.id.lv_list_student_submitted);
         lvStudentSubmitted.setAdapter(adapter);
-        Spinner spFilter = (Spinner) findViewById(R.id.sp_filter_submitted);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.arr_opts_statistic_submitted, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spFilter.setAdapter(adapter);
+//        Spinner spFilter = (Spinner) findViewById(R.id.sp_filter_submitted);
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+//                R.array.arr_opts_statistic_submitted, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spFilter.setAdapter(adapter);
 
         requestGetCheckEvent();
     }
