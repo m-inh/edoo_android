@@ -12,7 +12,7 @@ public class ItemTimeLine extends ItemBase implements Serializable {
     public static final String TYPE_POST_NOTE = "note";
     public static final String TYPE_POST_NOTIFICATION = "notification";
     public static final String TYPE_POST_POLL = "poll";
-    public static final String TYPE_POST_EXERCISE = "exercise";
+    public static final String TYPE_POST_EXERCISE = "event";
     private String title;
 
     //name of author post
@@ -190,5 +190,21 @@ public class ItemTimeLine extends ItemBase implements Serializable {
 
     public boolean isIncognito(){
         return isIncognito;
+    }
+
+
+    /**
+     *
+     * Exercise
+     */
+
+    private String remainingTime = "";
+
+    public String getRemainingTime() {
+        return remainingTime;
+    }
+
+    public void setRemainingTime(String remainingTime) {
+        this.remainingTime = remainingTime;
     }
 }

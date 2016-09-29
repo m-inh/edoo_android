@@ -23,10 +23,13 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.uet.fries.edoo.R;
+import com.uet.fries.edoo.adapter.EventExerciseDetailAdapter;
 import com.uet.fries.edoo.adapter.PostDetailAdapter;
+import com.uet.fries.edoo.adapter.TimeLineAdapter;
 import com.uet.fries.edoo.app.AppConfig;
 import com.uet.fries.edoo.communication.RequestServer;
 import com.uet.fries.edoo.helper.SQLiteHandler;
+import com.uet.fries.edoo.holder.AbstractHolder;
 import com.uet.fries.edoo.models.ItemComment;
 import com.uet.fries.edoo.models.ItemTimeLine;
 import com.uet.fries.edoo.utils.CommonVLs;
@@ -53,7 +56,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
 
     private RecyclerView rvMain;
-    private PostDetailAdapter mAdapter;
+    private RecyclerView.Adapter<AbstractHolder> mAdapter;
 
     private EditText edtComment;
     private ImageView btnSend;
@@ -117,7 +120,11 @@ public class PostDetailActivity extends AppCompatActivity {
     private void initViews(final ItemTimeLine itemTimeline) {
         initViews();
 
-        mAdapter = new PostDetailAdapter(this, itemTimeline);
+        if (!itemTimeline.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
+            mAdapter = new PostDetailAdapter(this, itemTimeline);
+        } else {
+            mAdapter = new EventExerciseDetailAdapter(this, itemTimeline);
+        }
         rvMain.setAdapter(mAdapter);
     }
 
@@ -322,7 +329,12 @@ public class PostDetailActivity extends AppCompatActivity {
                         public void run() {
                             if (postIsChanged) {
                                 PostDetailActivity.this.itemTimeline = itemTimeLine;
-                                mAdapter.setItemTimeline(PostDetailActivity.this.itemTimeline);
+                                String type = itemTimeLine.getType();
+                                if (!type.equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
+                                    ((PostDetailAdapter) mAdapter).setItemTimeline(PostDetailActivity.this.itemTimeline);
+                                } else {
+                                    ((EventExerciseDetailAdapter) mAdapter).setItemTimeline(PostDetailActivity.this.itemTimeline);
+                                }
                                 postIsChanged = false;
                                 Intent mIntent = new Intent();
                                 Bundle b = new Bundle();
@@ -330,7 +342,12 @@ public class PostDetailActivity extends AppCompatActivity {
                                 mIntent.putExtras(b);
                                 setResult(RESULT_OK, mIntent);
                             } else {
-                                mAdapter.setItemComments(cmtArr);
+                                String type = itemTimeLine.getType();
+                                if (!type.equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
+                                    ((PostDetailAdapter) mAdapter).setItemComments(cmtArr);
+                                } else {
+                                    ((EventExerciseDetailAdapter) mAdapter).setItemComments(cmtArr);
+                                }
                             }
                         }
                     });

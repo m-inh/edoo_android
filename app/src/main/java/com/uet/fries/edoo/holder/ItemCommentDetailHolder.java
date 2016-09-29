@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,7 +51,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
     private WebView wvCmt;
     private TextView tvCreateAt;
     private ImageView ivCommentSolved, ivCommentMenu;
-    private PostDetailAdapter postDetailAdapter;
+    private RecyclerView.Adapter<AbstractHolder> postDetailAdapter;
 
     public ItemCommentDetailHolder(View itemView) {
         super(itemView);
@@ -71,7 +72,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         this.itemTimeline = itemTimeline;
     }
 
-    public ItemCommentDetailHolder(View view, ItemTimeLine itemTimeline, PostDetailAdapter postDetailAdapter) {
+    public ItemCommentDetailHolder(View view, ItemTimeLine itemTimeline, RecyclerView.Adapter<AbstractHolder> postDetailAdapter) {
         this(view, itemTimeline);
         this.postDetailAdapter = postDetailAdapter;
     }
@@ -238,8 +239,8 @@ public class ItemCommentDetailHolder extends AbstractHolder {
                     Log.d(TAG, response.toString());
 
                     itemTimeline.setSolve(isSolved);
-                    if (isSolved) postDetailAdapter.setSolveCmt(idCmt);
-                    else postDetailAdapter.setUnsolveCmt();
+                    if (isSolved) ((PostDetailAdapter)postDetailAdapter).setSolveCmt(idCmt);
+                    else ((PostDetailAdapter)postDetailAdapter).setUnsolveCmt();
                 }
                 Log.d(TAG, message);
             }

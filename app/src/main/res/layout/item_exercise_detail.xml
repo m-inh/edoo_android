@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white"
     android:orientation="vertical"
     android:paddingBottom="@dimen/card_elevation"
@@ -73,16 +74,25 @@
         android:textSize="@dimen/t_size_subheading_2"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tv_content"
+    <!--<TextView-->
+        <!--android:id="@+id/tv_content"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginEnd="@dimen/card_padding"-->
+        <!--android:layout_marginStart="@dimen/paragraph_margin"-->
+        <!--android:layout_marginTop="@dimen/i_class_padding_bottom_small"-->
+        <!--android:text="@string/content_post"-->
+        <!--android:textColor="@color/black_87"-->
+        <!--android:textSize="@dimen/t_size_body" />-->
+
+    <WebView
+        android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/card_padding"
-        android:layout_marginStart="@dimen/paragraph_margin"
-        android:layout_marginTop="@dimen/i_class_padding_bottom_small"
-        android:text="@string/content_post"
-        android:textColor="@color/black_87"
-        android:textSize="@dimen/t_size_body" />
+        android:layout_marginTop="@dimen/paragraph_margin"
+        android:layout_marginLeft="@dimen/paragraph_margin"
+        android:layout_marginRight="@dimen/card_padding"
+        tools:ignore="WebViewLayout" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -129,6 +139,7 @@
         android:background="@color/bg_divider" />
 
     <TextView
+        android:id="@+id/btn_submit_check_exercise"
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:background="@drawable/bg_btn_pressed"

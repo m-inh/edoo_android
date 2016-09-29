@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -224,6 +225,14 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         String timeCreateAtPost = jsonPostArr.getJSONObject(i).getString("created_at");
                         String type = jsonPostArr.getJSONObject(i).getString("type");
 
+                        String remainingTime = "";
+                        Log.i(TAG, jsonPostArr.getJSONObject(i).toString());
+                        try {
+                            remainingTime = jsonPostArr.getJSONObject(i).getString("time_end");
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+
                         //author post
                         String nameAuthorPost = "Ẩn danh";
                         String idAuthorPost = "";
@@ -264,6 +273,11 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                                     .getTime())
                                     .toString();
                             itemTimeLine.setCreateAt(tempTime);
+
+                            tempTime = DateFormat.format("dd/MM/yy hh:mm", sdf.parse(remainingTime)
+                                    .getTime())
+                                    .toString();
+                            itemTimeLine.setRemainingTime(tempTime);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
