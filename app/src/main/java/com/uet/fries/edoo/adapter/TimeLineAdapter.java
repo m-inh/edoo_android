@@ -70,9 +70,9 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
         } else {
             ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(position);
             Log.i(TAG, "tupe" + itemTimeLine.getType());
-            if (itemTimeLine.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)){
+            if (itemTimeLine.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
                 return ITEM_EXERCISE;
-            }else return ITEM_TIMELINE;
+            } else return ITEM_TIMELINE;
         }
     }
 
@@ -162,7 +162,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
                 }
 
                 setResourceTypePost(itemPostHolder, itemTimeLine.getType());
-            }else {
+            } else if (abstractHolder.getViewHolderType() == ITEM_EXERCISE) {
                 ItemTimelineExerciseHolder itemPostHolder = (ItemTimelineExerciseHolder) abstractHolder;
                 itemPostHolder.setRemainingTime(itemTimeLine.getRemainingTime());
                 itemPostHolder.setTitle(itemTimeLine.getTitle());

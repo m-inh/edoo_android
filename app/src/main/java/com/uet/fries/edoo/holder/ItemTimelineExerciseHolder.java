@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.uet.fries.edoo.R;
 import com.uet.fries.edoo.activities.TimelineActivity;
+import com.uet.fries.edoo.adapter.TimeLineAdapter;
 import com.uet.fries.edoo.models.ItemTimeLine;
 
 /**
@@ -53,7 +54,7 @@ public class ItemTimelineExerciseHolder extends AbstractHolder {
 
     @Override
     public int getViewHolderType() {
-        return 2;
+        return TimeLineAdapter.ITEM_EXERCISE;
     }
 
     /**

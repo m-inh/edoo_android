@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.uet.fries.edoo.activities.TimelineActivity;
+import com.uet.fries.edoo.adapter.TimeLineAdapter;
 import com.uet.fries.edoo.models.ItemComment;
 import com.uet.fries.edoo.models.ItemTimeLine;
 
@@ -57,7 +58,7 @@ public class ItemPostHolder extends AbstractHolder {
 
     @Override
     public int getViewHolderType() {
-        return 1;
+        return TimeLineAdapter.ITEM_TIMELINE;
     }
 
     public void setListComment(ArrayList<ItemComment> arr) {
