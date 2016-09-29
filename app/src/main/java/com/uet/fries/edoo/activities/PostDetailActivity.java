@@ -102,14 +102,9 @@ public class PostDetailActivity extends AppCompatActivity {
 //            initViews();
 //        }
 
-        initViews(this.itemTimeline);
+        initViews();
+        setData(this.itemTimeline);
 
-        if (itemTimeline == null) {
-            postIsChanged = true;
-        } else postIsChanged = false;
-        if (itemTimeline.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
-            postIsChanged = true;
-        }
         getPostDetail(mIntent.getStringExtra("post_id"));
     }
 
@@ -133,13 +128,20 @@ public class PostDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void initViews(final ItemTimeLine itemTimeline) {
-        initViews();
+    private void setData(final ItemTimeLine itemTimeline) {
+        if (itemTimeline == null) {
+            Log.i(TAG, "item timeline null");
+            postIsChanged = true;
+            return;
+        }
+        Log.i(TAG, "item timeline NOT null");
+        postIsChanged = false;
 
         if (!itemTimeline.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
             mAdapter = new PostDetailAdapter(this, itemTimeline);
         } else {
             mAdapter = new EventExerciseDetailAdapter(this, itemTimeline);
+            postIsChanged = true;
         }
         rvMain.setAdapter(mAdapter);
     }
@@ -248,7 +250,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     String remainingTime = "";
                     String percentSubmitted = "0";
                     boolean isSendFile = false;
-                    if (itemTimeline.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
+                    if (type.equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
                         remainingTime = jsonPost.getString("time_end");
 
                         String countFile = jsonPost.getString("attach_file_count");
@@ -291,7 +293,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     itemTimeLine.setIsSeen(isSeen);
                     itemTimeLine.setSolve(isPostSolve);
 
-                    if (itemTimeline.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
+                    if (type.equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
                         itemTimeLine.setPercentSubmitted(percentSubmitted);
                         itemTimeLine.setRemainingTime(CommonVLs.getDateTime(remainingTime));
                         itemTimeLine.setIsSendFile(isSendFile);
@@ -357,10 +359,11 @@ public class PostDetailActivity extends AppCompatActivity {
                                 PostDetailActivity.this.itemTimeline = itemTimeLine;
                                 String type = itemTimeLine.getType();
                                 if (!type.equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
-                                    ((PostDetailAdapter) mAdapter).setItemTimeline(PostDetailActivity.this.itemTimeline);
+                                    mAdapter = new PostDetailAdapter(PostDetailActivity.this, itemTimeline);
                                 } else {
-                                    ((EventExerciseDetailAdapter) mAdapter).setItemTimeline(PostDetailActivity.this.itemTimeline);
+                                    mAdapter = new EventExerciseDetailAdapter(PostDetailActivity.this, itemTimeline);
                                 }
+                                rvMain.setAdapter(mAdapter);
                                 postIsChanged = false;
                                 Intent mIntent = new Intent();
                                 Bundle b = new Bundle();
@@ -470,6 +473,7 @@ public class PostDetailActivity extends AppCompatActivity {
     //------------------------------ Exercise ------------------------------------------------------
     private static final int IMAGE_LOCAL_REQUEST = 34242;
     private static final int CAMERA_REQUEST = 23423;
+
     public void pickImageFromMemory() {
         Intent iImage = (new Intent("android.intent.action.GET_CONTENT")).setType("image/*");
 
@@ -481,6 +485,7 @@ public class PostDetailActivity extends AppCompatActivity {
     }
 
     private Uri photoUri;
+
     public void pickImageFromCamera() {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "New Picture");
@@ -507,7 +512,7 @@ public class PostDetailActivity extends AppCompatActivity {
         String filename = "image_post.jpg";
         String fileType = "image/jpg";
         MultipartRequest request = new MultipartRequest(this, Request.Method.POST,
-                AppConfig.URL_UPFILE_EVENT + itemTimeline.getIdPost() , fileData, filename, fileType);
+                AppConfig.URL_UPFILE_EVENT + itemTimeline.getIdPost(), fileData, filename, fileType);
 
         request.setListener(new MultipartRequest.ServerListener() {
             @Override
@@ -521,7 +526,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     String urlImg = response.getJSONObject("data").getString("url");
                     Toast.makeText(PostDetailActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
 
-                    ((EventExerciseDetailAdapter)mAdapter).getEventDetail().setIsSendFile(true);
+                    ((EventExerciseDetailAdapter) mAdapter).getEventDetail().setIsSendFile(true);
 //                    Log.d(TAG, "url = " + urlImg);
                 } else {
                     Toast.makeText(PostDetailActivity.this, "Upload Failed", Toast.LENGTH_SHORT).show();
