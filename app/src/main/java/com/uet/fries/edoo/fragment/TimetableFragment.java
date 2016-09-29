@@ -94,11 +94,11 @@ public class TimetableFragment extends Fragment {
         columns[5] = (LinearLayout) rootView.findViewById(com.uet.fries.edoo.R.id.tt_col_7);
     }
 
-    private void showDialogInfo(final ItemLopMonHoc item, int bgCellId) {
+    private void showDialogInfo(final ItemLopMonHoc item, int bgItem) {
         final Dialog dialogInfo = new Dialog(mContext, com.uet.fries.edoo.R.style.DialogNoActionBar);
         View view = LayoutInflater.from(mContext).inflate(com.uet.fries.edoo.R.layout.dialog_item_subject_info, null);
         dialogInfo.setContentView(view);
-        view.setBackgroundResource(bgCellId);
+        view.setBackgroundResource(bgItem);
 
         // InitViews
         TextView ten = (TextView) dialogInfo.findViewById(com.uet.fries.edoo.R.id.dialogTenMH);
@@ -188,7 +188,7 @@ public class TimetableFragment extends Fragment {
     private void setDataForTimeTable() {
         convertSubjectToTable();
 //        int[] colorsBackground = getResources().getIntArray(R.array.arr_color_cell_background);
-        TypedArray bgCell = getResources().obtainTypedArray(com.uet.fries.edoo.R.array.arr_bg_cell_background);
+        TypedArray bgCell = getResources().obtainTypedArray(R.array.arr_bg_cell_background);
         TypedArray bgItem = getResources().obtainTypedArray(R.array.arr_background_item);
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < listSubjectInTable[0].length; j++) {
@@ -198,7 +198,8 @@ public class TimetableFragment extends Fragment {
                     space++;
                 }
                 if (posSubject >= 0) {
-                    addView(columns[i], bgCell.getResourceId(idColorForItem(posSubject), 0), space, listSubject.get(posSubject));
+                    addView(columns[i], bgCell.getResourceId(idColorForItem(posSubject), 0),
+                            bgItem.getResourceId(idColorForItem(posSubject), 0), space, listSubject.get(posSubject));
                 } else {
                     addEmptyView(columns[i], space);
                 }
@@ -217,12 +218,12 @@ public class TimetableFragment extends Fragment {
         }
     }
 
-    private void addView(LinearLayout col, final int bgCellId, int weight, final ItemLopMonHoc lmh) {
+    private void addView(LinearLayout col, final int bgCellId, final int bgItem, int weight, final ItemLopMonHoc lmh) {
         View view = LayoutInflater.from(mContext).inflate(com.uet.fries.edoo.R.layout.item_cell_timetable, null);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogInfo(lmh, bgCellId);
+                showDialogInfo(lmh, bgItem);
             }
         });
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, weight);
