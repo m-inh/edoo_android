@@ -52,6 +52,8 @@ dependencies {
     compile 'com.daimajia.easing:library:1.0.1@aar'
     compile 'com.daimajia.androidanimations:library:1.1.2@aar'
 
+    compile 'com.wdullaer:materialdatetimepicker:2.5.0'
+
     // FCM libs
     compile 'com.google.android.gms:play-services:9.4.0'
     compile 'com.android.support:multidex:1.0.1'

@@ -17,7 +17,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ItemPostHolder extends AbstractHolder {
-    private static final String TAG = "ItemPostHolder";
+    private static final String TAG = ItemPostHolder.class.getSimpleName();
     private ArrayList<ItemComment> listComment = new ArrayList<>();
     private Context mContext;
     private ImageView ivBookmark;

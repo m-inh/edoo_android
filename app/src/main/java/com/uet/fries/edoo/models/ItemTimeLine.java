@@ -12,6 +12,7 @@ public class ItemTimeLine extends ItemBase implements Serializable {
     public static final String TYPE_POST_NOTE = "note";
     public static final String TYPE_POST_NOTIFICATION = "notification";
     public static final String TYPE_POST_POLL = "poll";
+    public static final String TYPE_POST_EXERCISE = "exercise";
     private String title;
 
     //name of author post

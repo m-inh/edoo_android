@@ -45,6 +45,14 @@ public class CommonVLs {
         }
     }
 
+    public static int getColor(int idColor, Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return context.getResources().getColor(idColor, context.getTheme());
+        } else {
+            return context.getResources().getColor(idColor);
+        }
+    }
+
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {

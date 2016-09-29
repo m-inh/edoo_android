@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,233 +10,314 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_horizontal_margin">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:paddingLeft="@dimen/action_padding"
-        android:paddingTop="@dimen/action_padding"
-        android:text="Preview"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_size_tiny"
-        android:textStyle="italic" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:orientation="vertical"
-        android:padding="@dimen/action_padding">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/iv_line_type_post"
-                    android:layout_width="8dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/type_post_question" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="150dp"
-                        android:layout_height="26dp"
-                        android:layout_margin="@dimen/action_padding"
-                        android:background="@color/colorPrimaryHint" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="16dp"
-                        android:layout_marginLeft="@dimen/action_padding"
-                        android:layout_marginRight="36dp"
-                        android:layout_marginTop="@dimen/card_elevation"
-                        android:background="@color/colorPrimaryHint" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="16dp"
-                        android:layout_marginLeft="@dimen/action_padding"
-                        android:layout_marginRight="72dp"
-                        android:layout_marginTop="@dimen/card_elevation"
-                        android:background="@color/colorPrimaryHint" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="16dp"
-                        android:layout_marginBottom="@dimen/action_padding"
-                        android:layout_marginLeft="@dimen/action_padding"
-                        android:layout_marginRight="2dp"
-                        android:layout_marginTop="@dimen/card_elevation"
-                        android:background="@color/colorPrimaryHint" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/iv_post_writer_avatar"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_gravity="bottom"
-                    android:layout_marginRight="@dimen/action_padding"
-                    android:src="@mipmap/avatar_test"
-                    app:civ_border_color="@color/colorPrimary"
-                    app:civ_border_width="1dp" />
-
-                <TextView
-                    android:id="@+id/txt_post_writer_user"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/action_padding"
-                    android:text="Trần Minh Quý"
-                    android:textSize="@dimen/text_size_small"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:background="@android:color/white"
-        android:paddingLeft="@dimen/action_padding"
-        android:paddingTop="@dimen/action_padding"
-        android:text="Options"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_size_tiny"
-        android:textStyle="italic" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@android:color/white"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_weight="9"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/paragraph_margin"
+        android:paddingStart="@dimen/paragraph_margin"
+        android:paddingTop="@dimen/paragraph_margin">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/action_padding"
-            android:text="@string/type_post"
-            android:textSize="12sp" />
+            android:text="@string/txt_preview"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_tiny"
+            android:textStyle="italic|bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/txt_type_post_question"
+            <View
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="26dp"
                 android:layout_weight="1"
-                android:background="@color/type_post_question"
-                android:gravity="center"
-                android:padding="@dimen/card_elevation"
-                android:text="@string/type_post_question"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/t_size_caption"
-                android:textStyle="bold" />
+                android:background="@color/colorPrimaryHint" />
 
-            <TextView
-                android:id="@+id/txt_type_post_note"
+            <View
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/type_post_note"
-                android:gravity="center"
-                android:padding="@dimen/card_elevation"
-                android:text="@string/type_post_note"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/t_size_caption"
-                android:textStyle="bold" />
+                android:layout_height="1dp"
+                android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/txt_type_post_notification"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/type_post_notification"
-                android:gravity="center"
-                android:padding="@dimen/card_elevation"
-                android:text="@string/type_post_notification"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/t_size_caption"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txt_type_post_poll"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/type_post_poll"
-                android:gravity="center"
-                android:padding="@dimen/card_elevation"
-                android:text="@string/type_post_poll"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/t_size_caption"
-                android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/iv_line_type_post"
+                android:layout_width="@dimen/i_icon_size_big"
+                android:layout_height="@dimen/i_icon_size_big"
+                android:layout_gravity="right"
+                android:src="@drawable/ic_type_post_question" />
 
         </LinearLayout>
 
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/i_icon_size"
+            android:layout_marginRight="42dp"
+            android:layout_marginTop="@dimen/paragraph_margin"
+            android:background="@color/colorPrimaryHint" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/i_icon_size"
+            android:layout_marginRight="85dp"
+            android:layout_marginTop="@dimen/card_elevation"
+            android:background="@color/colorPrimaryHint" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/i_icon_size"
+            android:layout_marginTop="@dimen/card_elevation"
+            android:background="@color/colorPrimaryHint" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_post_writer_avatar"
+                android:layout_width="@dimen/btn_height"
+                android:layout_height="@dimen/btn_height"
+                android:layout_marginRight="@dimen/action_padding"
+                android:src="@mipmap/avatar_test"
+                app:civ_border_color="@color/colorPrimary"
+                app:civ_border_width="1dp" />
+
+            <TextView
+                android:id="@+id/txt_post_writer_user"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Trần Minh Quý"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
     </LinearLayout>
-
-
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/sc_incognito_mode_post"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@android:color/white"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:text="@string/post_incognito" />
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@android:color/white"
-        android:gravity="bottom"
-        android:orientation="vertical">
+        android:layout_weight="16"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/paragraph_margin">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_add_tag_post"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_gravity="right"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:visibility="gone"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_options"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_tiny"
+            android:textStyle="italic|bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            tools:ignore="NestedWeights">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/paragraph_margin"
+                android:layout_marginTop="20dp"
+                android:text="@string/txt_type_post"
+                android:textColor="@color/black_87"
+                android:textSize="@dimen/text_size_tiny" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/i_icon_size_bigger"
+                android:layout_marginEnd="@dimen/paragraph_margin"
+                android:layout_marginStart="@dimen/dialog_margin_icon"
+                android:layout_marginTop="@dimen/paragraph_margin">
+
+                <TextView
+                    android:id="@+id/tv_type_post_question"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_btn_border_fill"
+                    android:gravity="center"
+                    android:text="@string/type_post_question"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/t_size_caption"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_type_post_note"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/paragraph_margin"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_btn_border_empty"
+                    android:gravity="center"
+                    android:text="@string/type_post_note"
+                    android:textColor="@color/black_87"
+                    android:textSize="@dimen/t_size_caption"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/i_icon_size_bigger"
+                android:layout_marginEnd="@dimen/paragraph_margin"
+                android:layout_marginStart="@dimen/dialog_margin_icon"
+                android:layout_marginTop="@dimen/paragraph_margin">
+
+
+                <TextView
+                    android:id="@+id/tv_type_post_notification"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_btn_border_empty"
+                    android:gravity="center"
+                    android:text="@string/type_post_notification"
+                    android:textColor="@color/black_87"
+                    android:textSize="@dimen/t_size_caption"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_type_post_poll"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/paragraph_margin"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_btn_border_empty"
+                    android:gravity="center"
+                    android:text="@string/type_post_poll"
+                    android:textColor="@color/black_87"
+                    android:textSize="@dimen/t_size_caption"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/i_icon_size_bigger"
+                android:layout_marginEnd="@dimen/paragraph_margin"
+                android:layout_marginStart="@dimen/dialog_margin_icon"
+                android:layout_marginTop="@dimen/paragraph_margin">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/paragraph_margin"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_type_post_exercise"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_btn_border_empty"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="@string/type_post_exercise"
+                    android:textColor="@color/black_87"
+                    android:textSize="@dimen/t_size_caption"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_deadline"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/paragraph_margin"
+                android:layout_marginTop="28dp"
+                android:text="@string/txt_deadline"
+                android:textColor="@color/black_87"
+                android:textSize="@dimen/text_size_tiny" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/i_icon_size_bigger"
+                android:layout_marginEnd="@dimen/paragraph_margin"
+                android:layout_marginStart="@dimen/dialog_margin_icon"
+                android:layout_marginTop="@dimen/paragraph_margin">
+
+                <TextView
+                    android:id="@+id/tv_pick_date"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_btn_border_empty"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="12/10/2016"
+                    android:textColor="@color/black_87"
+                    android:textSize="@dimen/t_size_body"
+                    android:drawableRight="@drawable/ic_drop_down"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_pick_time"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/paragraph_margin"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_btn_border_empty"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="21:00"
+                    android:textColor="@color/black_87"
+                    android:textSize="@dimen/t_size_body"
+                    android:drawableRight="@drawable/ic_drop_down"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_mode_incognito"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/sc_incognito_mode_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="70dp"
+                android:layout_marginStart="@dimen/paragraph_margin"
+                android:background="@android:color/white"
+                android:paddingBottom="@dimen/t_size_button"
+                android:paddingTop="28dp"
+                android:text="@string/post_incognito"
+                android:textSize="@dimen/text_size_tiny" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

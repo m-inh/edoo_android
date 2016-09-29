@@ -137,7 +137,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
         PostWriterTagFragment pTag = postAdapter.getPostWriterTagFragment();
 
         if (isModeWritePost)
-            postPost(idLop, titlePost, contentPost, pTag.getTypePost(), pTag.getIsIncognitoPost(), pTag.getIsTeacher());
+            postPost(idLop, titlePost, contentPost, pTag.getTypePost(), pTag.getIsIncognitoPost(), pTag.getIsTeacher(), pTag.getTimestamp());
         else
             updatePost(itemTimeLine.getIdPost(), titlePost, contentPost, pTag.getIsIncognitoPost(), pTag.getTypePost());
     }
@@ -220,7 +220,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
     }
 
     // --------------------------------- Request Server --------------------------------------------
-    public void postPost(String classId, String title, String content, String type, boolean isIncognito, boolean isPostTeacher) {
+    public void postPost(String classId, String title, String content, String type, boolean isIncognito, boolean isPostTeacher, String timestamp) {
         String url = AppConfig.URL_POST_POST;
 
         JSONObject params = new JSONObject();
@@ -230,6 +230,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
             params.put("content", content);
             params.put("type", type);
             params.put("is_incognito", isIncognito);
+            if (!timestamp.equals("0")) params.put("event_end", timestamp);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -258,7 +259,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
         requestServer.sendRequest("post new post");
     }
 
-    private void updatePost(String postId, String title, String content, boolean isIncognito, String type){
+    private void updatePost(String postId, String title, String content, boolean isIncognito, String type) {
         JSONObject params = new JSONObject();
         try {
             params.put("post_id", postId);
@@ -275,12 +276,12 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
             @Override
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 pDialog.dismiss();
-                if (!error){
+                if (!error) {
                     Toast.makeText(getApplicationContext(), "Đã chỉnh sửa bài viết", Toast.LENGTH_SHORT).show();
                     Message msg = new Message();
                     msg.setTarget(mHandler);
                     msg.sendToTarget();
-                }else {
+                } else {
                     Log.d(TAG, "Error update post: " + response.toString());
                 }
             }

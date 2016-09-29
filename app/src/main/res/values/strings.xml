@@ -58,6 +58,7 @@
     <string name="type_post_note">Note</string>
     <string name="type_post_poll">Poll</string>
     <string name="type_post_notification">Notification</string>
+    <string name="type_post_exercise">Exercise</string>
     <string name="title_content2">Nội dung</string>
     <string name="lichthi">Lịch Thi</string>
     <string name="tailieu">Tài Liệu</string>
@@ -105,6 +106,15 @@
     <string name="txt_new_password_not_match">Mật khẩu mới không khớp với nhau!</string>
     <string name="txt_reset_password">Đặt lại mật khẩu</string>
     <string name="txt_forgot_password"><i>Quên mật khẩu?</i></string>
+    <string name="txt_number_exercise">Đã nộp:</string>
+    <string name="txt_submit">Nộp bài</string>
+    <string name="txt_check_submit">Kiểm tra</string>
+    <string name="txt_remaining_time">Còn:</string>
+    <string name="txt_preview">Xem trước</string>
+    <string name="txt_options">Tùy chọn</string>
+    <string name="txt_type_post">Loại bài viết:</string>
+    <string name="txt_deadline">Hạn nộp:</string>
+
 
     <string name="txt_save">Lưu</string>
     <string name="txt_no">Không</string>
@@ -137,4 +147,12 @@
     <string name="txt_intro_slide_6_title">Điểm đánh giá</string>
     <string name="txt_intro_slide_6_content">Hoạt động của bạn được ghi nhận, tính điểm và đánh giá công bằng nhất!</string>
     <string name="icognito">Ẩn danh</string>
+
+
+    <string-array name="arr_opts_statistic_submitted">
+        <item>Tất cả</item>
+        <item>Đã nộp bài</item>
+        <item>Nộp muộn</item>
+        <item>Chưa nộp bài</item>
+    </string-array>
 </resources>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/card_elevation"
+    android:paddingLeft="@dimen/paragraph_margin"
+    android:paddingRight="@dimen/paragraph_margin"
+    android:paddingTop="@dimen/paragraph_margin">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="@dimen/i_avatar_size"
+            android:layout_height="@dimen/i_avatar_size"
+            android:src="@mipmap/student" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/i_class_padding_bottom_small"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_nameauthor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/author_name"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/t_size_subheading_2"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_time_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/time_post"
+                android:textColor="@color/black_54"
+                android:textSize="@dimen/t_size_body_1" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/card_padding"
+        android:layout_marginStart="@dimen/paragraph_margin"
+        android:layout_marginTop="@dimen/i_class_padding_top"
+        android:gravity="left|center_vertical"
+        android:text="@string/title_post"
+        android:textAllCaps="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000"
+        android:textSize="@dimen/t_size_subheading_2"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/card_padding"
+        android:layout_marginStart="@dimen/paragraph_margin"
+        android:layout_marginTop="@dimen/i_class_padding_bottom_small"
+        android:text="@string/content_post"
+        android:textColor="@color/black_87"
+        android:textSize="@dimen/t_size_body" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/card_padding"
+        android:layout_marginStart="@dimen/paragraph_margin"
+        android:layout_marginTop="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:id="@+id/tv_deadline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="20:00, 12/10/16"
+            android:textColor="@color/red_500"
+            android:textSize="@dimen/t_size_body"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_number_exercise"
+            android:textColor="@color/black_54"
+            android:textSize="@dimen/t_size_body" />
+
+        <TextView
+            android:id="@+id/tv_percent_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/card_padding"
+            android:layout_marginStart="@dimen/action_padding"
+            android:text="69%"
+            android:textColor="@color/black_87"
+            android:textSize="@dimen/t_size_body"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="@dimen/i_class_padding_top"
+        android:background="@color/bg_divider" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="@drawable/bg_btn_pressed"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/txt_submit"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/t_size_button"
+        android:textStyle="bold" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/bg_divider" />
+
+
+</LinearLayout>

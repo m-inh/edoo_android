@@ -11,8 +11,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.uet.fries.edoo.R;
 import com.uet.fries.edoo.holder.AbstractHolder;
 import com.uet.fries.edoo.holder.ItemPostHolder;
+import com.uet.fries.edoo.holder.ItemTimelineExercise;
 import com.uet.fries.edoo.models.ItemBase;
 import com.uet.fries.edoo.models.ItemTimeLine;
 
@@ -31,6 +33,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
     public static final int ITEM_TIMELINE = 0;
     public static final int ITEM_LOADMORE = 1;
+    public static final int ITEM_EXERCISE = 2;
 
     public TimeLineAdapter(Context context, String idLop) {
         this.mContext = context;
@@ -47,7 +50,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
     }
 
     public void addItems(ArrayList<ItemBase> posts) {
-        itemArr.remove(itemArr.size()-1);
+        itemArr.remove(itemArr.size() - 1);
         itemArr.addAll(posts);
         itemArr.add(null);
         notifyDataSetChanged();
@@ -72,13 +75,16 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
         AbstractHolder holder = null;
         View view = null;
         if (viewType == ITEM_TIMELINE) {
-            view = LayoutInflater.from(mContext).inflate(com.uet.fries.edoo.R.layout.item_post, parent, false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_timeline, parent, false);
             holder = new ItemPostHolder(view);
         } else if (viewType == ITEM_LOADMORE) {
-            view = LayoutInflater.from(mContext).inflate(com.uet.fries.edoo.R.layout.item_loadmore, parent, false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_loadmore, parent, false);
             holder = new LoadMoreHolder(view);
+        } else if (viewType == ITEM_EXERCISE) {
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_timeline_exercise, parent, false);
+            holder = new ItemTimelineExercise(view);
         }
-        Animation myAni = AnimationUtils.loadAnimation(mContext, com.uet.fries.edoo.R.anim.anim_show_itemtimeline_fadein);
+        Animation myAni = AnimationUtils.loadAnimation(mContext, R.anim.anim_show_itemtimeline_fadein);
         if (view != null) {
             view.startAnimation(myAni);
         }
@@ -98,7 +104,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
                 loadMoreHolder.p.setVisibility(View.GONE);
                 loadMoreHolder.tvDone.setVisibility(View.GONE);
 
-                if (position == 0){
+                if (position == 0) {
                     loadMoreHolder.tvDone.setText("Lớp học chưa có bài đăng nào");
                     loadMoreHolder.tvDone.setVisibility(View.VISIBLE);
                 }
@@ -154,9 +160,12 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
     private void setResourceTypePost(ItemPostHolder itemPostHolder, String type) {
         int idDrawable = android.R.color.white;
-        if (type.equals(ItemTimeLine.TYPE_POST_NOTE)) idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_note;
-        else if (type.equals(ItemTimeLine.TYPE_POST_QUESTION)) idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_question;
-        else if (type.equals(ItemTimeLine.TYPE_POST_POLL)) idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_poll;
+        if (type.equals(ItemTimeLine.TYPE_POST_NOTE))
+            idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_note;
+        else if (type.equals(ItemTimeLine.TYPE_POST_QUESTION))
+            idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_question;
+        else if (type.equals(ItemTimeLine.TYPE_POST_POLL))
+            idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_poll;
         else if (type.equals(ItemTimeLine.TYPE_POST_NOTIFICATION))
             idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_notification;
         itemPostHolder.getIvTypePost().setImageResource(idDrawable);

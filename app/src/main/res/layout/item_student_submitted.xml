@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:orientation="vertical"
+    android:paddingEnd="@dimen/paragraph_margin"
+    android:paddingStart="@dimen/paragraph_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/bg_divider" />
+
+
+    <TextView
+        android:id="@+id/tv_submitted_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/l_l_name"
+        android:layout_marginStart="26dp"
+        android:text="19:00, 12/10/2016"
+        android:textColor="@color/black_54"
+        android:textSize="@dimen/t_size_body" />
+
+    <LinearLayout
+        android:id="@+id/l_l_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_submitted_status"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@color/dot_submit_on_time" />
+
+        <TextView
+            android:id="@+id/tv_student_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:text="@string/author_name"
+            android:textColor="@color/black_87"
+            android:textSize="@dimen/t_size_subheading" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

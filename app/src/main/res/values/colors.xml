@@ -11,6 +11,8 @@
     <color name="black_12">#1E000000</color>
     <color name="black_6">#0F000000</color>
 
+    <color name="red_500">#F44336</color>
+
     <color name="hint">#b7b7b7</color>
     <color name="bg_login">#26ae90</color>
     <color name="bg_register">#8bc34a</color>
@@ -117,6 +119,10 @@
 
 
     <!--Other-->
+    
+    <color name="dot_submit_on_time">#4caf50</color>
+    <color name="dot_submit_late">#ff9800</color>
+    <color name="dot_submit_none">#f44336</color>
 
 
 </resources>

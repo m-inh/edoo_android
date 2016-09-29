@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/paragraph_margin"
+    android:paddingRight="@dimen/paragraph_margin"
+    android:paddingTop="@dimen/i_class_padding_top">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_marker_seen"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="@dimen/lv_margin_top"
+            android:src="@color/colorPrimary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/i_class_padding_bottom_small"
+            android:paddingLeft="6dp"
+            android:paddingTop="0dp">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/i_icon_size"
+                android:layout_weight="1"
+                android:text="@string/title_post"
+                android:textAllCaps="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/t_size_subheading_2"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/i_class_padding_top"
+                android:layout_marginTop="@dimen/i_class_padding_bottom_small"
+                android:text="@string/content_post"
+                android:textColor="@color/black_87"
+                android:textSize="@dimen/t_size_body" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/paragraph_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_remaining_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Còn: 9 giờ, 6 ngày"
+                    android:textColor="@color/red_500"
+                    android:textSize="@dimen/t_size_body" />
+
+                <TextView
+                    android:id="@+id/tv_create_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="01/10/16"
+                    android:textColor="@color/black_87"
+                    android:textSize="@dimen/t_size_body" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </TableRow>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/hint" />
+
+</LinearLayout>
