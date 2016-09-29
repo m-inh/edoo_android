@@ -349,7 +349,7 @@ public class PostWriterTagFragment extends Fragment {
     public String getTimestamp() {
         if (!typePostIsExercise()) return "0";
 
-        String dateTime = tvPickDate.getText().toString() + " " + tvPickTime.getText().toString() + ":00";
+        String dateTime = tvPickDate.getText().toString() + "T" + tvPickTime.getText().toString() + ":00.000Z";
 //        Log.i(TAG, "date-time = " + dateTime);
 //        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 ////        formatter.setTimeZone(TimeZone.getTimeZone("Europe/London"));
@@ -359,7 +359,7 @@ public class PostWriterTagFragment extends Fragment {
         String timestamp = "1";
 
         try {
-            Date date = new SimpleDateFormat("dd/MM/yyyy'T'HH:mm:ss").parse(dateTime);
+            Date date = new SimpleDateFormat("dd/MM/yyyy'T'HH:mm:ss.SSS").parse(dateTime);
             timestamp = date.getTime() + "";
 
         } catch (ParseException e) {
