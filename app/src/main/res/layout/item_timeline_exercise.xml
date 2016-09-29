@@ -2,11 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/red_500_6"
+    android:background="@color/blue_500_6"
     android:orientation="vertical"
     android:paddingLeft="@dimen/paragraph_margin">
-
-    <!--android:background="?android:attr/selectableItemBackground"-->
 
     <TableRow
         android:layout_width="match_parent"

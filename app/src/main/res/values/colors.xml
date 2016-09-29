@@ -14,6 +14,9 @@
     <color name="red_500">#F44336</color>
     <color name="red_500_6">#0FF44336</color>
 
+    <color name="blue_500">#2196F3</color>
+    <color name="blue_500_6">#0F2196F3</color>
+
     <color name="hint">#b7b7b7</color>
     <color name="bg_login">#26ae90</color>
     <color name="bg_register">#8bc34a</color>

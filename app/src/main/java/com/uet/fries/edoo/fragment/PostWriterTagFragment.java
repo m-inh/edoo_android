@@ -287,8 +287,8 @@ public class PostWriterTagFragment extends Fragment {
     private void setOnClickDate() {
         final Calendar now = Calendar.getInstance();
         int year = now.get(Calendar.YEAR);
-        String month = getNumber(now.get(Calendar.MONTH));
-        String day = getNumber(now.get(Calendar.DAY_OF_MONTH) + 1);
+        String month = getNumber(now.get(Calendar.MONTH) + 1);
+        String day = getNumber(now.get(Calendar.DAY_OF_MONTH));
         String hour = getNumber(now.get(Calendar.HOUR_OF_DAY));
         String minutes = getNumber(now.get(Calendar.MINUTE));
         tvPickTime.setText(hour + ":" + minutes);

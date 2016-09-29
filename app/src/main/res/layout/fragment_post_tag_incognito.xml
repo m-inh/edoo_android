@@ -29,61 +29,50 @@
             android:textSize="@dimen/text_size_tiny"
             android:textStyle="italic|bold" />
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:gravity="center_vertical">
+            android:layout_height="0dp"
+            android:layout_weight="2">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="24dp"
-                android:layout_weight="1"
-                android:background="@color/colorPrimaryHint" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:gravity="center_vertical"
+                android:weightSum="2">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/activity_vertical_margin"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryHint" />
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/iv_line_type_post"
                 android:layout_width="@dimen/i_icon_size_big"
                 android:layout_height="@dimen/i_icon_size_big"
                 android:layout_gravity="right"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:src="@drawable/ic_type_post_question" />
 
-        </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_format_align_left_black_24dp" />
 
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="42dp"
-            android:layout_marginTop="@dimen/paragraph_margin"
-            android:background="@color/colorPrimaryHint" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="85dp"
-            android:layout_marginTop="@dimen/card_elevation"
-            android:background="@color/colorPrimaryHint" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/card_elevation"
-            android:background="@color/colorPrimaryHint" />
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/btn_height">
 
             <View
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1" />
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -126,7 +115,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4"
+            android:layout_weight="5"
             android:orientation="vertical"
             tools:ignore="NestedWeights">
 
@@ -220,7 +209,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/paragraph_margin"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:id="@+id/view" />
 
                 <TextView
                     android:id="@+id/tv_type_post_exercise"
@@ -271,12 +261,11 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_btn_border_empty"
                     android:clickable="true"
+                    android:drawableRight="@drawable/ic_drop_down"
                     android:gravity="center"
                     android:text="12/10/2016"
                     android:textColor="@color/black_87"
-                    android:textSize="@dimen/t_size_body"
-                    android:drawableRight="@drawable/ic_drop_down"
-                    />
+                    android:textSize="@dimen/t_size_body" />
 
                 <TextView
                     android:id="@+id/tv_pick_time"
@@ -286,11 +275,11 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_btn_border_empty"
                     android:clickable="true"
+                    android:drawableRight="@drawable/ic_drop_down"
                     android:gravity="center"
                     android:text="21:00"
                     android:textColor="@color/black_87"
-                    android:textSize="@dimen/t_size_body"
-                    android:drawableRight="@drawable/ic_drop_down"/>
+                    android:textSize="@dimen/t_size_body" />
 
             </LinearLayout>
 

@@ -139,7 +139,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
         if (isModeWritePost)
             postPost(idLop, titlePost, contentPost, pTag.getTypePost(), pTag.getIsIncognitoPost(), pTag.getIsTeacher(), pTag.getTimestamp());
         else
-            updatePost(itemTimeLine.getIdPost(), titlePost, contentPost, pTag.getIsIncognitoPost(), pTag.getTypePost());
+            updatePost(itemTimeLine.getIdPost(), titlePost, contentPost, pTag.getIsIncognitoPost(), pTag.getTypePost(), pTag.getTimestamp());
     }
 
     private MenuItem actionNextPage, actionPost;
@@ -259,7 +259,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
         requestServer.sendRequest("post new post");
     }
 
-    private void updatePost(String postId, String title, String content, boolean isIncognito, String type) {
+    private void updatePost(String postId, String title, String content, boolean isIncognito, String type, String timeStamp) {
         JSONObject params = new JSONObject();
         try {
             params.put("post_id", postId);
@@ -267,6 +267,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
             params.put("content", content);
             params.put("is_incognito", isIncognito);
             params.put("type", type);
+            if (type.equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) params.put("event_end", timeStamp);
         } catch (JSONException e) {
             e.printStackTrace();
         }
