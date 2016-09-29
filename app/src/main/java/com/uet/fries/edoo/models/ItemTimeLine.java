@@ -1,5 +1,7 @@
 package com.uet.fries.edoo.models;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -199,6 +201,7 @@ public class ItemTimeLine extends ItemBase implements Serializable {
      */
 
     private String remainingTime = "";
+    private String percentSubmitted = "0";
 
     public String getRemainingTime() {
         return remainingTime;
@@ -206,5 +209,13 @@ public class ItemTimeLine extends ItemBase implements Serializable {
 
     public void setRemainingTime(String remainingTime) {
         this.remainingTime = remainingTime;
+    }
+
+    public String getPercentSubmitted() {
+        return percentSubmitted;
+    }
+
+    public void setPercentSubmitted(String percentSubmitted) {
+        this.percentSubmitted = percentSubmitted;
     }
 }

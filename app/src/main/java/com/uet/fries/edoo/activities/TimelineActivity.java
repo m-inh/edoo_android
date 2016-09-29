@@ -34,6 +34,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by TooNies1810 on 8/12/16.
@@ -229,7 +230,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                         Log.i(TAG, jsonPostArr.getJSONObject(i).toString());
                         try {
                             remainingTime = jsonPostArr.getJSONObject(i).getString("time_end");
-                        }catch (JSONException e){
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
@@ -274,10 +275,8 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                                     .toString();
                             itemTimeLine.setCreateAt(tempTime);
 
-                            tempTime = DateFormat.format("dd/MM/yy hh:mm", sdf.parse(remainingTime)
-                                    .getTime())
-                                    .toString();
-                            itemTimeLine.setRemainingTime(tempTime);
+
+                            if (!remainingTime.equals("")) itemTimeLine.setRemainingTime(CommonVLs.getDateTime(remainingTime));
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }

@@ -65,7 +65,8 @@ public class ItemTimelineExerciseHolder extends AbstractHolder {
     }
 
     public void setRemainingTime(String time) {
-        tvRemainingTime.setText(mContext.getString(R.string.txt_remaining_time) + time);
+//        tvRemainingTime.setText(mContext.getString(R.string.txt_remaining_time) + time);
+        tvRemainingTime.setText(time);
     }
 
     public void setTitle(String title) {

@@ -114,6 +114,7 @@
     <string name="txt_options">Tùy chọn</string>
     <string name="txt_type_post">Loại bài viết:</string>
     <string name="txt_deadline">Hạn nộp:</string>
+    <string name="txt_list_submitted">Danh sách nộp bài</string>
 
 
     <string name="txt_save">Lưu</string>

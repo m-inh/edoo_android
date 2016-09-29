@@ -50,4 +50,10 @@ public class AppConfig {
 
 	public static final String  URL_GET_POST_DETAIL = URL_HOST + "/post";
 	public static final String  URL_DELETE_POST = URL_HOST + "/deletepost";
+
+
+	// Event
+	public static final String  URL_UPFILE_EVENT = URL_HOST + "/upfileevent/";
+	public static final String  URL_CHECK_EVENT = URL_HOST + "/checkevent/";
+
 }

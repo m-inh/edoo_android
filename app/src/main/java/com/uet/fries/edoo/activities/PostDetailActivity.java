@@ -1,9 +1,15 @@
 package com.uet.fries.edoo.activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +25,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -27,9 +34,11 @@ import com.uet.fries.edoo.adapter.EventExerciseDetailAdapter;
 import com.uet.fries.edoo.adapter.PostDetailAdapter;
 import com.uet.fries.edoo.adapter.TimeLineAdapter;
 import com.uet.fries.edoo.app.AppConfig;
+import com.uet.fries.edoo.communication.MultipartRequest;
 import com.uet.fries.edoo.communication.RequestServer;
 import com.uet.fries.edoo.helper.SQLiteHandler;
 import com.uet.fries.edoo.holder.AbstractHolder;
+import com.uet.fries.edoo.io.FileManager;
 import com.uet.fries.edoo.models.ItemComment;
 import com.uet.fries.edoo.models.ItemTimeLine;
 import com.uet.fries.edoo.utils.CommonVLs;
@@ -40,6 +49,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -94,6 +105,9 @@ public class PostDetailActivity extends AppCompatActivity {
         if (itemTimeline == null) {
             postIsChanged = true;
         } else postIsChanged = false;
+        if (itemTimeline.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
+            postIsChanged = true;
+        }
         getPostDetail(mIntent.getStringExtra("post_id"));
     }
 
@@ -202,16 +216,6 @@ public class PostDetailActivity extends AppCompatActivity {
         builder.show();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            postIsChanged = true;
-            getPostDetail(itemTimeline.getIdPost());
-
-        }
-    }
-
-
     // -------------------------------- RequestServer ----------------------------------------------
 
     private void getPostDetail(String idPost) {
@@ -237,6 +241,17 @@ public class PostDetailActivity extends AppCompatActivity {
                     boolean isPostSolve = jsonPost.getInt("is_solve") == 1;
                     String timeCreateAtPost = jsonPost.getString("created_at");
                     String type = jsonPost.getString("type");
+
+                    // Exercise
+                    String remainingTime = "";
+                    String percentSubmitted = "0";
+                    if (itemTimeline.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
+                        remainingTime = jsonPost.getString("time_end");
+
+                        String countFile = jsonPost.getString("attach_file_count");
+                        int studentCount = jsonPost.getJSONObject("class").getInt("student_count");
+                        percentSubmitted = countFile + "/" + studentCount;
+                    }
 
                     //author post
                     String nameAuthorPost = "Ẩn danh";
@@ -270,6 +285,9 @@ public class PostDetailActivity extends AppCompatActivity {
                     itemTimeLine.setCommentCount(commentCount);
                     itemTimeLine.setIsSeen(isSeen);
                     itemTimeLine.setSolve(isPostSolve);
+
+                    itemTimeLine.setPercentSubmitted(percentSubmitted);
+                    itemTimeLine.setRemainingTime(CommonVLs.getDateTime(remainingTime));
 
                     String format = CommonVLs.TIME_FORMAT;
                     SimpleDateFormat sdf = new SimpleDateFormat(format);
@@ -345,6 +363,7 @@ public class PostDetailActivity extends AppCompatActivity {
                                 String type = itemTimeLine.getType();
                                 if (!type.equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
                                     ((PostDetailAdapter) mAdapter).setItemComments(cmtArr);
+                                    mAdapter.notifyDataSetChanged();
                                 } else {
                                     ((EventExerciseDetailAdapter) mAdapter).setItemComments(cmtArr);
                                 }
@@ -438,6 +457,99 @@ public class PostDetailActivity extends AppCompatActivity {
             }
         });
         requestServer.sendRequest("delete_post");
+    }
+
+    //------------------------------ Exercise ------------------------------------------------------
+    private static final int IMAGE_LOCAL_REQUEST = 34242;
+    private static final int CAMERA_REQUEST = 23423;
+    public void pickImageFromMemory() {
+        Intent iImage = (new Intent("android.intent.action.GET_CONTENT")).setType("image/*");
+
+        if (CommonVLs.isHasStoragePermissions(this)) {
+            startActivityForResult(iImage, IMAGE_LOCAL_REQUEST);
+        } else {
+            CommonVLs.verifyStoragePermissions(this);
+        }
+    }
+
+    private Uri photoUri;
+    public void pickImageFromCamera() {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "New Picture");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+        photoUri = getContentResolver().insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+
+        if (CommonVLs.isHasCameraPermissions(this)) {
+            startActivityForResult(intent, CAMERA_REQUEST);
+        } else {
+            CommonVLs.verifyCameraPermissions(this);
+        }
+    }
+
+
+    private void uploadExercise(final Bitmap bmp) {
+        final ProgressDialog pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+        byte[] fileData = CommonVLs.getFileDataFromBitmap(bmp);
+        String filename = "image_post.jpg";
+        String fileType = "image/jpg";
+        MultipartRequest request = new MultipartRequest(this, Request.Method.POST,
+                AppConfig.URL_UPFILE_EVENT + itemTimeline.getIdPost() , fileData, filename, fileType);
+
+        request.setListener(new MultipartRequest.ServerListener() {
+            @Override
+            public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
+                Log.d(TAG, "response: " + response);
+                Log.d(TAG, "msg: " + message);
+
+                pDialog.dismiss();
+
+                if (!error) {
+                    String urlImg = response.getJSONObject("data").getString("url");
+                    Toast.makeText(PostDetailActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "url = " + urlImg);
+                } else {
+                    Toast.makeText(PostDetailActivity.this, "Upload Failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        request.sendRequest("up exercise");
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "result code = " + resultCode);
+        if (resultCode != Activity.RESULT_OK) return;
+
+        switch (requestCode) {
+            case REQUEST_EDIT_POST:
+                postIsChanged = true;
+                getPostDetail(itemTimeline.getIdPost());
+                break;
+            case IMAGE_LOCAL_REQUEST:
+//                Log.i(TAG, data.getData().toString());
+                File file = new File(FileManager.getPath(this, data.getData()));
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+                uploadExercise(bitmap);
+                break;
+            case CAMERA_REQUEST:
+                try {
+                    Bitmap photo = MediaStore.Images.Media.getBitmap(getContentResolver(), photoUri);
+                    if (photo == null) return;
+                    uploadExercise(photo);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
     }
 
 }

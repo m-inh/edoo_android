@@ -2,6 +2,7 @@ package com.uet.fries.edoo.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class EventExerciseDetailAdapter extends RecyclerView.Adapter<AbstractHol
     public AbstractHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_exercise_detail, parent, false);
-            return new ItemEventDetailHolder(view, itemTimeline, user.get("uid"));
+            return new ItemEventDetailHolder(view, itemTimeline, user.get("uid"), user.get("type"));
         } else {
             View view = LayoutInflater.from(mContext).inflate(com.uet.fries.edoo.R.layout.item_comment_in_post, parent, false);
             return new ItemCommentDetailHolder(view, itemTimeline, this);
@@ -74,14 +75,15 @@ public class EventExerciseDetailAdapter extends RecyclerView.Adapter<AbstractHol
             postDetailHolder.getTvCreateAt().setText(itemTimeline.getCreateAt());
 
             postDetailHolder.setDeadline(itemTimeline.getRemainingTime());
-
+            postDetailHolder.setPercentSubmitted(itemTimeline.getPercentSubmitted());
+            Log.i("set", "percent = " + itemTimeline.getPercentSubmitted());
         }
     }
 
 
     @Override
     public int getItemCount() {
-        if (itemTimeline == null){
+        if (itemTimeline == null) {
             return 0;
         } else {
             return itemTimeline.getItemComments().size() + 1;

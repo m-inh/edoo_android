@@ -8,11 +8,16 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by TooNies1810 on 8/13/16.
@@ -20,7 +25,7 @@ import java.text.SimpleDateFormat;
 public class CommonVLs {
     public static final String TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
 
-    public static String convertDate(String date){
+    public static String convertDate(String date) {
         String format = CommonVLs.TIME_FORMAT;
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         try {
@@ -53,6 +58,14 @@ public class CommonVLs {
         }
     }
 
+    // get time
+    public static String getDateTime(String timestamp) {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(Long.parseLong(timestamp));
+        String date = DateFormat.format("hh:mm, dd-MM-yyyy", cal).toString();
+        return date;
+    }
+
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
@@ -81,7 +94,7 @@ public class CommonVLs {
         }
     }
 
-    public static boolean isHasStoragePermissions(Activity activity){
+    public static boolean isHasStoragePermissions(Activity activity) {
         return ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED;
     }
@@ -114,11 +127,10 @@ public class CommonVLs {
         }
     }
 
-    public static boolean isHasCameraPermissions(Activity activity){
+    public static boolean isHasCameraPermissions(Activity activity) {
         return ActivityCompat.checkSelfPermission(activity, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED;
     }
-
 
 
     // Internet state Permissions
@@ -149,7 +161,7 @@ public class CommonVLs {
         }
     }
 
-    public static boolean isHasNetworkPermissions(Activity activity){
+    public static boolean isHasNetworkPermissions(Activity activity) {
         return ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_NETWORK_STATE)
                 == PackageManager.PERMISSION_GRANTED;
     }
