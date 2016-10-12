@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 
+import com.stfalcon.frescoimageviewer.ImageViewer;
 import com.uet.fries.edoo.activities.ProfileActivity;
 import com.uet.fries.edoo.app.AppConfig;
 import com.uet.fries.edoo.communication.RequestServer;
@@ -138,6 +139,15 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
                     .error(com.uet.fries.edoo.R.mipmap.ic_user).into(ivAvatar);
             tvName.setText(user.getName());
             tvPointCount.setText("" + user.getPointCount());
+
+            ivAvatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new ImageViewer.Builder(mContext, new String[]{user.getAvatar()})
+                            .setStartPosition(0)
+                            .show();
+                }
+            });
         }
 
         @Override

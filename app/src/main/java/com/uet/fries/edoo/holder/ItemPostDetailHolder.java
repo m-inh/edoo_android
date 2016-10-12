@@ -1,10 +1,14 @@
 package com.uet.fries.edoo.holder;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -12,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.stfalcon.frescoimageviewer.ImageViewer;
 import com.uet.fries.edoo.activities.PostDetailActivity;
 import com.uet.fries.edoo.R;
 import com.uet.fries.edoo.activities.WebviewActivity;
@@ -25,6 +30,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.R.id.list;
+import static android.webkit.WebView.HitTestResult.IMAGE_TYPE;
+import static android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE;
 
 /**
  * Created by TooNies1810 on 2/19/16.
@@ -89,7 +98,7 @@ public class ItemPostDetailHolder extends AbstractHolder {
         webView = (WebView) itemView.findViewById(R.id.webview);
     }
 
-    public void setContentToWebview(String content){
+    public void setContentToWebview(String content) {
         String htmlData = "<html>"
                 + "<head>"
                 + "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />"
@@ -100,7 +109,7 @@ public class ItemPostDetailHolder extends AbstractHolder {
                 + "</html>";
         webView.loadDataWithBaseURL("file:///android_asset/", htmlData, "text/html", "UTF-8", null);
 
-        webView.setWebViewClient(new WebViewClient(){
+        webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 Intent mIntent = new Intent();
@@ -112,6 +121,25 @@ public class ItemPostDetailHolder extends AbstractHolder {
 
         });
 
+        webView.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() != MotionEvent.ACTION_UP) return false;
+
+                WebView.HitTestResult hr = ((WebView) v).getHitTestResult();
+                switch (hr.getType()) {
+                    case IMAGE_TYPE:
+                        Log.i(TAG, "Image = " + hr.getExtra());
+                        new ImageViewer.Builder(mContext, new String[]{hr.getExtra()})
+                                .setStartPosition(0)
+                                .show();
+                        break;
+                    case SRC_ANCHOR_TYPE:
+                        Log.i(TAG, "Url = " + hr.getExtra());
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     public void setCbIsVote() {
@@ -220,7 +248,7 @@ public class ItemPostDetailHolder extends AbstractHolder {
         return tvCreateAt;
     }
 
-    public ImageView getIvTypePost(){
+    public ImageView getIvTypePost() {
         return ivTypePost;
     }
 }

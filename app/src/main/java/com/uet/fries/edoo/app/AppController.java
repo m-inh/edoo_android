@@ -7,6 +7,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.crashlytics.android.Crashlytics;
+import com.facebook.drawee.backends.pipeline.Fresco;
+
 import io.fabric.sdk.android.Fabric;
 
 public class AppController extends MultiDexApplication {
@@ -22,6 +24,7 @@ public class AppController extends MultiDexApplication {
 	public void onCreate() {
 		super.onCreate();
 		Fabric.with(this, new Crashlytics());
+		Fresco.initialize(this);
 		mInstance = this;
 	}
 
