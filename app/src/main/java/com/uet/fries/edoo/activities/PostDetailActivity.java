@@ -25,21 +25,17 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.uet.fries.edoo.R;
-import com.uet.fries.edoo.adapter.EventExerciseDetailAdapter;
+import com.uet.fries.edoo.adapter.ExerciseDetailAdapter;
 import com.uet.fries.edoo.adapter.PostDetailAdapter;
-import com.uet.fries.edoo.adapter.TimeLineAdapter;
 import com.uet.fries.edoo.app.AppConfig;
 import com.uet.fries.edoo.communication.MultipartRequest;
 import com.uet.fries.edoo.communication.RequestServer;
 import com.uet.fries.edoo.helper.SQLiteHandler;
 import com.uet.fries.edoo.holder.AbstractHolder;
-import com.uet.fries.edoo.holder.ItemEventDetailHolder;
 import com.uet.fries.edoo.io.FileManager;
 import com.uet.fries.edoo.models.ItemComment;
 import com.uet.fries.edoo.models.ItemTimeLine;
@@ -140,7 +136,7 @@ public class PostDetailActivity extends AppCompatActivity {
         if (!itemTimeline.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
             mAdapter = new PostDetailAdapter(this, itemTimeline);
         } else {
-            mAdapter = new EventExerciseDetailAdapter(this, itemTimeline);
+            mAdapter = new ExerciseDetailAdapter(this, itemTimeline);
             postIsChanged = true;
         }
         rvMain.setAdapter(mAdapter);
@@ -361,7 +357,7 @@ public class PostDetailActivity extends AppCompatActivity {
                                 if (!type.equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
                                     mAdapter = new PostDetailAdapter(PostDetailActivity.this, itemTimeline);
                                 } else {
-                                    mAdapter = new EventExerciseDetailAdapter(PostDetailActivity.this, itemTimeline);
+                                    mAdapter = new ExerciseDetailAdapter(PostDetailActivity.this, itemTimeline);
                                 }
                                 rvMain.setAdapter(mAdapter);
                                 postIsChanged = false;
@@ -376,7 +372,7 @@ public class PostDetailActivity extends AppCompatActivity {
                                     ((PostDetailAdapter) mAdapter).setItemComments(cmtArr);
                                     mAdapter.notifyDataSetChanged();
                                 } else {
-                                    ((EventExerciseDetailAdapter) mAdapter).setItemComments(cmtArr);
+                                    ((ExerciseDetailAdapter) mAdapter).setItemComments(cmtArr);
                                 }
                             }
                         }
@@ -526,7 +522,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     String urlImg = response.getJSONObject("data").getString("url");
                     Toast.makeText(PostDetailActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
 
-                    ((EventExerciseDetailAdapter) mAdapter).getEventDetail().setIsSendFile(true);
+                    ((ExerciseDetailAdapter) mAdapter).getEventDetail().setIsSendFile(true);
 //                    Log.d(TAG, "url = " + urlImg);
                 } else {
                     Toast.makeText(PostDetailActivity.this, "Upload Failed", Toast.LENGTH_SHORT).show();

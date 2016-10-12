@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * Created by TooNies1810 on 11/20/15.
  */
 public abstract class LopFragment extends Fragment {
-    private static final String TAG = "LopFragment";
+    private static final String TAG = LopFragment.class.getSimpleName();
     protected View root;
     protected ListView lvMain;
     protected LopAdapter mAdapter;

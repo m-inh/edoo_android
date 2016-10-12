@@ -41,7 +41,7 @@ import java.util.Date;
  */
 public class TimelineActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    private static final String TAG = "TimelineActivity";
+    private static final String TAG = TimelineActivity.class.getSimpleName();
     private TimeLineAdapter mAdapter;
     private ArrayList<ItemBase> itemPostArr;
     private RecyclerView mRecyclerView;

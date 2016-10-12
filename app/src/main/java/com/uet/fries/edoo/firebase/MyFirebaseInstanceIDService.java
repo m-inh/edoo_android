@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
-    private static final String TAG = "MyFirebaseIIDService";
+    private static final String TAG = MyFirebaseInstanceIDService.class.getSimpleName();
 
     private PrefManager session;
 

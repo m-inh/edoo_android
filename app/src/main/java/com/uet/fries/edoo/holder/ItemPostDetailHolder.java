@@ -40,7 +40,7 @@ import static android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE;
  */
 public class ItemPostDetailHolder extends AbstractHolder {
 
-    private static final String TAG = "ItemPostDetailHolder";
+    private static final String TAG = ItemPostDetailHolder.class.getSimpleName();
     private ItemTimeLine itemTimeLine;
     private String userId;
     private Context mContext;

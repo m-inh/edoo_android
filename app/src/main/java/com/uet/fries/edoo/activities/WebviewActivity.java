@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
  */
 public class WebviewActivity extends AppCompatActivity {
 
-    private static final String TAG = "WebviewActivity";
+    private static final String TAG = WebviewActivity.class.getSimpleName();
     private LinearLayout container;
     private Toolbar toolbar;
 

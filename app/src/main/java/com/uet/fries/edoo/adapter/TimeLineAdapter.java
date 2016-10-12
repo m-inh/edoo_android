@@ -26,7 +26,7 @@ import java.util.ArrayList;
  * Created by TooNies1810 on 11/20/15.
  */
 public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
-    private static final String TAG = "TimelineAdapter";
+    private static final String TAG = TimeLineAdapter.class.getSimpleName();
     private Context mContext;
     private ArrayList<ItemBase> itemArr;
     private String idLop;

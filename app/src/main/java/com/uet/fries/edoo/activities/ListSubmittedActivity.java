@@ -7,15 +7,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.uet.fries.edoo.R;
-import com.uet.fries.edoo.adapter.StudentSubmittedExerciseAdapter;
+import com.uet.fries.edoo.adapter.SubmittedExerciseAdapter;
 import com.uet.fries.edoo.app.AppConfig;
 import com.uet.fries.edoo.communication.RequestServer;
 import com.uet.fries.edoo.utils.CommonVLs;
@@ -32,7 +29,7 @@ import java.util.ArrayList;
 
 public class ListSubmittedActivity extends AppCompatActivity {
     private static final String TAG = ListSubmittedActivity.class.getSimpleName();
-    public StudentSubmittedExerciseAdapter adapter;
+    public SubmittedExerciseAdapter adapter;
     private String studentCount;
     private TextView tvPercent;
 
@@ -52,7 +49,7 @@ public class ListSubmittedActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        adapter = new StudentSubmittedExerciseAdapter(this);
+        adapter = new SubmittedExerciseAdapter(this);
 
 //        tvPercent = (TextView) findViewById(R.id.tv_percent_submit);
 //        tvPercent.setVisibility(View.INVISIBLE);
@@ -96,7 +93,7 @@ public class ListSubmittedActivity extends AppCompatActivity {
                     JSONObject data = response.getJSONObject("data");
                     Log.i(TAG, data.toString());
                     JSONArray attachFiles = data.getJSONArray("attack_files") ;
-                    ArrayList<StudentSubmittedExerciseAdapter.Student> arrStudent = new ArrayList<>();
+                    ArrayList<SubmittedExerciseAdapter.Student> arrStudent = new ArrayList<>();
 
                     for (int i = 0; i < attachFiles.length(); i++) {
                         JSONObject file = attachFiles.getJSONObject(i);
@@ -104,7 +101,7 @@ public class ListSubmittedActivity extends AppCompatActivity {
                         String name = author.getString("name");
                         String createAt = file.getString("created_at");
 
-                        arrStudent.add(new StudentSubmittedExerciseAdapter.Student(name, CommonVLs.getDateTime2(createAt), 1));
+                        arrStudent.add(new SubmittedExerciseAdapter.Student(name, CommonVLs.getDateTime2(createAt), 1));
                     }
 
                     adapter.setArrStudent(arrStudent);

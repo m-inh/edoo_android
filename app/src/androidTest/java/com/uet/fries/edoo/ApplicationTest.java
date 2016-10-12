@@ -1,4 +1,4 @@
-package uet.fries.edoo;
+package com.uet.fries.edoo;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -17,12 +17,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by tmq on 29/09/2016.
  */
 
-public class StudentSubmittedExerciseAdapter extends BaseAdapter {
+public class SubmittedExerciseAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater lf;
     private ArrayList<Student> arrStudent;
 
-    public StudentSubmittedExerciseAdapter(Context context){
+    public SubmittedExerciseAdapter(Context context){
         mContext = context;
         lf = LayoutInflater.from(mContext);
         arrStudent = new ArrayList<>();

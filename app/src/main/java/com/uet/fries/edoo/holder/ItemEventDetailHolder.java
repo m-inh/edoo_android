@@ -25,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ItemEventDetailHolder extends AbstractHolder {
 
-    private static final String TAG = "ItemPostDetailHolder";
+    private static final String TAG = ItemEventDetailHolder.class.getSimpleName();
     private ItemTimeLine itemTimeLine;
     private String userId, userType;
     private Context mContext;

@@ -22,14 +22,14 @@ import java.util.HashMap;
 /**
  * Created by TooNies1810 on 2/19/16.
  */
-public class EventExerciseDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
+public class ExerciseDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
     private Context mContext;
     private ItemTimeLine itemTimeline;
     private HashMap<String, String> user;
     private ItemEventDetailHolder eventDetail;
 
-    public EventExerciseDetailAdapter(Context mContext, ItemTimeLine itemTimeline) {
+    public ExerciseDetailAdapter(Context mContext, ItemTimeLine itemTimeline) {
         this.mContext = mContext;
         this.itemTimeline = itemTimeline;
 

@@ -26,7 +26,7 @@ import java.util.Map;
  * Created by tmq on 12/07/2016.
  */
 public class RequestServer {
-    private static final String TAG = "RequestServer";
+    private static final String TAG = RequestServer.class.getSimpleName();
     private JsonObjectRequest request;
     private int method;
     private String url;

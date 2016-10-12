@@ -16,23 +16,12 @@ public class ItemLop implements Serializable{
     //id duoc luu tren database ()
     public String idData;
 
-    public String vietTat;
-
     public ItemLop(String ten, String idData, String id, String giangVien, int soNguoi) {
         this.ten = ten;
         this.idData = idData;
         this.giangVien = giangVien;
         this.soNguoi = soNguoi;
         this.id = id;
-
-        locChuCaiDau();
-    }
-
-    void locChuCaiDau() {
-        if (ten == null) {
-            return;
-        }
-        vietTat = ten.charAt(0) + "";
     }
 
     public String getTen() {
@@ -49,10 +38,6 @@ public class ItemLop implements Serializable{
 
     public String getId() {
         return id;
-    }
-
-    public String getVietTat() {
-        return vietTat;
     }
 
     public String getIdData() {
