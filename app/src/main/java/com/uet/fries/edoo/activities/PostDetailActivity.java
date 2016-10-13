@@ -37,8 +37,10 @@ import com.uet.fries.edoo.communication.RequestServer;
 import com.uet.fries.edoo.helper.SQLiteHandler;
 import com.uet.fries.edoo.holder.AbstractHolder;
 import com.uet.fries.edoo.io.FileManager;
+import com.uet.fries.edoo.models.ITimelineBase;
 import com.uet.fries.edoo.models.ItemComment;
 import com.uet.fries.edoo.models.ItemTimeLine;
+import com.uet.fries.edoo.models.ItemTimeLineExercise;
 import com.uet.fries.edoo.utils.CommonVLs;
 import com.uet.fries.edoo.utils.PermissionManager;
 import com.uet.fries.edoo.utils.Reporter;
@@ -69,7 +71,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private EditText edtComment;
     private ImageView btnSend;
-    private ItemTimeLine itemTimeline;
+    private ITimelineBase itemTimeline;
     private boolean postIsChanged;
 
     private Toolbar toolbar;
@@ -90,7 +92,7 @@ public class PostDetailActivity extends AppCompatActivity {
         pDialog = new ProgressDialog(this);
 
         Intent mIntent = getIntent();
-        this.itemTimeline = (ItemTimeLine) mIntent.getSerializableExtra("timelineItem");
+        this.itemTimeline = (ITimelineBase) mIntent.getSerializableExtra("timelineItem");
 
 //        if (this.itemTimeline != null) {
 //            initViews(this.itemTimeline);
@@ -124,7 +126,7 @@ public class PostDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void setData(final ItemTimeLine itemTimeline) {
+    private void setData(final ITimelineBase itemTimeline) {
         if (itemTimeline == null) {
             Log.i(TAG, "item timeline null");
             postIsChanged = true;
@@ -134,9 +136,9 @@ public class PostDetailActivity extends AppCompatActivity {
         postIsChanged = false;
 
         if (!itemTimeline.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
-            mAdapter = new PostDetailAdapter(this, itemTimeline);
+            mAdapter = new PostDetailAdapter(this, (ItemTimeLine) itemTimeline);
         } else {
-            mAdapter = new ExerciseDetailAdapter(this, itemTimeline);
+            mAdapter = new ExerciseDetailAdapter(this, (ItemTimeLineExercise) itemTimeline);
             postIsChanged = true;
         }
         rvMain.setAdapter(mAdapter);
@@ -229,82 +231,10 @@ public class PostDetailActivity extends AppCompatActivity {
 
                     JSONObject jsonPost = response.getJSONObject("data");
 
-                    String id = jsonPost.getString("id");
-                    String titlePost = jsonPost.getString("title");
-                    String contentPost = jsonPost.getString("content");
-                    String desPost = jsonPost.getString("description");
-                    int like = jsonPost.getInt("vote_count");
-                    int commentCount = jsonPost.getInt("comment_count");
-                    boolean isIncognito = jsonPost.getInt("is_incognito") == 1;
-//                    boolean isSeen = jsonPost.getInt("is_seen") == 1;
-                    boolean isSeen = true;
-                    boolean isPostSolve = jsonPost.getInt("is_solve") == 1;
-                    String timeCreateAtPost = jsonPost.getString("created_at");
-                    String type = jsonPost.getString("type");
-
-                    // Exercise
-                    String remainingTime = "";
-                    String percentSubmitted = "0";
-                    boolean isSendFile = false;
-                    if (type.equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
-                        remainingTime = jsonPost.getString("time_end");
-
-                        String countFile = jsonPost.getString("attach_file_count");
-                        int studentCount = jsonPost.getJSONObject("class").getInt("student_count");
-                        percentSubmitted = countFile + "/" + studentCount;
-
-                        isSendFile = jsonPost.getBoolean("is_send_file");
-                    }
-
-                    //author post
-                    String nameAuthorPost = "Ẩn danh";
-                    String idAuthorPost = "";
-                    String emailAuthorPost = "";
-                    String typeAuthorPost = "";
-                    String mssvAuthorPost = "";
-                    String avarAuthorPost = "okmen.com";
-
-                    try {
-                        JSONObject jsonAuthorPost = jsonPost.getJSONObject("author");
-                        idAuthorPost = jsonAuthorPost.getString("id");
-                        emailAuthorPost = jsonAuthorPost.getString("email");
-                        typeAuthorPost = jsonAuthorPost.getString("capability");
-                        mssvAuthorPost = jsonAuthorPost.getString("code");
-                        avarAuthorPost = jsonAuthorPost.getString("avatar");
-                        nameAuthorPost = jsonAuthorPost.getString("name");
-
-                        if (isIncognito) {
-                            nameAuthorPost = "Ẩn danh";
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    boolean isConfirm = false;
-                    final ItemTimeLine itemTimeLine = new ItemTimeLine(id, titlePost, nameAuthorPost, avarAuthorPost, isIncognito, contentPost, like, isConfirm, type);
-                    itemTimeLine.setTypeAuthor(typeAuthorPost);
-                    itemTimeLine.setDescription(desPost);
-                    itemTimeLine.setIdAuthor(idAuthorPost);
-                    itemTimeLine.setCommentCount(commentCount);
-                    itemTimeLine.setIsSeen(isSeen);
-                    itemTimeLine.setSolve(isPostSolve);
-
-                    if (type.equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
-                        itemTimeLine.setPercentSubmitted(percentSubmitted);
-                        itemTimeLine.setRemainingTime(CommonVLs.getDateTime(remainingTime));
-                        itemTimeLine.setIsSendFile(isSendFile);
-                    }
-
-                    String format = CommonVLs.TIME_FORMAT;
-                    SimpleDateFormat sdf = new SimpleDateFormat(format);
-                    try {
-                        String tempTime = DateFormat.format("dd/MM/yy", sdf.parse(timeCreateAtPost)
-                                .getTime())
-                                .toString();
-                        itemTimeLine.setCreateAt(tempTime);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    final ITimelineBase iTimeLine =
+                            jsonPost.getString("type").equals(ITimelineBase.TYPE_POST_EXERCISE) ?
+                                    new ItemTimeLineExercise(jsonPost) :
+                                    new ItemTimeLine(jsonPost);
 
                     // parse cmt
                     final ArrayList<ItemComment> cmtArr = new ArrayList<>();
@@ -346,18 +276,18 @@ public class PostDetailActivity extends AppCompatActivity {
                         cmtArr.add(itemComment);
                     }
 
-                    itemTimeLine.setItemComments(cmtArr);
+                    iTimeLine.setItemComments(cmtArr);
 
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             if (postIsChanged) {
-                                PostDetailActivity.this.itemTimeline = itemTimeLine;
-                                String type = itemTimeLine.getType();
+                                PostDetailActivity.this.itemTimeline = iTimeLine;
+                                String type = iTimeLine.getType();
                                 if (!type.equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
-                                    mAdapter = new PostDetailAdapter(PostDetailActivity.this, itemTimeline);
+                                    mAdapter = new PostDetailAdapter(PostDetailActivity.this, (ItemTimeLine) itemTimeline);
                                 } else {
-                                    mAdapter = new ExerciseDetailAdapter(PostDetailActivity.this, itemTimeline);
+                                    mAdapter = new ExerciseDetailAdapter(PostDetailActivity.this, (ItemTimeLineExercise) itemTimeline);
                                 }
                                 rvMain.setAdapter(mAdapter);
                                 postIsChanged = false;
@@ -367,7 +297,7 @@ public class PostDetailActivity extends AppCompatActivity {
                                 mIntent.putExtras(b);
                                 setResult(RESULT_OK, mIntent);
                             } else {
-                                String type = itemTimeLine.getType();
+                                String type = iTimeLine.getType();
                                 if (!type.equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
                                     ((PostDetailAdapter) mAdapter).setItemComments(cmtArr);
                                     mAdapter.notifyDataSetChanged();
@@ -415,9 +345,10 @@ public class PostDetailActivity extends AppCompatActivity {
                     String capability = user.get("type");
                     // Thay doi tren Local
                     itemTimeline.getItemComments().add(new ItemComment(idCmt, uid, name, ava, content, false, capability));
-                    if (user.get("type").equalsIgnoreCase("teacher")) {
-                        itemTimeline.setIsConfirmByTeacher(true);
-                    }
+
+//                    if (user.get("type").equalsIgnoreCase("teacher")) {
+//                        itemTimeline.setIsConfirmByTeacher(true);
+//                    }
 
                     itemTimeline.setCommentCount(itemTimeline.getCommentCount() + 1);
                     mAdapter.notifyDataSetChanged();

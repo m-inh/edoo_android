@@ -16,6 +16,7 @@ import com.uet.fries.edoo.activities.ListSubmittedActivity;
 import com.uet.fries.edoo.activities.PostDetailActivity;
 import com.uet.fries.edoo.activities.WebviewActivity;
 import com.uet.fries.edoo.models.ItemTimeLine;
+import com.uet.fries.edoo.models.ItemTimeLineExercise;
 import com.uet.fries.edoo.utils.CommonVLs;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -26,7 +27,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ItemEventDetailHolder extends AbstractHolder {
 
     private static final String TAG = ItemEventDetailHolder.class.getSimpleName();
-    private ItemTimeLine itemTimeLine;
+    private ItemTimeLineExercise itemTLExercise;
     private String userId, userType;
     private Context mContext;
 
@@ -41,9 +42,9 @@ public class ItemEventDetailHolder extends AbstractHolder {
         super(itemView);
     }
 
-    public ItemEventDetailHolder(View itemView, ItemTimeLine itemTimeLine, String userId, String userType) {
+    public ItemEventDetailHolder(View itemView, ItemTimeLineExercise itemTLExercise, String userId, String userType) {
         this(itemView);
-        this.itemTimeLine = itemTimeLine;
+        this.itemTLExercise = itemTLExercise;
         this.userId = userId;
         this.userType = userType;
         this.mContext = itemView.getContext();
@@ -59,7 +60,7 @@ public class ItemEventDetailHolder extends AbstractHolder {
         tvPercentSubmitted = (TextView) itemView.findViewById(R.id.tv_percent_submit);
 
         Picasso.with(mContext)
-                .load(itemTimeLine.getAva()).fit()
+                .load(itemTLExercise.getAvaAuthor()).fit()
                 .placeholder(R.mipmap.ic_user).error(R.mipmap.ic_user)
                 .into(ivAvatar);
 
@@ -138,9 +139,9 @@ public class ItemEventDetailHolder extends AbstractHolder {
 
     private void checkSubmitExercise() {
         Intent intent = new Intent(mContext, ListSubmittedActivity.class);
-        intent.putExtra("post_id", itemTimeLine.getIdPost());
-        String percent = itemTimeLine.getPercentSubmitted();
-        Log.i(TAG, "percent=" + percent);
+        intent.putExtra("post_id", itemTLExercise.getIdPost());
+//        String percent = itemTimeLine.getPercentSubmitted();
+//        Log.i(TAG, "percent=" + percent);
 //        intent.putExtra("student_count", percent.substring(percent.indexOf("/"), percent.length()));
         mContext.startActivity(intent);
     }

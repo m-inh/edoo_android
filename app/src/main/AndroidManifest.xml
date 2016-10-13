@@ -113,9 +113,14 @@
             </intent-filter>
         </service>
         <!-- [END firebase_iid_service] -->
+
+
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="de59737955ad285c03cefbaed1210a1127649088" />
+            android:value="de59737955ad285c03cefbaed1210a1127649088"
+            />
+
+
     </application>
 
 </manifest>

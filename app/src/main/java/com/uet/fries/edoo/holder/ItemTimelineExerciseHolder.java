@@ -9,6 +9,7 @@ import com.uet.fries.edoo.R;
 import com.uet.fries.edoo.activities.TimelineActivity;
 import com.uet.fries.edoo.adapter.TimeLineAdapter;
 import com.uet.fries.edoo.models.ItemTimeLine;
+import com.uet.fries.edoo.models.ItemTimeLineExercise;
 
 /**
  * Created by tmq on 28/09/2016.
@@ -20,7 +21,7 @@ public class ItemTimelineExerciseHolder extends AbstractHolder {
             tvRemainingTime, tvCreateTime;
     private ImageView ivSeen;
 
-    private ItemTimeLine itemTimeLine;
+    private ItemTimeLineExercise itemTimeLineExercise;
 
     public ItemTimelineExerciseHolder(View itemView) {
         super(itemView);
@@ -39,17 +40,15 @@ public class ItemTimelineExerciseHolder extends AbstractHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemTimeLine.setIsSeen(true);
+                itemTimeLineExercise.setIsSeen(true);
                 TimelineActivity timelineActivity = (TimelineActivity) mContext;
-                timelineActivity.startPostDetailActivity(itemTimeLine);
-
-//                postSeen(itemTimeLine.getIdPost());
+                timelineActivity.startPostDetailActivity(itemTimeLineExercise);
             }
         });
     }
 
-    public void setItemTimeLine(ItemTimeLine itemTimeLine) {
-        this.itemTimeLine = itemTimeLine;
+    public void setItemTimeLineExercise(ItemTimeLineExercise itemTimeLineExercise) {
+        this.itemTimeLineExercise = itemTimeLineExercise;
     }
 
     @Override

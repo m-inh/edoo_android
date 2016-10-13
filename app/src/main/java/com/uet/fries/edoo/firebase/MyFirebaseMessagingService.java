@@ -15,6 +15,7 @@ import android.util.Log;
 
 import com.uet.fries.edoo.R;
 import com.uet.fries.edoo.activities.MainActivity;
+import com.uet.fries.edoo.models.ITimelineBase;
 import com.uet.fries.edoo.models.ItemLop;
 import com.uet.fries.edoo.models.ItemTimeLine;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -93,7 +94,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     name = msgData.get("name]");
                 }
 
-                ItemTimeLine itemTimeLine = new ItemTimeLine();
+                ITimelineBase itemTimeLine = new ITimelineBase();
                 itemTimeLine.setIdPost(postId);
                 Bundle b = new Bundle();
                 b.putSerializable("item_timeline", itemTimeLine);

@@ -15,6 +15,7 @@ import com.uet.fries.edoo.holder.ItemEventDetailHolder;
 import com.uet.fries.edoo.holder.ItemPostDetailHolder;
 import com.uet.fries.edoo.models.ItemComment;
 import com.uet.fries.edoo.models.ItemTimeLine;
+import com.uet.fries.edoo.models.ItemTimeLineExercise;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,13 +26,13 @@ import java.util.HashMap;
 public class ExerciseDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
     private Context mContext;
-    private ItemTimeLine itemTimeline;
+    private ItemTimeLineExercise itemTimeline;
     private HashMap<String, String> user;
     private ItemEventDetailHolder eventDetail;
 
-    public ExerciseDetailAdapter(Context mContext, ItemTimeLine itemTimeline) {
+    public ExerciseDetailAdapter(Context mContext, ItemTimeLineExercise itemTimeLineExercise) {
         this.mContext = mContext;
-        this.itemTimeline = itemTimeline;
+        this.itemTimeline = itemTimeLineExercise;
 
         SQLiteHandler sqLite = new SQLiteHandler(mContext);
         user = sqLite.getUserDetails();
@@ -72,14 +73,14 @@ public class ExerciseDetailAdapter extends RecyclerView.Adapter<AbstractHolder> 
 
             postDetailHolder.setTitle(itemTimeline.getTitle());
             postDetailHolder.setContentToWebview(itemTimeline.getContent());
-            postDetailHolder.setAuthorName(itemTimeline.getName());
+            postDetailHolder.setAuthorName(itemTimeline.getNameAuthor());
 
             postDetailHolder.getTvCreateAt().setText(itemTimeline.getCreateAt());
 
             postDetailHolder.setDeadline(itemTimeline.getRemainingTime());
             postDetailHolder.setPercentSubmitted(itemTimeline.getPercentSubmitted());
             postDetailHolder.setIsSendFile(itemTimeline.getIsSendFile());
-            Log.i("set" + position, "percent = " + itemTimeline.getPercentSubmitted());
+//            Log.i("set" + position, "percent = " + itemTimeline.getPercentSubmitted());
         }
     }
 
@@ -93,33 +94,13 @@ public class ExerciseDetailAdapter extends RecyclerView.Adapter<AbstractHolder> 
         }
     }
 
-    public void setItemTimeline(ItemTimeLine itemTimeline) {
+    public void setItemTimeline(ItemTimeLineExercise itemTimeline) {
         this.itemTimeline = itemTimeline;
         notifyDataSetChanged();
     }
 
     public void setItemComments(ArrayList<ItemComment> commentArr) {
         this.itemTimeline.setItemComments(commentArr);
-        notifyDataSetChanged();
-    }
-
-    public void setSolveCmt(String cmtId) {
-        ArrayList<ItemComment> cmts = itemTimeline.getItemComments();
-        for (int i = 0; i < cmts.size(); i++) {
-            if (cmts.get(i).getIdComment().equalsIgnoreCase(cmtId)) {
-                cmts.get(i).setIsSolved(true);
-            } else {
-                cmts.get(i).setIsSolved(false);
-            }
-        }
-        notifyDataSetChanged();
-    }
-
-    public void setUnsolveCmt() {
-        ArrayList<ItemComment> cmts = itemTimeline.getItemComments();
-        for (int i = 0; i < cmts.size(); i++) {
-            cmts.get(i).setIsSolved(false);
-        }
         notifyDataSetChanged();
     }
 

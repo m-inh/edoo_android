@@ -25,6 +25,7 @@ import com.uet.fries.edoo.activities.WebviewActivity;
 import com.uet.fries.edoo.adapter.PostDetailAdapter;
 import com.uet.fries.edoo.app.AppConfig;
 import com.uet.fries.edoo.communication.RequestServer;
+import com.uet.fries.edoo.models.ITimelineBase;
 import com.uet.fries.edoo.models.ItemComment;
 import com.uet.fries.edoo.models.ItemTimeLine;
 import com.uet.fries.edoo.utils.PermissionManager;
@@ -42,7 +43,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
 
     private static final String TAG = ItemCommentDetailHolder.class.getSimpleName();
     private Context mContext;
-    private ItemTimeLine itemTimeline;
+    private ITimelineBase itemTimeline;
     private ItemComment itemComment;
 
     private TextView tvAuthorName;
@@ -67,12 +68,12 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         tvCreateAt = (TextView) itemView.findViewById(com.uet.fries.edoo.R.id.tv_create_at);
     }
 
-    public ItemCommentDetailHolder(View view, ItemTimeLine itemTimeline) {
+    public ItemCommentDetailHolder(View view, ITimelineBase itemTimeline) {
         this(view);
         this.itemTimeline = itemTimeline;
     }
 
-    public ItemCommentDetailHolder(View view, ItemTimeLine itemTimeline, RecyclerView.Adapter<AbstractHolder> postDetailAdapter) {
+    public ItemCommentDetailHolder(View view, ITimelineBase itemTimeline, RecyclerView.Adapter<AbstractHolder> postDetailAdapter) {
         this(view, itemTimeline);
         this.postDetailAdapter = postDetailAdapter;
     }
@@ -168,6 +169,12 @@ public class ItemCommentDetailHolder extends AbstractHolder {
             itNotSolve.setVisible(false);
         }
 
+        // Bai tap thi se khong co solve, notSolve
+        if (itemTimeline.getType().equalsIgnoreCase(ITimelineBase.TYPE_POST_EXERCISE)){
+            itSolve.setVisible(false);
+            itNotSolve.setVisible(false);
+        }
+
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -238,7 +245,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
                 if (!error) {
                     Log.d(TAG, response.toString());
 
-                    itemTimeline.setSolve(isSolved);
+                    ((ItemTimeLine)itemTimeline).setSolve(isSolved);
                     if (isSolved) ((PostDetailAdapter)postDetailAdapter).setSolveCmt(idCmt);
                     else ((PostDetailAdapter)postDetailAdapter).setUnsolveCmt();
                 }

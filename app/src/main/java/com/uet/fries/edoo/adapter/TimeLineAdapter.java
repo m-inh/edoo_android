@@ -16,6 +16,7 @@ import com.uet.fries.edoo.R;
 import com.uet.fries.edoo.holder.AbstractHolder;
 import com.uet.fries.edoo.holder.ItemPostHolder;
 import com.uet.fries.edoo.holder.ItemTimelineExerciseHolder;
+import com.uet.fries.edoo.models.ITimelineBase;
 import com.uet.fries.edoo.models.ItemBase;
 import com.uet.fries.edoo.models.ItemTimeLine;
 import com.uet.fries.edoo.models.ItemTimeLineExercise;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
     private static final String TAG = TimeLineAdapter.class.getSimpleName();
     private Context mContext;
-    private ArrayList<ItemBase> itemArr;
+    private ArrayList<ITimelineBase> itemArr;
     private String idLop;
 
     private boolean isLoadable;
@@ -44,14 +45,14 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
         itemArr = new ArrayList<>();
     }
 
-    public void updateList(ArrayList<ItemBase> posts) {
+    public void updateList(ArrayList<ITimelineBase> posts) {
         itemArr.clear();
         itemArr.addAll(posts);
         itemArr.add(null);
         notifyDataSetChanged();
     }
 
-    public void addItems(ArrayList<ItemBase> posts) {
+    public void addItems(ArrayList<ITimelineBase> posts) {
         itemArr.remove(itemArr.size() - 1);
         itemArr.addAll(posts);
         itemArr.add(null);
@@ -68,7 +69,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
         if (position == itemArr.size() - 1) {
             return ITEM_LOADMORE;
         } else {
-            ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(position);
+            ITimelineBase itemTimeLine = itemArr.get(position);
             if (itemTimeLine.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
                 return ITEM_EXERCISE;
             } else return ITEM_TIMELINE;
@@ -115,17 +116,17 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
                 }
             }
         } else {
-            ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(position);
             if (abstractHolder.getViewHolderType() == ITEM_TIMELINE) {
+                ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(position);
                 ItemPostHolder itemPostHolder = (ItemPostHolder) abstractHolder;
                 itemPostHolder.setIdLop(idLop);
                 itemPostHolder.setKeyLopType(itemTimeLine.getKeyLopType());
                 itemPostHolder.setIdPost(itemTimeLine.getIdPost());
                 itemPostHolder.setItemTimeLine(itemTimeLine);
                 itemPostHolder.setListComment(itemTimeLine.getItemComments());
-                itemPostHolder.getTxtAuthor().setText(itemTimeLine.getName());
+                itemPostHolder.getTxtAuthor().setText(itemTimeLine.getNameAuthor());
                 itemPostHolder.getTxtTitle().setText(itemTimeLine.getTitle());
-                itemPostHolder.getTxtContent().setText(itemTimeLine.getDescription());
+                itemPostHolder.getTxtContent().setText(itemTimeLine.getSummary());
                 itemPostHolder.setLike(itemTimeLine.getLike());
                 itemPostHolder.getTxtCountLike().setText(itemTimeLine.getLike() + "");
                 if (itemTimeLine.getLike() >= 0) {
@@ -162,12 +163,13 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
                 setResourceTypePost(itemPostHolder, itemTimeLine.getType());
             } else if (abstractHolder.getViewHolderType() == ITEM_EXERCISE) {
+                ItemTimeLineExercise itemTimeLine = (ItemTimeLineExercise) itemArr.get(position);
                 ItemTimelineExerciseHolder itemPostHolder = (ItemTimelineExerciseHolder) abstractHolder;
                 itemPostHolder.setRemainingTime(itemTimeLine.getRemainingTime());
                 itemPostHolder.setTitle(itemTimeLine.getTitle());
-                itemPostHolder.setSummary(itemTimeLine.getDescription());
+                itemPostHolder.setSummary(itemTimeLine.getSummary());
                 itemPostHolder.setSeen(itemTimeLine.isSeen());
-                itemPostHolder.setItemTimeLine(itemTimeLine);
+                itemPostHolder.setItemTimeLineExercise(itemTimeLine);
                 itemPostHolder.setCreateTime(itemTimeLine.getCreateAt());
             }
         }
@@ -190,7 +192,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
         isLoadable = loadable;
     }
 
-    public ArrayList<ItemBase> getItemArr() {
+    public ArrayList<ITimelineBase> getItemArr() {
         return itemArr;
     }
 

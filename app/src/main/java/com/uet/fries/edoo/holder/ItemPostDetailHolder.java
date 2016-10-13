@@ -85,7 +85,7 @@ public class ItemPostDetailHolder extends AbstractHolder {
         ivIsVote = (ImageView) itemView.findViewById(R.id.iv_bookmark);
 
         Picasso.with(mContext)
-                .load(itemTimeLine.getAva()).fit()
+                .load(itemTimeLine.getAvaAuthor()).fit()
                 .placeholder(R.mipmap.ic_user).error(R.mipmap.ic_user)
                 .into(ivAvatar);
 

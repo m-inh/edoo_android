@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,9 +20,11 @@ import com.android.volley.Request;
 import com.uet.fries.edoo.adapter.TimeLineAdapter;
 import com.uet.fries.edoo.app.AppConfig;
 import com.uet.fries.edoo.communication.RequestServer;
+import com.uet.fries.edoo.models.ITimelineBase;
 import com.uet.fries.edoo.models.ItemBase;
 import com.uet.fries.edoo.models.ItemLop;
 import com.uet.fries.edoo.models.ItemTimeLine;
+import com.uet.fries.edoo.models.ItemTimeLineExercise;
 import com.uet.fries.edoo.utils.CommonVLs;
 import com.uet.fries.edoo.utils.Reporter;
 
@@ -43,7 +44,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
 
     private static final String TAG = TimelineActivity.class.getSimpleName();
     private TimeLineAdapter mAdapter;
-    private ArrayList<ItemBase> itemPostArr;
+    private ArrayList<ITimelineBase> itemPostArr;
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout swipeRefresh;
     private ProgressBar pbLoading;
@@ -179,7 +180,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
     }
 
     private void requestPost(final String classId, int pageNumber, int typeFilter) {
-        final ArrayList<ItemBase> itemPostArr = new ArrayList<>();
+        final ArrayList<ITimelineBase> itemPostArr = new ArrayList<>();
 
         String queryParams = "";
 
@@ -212,76 +213,17 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
 
                     // create item timeline
                     for (int i = 0; i < jsonPostArr.length(); i++) {
-                        //Lay mang cac post
-                        //Luu vao 1 arrayList post
-                        String id = jsonPostArr.getJSONObject(i).getString("id");
-                        String titlePost = jsonPostArr.getJSONObject(i).getString("title");
-                        String contentPost = jsonPostArr.getJSONObject(i).getString("content");
-                        String desPost = jsonPostArr.getJSONObject(i).getString("description");
-                        int like = jsonPostArr.getJSONObject(i).getInt("vote_count");
-                        int commentCount = jsonPostArr.getJSONObject(i).getInt("comment_count");
-                        boolean isIncognito = jsonPostArr.getJSONObject(i).getInt("is_incognito") == 1;
-                        boolean isSeen = jsonPostArr.getJSONObject(i).getInt("is_seen") == 1;
-                        boolean isSolve = jsonPostArr.getJSONObject(i).getInt("is_solve") == 1;
-                        String timeCreateAtPost = jsonPostArr.getJSONObject(i).getString("created_at");
-                        String type = jsonPostArr.getJSONObject(i).getString("type");
-
-                        String remainingTime = "";
-                        Log.i(TAG, jsonPostArr.getJSONObject(i).toString());
                         try {
-                            remainingTime = jsonPostArr.getJSONObject(i).getString("time_end");
+                            ITimelineBase itemTimeline =
+                                    jsonPostArr.getJSONObject(i).getString("type").equals(ITimelineBase.TYPE_POST_EXERCISE) ?
+                                            new ItemTimeLineExercise(jsonPostArr.getJSONObject(i)) :
+                                            new ItemTimeLine(jsonPostArr.getJSONObject(i));
+
+                            itemPostArr.add(itemTimeline);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.d(TAG, "Parse json to ItemTimeLine is Failed!");
                         }
-
-                        //author post
-                        String nameAuthorPost = "Ẩn danh";
-                        String idAuthorPost = "";
-                        String emailAuthorPost = "";
-                        String typeAuthorPost = "";
-                        String mssvAuthorPost = "";
-                        String avarAuthorPost = "okmen.com";
-
-                        try {
-                            JSONObject jsonAuthorPost = jsonPostArr.getJSONObject(i).getJSONObject("author");
-                            idAuthorPost = jsonAuthorPost.getString("id");
-                            emailAuthorPost = jsonAuthorPost.getString("email");
-                            typeAuthorPost = jsonAuthorPost.getString("capability");
-                            mssvAuthorPost = jsonAuthorPost.getString("code");
-                            avarAuthorPost = jsonAuthorPost.getString("avatar");
-                            nameAuthorPost = jsonAuthorPost.getString("name");
-
-                            if (isIncognito) {
-                                nameAuthorPost = "Ẩn danh";
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        boolean isConfirm = false;
-                        ItemTimeLine itemTimeLine = new ItemTimeLine(id, titlePost, nameAuthorPost, avarAuthorPost, isIncognito, contentPost, like, isConfirm, type);
-                        itemTimeLine.setTypeAuthor(typeAuthorPost);
-                        itemTimeLine.setDescription(desPost);
-                        itemTimeLine.setIdAuthor(idAuthorPost);
-                        itemTimeLine.setCommentCount(commentCount);
-                        itemTimeLine.setIsSeen(isSeen);
-                        itemTimeLine.setSolve(isSolve);
-
-                        String format = CommonVLs.TIME_FORMAT;
-                        SimpleDateFormat sdf = new SimpleDateFormat(format);
-                        try {
-                            String tempTime = DateFormat.format("dd/MM/yy", sdf.parse(timeCreateAtPost)
-                                    .getTime())
-                                    .toString();
-                            itemTimeLine.setCreateAt(tempTime);
-
-
-                            if (!remainingTime.equals("")) itemTimeLine.setRemainingTime(CommonVLs.getDateTime(remainingTime));
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-
-                        itemPostArr.add(itemTimeLine);
                     }
 
                     JSONObject jsonPage = response.getJSONObject("data").getJSONObject("pagination");
@@ -317,7 +259,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
     private static final int REQUEST_CODE_POST_DETAIL = 1201;
     private static final int REQUEST_CODE_POST_WRITER = 1202;
 
-    public void startPostDetailActivity(ItemTimeLine itemTimeLine) {
+    public void startPostDetailActivity(ITimelineBase itemTimeLine) {
         Intent mIntent = new Intent();
         mIntent.putExtra("timelineItem", itemTimeLine);
         mIntent.putExtra("post_id", itemTimeLine.getIdPost());
@@ -348,12 +290,14 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_POST_DETAIL) {
             if (resultCode == RESULT_OK) {
-                ItemTimeLine itemTimeLine = (ItemTimeLine) data.getExtras().getSerializable("item_timeline");
+                ITimelineBase itemTimeLine = (ITimelineBase) data.getExtras().getSerializable("item_timeline");
+
+                if (itemTimeLine==null) return;
 
                 String idPost = itemTimeLine.getIdPost();
 
                 for (int i = 0; i < mAdapter.getItemArr().size() - 1; i++) {
-                    ItemTimeLine tempItem = (ItemTimeLine) mAdapter.getItemArr().get(i);
+                    ITimelineBase tempItem =  mAdapter.getItemArr().get(i);
                     if (idPost.equalsIgnoreCase(tempItem.getIdPost())) {
                         mAdapter.getItemArr().set(i, itemTimeLine);
                     }
