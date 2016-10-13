@@ -15,7 +15,6 @@ import com.uet.fries.edoo.R;
 import com.uet.fries.edoo.activities.ListSubmittedActivity;
 import com.uet.fries.edoo.activities.PostDetailActivity;
 import com.uet.fries.edoo.activities.WebviewActivity;
-import com.uet.fries.edoo.models.ItemTimeLine;
 import com.uet.fries.edoo.models.ItemTimeLineExercise;
 import com.uet.fries.edoo.utils.CommonVLs;
 

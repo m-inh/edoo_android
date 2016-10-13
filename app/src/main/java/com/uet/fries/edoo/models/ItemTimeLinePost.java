@@ -15,18 +15,18 @@ import java.util.ArrayList;
 /**
  * Cac bai post binh thuong
  */
-public class ItemTimeLine extends ITimelineBase implements Serializable {
-    private static final String TAG = ItemTimeLine.class.getSimpleName();
+public class ItemTimeLinePost extends ITimelineBase implements Serializable {
+    private static final String TAG = ItemTimeLinePost.class.getSimpleName();
 
     private int like;
     private boolean isSolve;
     private boolean isIncognito;
 
-    public ItemTimeLine(){
+    public ItemTimeLinePost(){
         super();
     }
 
-    public ItemTimeLine(JSONObject jsonTimeline) throws JSONException {
+    public ItemTimeLinePost(JSONObject jsonTimeline) throws JSONException {
         super(jsonTimeline);
 
         this.like = jsonTimeline.getInt("vote_count");

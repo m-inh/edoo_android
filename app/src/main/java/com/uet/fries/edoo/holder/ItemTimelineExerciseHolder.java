@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.uet.fries.edoo.R;
 import com.uet.fries.edoo.activities.TimelineActivity;
 import com.uet.fries.edoo.adapter.TimeLineAdapter;
-import com.uet.fries.edoo.models.ItemTimeLine;
 import com.uet.fries.edoo.models.ItemTimeLineExercise;
 
 /**

@@ -30,7 +30,7 @@ import com.uet.fries.edoo.app.AppConfig;
 import com.uet.fries.edoo.communication.RequestServer;
 import com.uet.fries.edoo.fragment.PostWriterContentFragment;
 import com.uet.fries.edoo.fragment.PostWriterTagFragment;
-import com.uet.fries.edoo.models.ItemTimeLine;
+import com.uet.fries.edoo.models.ItemTimeLinePost;
 import com.uet.fries.edoo.utils.Reporter;
 
 import org.json.JSONException;
@@ -49,7 +49,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
 
     private ProgressDialog pDialog;
     private boolean isModeWritePost = true;
-    private ItemTimeLine itemTimeLine = null;
+    private ItemTimeLinePost itemTimeLine = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
         toolbar = (Toolbar) findViewById(R.id.tb_post_writer);
         setSupportActionBar(toolbar);
 
-        itemTimeLine = (ItemTimeLine) getIntent().getSerializableExtra("timelineItem");
+        itemTimeLine = (ItemTimeLinePost) getIntent().getSerializableExtra("timelineItem");
         if (itemTimeLine != null) {
             toolbar.setTitle(R.string.txt_edit_post);
             isModeWritePost = false;
@@ -267,7 +267,7 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
             params.put("content", content);
             params.put("is_incognito", isIncognito);
             params.put("type", type);
-            if (type.equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) params.put("event_end", timeStamp);
+            if (type.equalsIgnoreCase(ItemTimeLinePost.TYPE_POST_EXERCISE)) params.put("event_end", timeStamp);
         } catch (JSONException e) {
             e.printStackTrace();
         }

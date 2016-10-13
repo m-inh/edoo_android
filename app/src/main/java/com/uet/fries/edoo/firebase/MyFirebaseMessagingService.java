@@ -17,7 +17,6 @@ import com.uet.fries.edoo.R;
 import com.uet.fries.edoo.activities.MainActivity;
 import com.uet.fries.edoo.models.ITimelineBase;
 import com.uet.fries.edoo.models.ItemLop;
-import com.uet.fries.edoo.models.ItemTimeLine;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

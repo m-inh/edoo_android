@@ -28,9 +28,9 @@ import com.uet.fries.edoo.fragment.TimetableFragment;
 import com.uet.fries.edoo.helper.SQLiteHandler;
 import com.uet.fries.edoo.helper.PrefManager;
 import com.uet.fries.edoo.models.ItemLop;
-import com.uet.fries.edoo.models.ItemTimeLine;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
+import com.uet.fries.edoo.models.ItemTimeLinePost;
 import com.uet.fries.edoo.utils.Reporter;
 
 import org.json.JSONException;
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity
                     goToTimeLine(itemLop, "");
                 }
             } else if (notiType.equalsIgnoreCase("comment")){
-                ItemTimeLine itemTimeLine = (ItemTimeLine) mIntent.getSerializableExtra("item_timeline");
+                ItemTimeLinePost itemTimeLine = (ItemTimeLinePost) mIntent.getSerializableExtra("item_timeline");
                 Intent intent = new Intent(this, PostDetailActivity.class);
                 intent.putExtra("post_id", itemTimeLine.getIdPost());
                 startActivity(intent);

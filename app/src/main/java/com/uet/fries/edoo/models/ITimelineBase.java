@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Created by tmq on 13/10/2016.
  */
 
-public class ITimelineBase extends ItemBase implements Serializable {
+public class ITimelineBase implements Serializable {
 
     public static final String TYPE_POST_QUESTION = "question";
     public static final String TYPE_POST_NOTE = "note";
@@ -48,15 +48,6 @@ public class ITimelineBase extends ItemBase implements Serializable {
     public ITimelineBase() {
     }
 
-//    public ITimelineAbstract(String idPost, String title, String name, String ava, String content, String type) {
-//        this.name = name;
-//        this.idPost = idPost;
-//        this.title = title;
-//        this.ava = ava;
-//        this.content = content;
-//        this.type = type;
-//    }
-
     public ITimelineBase(JSONObject jsonTimeline) throws JSONException {
         this.title = jsonTimeline.getString("title");
         this.content = jsonTimeline.getString("content");
@@ -78,14 +69,6 @@ public class ITimelineBase extends ItemBase implements Serializable {
         }catch (JSONException e){
             e.printStackTrace();
         }
-
-//        String remainingTime = "";
-//        Log.i(ITimelineAbstract.class.getSimpleName(), jsonTimeLine.toString());
-//        try {
-//            remainingTime = jsonTimeLine.getString("time_end");
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
 
         //author post
         this.nameAuthor = "Ẩn danh";

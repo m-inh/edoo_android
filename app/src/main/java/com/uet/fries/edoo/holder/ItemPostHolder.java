@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.uet.fries.edoo.activities.TimelineActivity;
 import com.uet.fries.edoo.adapter.TimeLineAdapter;
 import com.uet.fries.edoo.models.ItemComment;
-import com.uet.fries.edoo.models.ItemTimeLine;
+import com.uet.fries.edoo.models.ItemTimeLinePost;
 
 import java.util.ArrayList;
 
@@ -31,7 +31,7 @@ public class ItemPostHolder extends AbstractHolder {
     private String idLop;
     private String keyLopType;
     private String idPost;
-    private ItemTimeLine itemTimeLine;
+    private ItemTimeLinePost itemTimeLine;
 
     private View rootView;
 
@@ -116,7 +116,7 @@ public class ItemPostHolder extends AbstractHolder {
         this.idPost = idPost;
     }
 
-    public void setItemTimeLine(ItemTimeLine itemTimeLine) {
+    public void setItemTimeLine(ItemTimeLinePost itemTimeLine) {
         this.itemTimeLine = itemTimeLine;
     }
 

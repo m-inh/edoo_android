@@ -5,9 +5,6 @@ import com.uet.fries.edoo.utils.CommonVLs;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
 /**
  * Created by TooNies1810 on 11/20/15.
  */

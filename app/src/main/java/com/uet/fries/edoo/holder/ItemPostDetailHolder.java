@@ -22,8 +22,8 @@ import com.uet.fries.edoo.R;
 import com.uet.fries.edoo.activities.WebviewActivity;
 import com.uet.fries.edoo.app.AppConfig;
 import com.uet.fries.edoo.communication.RequestServer;
-import com.uet.fries.edoo.models.ItemTimeLine;
 import com.squareup.picasso.Picasso;
+import com.uet.fries.edoo.models.ItemTimeLinePost;
 import com.uet.fries.edoo.utils.PermissionManager;
 
 import org.json.JSONException;
@@ -31,7 +31,6 @@ import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static android.R.id.list;
 import static android.webkit.WebView.HitTestResult.IMAGE_TYPE;
 import static android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE;
 
@@ -41,7 +40,7 @@ import static android.webkit.WebView.HitTestResult.SRC_ANCHOR_TYPE;
 public class ItemPostDetailHolder extends AbstractHolder {
 
     private static final String TAG = ItemPostDetailHolder.class.getSimpleName();
-    private ItemTimeLine itemTimeLine;
+    private ItemTimeLinePost itemTimeLine;
     private String userId;
     private Context mContext;
 
@@ -63,7 +62,7 @@ public class ItemPostDetailHolder extends AbstractHolder {
         super(itemView);
     }
 
-    public ItemPostDetailHolder(View itemView, ItemTimeLine itemTimeLine, String userId) {
+    public ItemPostDetailHolder(View itemView, ItemTimeLinePost itemTimeLine, String userId) {
         this(itemView);
         this.itemTimeLine = itemTimeLine;
         this.userId = userId;

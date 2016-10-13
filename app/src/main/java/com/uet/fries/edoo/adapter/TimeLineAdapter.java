@@ -17,9 +17,8 @@ import com.uet.fries.edoo.holder.AbstractHolder;
 import com.uet.fries.edoo.holder.ItemPostHolder;
 import com.uet.fries.edoo.holder.ItemTimelineExerciseHolder;
 import com.uet.fries.edoo.models.ITimelineBase;
-import com.uet.fries.edoo.models.ItemBase;
-import com.uet.fries.edoo.models.ItemTimeLine;
 import com.uet.fries.edoo.models.ItemTimeLineExercise;
+import com.uet.fries.edoo.models.ItemTimeLinePost;
 
 import java.util.ArrayList;
 
@@ -70,7 +69,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
             return ITEM_LOADMORE;
         } else {
             ITimelineBase itemTimeLine = itemArr.get(position);
-            if (itemTimeLine.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
+            if (itemTimeLine.getType().equalsIgnoreCase(ItemTimeLinePost.TYPE_POST_EXERCISE)) {
                 return ITEM_EXERCISE;
             } else return ITEM_TIMELINE;
         }
@@ -117,7 +116,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
             }
         } else {
             if (abstractHolder.getViewHolderType() == ITEM_TIMELINE) {
-                ItemTimeLine itemTimeLine = (ItemTimeLine) itemArr.get(position);
+                ItemTimeLinePost itemTimeLine = (ItemTimeLinePost) itemArr.get(position);
                 ItemPostHolder itemPostHolder = (ItemPostHolder) abstractHolder;
                 itemPostHolder.setIdLop(idLop);
                 itemPostHolder.setKeyLopType(itemTimeLine.getKeyLopType());
@@ -177,13 +176,13 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
     private void setResourceTypePost(ItemPostHolder itemPostHolder, String type) {
         int idDrawable = android.R.color.white;
-        if (type.equals(ItemTimeLine.TYPE_POST_NOTE))
+        if (type.equals(ITimelineBase.TYPE_POST_NOTE))
             idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_note;
-        else if (type.equals(ItemTimeLine.TYPE_POST_QUESTION))
+        else if (type.equals(ITimelineBase.TYPE_POST_QUESTION))
             idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_question;
-        else if (type.equals(ItemTimeLine.TYPE_POST_POLL))
+        else if (type.equals(ITimelineBase.TYPE_POST_POLL))
             idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_poll;
-        else if (type.equals(ItemTimeLine.TYPE_POST_NOTIFICATION))
+        else if (type.equals(ITimelineBase.TYPE_POST_NOTIFICATION))
             idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_notification;
         itemPostHolder.getIvTypePost().setImageResource(idDrawable);
     }

@@ -12,9 +12,7 @@ import com.uet.fries.edoo.helper.SQLiteHandler;
 import com.uet.fries.edoo.holder.AbstractHolder;
 import com.uet.fries.edoo.holder.ItemCommentDetailHolder;
 import com.uet.fries.edoo.holder.ItemEventDetailHolder;
-import com.uet.fries.edoo.holder.ItemPostDetailHolder;
 import com.uet.fries.edoo.models.ItemComment;
-import com.uet.fries.edoo.models.ItemTimeLine;
 import com.uet.fries.edoo.models.ItemTimeLineExercise;
 
 import java.util.ArrayList;

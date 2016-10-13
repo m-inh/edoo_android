@@ -11,8 +11,9 @@ import com.uet.fries.edoo.helper.SQLiteHandler;
 import com.uet.fries.edoo.holder.AbstractHolder;
 import com.uet.fries.edoo.holder.ItemCommentDetailHolder;
 import com.uet.fries.edoo.holder.ItemPostDetailHolder;
+import com.uet.fries.edoo.models.ITimelineBase;
 import com.uet.fries.edoo.models.ItemComment;
-import com.uet.fries.edoo.models.ItemTimeLine;
+import com.uet.fries.edoo.models.ItemTimeLinePost;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,10 +24,10 @@ import java.util.HashMap;
 public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
     private Context mContext;
-    private ItemTimeLine itemTimeline;
+    private ItemTimeLinePost itemTimeline;
     private HashMap<String, String> user;
 
-    public PostDetailAdapter(Context mContext, ItemTimeLine itemTimeline) {
+    public PostDetailAdapter(Context mContext, ItemTimeLinePost itemTimeline) {
         this.mContext = mContext;
         this.itemTimeline = itemTimeline;
 
@@ -87,12 +88,12 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
     private void setResourceTypePost(ItemPostDetailHolder postDetailHolder, String type) {
         int idDrawable = android.R.color.white;
-        if (type.equals(ItemTimeLine.TYPE_POST_NOTE)) idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_note;
-        else if (type.equals(ItemTimeLine.TYPE_POST_QUESTION))
+        if (type.equals(ITimelineBase.TYPE_POST_NOTE)) idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_note;
+        else if (type.equals(ITimelineBase.TYPE_POST_QUESTION))
             idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_question;
-        else if (type.equals(ItemTimeLine.TYPE_POST_POLL))
+        else if (type.equals(ITimelineBase.TYPE_POST_POLL))
             idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_poll;
-        else if (type.equals(ItemTimeLine.TYPE_POST_NOTIFICATION))
+        else if (type.equals(ITimelineBase.TYPE_POST_NOTIFICATION))
             idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_notification;
         postDetailHolder.getIvTypePost().setImageResource(idDrawable);
     }
@@ -106,7 +107,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
         }
     }
 
-    public void setItemTimeline(ItemTimeLine itemTimeline) {
+    public void setItemTimeline(ItemTimeLinePost itemTimeline) {
         this.itemTimeline = itemTimeline;
         notifyDataSetChanged();
     }

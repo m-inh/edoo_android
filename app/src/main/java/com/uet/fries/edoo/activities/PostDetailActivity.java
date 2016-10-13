@@ -39,8 +39,8 @@ import com.uet.fries.edoo.holder.AbstractHolder;
 import com.uet.fries.edoo.io.FileManager;
 import com.uet.fries.edoo.models.ITimelineBase;
 import com.uet.fries.edoo.models.ItemComment;
-import com.uet.fries.edoo.models.ItemTimeLine;
 import com.uet.fries.edoo.models.ItemTimeLineExercise;
+import com.uet.fries.edoo.models.ItemTimeLinePost;
 import com.uet.fries.edoo.utils.CommonVLs;
 import com.uet.fries.edoo.utils.PermissionManager;
 import com.uet.fries.edoo.utils.Reporter;
@@ -135,8 +135,8 @@ public class PostDetailActivity extends AppCompatActivity {
         Log.i(TAG, "item timeline NOT null");
         postIsChanged = false;
 
-        if (!itemTimeline.getType().equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
-            mAdapter = new PostDetailAdapter(this, (ItemTimeLine) itemTimeline);
+        if (!itemTimeline.getType().equalsIgnoreCase(ITimelineBase.TYPE_POST_EXERCISE)) {
+            mAdapter = new PostDetailAdapter(this, (ItemTimeLinePost) itemTimeline);
         } else {
             mAdapter = new ExerciseDetailAdapter(this, (ItemTimeLineExercise) itemTimeline);
             postIsChanged = true;
@@ -234,7 +234,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     final ITimelineBase iTimeLine =
                             jsonPost.getString("type").equals(ITimelineBase.TYPE_POST_EXERCISE) ?
                                     new ItemTimeLineExercise(jsonPost) :
-                                    new ItemTimeLine(jsonPost);
+                                    new ItemTimeLinePost(jsonPost);
 
                     // parse cmt
                     final ArrayList<ItemComment> cmtArr = new ArrayList<>();
@@ -284,8 +284,8 @@ public class PostDetailActivity extends AppCompatActivity {
                             if (postIsChanged) {
                                 PostDetailActivity.this.itemTimeline = iTimeLine;
                                 String type = iTimeLine.getType();
-                                if (!type.equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
-                                    mAdapter = new PostDetailAdapter(PostDetailActivity.this, (ItemTimeLine) itemTimeline);
+                                if (!type.equalsIgnoreCase(ItemTimeLinePost.TYPE_POST_EXERCISE)) {
+                                    mAdapter = new PostDetailAdapter(PostDetailActivity.this, (ItemTimeLinePost) itemTimeline);
                                 } else {
                                     mAdapter = new ExerciseDetailAdapter(PostDetailActivity.this, (ItemTimeLineExercise) itemTimeline);
                                 }
@@ -298,7 +298,7 @@ public class PostDetailActivity extends AppCompatActivity {
                                 setResult(RESULT_OK, mIntent);
                             } else {
                                 String type = iTimeLine.getType();
-                                if (!type.equalsIgnoreCase(ItemTimeLine.TYPE_POST_EXERCISE)) {
+                                if (!type.equalsIgnoreCase(ITimelineBase.TYPE_POST_EXERCISE)) {
                                     ((PostDetailAdapter) mAdapter).setItemComments(cmtArr);
                                     mAdapter.notifyDataSetChanged();
                                 } else {

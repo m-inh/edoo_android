@@ -20,8 +20,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.uet.fries.edoo.R;
 import com.uet.fries.edoo.helper.SQLiteHandler;
-import com.uet.fries.edoo.holder.ItemPostHolder;
-import com.uet.fries.edoo.models.ItemTimeLine;
+import com.uet.fries.edoo.models.ITimelineBase;
 import com.uet.fries.edoo.utils.CommonVLs;
 import com.nineoldandroids.animation.Animator;
 import com.squareup.picasso.Picasso;
@@ -92,7 +91,7 @@ public class PostWriterTagFragment extends Fragment {
         // Type post default for Teacher and Student
         if (typePost.equals("")) {
 //            if (!getIsTeacher()) {
-            typePost = ItemTimeLine.TYPE_POST_QUESTION;
+            typePost = ITimelineBase.TYPE_POST_QUESTION;
 //            } else {
 //                typePost = ItemTimeLine.TYPE_POST_NOTIFICATION;
 //                typeNotification.setTextSize(14f);
@@ -101,23 +100,23 @@ public class PostWriterTagFragment extends Fragment {
             int idType = 0;
             int type = 0;
             switch (typePost) {
-                case ItemTimeLine.TYPE_POST_QUESTION:
+                case ITimelineBase.TYPE_POST_QUESTION:
                     idType = R.drawable.ic_type_post_question;
                     type = R.id.tv_type_post_question;
                     break;
-                case ItemTimeLine.TYPE_POST_NOTE:
+                case ITimelineBase.TYPE_POST_NOTE:
                     idType = R.drawable.ic_type_post_note;
                     type = R.id.tv_type_post_note;
                     break;
-                case ItemTimeLine.TYPE_POST_NOTIFICATION:
+                case ITimelineBase.TYPE_POST_NOTIFICATION:
                     idType = R.drawable.ic_type_post_notification;
                     type = R.id.tv_type_post_notification;
                     break;
-                case ItemTimeLine.TYPE_POST_POLL:
+                case ITimelineBase.TYPE_POST_POLL:
                     idType = R.drawable.ic_type_post_poll;
                     type = R.id.tv_type_post_poll;
                     break;
-                case ItemTimeLine.TYPE_POST_EXERCISE:
+                case ITimelineBase.TYPE_POST_EXERCISE:
                     type = R.id.tv_type_post_exercise;
                     break;
             }
@@ -182,27 +181,27 @@ public class PostWriterTagFragment extends Fragment {
 //                    Toast.makeText(getContext(), "Add Tag...", Toast.LENGTH_SHORT).show();
 //                    return;
                 case R.id.tv_type_post_question:
-                    typePost = ItemTimeLine.TYPE_POST_QUESTION;
+                    typePost = ITimelineBase.TYPE_POST_QUESTION;
                     idType = R.drawable.ic_type_post_question;
                     type = R.id.tv_type_post_question;
                     break;
                 case R.id.tv_type_post_note:
-                    typePost = ItemTimeLine.TYPE_POST_NOTE;
+                    typePost = ITimelineBase.TYPE_POST_NOTE;
                     idType = R.drawable.ic_type_post_note;
                     type = R.id.tv_type_post_note;
                     break;
                 case R.id.tv_type_post_notification:
-                    typePost = ItemTimeLine.TYPE_POST_NOTIFICATION;
+                    typePost = ITimelineBase.TYPE_POST_NOTIFICATION;
                     idType = R.drawable.ic_type_post_notification;
                     type = R.id.tv_type_post_notification;
                     break;
                 case R.id.tv_type_post_poll:
-                    typePost = ItemTimeLine.TYPE_POST_POLL;
+                    typePost = ITimelineBase.TYPE_POST_POLL;
                     idType = R.drawable.ic_type_post_poll;
                     type = R.id.tv_type_post_poll;
                     break;
                 case R.id.tv_type_post_exercise:
-                    typePost = ItemTimeLine.TYPE_POST_EXERCISE;
+                    typePost = ITimelineBase.TYPE_POST_EXERCISE;
                     type = R.id.tv_type_post_exercise;
                     break;
             }
@@ -369,7 +368,7 @@ public class PostWriterTagFragment extends Fragment {
     }
 
     public boolean typePostIsExercise() {
-        return getTypePost().equals(ItemTimeLine.TYPE_POST_EXERCISE);
+        return getTypePost().equals(ITimelineBase.TYPE_POST_EXERCISE);
     }
 
     public boolean getIsIncognitoPost() {

@@ -21,21 +21,16 @@ import com.uet.fries.edoo.adapter.TimeLineAdapter;
 import com.uet.fries.edoo.app.AppConfig;
 import com.uet.fries.edoo.communication.RequestServer;
 import com.uet.fries.edoo.models.ITimelineBase;
-import com.uet.fries.edoo.models.ItemBase;
 import com.uet.fries.edoo.models.ItemLop;
-import com.uet.fries.edoo.models.ItemTimeLine;
 import com.uet.fries.edoo.models.ItemTimeLineExercise;
-import com.uet.fries.edoo.utils.CommonVLs;
+import com.uet.fries.edoo.models.ItemTimeLinePost;
 import com.uet.fries.edoo.utils.Reporter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by TooNies1810 on 8/12/16.
@@ -217,7 +212,7 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
                             ITimelineBase itemTimeline =
                                     jsonPostArr.getJSONObject(i).getString("type").equals(ITimelineBase.TYPE_POST_EXERCISE) ?
                                             new ItemTimeLineExercise(jsonPostArr.getJSONObject(i)) :
-                                            new ItemTimeLine(jsonPostArr.getJSONObject(i));
+                                            new ItemTimeLinePost(jsonPostArr.getJSONObject(i));
 
                             itemPostArr.add(itemTimeline);
                         } catch (JSONException e) {

@@ -27,7 +27,7 @@ import com.uet.fries.edoo.app.AppConfig;
 import com.uet.fries.edoo.communication.RequestServer;
 import com.uet.fries.edoo.models.ITimelineBase;
 import com.uet.fries.edoo.models.ItemComment;
-import com.uet.fries.edoo.models.ItemTimeLine;
+import com.uet.fries.edoo.models.ItemTimeLinePost;
 import com.uet.fries.edoo.utils.PermissionManager;
 import com.squareup.picasso.Picasso;
 
@@ -245,7 +245,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
                 if (!error) {
                     Log.d(TAG, response.toString());
 
-                    ((ItemTimeLine)itemTimeline).setSolve(isSolved);
+                    ((ItemTimeLinePost)itemTimeline).setSolve(isSolved);
                     if (isSolved) ((PostDetailAdapter)postDetailAdapter).setSolveCmt(idCmt);
                     else ((PostDetailAdapter)postDetailAdapter).setUnsolveCmt();
                 }
