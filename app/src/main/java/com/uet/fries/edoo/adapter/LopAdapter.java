@@ -18,7 +18,6 @@ import java.util.Random;
 public class LopAdapter extends BaseAdapter {
 
     private ArrayList<ItemLop> itemArr = new ArrayList<>();
-//    private ArrayList<Integer> resBgId = new ArrayList<>();
     private Context mContext;
     private LayoutInflater lf;
 

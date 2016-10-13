@@ -33,10 +33,6 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
     private boolean isLoadable;
 
-    public static final int ITEM_TIMELINE = 0;
-    public static final int ITEM_LOADMORE = 1;
-    public static final int ITEM_EXERCISE = 2;
-
     public TimeLineAdapter(Context context, String idLop) {
         this.mContext = context;
         this.idLop = idLop;
@@ -66,12 +62,12 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
     @Override
     public int getItemViewType(int position) {
         if (position == itemArr.size() - 1) {
-            return ITEM_LOADMORE;
+            return AbstractHolder.TYPE_LOADMORE;
         } else {
             ITimelineBase itemTimeLine = itemArr.get(position);
             if (itemTimeLine.getType().equalsIgnoreCase(ItemTimeLinePost.TYPE_POST_EXERCISE)) {
-                return ITEM_EXERCISE;
-            } else return ITEM_TIMELINE;
+                return AbstractHolder.TYPE_EXERCISE;
+            } else return AbstractHolder.TYPE_TIMELINE;
         }
     }
 
@@ -79,13 +75,13 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
     public AbstractHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         AbstractHolder holder = null;
         View view = null;
-        if (viewType == ITEM_TIMELINE) {
+        if (viewType == AbstractHolder.TYPE_TIMELINE) {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_timeline, parent, false);
             holder = new ItemPostHolder(view);
-        } else if (viewType == ITEM_LOADMORE) {
+        } else if (viewType == AbstractHolder.TYPE_LOADMORE) {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_loadmore, parent, false);
             holder = new LoadMoreHolder(view);
-        } else if (viewType == ITEM_EXERCISE) {
+        } else if (viewType == AbstractHolder.TYPE_EXERCISE) {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_timeline_exercise, parent, false);
             holder = new ItemTimelineExerciseHolder(view);
         }
@@ -115,13 +111,13 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
                 }
             }
         } else {
-            if (abstractHolder.getViewHolderType() == ITEM_TIMELINE) {
+            if (abstractHolder.getViewHolderType() == AbstractHolder.TYPE_TIMELINE) {
                 ItemTimeLinePost itemTimeLine = (ItemTimeLinePost) itemArr.get(position);
                 ItemPostHolder itemPostHolder = (ItemPostHolder) abstractHolder;
                 itemPostHolder.setItemTimeLine(itemTimeLine);
                 itemPostHolder.setIdLop(idLop);
 
-            } else if (abstractHolder.getViewHolderType() == ITEM_EXERCISE) {
+            } else if (abstractHolder.getViewHolderType() == AbstractHolder.TYPE_EXERCISE) {
                 ItemTimeLineExercise itemTimeLine = (ItemTimeLineExercise) itemArr.get(position);
                 ItemTimelineExerciseHolder itemPostHolder = (ItemTimelineExerciseHolder) abstractHolder;
                 itemPostHolder.setItemTimeLineExercise(itemTimeLine);
@@ -153,7 +149,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
         @Override
         public int getViewHolderType() {
-            return ITEM_LOADMORE;
+            return AbstractHolder.TYPE_LOADMORE;
         }
     }
 

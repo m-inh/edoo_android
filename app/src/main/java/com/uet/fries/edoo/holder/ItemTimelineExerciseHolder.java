@@ -62,7 +62,7 @@ public class ItemTimelineExerciseHolder extends AbstractHolder {
 
     @Override
     public int getViewHolderType() {
-        return TimeLineAdapter.ITEM_EXERCISE;
+        return AbstractHolder.TYPE_EXERCISE;
     }
 
     /**

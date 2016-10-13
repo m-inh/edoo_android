@@ -56,7 +56,7 @@ public class ItemPostHolder extends AbstractHolder {
 
     @Override
     public int getViewHolderType() {
-        return TimeLineAdapter.ITEM_TIMELINE;
+        return AbstractHolder.TYPE_TIMELINE;
     }
 
     public void setListComment(ArrayList<ItemComment> arr) {

@@ -39,15 +39,15 @@ public class ExerciseDetailAdapter extends RecyclerView.Adapter<AbstractHolder> 
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
-            return 0;
+            return AbstractHolder.TYPE_HEADER;
         } else {
-            return 1;
+            return AbstractHolder.TYPE_COMMENT;
         }
     }
 
     @Override
     public AbstractHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == 0) {
+        if (viewType == AbstractHolder.TYPE_HEADER) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_exercise_detail, parent, false);
             eventDetail = new ItemEventDetailHolder(view, itemTimeline, user.get("uid"), user.get("type"));
             return eventDetail;

@@ -149,7 +149,7 @@ public class ItemEventDetailHolder extends AbstractHolder {
     //---------------------------------------------------------------
     @Override
     public int getViewHolderType() {
-        return 0;
+        return AbstractHolder.TYPE_HEADER;
     }
 
     public void setTitle(String title) {

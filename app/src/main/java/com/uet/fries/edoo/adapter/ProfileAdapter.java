@@ -81,15 +81,15 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) return 0;
-        else return 1;
+        if (position == 0) return AbstractHolder.TYPE_HEADER;
+        else return AbstractHolder.TYPE_INFO;
     }
 
     @Override
     public AbstractHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         switch (viewType) {
-            case 0:
+            case AbstractHolder.TYPE_HEADER:
                 view = LayoutInflater.from(mContext).inflate(com.uet.fries.edoo.R.layout.item_header_profile, parent, false);
                 return new ItemHeaderProfileHolder(view);
             default:
@@ -152,7 +152,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
         @Override
         public int getViewHolderType() {
-            return 0;
+            return AbstractHolder.TYPE_HEADER;
         }
     }
 
@@ -326,7 +326,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
 
         @Override
         public int getViewHolderType() {
-            return 1;
+            return AbstractHolder.TYPE_INFO;
         }
     }
 

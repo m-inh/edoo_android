@@ -179,7 +179,7 @@ public class ItemPostDetailHolder extends AbstractHolder {
 
     @Override
     public int getViewHolderType() {
-        return 0;
+        return AbstractHolder.TYPE_HEADER;
     }
 
     //Post like and cmt to server

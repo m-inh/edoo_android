@@ -38,15 +38,15 @@ public class PostDetailAdapter extends RecyclerView.Adapter<AbstractHolder> {
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
-            return 0;
+            return AbstractHolder.TYPE_HEADER;
         } else {
-            return 1;
+            return AbstractHolder.TYPE_COMMENT;
         }
     }
 
     @Override
     public AbstractHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == 0) {
+        if (viewType == AbstractHolder.TYPE_HEADER) {
             View view = LayoutInflater.from(mContext).inflate(com.uet.fries.edoo.R.layout.item_post_detail, parent, false);
             return new ItemPostDetailHolder(view, itemTimeline, user.get("uid"));
         } else {

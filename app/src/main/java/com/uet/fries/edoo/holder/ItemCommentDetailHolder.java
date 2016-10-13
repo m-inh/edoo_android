@@ -80,7 +80,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
 
     @Override
     public int getViewHolderType() {
-        return 1;
+        return AbstractHolder.TYPE_COMMENT;
     }
 
     public ItemComment getItemComment() {
