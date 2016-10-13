@@ -48,6 +48,16 @@ public class ItemTimelineExerciseHolder extends AbstractHolder {
 
     public void setItemTimeLineExercise(ItemTimeLineExercise itemTimeLineExercise) {
         this.itemTimeLineExercise = itemTimeLineExercise;
+
+        setDataFromItemTimeline();
+    }
+
+    private void setDataFromItemTimeline(){
+        setRemainingTime(itemTimeLineExercise.getRemainingTime());
+        setTitle(itemTimeLineExercise.getTitle());
+        setSummary(itemTimeLineExercise.getSummary());
+        setSeen(itemTimeLineExercise.isSeen());
+        setCreateTime(itemTimeLineExercise.getCreateAt());
     }
 
     @Override

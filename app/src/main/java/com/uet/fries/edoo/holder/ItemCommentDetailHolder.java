@@ -90,13 +90,13 @@ public class ItemCommentDetailHolder extends AbstractHolder {
     public void setItemComment(final ItemComment itemComment, final String userId, final String userType) {
         this.itemComment = itemComment;
 
-        tvAuthorName.setText(itemComment.getName());
+        tvAuthorName.setText(itemComment.getNameAuthor());
 //        tvComment.setText(itemComment.getContent());
         setContentToWebview(itemComment.getContent());
         tvCreateAt.setText(itemComment.getCreateAt());
-        if (!itemComment.getAvaUrl().isEmpty()) {
+        if (!itemComment.getAvaUrlAuthor().isEmpty()) {
             Picasso.with(mContext)
-                    .load(itemComment.getAvaUrl()).fit()
+                    .load(itemComment.getAvaUrlAuthor()).fit()
                     .placeholder(com.uet.fries.edoo.R.mipmap.ic_user).error(com.uet.fries.edoo.R.mipmap.ic_user)
                     .into(ivAuthorAvatar);
         }
@@ -146,8 +146,8 @@ public class ItemCommentDetailHolder extends AbstractHolder {
 
         boolean permissionDeleteComment = PermissionManager.pDeleteComment(
                 itemTimeline.getIdAuthor(),
-                itemComment.getCapability(),
-                itemComment.getIdAuthorComment(),
+                itemComment.getCapabilityAuthor(),
+                itemComment.getIdAuthor(),
                 userId,
                 userType
         );
@@ -158,7 +158,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
                 itemTimeline.getIdAuthor(),
                 userId,
                 userType,
-                itemComment.getIdAuthorComment()
+                itemComment.getIdAuthor()
         );
 
         if (permissionSolveComment) {

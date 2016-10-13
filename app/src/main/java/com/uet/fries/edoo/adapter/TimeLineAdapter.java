@@ -118,73 +118,15 @@ public class TimeLineAdapter extends RecyclerView.Adapter<AbstractHolder> {
             if (abstractHolder.getViewHolderType() == ITEM_TIMELINE) {
                 ItemTimeLinePost itemTimeLine = (ItemTimeLinePost) itemArr.get(position);
                 ItemPostHolder itemPostHolder = (ItemPostHolder) abstractHolder;
-                itemPostHolder.setIdLop(idLop);
-                itemPostHolder.setKeyLopType(itemTimeLine.getKeyLopType());
-                itemPostHolder.setIdPost(itemTimeLine.getIdPost());
                 itemPostHolder.setItemTimeLine(itemTimeLine);
-                itemPostHolder.setListComment(itemTimeLine.getItemComments());
-                itemPostHolder.getTxtAuthor().setText(itemTimeLine.getNameAuthor());
-                itemPostHolder.getTxtTitle().setText(itemTimeLine.getTitle());
-                itemPostHolder.getTxtContent().setText(itemTimeLine.getSummary());
-                itemPostHolder.setLike(itemTimeLine.getLike());
-                itemPostHolder.getTxtCountLike().setText(itemTimeLine.getLike() + "");
-                if (itemTimeLine.getLike() >= 0) {
-                    itemPostHolder.getIvLike().setImageResource(com.uet.fries.edoo.R.drawable.ic_vote_up);
-                } else {
-                    itemPostHolder.getIvLike().setImageResource(com.uet.fries.edoo.R.drawable.ic_vote_down);
-                }
+                itemPostHolder.setIdLop(idLop);
 
-                int countCmt = itemTimeLine.getItemComments().size();
-                if (countCmt == 0) {
-                    countCmt = itemTimeLine.getCommentCount();
-                }
-                itemPostHolder.getTxtCountComment().setText(countCmt + "");
-                itemPostHolder.getTvTimeCreateAt().setText(", " + itemTimeLine.getCreateAt());
-
-                itemPostHolder.getIvBookmark().setVisibility(View.GONE);
-
-                boolean isPostByTeacher = itemTimeLine.getTypeAuthor().equalsIgnoreCase("teacher");
-
-                if (itemTimeLine.isSolve()) {
-                    itemPostHolder.getIvBookmark().setVisibility(View.VISIBLE);
-                    itemPostHolder.getIvBookmark().setImageResource(com.uet.fries.edoo.R.drawable.ic_bookmark_solved);
-                }
-                if (isPostByTeacher) {
-                    itemPostHolder.getIvBookmark().setVisibility(View.VISIBLE);
-                    itemPostHolder.getIvBookmark().setImageResource(com.uet.fries.edoo.R.drawable.ic_bookmark_post_teacher);
-                }
-
-                if (itemTimeLine.isSeen()) {
-                    itemPostHolder.getIvSeen().setVisibility(View.INVISIBLE);
-                } else {
-                    itemPostHolder.getIvSeen().setVisibility(View.VISIBLE);
-                }
-
-                setResourceTypePost(itemPostHolder, itemTimeLine.getType());
             } else if (abstractHolder.getViewHolderType() == ITEM_EXERCISE) {
                 ItemTimeLineExercise itemTimeLine = (ItemTimeLineExercise) itemArr.get(position);
                 ItemTimelineExerciseHolder itemPostHolder = (ItemTimelineExerciseHolder) abstractHolder;
-                itemPostHolder.setRemainingTime(itemTimeLine.getRemainingTime());
-                itemPostHolder.setTitle(itemTimeLine.getTitle());
-                itemPostHolder.setSummary(itemTimeLine.getSummary());
-                itemPostHolder.setSeen(itemTimeLine.isSeen());
                 itemPostHolder.setItemTimeLineExercise(itemTimeLine);
-                itemPostHolder.setCreateTime(itemTimeLine.getCreateAt());
             }
         }
-    }
-
-    private void setResourceTypePost(ItemPostHolder itemPostHolder, String type) {
-        int idDrawable = android.R.color.white;
-        if (type.equals(ITimelineBase.TYPE_POST_NOTE))
-            idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_note;
-        else if (type.equals(ITimelineBase.TYPE_POST_QUESTION))
-            idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_question;
-        else if (type.equals(ITimelineBase.TYPE_POST_POLL))
-            idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_poll;
-        else if (type.equals(ITimelineBase.TYPE_POST_NOTIFICATION))
-            idDrawable = com.uet.fries.edoo.R.drawable.ic_type_post_notification;
-        itemPostHolder.getIvTypePost().setImageResource(idDrawable);
     }
 
     public void setLoadable(boolean loadable) {

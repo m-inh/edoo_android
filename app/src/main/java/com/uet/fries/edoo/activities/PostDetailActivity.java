@@ -243,37 +243,12 @@ public class PostDetailActivity extends AppCompatActivity {
                     for (int i = 0; i < commentJsonArr.length(); i++) {
                         JSONObject cmtJson = commentJsonArr.getJSONObject(i);
 
-                        String idComment = cmtJson.getString("id");
-                        String contentComment = cmtJson.getString("content");
-                        String timeCreateAtCmt = cmtJson.getString("created_at");
-                        boolean isSolve = cmtJson.getInt("is_solve") == 1;
-
-                        String idAuthorComment = "";
-                        String nameAuthorComment = "";
-                        String emailAuthorComment = "";
-                        String typeAuthorComment = "";
-                        String mssvAuthorComment = "";
-                        String avarAuthorComment = "";
-
                         try {
-                            JSONObject jsonAuthorComment = cmtJson.getJSONObject("author");
-                            idAuthorComment = jsonAuthorComment.getString("id");
-                            nameAuthorComment = jsonAuthorComment.getString("name");
-                            emailAuthorComment = jsonAuthorComment.getString("email");
-                            typeAuthorComment = jsonAuthorComment.getString("capability");
-                            mssvAuthorComment = jsonAuthorComment.getString("code");
-                            avarAuthorComment = jsonAuthorComment.getString("avatar");
-                        } catch (Exception e) {
-                            continue;
+                            cmtArr.add(new ItemComment(cmtJson));
+                        } catch (JSONException e){
+                            Log.d(TAG, "Parse json to Comment is Failed");
                         }
 
-                        ItemComment itemComment = new ItemComment(idComment,
-                                idAuthorComment, nameAuthorComment,
-                                avarAuthorComment, contentComment, isSolve, typeAuthorComment);
-
-                        itemComment.setCreateAt(CommonVLs.convertDate(timeCreateAtCmt));
-
-                        cmtArr.add(itemComment);
                     }
 
                     iTimeLine.setItemComments(cmtArr);

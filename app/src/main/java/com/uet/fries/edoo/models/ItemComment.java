@@ -1,5 +1,10 @@
 package com.uet.fries.edoo.models;
 
+import com.uet.fries.edoo.utils.CommonVLs;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -7,33 +12,57 @@ import java.io.Serializable;
  */
 public class ItemComment implements Serializable {
 
-    //name of author comment
-    private String name;
-    //ava of author comment
-    private String avaUrl;
+    //Author comment
+    private String nameAuthor;
+    private String capabilityAuthor;
+    private String avaUrlAuthor;
+    private String idAuthor;
+
+    // Comment info
     private String content;
     private boolean isSolved;
     private String idComment;
-    private String idAuthorComment;
     private String createAt;
-    private String capability;
 
     public ItemComment(String idComment, String idAuthorComment, String name, String avaUrl, String content, boolean isVote, String capability) {
-        this.name = name;
-        this.avaUrl = avaUrl;
+        this.nameAuthor = name;
+        this.avaUrlAuthor = avaUrl;
         this.content = content;
         this.isSolved = isVote;
         this.idComment = idComment;
-        this.idAuthorComment = idAuthorComment;
-        this.capability = capability;
+        this.idAuthor = idAuthorComment;
+        this.capabilityAuthor = capability;
     }
 
-    public String getName() {
-        return name;
+    public ItemComment(JSONObject jsonCmt) throws JSONException{
+        this.idComment = jsonCmt.getString("id");
+        this.content = jsonCmt.getString("content");
+        this.createAt = CommonVLs.convertDate(jsonCmt.getString("created_at"));
+        this.isSolved = jsonCmt.getInt("is_solve") == 1;
+
+        this.nameAuthor = "";
+        this.idAuthor = "";
+        this.capabilityAuthor = "";
+        this.avaUrlAuthor = "";
+
+        try {
+            JSONObject jsonAuthorComment = jsonCmt.getJSONObject("author");
+            this.nameAuthor = jsonAuthorComment.getString("name");
+            this.idAuthor = jsonAuthorComment.getString("id");
+            this.capabilityAuthor = jsonAuthorComment.getString("capability");
+            this.avaUrlAuthor = jsonAuthorComment.getString("avatar");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public String getAvaUrl() {
-        return avaUrl;
+    public String getNameAuthor() {
+        return nameAuthor;
+    }
+
+    public String getAvaUrlAuthor() {
+        return avaUrlAuthor;
     }
 
     public String getContent() {
@@ -48,8 +77,8 @@ public class ItemComment implements Serializable {
         return idComment;
     }
 
-    public String getIdAuthorComment() {
-        return idAuthorComment;
+    public String getIdAuthor() {
+        return idAuthor;
     }
 
     public void setIsSolved(boolean solved) {
@@ -64,7 +93,7 @@ public class ItemComment implements Serializable {
         this.createAt = createAt;
     }
 
-    public String getCapability(){
-        return capability;
+    public String getCapabilityAuthor(){
+        return capabilityAuthor;
     }
 }
