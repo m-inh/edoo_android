@@ -123,10 +123,6 @@
 
 
     <!--Other-->
-    
-    <color name="dot_submit_on_time">#4caf50</color>
-    <color name="dot_submit_late">#ff9800</color>
-    <color name="dot_submit_none">#f44336</color>
 
 
 </resources>

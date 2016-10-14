@@ -1,12 +1,9 @@
 package com.uet.fries.edoo.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +11,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -28,13 +24,11 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.TimeZone;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -68,10 +62,6 @@ public class PostWriterTagFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_post_tag_incognito, null);
 
-        //get data from Mainactivity
-//        Intent mIntent = getIntent();
-//        this.idLop = mIntent.getStringExtra("class_id");
-
         sqlite = new SQLiteHandler(getContext());
 
         initViews();
@@ -86,16 +76,10 @@ public class PostWriterTagFragment extends Fragment {
         typePoll.setOnClickListener(clickTypePost);
         typeExercise.setOnClickListener(clickTypePost);
         scIncognitoMode.setOnCheckedChangeListener(checkIncognitoMode);
-//        fabAddTagPost.setOnClickListener(clickTypePost);
 
         // Type post default for Teacher and Student
         if (typePost.equals("")) {
-//            if (!getIsTeacher()) {
             typePost = ITimelineBase.TYPE_POST_QUESTION;
-//            } else {
-//                typePost = ItemTimeLine.TYPE_POST_NOTIFICATION;
-//                typeNotification.setTextSize(14f);
-//            }
         } else {
             int idType = 0;
             int type = 0;
@@ -134,7 +118,8 @@ public class PostWriterTagFragment extends Fragment {
         }
 
 
-        setOnClickDate();
+        // Pick Date, Time
+        setOnClickDateTime();
     }
 
     private void setDataUser(boolean isUser) {
@@ -177,9 +162,6 @@ public class PostWriterTagFragment extends Fragment {
             int idType = 0;
             int type = 0;
             switch (view.getId()) {
-//                case R.id.fab_add_tag_post:
-//                    Toast.makeText(getContext(), "Add Tag...", Toast.LENGTH_SHORT).show();
-//                    return;
                 case R.id.tv_type_post_question:
                     typePost = ITimelineBase.TYPE_POST_QUESTION;
                     idType = R.drawable.ic_type_post_question;
@@ -283,13 +265,14 @@ public class PostWriterTagFragment extends Fragment {
         }
     };
 
-    private void setOnClickDate() {
+    private void setOnClickDateTime() {
         final Calendar now = Calendar.getInstance();
+        now.setTimeInMillis(now.getTimeInMillis() + 24*3600*1000);
         int year = now.get(Calendar.YEAR);
         String month = getNumber(now.get(Calendar.MONTH) + 1);
         String day = getNumber(now.get(Calendar.DAY_OF_MONTH));
-        String hour = getNumber(now.get(Calendar.HOUR_OF_DAY));
-        String minutes = getNumber(now.get(Calendar.MINUTE));
+        String hour = "21";
+        String minutes = "00";
         tvPickTime.setText(hour + ":" + minutes);
         tvPickDate.setText(day + "/" + month + "/" + year);
 
@@ -305,6 +288,7 @@ public class PostWriterTagFragment extends Fragment {
                 );
                 dpd.setAccentColor(CommonVLs.getColor(R.color.colorPrimary, getContext()));
                 dpd.setTitle("Ngày nộp bài");
+                dpd.setMinDate(now);
 
                 dpd.show(getActivity().getFragmentManager(), TAG + "DatePicker");
             }
@@ -315,13 +299,13 @@ public class PostWriterTagFragment extends Fragment {
             public void onClick(View v) {
                 TimePickerDialog tpd = TimePickerDialog.newInstance(
                         onTimeSetListener,
-                        now.get(Calendar.HOUR_OF_DAY),
-                        now.get(Calendar.MINUTE),
+                        21,
+                        0,
                         true
                 );
                 tpd.enableMinutes(true);
                 tpd.setAccentColor(CommonVLs.getColor(R.color.colorPrimary, getContext()));
-                tpd.setTitle("Thời gian nộp bài");
+                tpd.setTitle("Giờ nộp bài");
                 tpd.show(getActivity().getFragmentManager(), TAG + "TimePicker");
             }
         });

@@ -101,7 +101,7 @@ public class ListSubmittedActivity extends AppCompatActivity {
                         String name = author.getString("name");
                         String createAt = file.getString("created_at");
 
-                        arrStudent.add(new SubmittedExerciseAdapter.Student(name, CommonVLs.getDateTime2(createAt), 1));
+                        arrStudent.add(new SubmittedExerciseAdapter.Student(name, createAt));
                     }
 
                     adapter.setArrStudent(arrStudent);
