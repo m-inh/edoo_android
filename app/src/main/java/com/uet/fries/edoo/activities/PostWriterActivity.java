@@ -31,7 +31,6 @@ import com.uet.fries.edoo.communication.RequestServer;
 import com.uet.fries.edoo.fragment.PostWriterContentFragment;
 import com.uet.fries.edoo.fragment.PostWriterTagFragment;
 import com.uet.fries.edoo.models.ItemTimeLinePost;
-import com.uet.fries.edoo.utils.Reporter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,8 +53,6 @@ public class PostWriterActivity extends AppCompatActivity implements ViewPager.O
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Reporter.register(this);// Crash Reporter
 
         setContentView(com.uet.fries.edoo.R.layout.activity_post_writer_view_pager);
         toolbar = (Toolbar) findViewById(R.id.tb_post_writer);

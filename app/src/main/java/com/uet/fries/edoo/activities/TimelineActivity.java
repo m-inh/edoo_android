@@ -24,7 +24,6 @@ import com.uet.fries.edoo.models.ITimelineBase;
 import com.uet.fries.edoo.models.ItemLop;
 import com.uet.fries.edoo.models.ItemTimeLineExercise;
 import com.uet.fries.edoo.models.ItemTimeLinePost;
-import com.uet.fries.edoo.utils.Reporter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,8 +58,6 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Reporter.register(this);// Crash Reporter
 
         setContentView(com.uet.fries.edoo.R.layout.activity_timeline);
 

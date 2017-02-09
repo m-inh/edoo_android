@@ -16,7 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -43,7 +42,6 @@ import com.uet.fries.edoo.models.ItemTimeLineExercise;
 import com.uet.fries.edoo.models.ItemTimeLinePost;
 import com.uet.fries.edoo.utils.CommonVLs;
 import com.uet.fries.edoo.utils.PermissionManager;
-import com.uet.fries.edoo.utils.Reporter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,8 +49,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -79,8 +75,6 @@ public class PostDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Reporter.register(this);// Crash Reporter
 
         setContentView(R.layout.activity_post_detailt);
 

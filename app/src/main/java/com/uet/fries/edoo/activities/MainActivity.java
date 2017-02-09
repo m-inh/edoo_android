@@ -31,7 +31,6 @@ import com.uet.fries.edoo.models.ItemLop;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 import com.uet.fries.edoo.models.ItemTimeLinePost;
-import com.uet.fries.edoo.utils.Reporter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,8 +67,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Reporter.register(this);// Crash Reporter
 
         setContentView(R.layout.activity_main);
 

@@ -3,7 +3,6 @@ package com.uet.fries.edoo.activities;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -22,7 +21,6 @@ import com.uet.fries.edoo.helper.SQLiteHandler;
 import com.uet.fries.edoo.helper.PrefManager;
 import com.uet.fries.edoo.utils.CommonVLs;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.uet.fries.edoo.utils.Reporter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,8 +40,6 @@ public class LoginActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Reporter.register(this);// Crash Reporter
 
         setContentView(R.layout.activity_login);
 
