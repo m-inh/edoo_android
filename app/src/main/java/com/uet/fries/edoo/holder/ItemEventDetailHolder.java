@@ -60,7 +60,7 @@ public class ItemEventDetailHolder extends AbstractHolder {
 
         Picasso.with(mContext)
                 .load(itemTLExercise.getAvaAuthor()).fit()
-                .placeholder(R.mipmap.ic_user).error(R.mipmap.ic_user)
+                .placeholder(R.drawable.ic_user).error(R.drawable.ic_user)
                 .into(ivAvatar);
 
         webView = (WebView) itemView.findViewById(R.id.webview);

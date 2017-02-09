@@ -128,8 +128,8 @@ public class PostWriterTagFragment extends Fragment {
             String urlAvatar = user.get("avatar");
             Picasso.with(getContext())
                     .load(urlAvatar).fit()
-                    .placeholder(R.mipmap.ic_user)
-                    .error(R.mipmap.ic_user).into(ivAvatar);
+                    .placeholder(R.drawable.ic_user)
+                    .error(R.drawable.ic_user).into(ivAvatar);
             txtUser.setText(user.get("name"));
         } else {
             ivAvatar.setImageResource(R.drawable.ic_incognito_mode);

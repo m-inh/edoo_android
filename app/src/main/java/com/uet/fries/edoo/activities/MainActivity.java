@@ -159,12 +159,14 @@ public class MainActivity extends AppCompatActivity
 
     public void updateAvatar() {
         HashMap<String, String> user = sqlite.getUserDetails();
-        Picasso.with(this).invalidate(user.get("avatar"));
+        String urlAvatar = user.get("avatar");
+        if (urlAvatar.isEmpty()) urlAvatar += "...";
+        Picasso.with(this).invalidate(urlAvatar);
 //        Log.i(TAG, "update ava: " + user.get("avatar"));
         Picasso.with(this)
-                .load(user.get("avatar")).fit()
-                .placeholder(R.mipmap.ic_user)
-                .error(R.mipmap.ic_user)
+                .load(urlAvatar).fit()
+                .placeholder(R.drawable.ic_user)
+                .error(R.drawable.ic_user)
                 .into(ivAva);
         Log.i(TAG, "update avatar + " + user.get("avatar"));
     }

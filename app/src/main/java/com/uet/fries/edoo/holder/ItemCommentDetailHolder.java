@@ -97,7 +97,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         if (!itemComment.getAvaUrlAuthor().isEmpty()) {
             Picasso.with(mContext)
                     .load(itemComment.getAvaUrlAuthor()).fit()
-                    .placeholder(com.uet.fries.edoo.R.mipmap.ic_user).error(com.uet.fries.edoo.R.mipmap.ic_user)
+                    .placeholder(com.uet.fries.edoo.R.drawable.ic_user).error(com.uet.fries.edoo.R.drawable.ic_user)
                     .into(ivAuthorAvatar);
         }
 

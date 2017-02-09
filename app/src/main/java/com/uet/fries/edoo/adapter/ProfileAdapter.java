@@ -133,10 +133,12 @@ public class ProfileAdapter extends RecyclerView.Adapter<AbstractHolder> {
         }
 
         public void setData() {
+            String urlAvatar = user.getAvatar();
+            if (urlAvatar.isEmpty()) urlAvatar += "...";
             Picasso.with(mContext)
-                    .load(user.getAvatar()).fit()
-                    .placeholder(com.uet.fries.edoo.R.mipmap.ic_user)
-                    .error(com.uet.fries.edoo.R.mipmap.ic_user).into(ivAvatar);
+                    .load(urlAvatar).fit()
+                    .placeholder(com.uet.fries.edoo.R.drawable.ic_user)
+                    .error(com.uet.fries.edoo.R.drawable.ic_user).into(ivAvatar);
             tvName.setText(user.getName());
             tvPointCount.setText("" + user.getPointCount());
 
