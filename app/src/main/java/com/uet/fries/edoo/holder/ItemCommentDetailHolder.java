@@ -97,6 +97,7 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         if (!itemComment.getAvaUrlAuthor().isEmpty()) {
             String urlAvatar = itemComment.getAvaUrlAuthor();
             if (urlAvatar.isEmpty()) urlAvatar += "...";
+            Log.i(TAG, "urlAvatar = " + urlAvatar);
             Picasso.with(mContext)
                     .load(urlAvatar).fit()
                     .placeholder(com.uet.fries.edoo.R.drawable.ic_user)

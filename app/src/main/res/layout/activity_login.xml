@@ -30,7 +30,6 @@
             android:layout_marginBottom="10dp"
             android:background="@color/white"
             android:hint="@string/hint_email"
-            android:text="quytm_58@vnu.edu.vn"
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:padding="10dp"
@@ -46,7 +45,6 @@
             android:hint="@string/hint_password"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:text="123456"
             android:padding="10dp"
             android:textColor="@color/input_login"
             android:textColorHint="@color/input_login_hint" />

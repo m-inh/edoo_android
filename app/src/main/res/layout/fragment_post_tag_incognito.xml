@@ -80,7 +80,7 @@
                 android:layout_width="@dimen/btn_height"
                 android:layout_height="@dimen/btn_height"
                 android:layout_marginRight="@dimen/action_padding"
-                android:src="@mipmap/avatar_test"
+                android:src="@drawable/ic_user"
                 app:civ_border_color="@color/colorPrimary"
                 app:civ_border_width="1dp" />
 

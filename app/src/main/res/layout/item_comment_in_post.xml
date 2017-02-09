@@ -29,7 +29,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="top"
-            android:src="@mipmap/avatar_test" />
+            android:src="@drawable/ic_user" />
 
         <RelativeLayout
             android:layout_width="0dp"
