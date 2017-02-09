@@ -95,9 +95,12 @@ public class ItemCommentDetailHolder extends AbstractHolder {
         setContentToWebview(itemComment.getContent());
         tvCreateAt.setText(itemComment.getCreateAt());
         if (!itemComment.getAvaUrlAuthor().isEmpty()) {
+            String urlAvatar = itemComment.getAvaUrlAuthor();
+            if (urlAvatar.isEmpty()) urlAvatar += "...";
             Picasso.with(mContext)
-                    .load(itemComment.getAvaUrlAuthor()).fit()
-                    .placeholder(com.uet.fries.edoo.R.drawable.ic_user).error(com.uet.fries.edoo.R.drawable.ic_user)
+                    .load(urlAvatar).fit()
+                    .placeholder(com.uet.fries.edoo.R.drawable.ic_user)
+                    .error(com.uet.fries.edoo.R.drawable.ic_user)
                     .into(ivAuthorAvatar);
         }
 

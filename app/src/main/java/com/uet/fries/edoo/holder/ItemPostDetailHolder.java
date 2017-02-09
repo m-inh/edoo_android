@@ -83,8 +83,10 @@ public class ItemPostDetailHolder extends AbstractHolder {
 //        cbIsVote = (CheckBox) itemView.findViewById(R.id.cb_isVote);
         ivIsVote = (ImageView) itemView.findViewById(R.id.iv_bookmark);
 
+        String urlAvatar = itemTimeLine.getAvaAuthor();
+        if (urlAvatar.isEmpty()) urlAvatar += "...";
         Picasso.with(mContext)
-                .load(itemTimeLine.getAvaAuthor()).fit()
+                .load(urlAvatar).fit()
                 .placeholder(R.drawable.ic_user).error(R.drawable.ic_user)
                 .into(ivAvatar);
 

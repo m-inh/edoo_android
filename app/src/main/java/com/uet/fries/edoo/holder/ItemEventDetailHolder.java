@@ -58,8 +58,10 @@ public class ItemEventDetailHolder extends AbstractHolder {
         btnSubmitCheckExercise = (TextView) itemView.findViewById(R.id.btn_submit_check_exercise);
         tvPercentSubmitted = (TextView) itemView.findViewById(R.id.tv_percent_submit);
 
+        String urlAvatar = itemTLExercise.getAvaAuthor();
+        if (urlAvatar.isEmpty()) urlAvatar += "...";
         Picasso.with(mContext)
-                .load(itemTLExercise.getAvaAuthor()).fit()
+                .load(urlAvatar).fit()
                 .placeholder(R.drawable.ic_user).error(R.drawable.ic_user)
                 .into(ivAvatar);
 

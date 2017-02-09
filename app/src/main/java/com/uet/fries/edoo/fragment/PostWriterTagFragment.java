@@ -126,6 +126,7 @@ public class PostWriterTagFragment extends Fragment {
         if (isUser) {
             HashMap<String, String> user = sqlite.getUserDetails();
             String urlAvatar = user.get("avatar");
+            if (urlAvatar.isEmpty()) urlAvatar += "...";
             Picasso.with(getContext())
                     .load(urlAvatar).fit()
                     .placeholder(R.drawable.ic_user)

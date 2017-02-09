@@ -162,7 +162,6 @@ public class MainActivity extends AppCompatActivity
         String urlAvatar = user.get("avatar");
         if (urlAvatar.isEmpty()) urlAvatar += "...";
         Picasso.with(this).invalidate(urlAvatar);
-//        Log.i(TAG, "update ava: " + user.get("avatar"));
         Picasso.with(this)
                 .load(urlAvatar).fit()
                 .placeholder(R.drawable.ic_user)
