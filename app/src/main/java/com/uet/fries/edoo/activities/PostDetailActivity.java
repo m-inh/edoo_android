@@ -40,6 +40,7 @@ import com.uet.fries.edoo.models.ITimelineBase;
 import com.uet.fries.edoo.models.ItemComment;
 import com.uet.fries.edoo.models.ItemTimeLineExercise;
 import com.uet.fries.edoo.models.ItemTimeLinePost;
+import com.uet.fries.edoo.utils.AnalyticsApp;
 import com.uet.fries.edoo.utils.CommonVLs;
 import com.uet.fries.edoo.utils.PermissionManager;
 
@@ -329,6 +330,9 @@ public class PostDetailActivity extends AppCompatActivity {
                             appBarLayout.setExpanded(false, true);
                         }
                     }, 1000);
+
+
+                    new AnalyticsApp().sendEventCommentPost(PostDetailActivity.this);
                 }
             }
         });
@@ -424,6 +428,9 @@ public class PostDetailActivity extends AppCompatActivity {
 
                     ((ExerciseDetailAdapter) mAdapter).getEventDetail().setIsSendFile(true);
 //                    Log.d(TAG, "url = " + urlImg);
+
+
+                    new AnalyticsApp().sendEventUploadExercise(PostDetailActivity.this);
                 } else {
                     Toast.makeText(PostDetailActivity.this, "Upload Failed", Toast.LENGTH_SHORT).show();
                 }

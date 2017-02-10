@@ -24,6 +24,7 @@ import com.uet.fries.edoo.models.ITimelineBase;
 import com.uet.fries.edoo.models.ItemLop;
 import com.uet.fries.edoo.models.ItemTimeLineExercise;
 import com.uet.fries.edoo.models.ItemTimeLinePost;
+import com.uet.fries.edoo.utils.AnalyticsApp;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -302,6 +303,8 @@ public class TimelineActivity extends AppCompatActivity implements SwipeRefreshL
         if (requestCode == REQUEST_CODE_POST_WRITER) {
             if (resultCode == RESULT_OK) {
                 refreshPosts();
+
+                new AnalyticsApp().sendEventWritePost(this);
             }
         }
 

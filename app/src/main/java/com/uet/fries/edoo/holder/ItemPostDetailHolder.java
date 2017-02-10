@@ -24,6 +24,7 @@ import com.uet.fries.edoo.app.AppConfig;
 import com.uet.fries.edoo.communication.RequestServer;
 import com.squareup.picasso.Picasso;
 import com.uet.fries.edoo.models.ItemTimeLinePost;
+import com.uet.fries.edoo.utils.AnalyticsApp;
 import com.uet.fries.edoo.utils.PermissionManager;
 
 import org.json.JSONException;
@@ -185,7 +186,7 @@ public class ItemPostDetailHolder extends AbstractHolder {
     }
 
     //Post like and cmt to server
-    private void postLike(String idPost, int content) {
+    private void postLike(String idPost, final int content) {
         JSONObject params = new JSONObject();
         try {
             params.put("post_id", idPost);
@@ -200,6 +201,13 @@ public class ItemPostDetailHolder extends AbstractHolder {
             public void onReceive(boolean error, JSONObject response, String message) throws JSONException {
                 if (!error) {
                     int countVote = response.getJSONObject("data").getInt("vote_count");
+
+                    // Analytics
+                    if (countVote != itemTimeLine.getLike()) {
+                        if (content > 0) new AnalyticsApp().sendEventLikePost(mContext);
+                        else new AnalyticsApp().sendEventDislikePost(mContext);
+                    }
+
                     itemTimeLine.setLike(countVote);
                     tvLike.setText(itemTimeLine.getLike() + "");
                     if (itemTimeLine.getLike() >= 0) {
